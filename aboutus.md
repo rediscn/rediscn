@@ -3,6 +3,8 @@ layout: index
 title: 关于redis.cn翻译团队 -- Redis中文官方网站
 excerpt: redis中文资料、中文文档尽在redis中文官方网站，下载安装redis，在帮助手册里查找redis常用命令（commands），选择适合的redis客户端方式，配置redis主从（master-slave），阅读redis官方文档、教程、教材，社区里了解更多redis信息，如： 数据类型、持久化、主从配置、集群配置、性能测试、全面的redis资料都在这里。
 permalink: aboutus.html
+disqusIdentifier: aboutus
+disqusUrl: http://redis.cn/aboutus.html
 ---
 
 <section id='commands'>

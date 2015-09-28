@@ -2,9 +2,10 @@
 layout: index
 title: redis中文网更新日志 - Redis中文官方网站
 permalink: update.html
+disqusIdentifier: update
+disqusUrl: http://redis.cn/update.html
 ---
 
-<div class='site-content'>
 <div class='text'>
       <section id='clients'>
         <h1>redis中文网更新日志</h1>
@@ -172,4 +173,4 @@ permalink: update.html
        
       </section>
     </div>
-    </div>
+
