@@ -1,12 +1,12 @@
 # Site settings
-title: Your awesome title
-email: your-email@domain.com
+title: redis.cn
+email: rjgcs123@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   redis\u4e2d\u6587\u8d44\u6599\u7ad9\uff0c\u4e0b\u8f7d\u5b89\u88c5redis\uff0c\u67e5\u627eredis\u5e38\u7528\u547d\u4ee4\uff08commands\uff09\uff0c\u9009\u62e9\u9002\u5408\u7684redis\u5ba2\u6237\u7aef\u65b9\u5f0f\uff0c\u914d\u7f6eredis\u4e3b\u4ece\uff08master-slave\uff09\uff0c\u9605\u8bfbredis\u5b98\u65b9\u6587\u6863\uff0c\u793e\u533a\u91cc\u4e86\u89e3\u66f4\u591aredis\u4fe1\u606f\uff0c\u63d0\u4ea4redis\u7684bug\u3002
 baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://ghthub.redis.cn" # the base hostname & protocol for your site
 twitter_username: jekyllrb
-github_username:  jekyll
+github_username:  geelou
 
 # Build settings
 markdown: kramdown
