@@ -1,0 +1,20 @@
+{% include head.html %}
+{% include header.html %}
+
+<div class='text'>
+          <h1 class='command'>
+            <span class='name'>APPEND</span>
+            <span class='arg'>key</span>
+            <span class='arg'>value</span>
+          </h1>
+          <article>
+            <div class='article-main'>
+              
+              {{ content }}
+              
+            </div>
+{% include commands/{{ page.commandsType}}.html %}
+            </article>
+        </div>
+
+{% include footer.html %}

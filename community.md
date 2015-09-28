@@ -1,4 +1,4 @@
-
+---
 layout: index
 title: Redis社区 -- Redis中文资料站
 excerpt: Redis中文技术交流社区，学习交流redis技术欢迎来redis.cn中文官方网站。
@@ -7,58 +7,51 @@ disqusIdentifier: community
 disqusUrl: http://redis.cn/community.html
 ---
 
-<div class='text'>
-          <article id='topic'>
-            <span id="community" class=anchor></span><h1 ><a href="#community" class=anchor-link>*</a>Community</h1>
-            
-            <ul>
-            <li>Join the <a href="http://groups.google.com/group/redis-db">mailing list</a> (Subscribe via <a href="mailto:redis-db+subscribe@googlegroups.com">email</a>)</li>
-            <li>Meet us at the <code>#redis</code> channel on Freenode (<a href="http://webchat.freenode.net/?channels=redis">web access link</a>)</li>
-            <li>Follow <a href="http://twitter.com/redisfeed">Redis news feed</a> on Twitter</li>
-            </ul>
-            
-            <span id="local-meetups" class=anchor></span><h2 ><a href="#local-meetups" class=anchor-link>*</a>Local meetups</h2>
-            
-            <ul>
-            <li><a href="http://www.meetup.com/Redis-London">London Redis Meetup Group</a></li>
-            <li><a href="http://sfmeetup.redis.io">San Francisco Meetup Group</a></li>
-            <li><a href="http://www.meetup.com/New-York-REDIS-Meetup">New York Meetup Group</a></li>
-            </ul>
-            
-            <span id="contributing-to-redis" class=anchor></span><h2 ><a href="#contributing-to-redis" class=anchor-link>*</a>Contributing to Redis</h2>
-            
-            <p>Would you like to contribute a feature to Redis?</p>
-            
-            <ol>
-            <li><p>Enter the IRC channel <code>#redis</code> on Freenode and look for Salvatore (antirez) or Pieter (pietern).
-            Ask them what they think about your idea and what the chances are of getting it merged upstream.
-            We try hard to keep Redis simple, so you&#39;re likely to find high resistance to new features.</p></li>
-            <li><p>If you don&#39;t get any feedback, or if feedback is positive, drop a message to the
-            <a href="http://groups.google.com/group/redis-db">mailing list</a> with your proposal. Make sure you explain
-            what the use case is and how the API would look like.</p></li>
-            <li><p>If you get good feedback, do the following to submit a patch:</p>
-            
-            <ol>
-            <li>Fork <a href="http://github.com/antirez/redis">the official repository</a>.</li>
-            <li>Clone your fork: <code>git clone git@github.com:&lt;your-username&gt;/redis.git</code></li>
-            <li>Make sure tests are passing for you: <code>make &amp;&amp; make test</code></li>
-            <li>Create a topic branch: <code>git checkout -b new-feature</code></li>
-            <li>Add tests and code for your changes.</li>
-            <li>Once you&#39;re done, make sure all tests still pass: <code>make &amp;&amp; make test</code></li>
-            <li>Commit and push to your fork.</li>
-            <li><a href="https://github.com/antirez/redis/issues">Create an issue</a> with a link to your patch.</li>
-            <li>Sit back and enjoy.</li>
-            </ol></li>
-            </ol>
-            
-            <p>There are other ways to help:</p>
-            
-            <ul>
-            <li><p><a href="https://github.com/antirez/redis/issues">Fix a bug or share your experience on issues</a></p></li>
-            <li><p>Improve the <a href="http://github.com/antirez/redis-doc">documentation</a></p></li>
-            <li><p>Help maintain or create new <a href="/clients">client libraries</a></p></li>
-            <li><p>Improve <a href="http://github.com/antirez/redis-io">this very website</a></p></li>
-            </ul>
-          </article>
-        </div>
-        
+Community
+===
+
+* Join the [mailing list](http://groups.google.com/group/redis-db) (Subscribe via [email](mailto:redis-db+subscribe@googlegroups.com))
+* Meet us at the `#redis` channel on Freenode ([web access link](http://webchat.freenode.net/?channels=redis))
+* Follow [Redis news feed](http://twitter.com/redisfeed) on Twitter
+
+Local meetups
+---
+
+* [London Redis Meetup Group](http://www.meetup.com/Redis-London)
+* [San Francisco Meetup Group](http://sfmeetup.redis.io)
+* [New York Meetup Group](http://www.meetup.com/New-York-REDIS-Meetup)
+
+Contributing to Redis
+---
+
+Would you like to contribute a feature to Redis?
+
+1. Enter the IRC channel `#redis` on Freenode and look for Salvatore (antirez) or Pieter (pietern).
+Ask them what they think about your idea and what the chances are of getting it merged upstream.
+We try hard to keep Redis simple, so you're likely to find high resistance to new features.
+
+2. If you don't get any feedback, or if feedback is positive, drop a message to the
+[mailing list](http://groups.google.com/group/redis-db) with your proposal. Make sure you explain
+what the use case is and how the API would look like.
+
+3. If you get good feedback, do the following to submit a patch:
+
+    1. Fork [the official repository](http://github.com/antirez/redis).
+    2. Clone your fork: `git clone git@github.com:<your-username>/redis.git`
+    3. Make sure tests are passing for you: `make && make test`
+    4. Create a topic branch: `git checkout -b new-feature`
+    5. Add tests and code for your changes.
+    6. Once you're done, make sure all tests still pass: `make && make test`
+    7. Commit and push to your fork.
+    8. [Create an issue](https://github.com/antirez/redis/issues) with a link to your patch.
+    9. Sit back and enjoy.
+
+There are other ways to help:
+
+* [Fix a bug or share your experience on issues](https://github.com/antirez/redis/issues)
+
+* Improve the [documentation](http://github.com/antirez/redis-doc)
+
+* Help maintain or create new [client libraries](/clients)
+
+* Improve [this very website](http://github.com/antirez/redis-io)
