@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS internals -- Redis中文资料站
+permalink: topics/internals.html
+disqusIdentifier: topics_internals
+disqusUrl: http://redis.cn/topics/internals.html
+---
+
 # Redis Internals documentation
 
 Redis source code is not very big (just 20k lines of code for the 2.2 release) and we try hard to make it simple and easy to understand. However we have some documentation explaining selected parts of the Redis internals.

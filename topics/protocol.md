@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS protocol -- Redis中文资料站
+permalink: topics/protocol.html
+disqusIdentifier: topics_protocol
+disqusUrl: http://redis.cn/topics/protocol.html
+---
+
 # Redis Protocol specification
 
 Redis clients communicate with the Redis server using a protocol called **RESP** (REdis Serialization Protocol). While the protocol was designed specifically for Redis, it can be used for other client-server software projects.

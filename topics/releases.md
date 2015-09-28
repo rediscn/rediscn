@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS sentinel-old -- Redis中文资料站
+permalink: topics/releases.html
+disqusIdentifier: topics_releases
+disqusUrl: http://redis.cn/topics/releases.html
+---
+
 Redis release cycle
 ===
 

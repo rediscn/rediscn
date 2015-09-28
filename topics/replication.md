@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS sentinel-old -- Redis中文资料站
+permalink: topics/replication.html
+disqusIdentifier: topics_replication
+disqusUrl: http://redis.cn/topics/replication.html
+---
+
 Replication
 ===
 

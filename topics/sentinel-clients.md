@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS sentinel-old -- Redis中文资料站
+permalink: topics/sentinel-clients.html
+disqusIdentifier: topics_sentinel-clients
+disqusUrl: http://redis.cn/topics/sentinel-clients.html
+---
+
 **WARNING:** This document is a draft and the guidelines that it contains may change in the future as the Sentinel project evolves.
 
 Guidelines for Redis clients with support for Redis Sentinel

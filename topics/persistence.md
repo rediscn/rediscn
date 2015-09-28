@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS persistence -- Redis中文资料站
+permalink: topics/persistence.html
+disqusIdentifier: topics_persistence
+disqusUrl: http://redis.cn/topics/persistence.html
+---
+
 This page provides a technical description of Redis persistence, it is a suggested read for all the Redis users. For a wider overview of Redis persistence and the durability guarantees it provides you may want to also read [Redis persistence demystified](http://antirez.com/post/redis-persistence-demystified.html).
 
 Redis Persistence

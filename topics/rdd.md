@@ -1,4 +1,12 @@
-﻿Redis Design Drafts
+---
+layout: topics
+title: REDIS rdd -- Redis中文资料站
+permalink: topics/rdd.html
+disqusIdentifier: topics_rdd
+disqusUrl: http://redis.cn/topics/rdd.html
+---
+
+Redis Design Drafts
 ===
 
 Redis Design Drafts are a way to make the community aware about the design of

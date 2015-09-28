@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS problems -- Redis中文资料站
+permalink: topics/problems.html
+disqusIdentifier: topics_problems
+disqusUrl: http://redis.cn/topics/problems.html
+---
+
 Problems with Redis? This is a good starting point.
 ===
 

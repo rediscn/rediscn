@@ -1,3 +1,10 @@
+---
+layout: topics
+title: REDIS 管理 -- Redis中文资料站
+permalink: topics/admin.html
+disqusIdentifier: admin
+disqusUrl: http://redis.cn/topics/admin.html
+---
 Redis Administration
 ===
 

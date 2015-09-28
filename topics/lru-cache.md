@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS lru-cache -- Redis中文资料站
+permalink: topics/lru-cache.html
+disqusIdentifier: topics_lru-cache
+disqusUrl: http://redis.cn/topics/lru-cache.html
+---
+
 Using Redis as an LRU cache
 ===
 

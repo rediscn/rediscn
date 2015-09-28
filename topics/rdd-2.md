@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS rdd-2 -- Redis中文资料站
+permalink: topics/rdd-2.html
+disqusIdentifier: topics_rdd-2
+disqusUrl: http://redis.cn/topics/rdd-2.html
+---
+
 # Redis Design Draft 2 -- RDB version 7 info fields
 
 * Author: Salvatore Sanfilippo `antirez@gmail.com`

@@ -15,57 +15,57 @@ Note: The Redis Documentation is also available in raw (computer friendly) forma
 Programming with Redis
 ---
 
-* [The full list of commands](/commands) implemented by Redis, along with thorough documentation for each of them.
-* [Pipelining](/topics/pipelining): Learn how to send multiple commands
+* [The full list of commands](/commands.html) implemented by Redis, along with thorough documentation for each of them.
+* [Pipelining](/topics/pipelining.html): Learn how to send multiple commands
 at once, saving on round trip time.
-* [Redis Pub/Sub](topics/pubsub): Redis is a fast and stable Publish/Subscribe messaging system! Check it out.
-* [Redis Lua scripting](/commands/eval): Redis 2.6 Lua scripting feature documentation.
-* [Memory optimization](/topics/memory-optimization): Understand how
+* [Redis Pub/Sub](topics/pubsub.html): Redis is a fast and stable Publish/Subscribe messaging system! Check it out.
+* [Redis Lua scripting](/commands/eval.html): Redis 2.6 Lua scripting feature documentation.
+* [Memory optimization](/topics/memory-optimization.html): Understand how
 Redis uses RAM and learn some tricks to use less of it.
-* [Expires](/commands/expire): Redis allows to set a time to live different for every key so that the key will be automatically removed from the server when it expires.
-* [Redis as an LRU cache](/topics/lru-cache): How to configure and use Redis as a cache with a fixed amount of memory and auto eviction of keys.
-* [Redis transactions](/topics/transactions): It is possible to group commands together so that they are executed as a single transaction.
-* [Mass insertion of data](/topics/mass-insert): How to add a big amount of pre existing or generated data to a Redis instance in a short time.
-* [Partitioning](/topics/partitioning): How to distribute your data among multiple Redis instances.
-* [Distributed locks](/topics/distlock): Implementing a distributed lock manager with Redis.
-* [Redis keyspace notifications](/topics/notifications): Get notifications of keyspace events via Pub/Sub (Redis 2.8 or greater).
+* [Expires](/commands/expire.html): Redis allows to set a time to live different for every key so that the key will be automatically removed from the server when it expires.
+* [Redis as an LRU cache](/topics/lru-cache.html): How to configure and use Redis as a cache with a fixed amount of memory and auto eviction of keys.
+* [Redis transactions](/topics/transactions.html): It is possible to group commands together so that they are executed as a single transaction.
+* [Mass insertion of data](/topics/mass-insert.html): How to add a big amount of pre existing or generated data to a Redis instance in a short time.
+* [Partitioning](/topics/partitioning.html): How to distribute your data among multiple Redis instances.
+* [Distributed locks](/topics/distlock.html): Implementing a distributed lock manager with Redis.
+* [Redis keyspace notifications](/topics/notifications.html): Get notifications of keyspace events via Pub/Sub (Redis 2.8 or greater).
 
 Tutorials & FAQ
 ---
 
-* [Introduction to Redis data types](/topics/data-types-intro): This is a good starting point to learn the Redis API and data model.
-* [Writing a simple Twitter clone with PHP and Redis](/topics/twitter-clone)
+* [Introduction to Redis data types](/topics/data-types-intro.html): This is a good starting point to learn the Redis API and data model.
+* [Writing a simple Twitter clone with PHP and Redis](/topics/twitter-clone.html)
 * [Auto complete with Redis](http://autocomplete.redis.io)
-* [Data types short summary](/topics/data-types): A short summary of the different types of values that Redis supports, not as updated and info rich as the first tutorial listed in this section.
+* [Data types short summary](/topics/data-types.html): A short summary of the different types of values that Redis supports, not as updated and info rich as the first tutorial listed in this section.
 * [FAQ](/topics/faq): Some common questions about Redis.
 
 Administration
 ---
-* [Configuration](/topics/config): How to configure redis.
-* [Replication](/topics/replication): What you need to know in order to
+* [Configuration](/topics/config.html): How to configure redis.
+* [Replication](/topics/replication.html): What you need to know in order to
 set up master-slave replication.
-* [Persistence](/topics/persistence): Know your options when configuring
+* [Persistence](/topics/persistence.html): Know your options when configuring
 Redis' durability.
-* [Redis Administration](/topics/admin): Selected administration topics.
-* [Security](/topics/security): An overview of Redis security.
-* [Encryption](/topics/encryption): How to encrypt Redis client-server communication.
-* [Signals Handling](/topics/signals): How Redis handles signals.
-* [Connections Handling](/topics/clients): How Redis handles clients connections.
-* [High Availability](/topics/sentinel): Redis Sentinel is the official high availability solution for Redis.
-* [Latency monitoring](/topics/latency-monitor): Redis integrated latency monitoring and reporting capabilities are helpful to tune Redis instances for low latency workloads.
-* [Benchmarks](/topics/benchmarks): See how fast Redis is in different platforms.
-* [Redis Releases](/topics/releases): Redis development cycle and version numbering.
+* [Redis Administration](/topics/admin.html): Selected administration topics.
+* [Security](/topics/security.html): An overview of Redis security.
+* [Encryption](/topics/encryption.html): How to encrypt Redis client-server communication.
+* [Signals Handling](/topics/signals.html): How Redis handles signals.
+* [Connections Handling](/topics/clients.html): How Redis handles clients connections.
+* [High Availability](/topics/sentinel.html): Redis Sentinel is the official high availability solution for Redis.
+* [Latency monitoring](/topics/latency-monitor.html): Redis integrated latency monitoring and reporting capabilities are helpful to tune Redis instances for low latency workloads.
+* [Benchmarks](/topics/benchmarks.html): See how fast Redis is in different platforms.
+* [Redis Releases](/topics/releases.html): Redis development cycle and version numbering.
 
 Troubleshooting
 ---
 
-* [Redis problems?](/topics/problems): Bugs? High latency? Other issues? Use [our problems troubleshooting page](/topics/problems) as a starting point to find more information.
+* [Redis problems?](/topics/problems.html): Bugs? High latency? Other issues? Use [our problems troubleshooting page](/topics/problems) as a starting point to find more information.
 
 Redis Cluster
 ---
 
-* [Redis Cluster tutorial](/topics/cluster-tutorial): a gentle introduction and setup guide to Redis Cluster.
-* [Redis Cluster specification](/topics/cluster-spec): the more formal description of the behavior and algorithms used in Redis Cluster.
+* [Redis Cluster tutorial](/topics/cluster-tutorial.html): a gentle introduction and setup guide to Redis Cluster.
+* [Redis Cluster specification](/topics/cluster-spec.html): the more formal description of the behavior and algorithms used in Redis Cluster.
 
 Other distributed systems based on Redis
 ---
@@ -75,12 +75,12 @@ Other distributed systems based on Redis
 Specifications
 ---
 
-* [Redis Design Drafts](/topics/rdd): Design drafts of new proposals.
-* [Redis Protocol specification](/topics/protocol): if you're implementing a
+* [Redis Design Drafts](/topics/rdd.html): Design drafts of new proposals.
+* [Redis Protocol specification](/topics/protocol.html): if you're implementing a
 client, or out of curiosity, learn how to communicate with Redis at a
 low level.
 * [Redis RDB format](https://github.com/sripathikrishnan/redis-rdb-tools/wiki/Redis-RDB-Dump-File-Format) specification, and [RDB version history](https://github.com/sripathikrishnan/redis-rdb-tools/blob/master/docs/RDB_Version_History.textile).
-* [Internals](/topics/internals): Learn details about how Redis is implemented under the hood.
+* [Internals](/topics/internals.html): Learn details about how Redis is implemented under the hood.
 
 Resources
 ---
@@ -89,7 +89,7 @@ Resources
 
 Use cases
 ---
-* [Who is using Redis](/topics/whos-using-redis)
+* [Who is using Redis](/topics/whos-using-redis.html)
 
 Books
 ---
@@ -123,5 +123,5 @@ The work [Salvatore Sanfilippo](http://antirez.com) does in order to develop Red
 License, Trademark and Logo
 ---
 
-* Redis is released under the three clause BSD license. You can find [additional information in our license page](/topics/license).
-* The Redis trademark and logos are owned by Salvatore Sanfilippo, please read the [Redis trademark guidelines](/topics/trademark) for our policy about the use of the Redis trademarks and logo.
+* Redis is released under the three clause BSD license. You can find [additional information in our license page](/topics/license.html).
+* The Redis trademark and logos are owned by Salvatore Sanfilippo, please read the [Redis trademark guidelines](/topics/trademark.html) for our policy about the use of the Redis trademarks and logo.

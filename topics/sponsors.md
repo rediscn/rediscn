@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS sponsors -- Redis中文资料站
+permalink: topics/sponsors.html
+disqusIdentifier: sponsors
+disqusUrl: http://redis.cn/topics/sponsors.html
+---
+
 Redis Sponsors
 ===
 

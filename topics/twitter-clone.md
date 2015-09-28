@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS twitter-clone -- Redis中文资料站
+permalink: topics/twitter-clone.html
+disqusIdentifier: twitter-clone
+disqusUrl: http://redis.cn/topics/twitter-clone.html
+---
+
 Tutorial: Design and implementation of a simple Twitter clone using PHP and the Redis key-value store
 ===
 

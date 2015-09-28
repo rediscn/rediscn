@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS cluster-spec -- Redis中文资料站
+permalink: topics/cluster-spec.html
+disqusIdentifier: topics_cluster-spec
+disqusUrl: http://redis.cn/topics/cluster-spec.html
+---
+
 Redis Cluster Specification
 ===
 

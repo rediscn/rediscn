@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS sentinel-spec -- Redis中文资料站
+permalink: topics/sentinel-spec.html
+disqusIdentifier: sentinel-spec
+disqusUrl: http://redis.cn/topics/sentinel-spec.html
+---
+
 **WARNING:** this document is no longer in sync with the implementation of Redis Sentinel and will be removed in the next weeks.
 
 Redis Sentinel design draft 1.3

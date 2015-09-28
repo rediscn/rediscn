@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS sentinel-old -- Redis中文资料站
+permalink: topics/security.html
+disqusIdentifier: topics_security
+disqusUrl: http://redis.cn/topics/security.html
+---
+
 Redis Security
 ===
 

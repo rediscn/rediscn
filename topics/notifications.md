@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS notifications -- Redis中文资料站
+permalink: topics/notifications.html
+disqusIdentifier: topics_notifications
+disqusUrl: http://redis.cn/topics/notifications.html
+---
+
 Redis Keyspace Notifications
 ===
 

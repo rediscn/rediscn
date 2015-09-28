@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS clients -- Redis中文资料站
+permalink: topics/clients.html
+disqusIdentifier: topics_clients
+disqusUrl: http://redis.cn/topics/clients.html
+---
+
 Redis Clients Handling
 ===
 

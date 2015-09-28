@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS internals-eventlib -- Redis中文资料站
+permalink: topics/internals-eventlib.html
+disqusIdentifier: topics_internals-eventlib
+disqusUrl: http://redis.cn/topics/internals-eventlib.html
+---
+
 Event Library
 ===
 

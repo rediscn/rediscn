@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS rdd-1 -- Redis中文资料站
+permalink: topics/rdd-1.html
+disqusIdentifier: topics_rdd-1
+disqusUrl: http://redis.cn/topics/rdd-1.html
+---
+
 # Redis Design Draft 1 -- Redis Design Drafts
 
 * Author: Salvatore Sanfilippo `antirez@gmail.com`

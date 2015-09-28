@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS benchmarks -- Redis中文资料站
+permalink: topics/benchmarks.html
+disqusIdentifier: topics_benchmarks
+disqusUrl: http://redis.cn/topics/benchmarks.html
+---
+
 # How fast is Redis?
 
 Redis includes the `redis-benchmark` utility that simulates running commands done

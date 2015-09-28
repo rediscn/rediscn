@@ -1,4 +1,12 @@
-﻿# Redis TRADEMARK GUIDELINES
+---
+layout: topics
+title: REDIS trademark -- Redis中文资料站
+permalink: topics/trademark.html
+disqusIdentifier: trademark
+disqusUrl: http://redis.cn/topics/trademark.html
+---
+
+# Redis TRADEMARK GUIDELINES
 
 1. **PURPOSE**. The Redis trademark and logo identify the Redis community and individual Redis projects. This policy outlines our policy and guidelines about the use of the Redis trademarks and logo by members of the Redis development and user community.
 

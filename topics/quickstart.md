@@ -1,4 +1,12 @@
-﻿Redis Quick Start
+---
+layout: topics
+title: REDIS quickstart -- Redis中文资料站
+permalink: topics/quickstart.html
+disqusIdentifier: topics_quickstart
+disqusUrl: http://redis.cn/topics/quickstart.html
+---
+
+Redis Quick Start
 ===
 
 This is a quick start document that targets people without prior experience

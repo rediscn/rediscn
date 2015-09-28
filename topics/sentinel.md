@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS sentinel-old -- Redis中文资料站
+permalink: topics/sentinel.html
+disqusIdentifier: topics_sentinel
+disqusUrl: http://redis.cn/topics/sentinel.html
+---
+
 Redis Sentinel Documentation
 ===
 

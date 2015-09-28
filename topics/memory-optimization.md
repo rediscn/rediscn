@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS memory-optimization -- Redis中文资料站
+permalink: topics/memory-optimization.html
+disqusIdentifier: topics_memory-optimization
+disqusUrl: http://redis.cn/topics/memory-optimization.html
+---
+
 This page is a work in progress. Currently it is just a list of things you should check if you have problems with memory.
 
 Special encoding of small aggregate data types

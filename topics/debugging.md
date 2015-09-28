@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS debugging -- Redis中文资料站
+permalink: topics/debugging.html
+disqusIdentifier: topics_debugging
+disqusUrl: http://redis.cn/topics/debugging.html
+---
+
 Redis debugging guide
 ===
 

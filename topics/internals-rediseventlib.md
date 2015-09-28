@@ -1,4 +1,12 @@
-﻿Redis Event Library
+---
+layout: topics
+title: REDIS internals-rediseventlib -- Redis中文资料站
+permalink: topics/internals-rediseventlib.html
+disqusIdentifier: topics_internals-rediseventlib
+disqusUrl: http://redis.cn/topics/internals-rediseventlib.html
+---
+
+Redis Event Library
 ===
 
 Redis implements its own event library. The event library is implemented in `ae.c`.

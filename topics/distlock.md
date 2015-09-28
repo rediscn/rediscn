@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS distlock -- Redis中文资料站
+permalink: topics/distlock.html
+disqusIdentifier: topics_distlock
+disqusUrl: http://redis.cn/topics/distlock.html
+---
+
 Distributed locks with Redis
 ===
 

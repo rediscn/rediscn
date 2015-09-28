@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS partitioning -- Redis中文资料站
+permalink: topics/partitioning.html
+disqusIdentifier: topics_partitioning
+disqusUrl: http://redis.cn/topics/partitioning.html
+---
+
 Partitioning: how to split data among multiple Redis instances.
 ===
 

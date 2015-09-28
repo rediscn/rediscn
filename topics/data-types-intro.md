@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS data-types-intro -- Redis中文资料站
+permalink: topics/data-types-intro.html
+disqusIdentifier: topics_data-types-intro
+disqusUrl: http://redis.cn/topics/data-types-intro.html
+---
+
 An introduction to Redis data types and abstractions
 ===
 

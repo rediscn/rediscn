@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS latency -- Redis中文资料站
+permalink: topics/latency.html
+disqusIdentifier: topics_latency
+disqusUrl: http://redis.cn/topics/latency.html
+---
+
 Redis latency problems troubleshooting
 ===
 

@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS mass-insert -- Redis中文资料站
+permalink: topics/mass-insert.html
+disqusIdentifier: topics_mass-insert
+disqusUrl: http://redis.cn/topics/mass-insert.html
+---
+
 Redis Mass Insertion
 ===
 

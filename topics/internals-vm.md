@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS internals-vm -- Redis中文资料站
+permalink: topics/internals-vm.html
+disqusIdentifier: topics_internals-vm
+disqusUrl: http://redis.cn/topics/internals-vm.html
+---
+
 UPDATE: Virtual Memory is deprecated since Redis 2.6, so this documentation
 is here only for historical reasons.
 

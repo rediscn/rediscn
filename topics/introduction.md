@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS introduction -- Redis中文资料站
+permalink: topics/introduction.html
+disqusIdentifier: topics_introduction
+disqusUrl: http://redis.cn/topics/introduction.html
+---
+
 Introduction to Redis
 ===
 

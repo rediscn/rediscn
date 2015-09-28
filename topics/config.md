@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS config -- Redis中文资料站
+permalink: topics/config.html
+disqusIdentifier: topics_config
+disqusUrl: http://redis.cn/topics/config.html
+---
+
 Redis configuration
 ===
 

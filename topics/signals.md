@@ -1,3 +1,11 @@
+---
+layout: topics
+title: REDIS signals -- Redis中文资料站
+permalink: topics/signals.html
+disqusIdentifier: signals
+disqusUrl: http://redis.cn/topics/signals.html
+---
+
 Redis Signals Handling
 ===
 
