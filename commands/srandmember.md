@@ -1,3 +1,12 @@
+---
+layout: commands
+title: srandmember 命令 -- Redis中文资料站
+permalink: commands/srandmember.html
+disqusIdentifier: command_srandmember
+disqusUrl: http://redis.cn/commands/srandmember.html
+commandsType: keys
+---
+
 When called with just the `key` argument, return a random element from the set value stored at `key`.
 
 Starting from Redis version 2.6, when called with the additional `count` argument, return an array of `count` **distinct elements** if `count` is positive. If called with a negative `count` the behavior changes and the command is allowed to return the **same element multiple times**. In this case the number of returned elements is the absolute value of the specified `count`.

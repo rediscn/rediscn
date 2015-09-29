@@ -1,3 +1,12 @@
+---
+layout: commands
+title: zincrby 命令 -- Redis中文资料站
+permalink: commands/zincrby.html
+disqusIdentifier: command_zincrby
+disqusUrl: http://redis.cn/commands/zincrby.html
+commandsType: keys
+---
+
 Increments the score of `member` in the sorted set stored at `key` by
 `increment`.
 If `member` does not exist in the sorted set, it is added with `increment` as

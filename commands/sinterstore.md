@@ -1,3 +1,12 @@
+---
+layout: commands
+title: sinterstore 命令 -- Redis中文资料站
+permalink: commands/sinterstore.html
+disqusIdentifier: command_sinterstore
+disqusUrl: http://redis.cn/commands/sinterstore.html
+commandsType: keys
+---
+
 This command is equal to `SINTER`, but instead of returning the resulting set,
 it is stored in `destination`.
 

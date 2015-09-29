@@ -1,3 +1,12 @@
+---
+layout: commands
+title: spop 命令 -- Redis中文资料站
+permalink: commands/spop.html
+disqusIdentifier: command_spop
+disqusUrl: http://redis.cn/commands/spop.html
+commandsType: keys
+---
+
 Removes and returns one or more random elements from the set value store at `key`.
 
 This operation is similar to `SRANDMEMBER`, that returns one or more random elements from a set but does not remove it.

@@ -1,3 +1,12 @@
+---
+layout: commands
+title: zremrangebyrank 命令 -- Redis中文资料站
+permalink: commands/zremrangebyrank.html
+disqusIdentifier: command_zremrangebyrank
+disqusUrl: http://redis.cn/commands/zremrangebyrank.html
+commandsType: keys
+---
+
 Removes all elements in the sorted set stored at `key` with rank between `start`
 and `stop`.
 Both `start` and `stop` are `0` -based indexes with `0` being the element with

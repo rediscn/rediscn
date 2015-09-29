@@ -1,3 +1,12 @@
+---
+layout: commands
+title: migrate 命令 -- Redis中文资料站
+permalink: commands/migrate.html
+disqusIdentifier: command_migrate
+disqusUrl: http://redis.cn/commands/migrate.html
+commandsType: keys
+---
+
 Atomically transfer a key from a source Redis instance to a destination Redis
 instance.
 On success the key is deleted from the original instance and is guaranteed to

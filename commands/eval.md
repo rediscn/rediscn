@@ -1,3 +1,12 @@
+---
+layout: commands
+title: eval 命令 -- Redis中文资料站
+permalink: commands/eval.html
+disqusIdentifier: command_eval
+disqusUrl: http://redis.cn/commands/eval.html
+commandsType: keys
+---
+
 ## Introduction to EVAL
 
 `EVAL` and `EVALSHA` are used to evaluate scripts using the Lua interpreter

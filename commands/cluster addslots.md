@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster addslots 命令 -- Redis中文资料站
+permalink: commands/cluster addslots.html
+disqusIdentifier: command_cluster_addslots
+disqusUrl: http://redis.cn/commands/cluster addslots.html
+commandsType: keys
+---
+
 This command is useful in order to modify a node's view of the cluster
 configuration. Specifically it assigns a set of hash slots to the node
 receiving the command. If the command is successful, the node will map

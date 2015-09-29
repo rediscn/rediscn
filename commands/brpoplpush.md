@@ -1,3 +1,12 @@
+---
+layout: commands
+title: brpoplpush 命令 -- Redis中文资料站
+permalink: commands/brpoplpush.html
+disqusIdentifier: command_brpoplpush
+disqusUrl: http://redis.cn/commands/brpoplpush.html
+commandsType: keys
+---
+
 `BRPOPLPUSH` is the blocking variant of `RPOPLPUSH`.
 When `source` contains elements, this command behaves exactly like `RPOPLPUSH`.
 When used inside a `MULTI`/`EXEC` block, this command behaves exactly like `RPOPLPUSH`.

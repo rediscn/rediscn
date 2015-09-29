@@ -1,3 +1,12 @@
+---
+layout: commands
+title: script exists 命令 -- Redis中文资料站
+permalink: commands/script exists.html
+disqusIdentifier: command_script-exists
+disqusUrl: http://redis.cn/commands/script exists.html
+commandsType: keys
+---
+
 Returns information about the existence of the scripts in the script cache.
 
 This command accepts one or more SHA1 digests and returns a list of ones or

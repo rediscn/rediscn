@@ -1,3 +1,12 @@
+---
+layout: commands
+title: bgrewriteaof 命令 -- Redis中文资料站
+permalink: commands/bgrewriteaof.html
+disqusIdentifier: command_bgrewriteaof
+disqusUrl: http://redis.cn/commands/bgrewriteaof.html
+commandsType: keys
+---
+
 Instruct Redis to start an [Append Only File][tpaof] rewrite process.
 The rewrite will create a small optimized version of the current Append Only
 File.

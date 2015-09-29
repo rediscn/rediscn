@@ -1,3 +1,12 @@
+---
+layout: commands
+title: zadd 命令 -- Redis中文资料站
+permalink: commands/zadd.html
+disqusIdentifier: command_zadd
+disqusUrl: http://redis.cn/commands/zadd.html
+commandsType: keys
+---
+
 Adds all the specified members with the specified scores to the sorted set
 stored at `key`.
 It is possible to specify multiple score / member pairs.

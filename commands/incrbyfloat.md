@@ -1,3 +1,12 @@
+---
+layout: commands
+title: incrbyfloat 命令 -- Redis中文资料站
+permalink: commands/incrbyfloat.html
+disqusIdentifier: command_incrbyfloat
+disqusUrl: http://redis.cn/commands/incrbyfloat.html
+commandsType: keys
+---
+
 Increment the string representing a floating point number stored at `key` by the
 specified `increment`.
 If the key does not exist, it is set to `0` before performing the operation.

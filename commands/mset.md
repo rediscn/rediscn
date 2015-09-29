@@ -1,3 +1,12 @@
+---
+layout: commands
+title: mset 命令 -- Redis中文资料站
+permalink: commands/mset.html
+disqusIdentifier: command_mset
+disqusUrl: http://redis.cn/commands/mset.html
+commandsType: keys
+---
+
 Sets the given keys to their respective values.
 `MSET` replaces existing values with new values, just as regular `SET`.
 See `MSETNX` if you don't want to overwrite existing values.

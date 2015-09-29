@@ -1,3 +1,12 @@
+---
+layout: commands
+title: pfcount 命令 -- Redis中文资料站
+permalink: commands/pfcount.html
+disqusIdentifier: command_pfcount
+disqusUrl: http://redis.cn/commands/pfcount.html
+commandsType: keys
+---
+
 When called with a single key, returns the approximated cardinality computed by the HyperLogLog data structure stored at the specified variable, which is 0 if the variable does not exist.
 
 When called with multiple keys, returns the approximated cardinality of the union of the HyperLogLogs passed, by internally merging the HyperLogLogs stored at the provided keys into a temporary HyperLogLog.

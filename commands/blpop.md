@@ -1,3 +1,12 @@
+---
+layout: commands
+title: blpop 命令 -- Redis中文资料站
+permalink: commands/blpop.html
+disqusIdentifier: command_blpop
+disqusUrl: http://redis.cn/commands/blpop.html
+commandsType: keys
+---
+
 `BLPOP` is a blocking list pop primitive.
 It is the blocking version of `LPOP` because it blocks the connection when there
 are no elements to pop from any of the given lists.

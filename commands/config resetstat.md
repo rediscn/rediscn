@@ -1,3 +1,12 @@
+---
+layout: commands
+title: config resetstat 命令 -- Redis中文资料站
+permalink: commands/config resetstat.html
+disqusIdentifier: command_config_resetstat
+disqusUrl: http://redis.cn/commands/config resetstat.html
+commandsType: keys
+---
+
 Resets the statistics reported by Redis using the `INFO` command.
 
 These are the counters that are reset:

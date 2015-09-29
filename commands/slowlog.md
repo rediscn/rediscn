@@ -1,3 +1,12 @@
+---
+layout: commands
+title: slowlog 命令 -- Redis中文资料站
+permalink: commands/slowlog.html
+disqusIdentifier: command_slowlog
+disqusUrl: http://redis.cn/commands/slowlog.html
+commandsType: keys
+---
+
 This command is used in order to read and reset the Redis slow queries log.
 
 ## Redis slow log overview

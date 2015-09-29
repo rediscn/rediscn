@@ -1,3 +1,12 @@
+---
+layout: commands
+title: sort 命令 -- Redis中文资料站
+permalink: commands/sort.html
+disqusIdentifier: command_sort
+disqusUrl: http://redis.cn/commands/sort.html
+commandsType: keys
+---
+
 Returns or stores the elements contained in the [list][tdtl], [set][tdts] or
 [sorted set][tdtss] at `key`.
 By default, sorting is numeric and elements are compared by their value

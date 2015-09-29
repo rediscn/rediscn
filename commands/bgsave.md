@@ -1,3 +1,12 @@
+---
+layout: commands
+title: bgsave 命令 -- Redis中文资料站
+permalink: commands/bgsave.html
+disqusIdentifier: command_bgsave
+disqusUrl: http://redis.cn/commands/bgsave.html
+commandsType: keys
+---
+
 Save the DB in background.
 The OK code is immediately returned.
 Redis forks, the parent continues to serve the clients, the child saves the DB

@@ -1,3 +1,12 @@
+---
+layout: commands
+title: pexpireat 命令 -- Redis中文资料站
+permalink: commands/pexpireat.html
+disqusIdentifier: command_pexpireat
+disqusUrl: http://redis.cn/commands/pexpireat.html
+commandsType: keys
+---
+
 `PEXPIREAT` has the same effect and semantic as `EXPIREAT`, but the Unix time at
 which the key will expire is specified in milliseconds instead of seconds.
 

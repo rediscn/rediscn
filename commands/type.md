@@ -1,3 +1,12 @@
+---
+layout: commands
+title: type 命令 -- Redis中文资料站
+permalink: commands/type.html
+disqusIdentifier: command_type
+disqusUrl: http://redis.cn/commands/type.html
+commandsType: keys
+---
+
 Returns the string representation of the type of the value stored at `key`.
 The different types that can be returned are: `string`, `list`, `set`, `zset`
 and `hash`.

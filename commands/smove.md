@@ -1,3 +1,12 @@
+---
+layout: commands
+title: smove 命令 -- Redis中文资料站
+permalink: commands/smove.html
+disqusIdentifier: command_smove
+disqusUrl: http://redis.cn/commands/smove.html
+commandsType: keys
+---
+
 Move `member` from the set at `source` to the set at `destination`.
 This operation is atomic.
 In every given moment the element will appear to be a member of `source` **or**

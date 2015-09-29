@@ -1,3 +1,12 @@
+---
+layout: commands
+title: setrange 命令 -- Redis中文资料站
+permalink: commands/setrange.html
+disqusIdentifier: command_setrange
+disqusUrl: http://redis.cn/commands/setrange.html
+commandsType: keys
+---
+
 Overwrites part of the string stored at _key_, starting at the specified offset,
 for the entire length of _value_.
 If the offset is larger than the current length of the string at _key_, the

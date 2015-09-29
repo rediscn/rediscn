@@ -1,3 +1,12 @@
+---
+layout: commands
+title: pubsub 命令 -- Redis中文资料站
+permalink: commands/pubsub.html
+disqusIdentifier: command_pubsub
+disqusUrl: http://redis.cn/commands/pubsub.html
+commandsType: keys
+---
+
 The PUBSUB command is an introspection command that allows to inspect the
 state of the Pub/Sub subsystem. It is composed of subcommands that are
 documented separately. The general form is:

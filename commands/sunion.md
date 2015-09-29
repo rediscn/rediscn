@@ -1,3 +1,12 @@
+---
+layout: commands
+title: sunion 命令 -- Redis中文资料站
+permalink: commands/sunion.html
+disqusIdentifier: command_sunion
+disqusUrl: http://redis.cn/commands/sunion.html
+commandsType: keys
+---
+
 Returns the members of the set resulting from the union of all the given sets.
 
 For example:

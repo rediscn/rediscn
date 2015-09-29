@@ -1,3 +1,12 @@
+---
+layout: commands
+title: mget 命令 -- Redis中文资料站
+permalink: commands/mget.html
+disqusIdentifier: command_mget
+disqusUrl: http://redis.cn/commands/mget.html
+commandsType: keys
+---
+
 Returns the values of all specified keys.
 For every key that does not hold a string value or does not exist, the special
 value `nil` is returned.

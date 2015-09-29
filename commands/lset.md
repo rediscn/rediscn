@@ -1,3 +1,12 @@
+---
+layout: commands
+title: lset 命令 -- Redis中文资料站
+permalink: commands/lset.html
+disqusIdentifier: command_lset
+disqusUrl: http://redis.cn/commands/lset.html
+commandsType: keys
+---
+
 Sets the list element at `index` to `value`.
 For more information on the `index` argument, see `LINDEX`.
 

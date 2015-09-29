@@ -1,3 +1,12 @@
+---
+layout: commands
+title: client-list 命令 -- Redis中文资料站
+permalink: commands/client-list.html
+disqusIdentifier: command_client-list
+disqusUrl: http://redis.cn/commands/client-list.html
+commandsType: keys
+---
+
 The `CLIENT LIST` command returns information and statistics about the client
 connections server in a mostly human readable format.
 

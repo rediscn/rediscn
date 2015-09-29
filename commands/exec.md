@@ -1,3 +1,12 @@
+---
+layout: commands
+title: exec 命令 -- Redis中文资料站
+permalink: commands/exec.html
+disqusIdentifier: command_exec
+disqusUrl: http://redis.cn/commands/exec.html
+commandsType: keys
+---
+
 Executes all previously queued commands in a [transaction][tt] and restores the
 connection state to normal.
 

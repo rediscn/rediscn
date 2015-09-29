@@ -1,3 +1,12 @@
+---
+layout: commands
+title: config get 命令 -- Redis中文资料站
+permalink: commands/config get.html
+disqusIdentifier: command_config_get
+disqusUrl: http://redis.cn/commands/config get.html
+commandsType: keys
+---
+
 The `CONFIG GET` command is used to read the configuration parameters of a
 running Redis server.
 Not all the configuration parameters are supported in Redis 2.4, while Redis 2.6

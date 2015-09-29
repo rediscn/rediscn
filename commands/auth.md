@@ -1,3 +1,12 @@
+---
+layout: commands
+title: auth 命令 -- Redis中文资料站
+permalink: commands/auth.html
+disqusIdentifier: command_auth
+disqusUrl: http://redis.cn/commands/auth.html
+commandsType: keys
+---
+
 Request for authentication in a password-protected Redis server.
 Redis can be instructed to require a password before allowing clients to execute
 commands.

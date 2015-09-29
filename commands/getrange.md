@@ -1,3 +1,12 @@
+---
+layout: commands
+title: getrange 命令 -- Redis中文资料站
+permalink: commands/getrange.html
+disqusIdentifier: command_getrange
+disqusUrl: http://redis.cn/commands/getrange.html
+commandsType: keys
+---
+
 **Warning**: this command was renamed to `GETRANGE`, it is called `SUBSTR` in
 Redis versions `<= 2.0`.
 

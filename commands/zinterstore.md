@@ -1,3 +1,12 @@
+---
+layout: commands
+title: zinterstore 命令 -- Redis中文资料站
+permalink: commands/zinterstore.html
+disqusIdentifier: command_zinterstore
+disqusUrl: http://redis.cn/commands/zinterstore.html
+commandsType: keys
+---
+
 Computes the intersection of `numkeys` sorted sets given by the specified keys,
 and stores the result in `destination`.
 It is mandatory to provide the number of input keys (`numkeys`) before passing

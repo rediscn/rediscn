@@ -1,3 +1,12 @@
+---
+layout: commands
+title: geopos 命令 -- Redis中文资料站
+permalink: commands/geopos.html
+disqusIdentifier: command_geopos
+disqusUrl: http://redis.cn/commands/geopos.html
+commandsType: keys
+---
+
 Return the positions (longitude,latitude) of all the specified members of the geospatial index represented by the sorted set at *key*.
 
 Given a sorted set representing a geospatial index, populated using the `GEOADD` command, it is often useful to obtain back the coordinates of specified members. When the geospatial index is populated via `GEOADD` the coordinates are converted into a 52 bit geohash, so the coordinates returned may not be exactly the ones used in order to add the elements, but small errors may be introduced.

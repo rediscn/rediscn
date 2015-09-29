@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster keyslot命令 -- Redis中文资料站
+permalink: commands/cluster keyslot.html
+disqusIdentifier: command_cluster_keyslot
+disqusUrl: http://redis.cn/commands/cluster keyslot.html
+commandsType: keys
+---
+
 Returns an integer identifying the hash slot the specified key hashes to.
 This command is mainly useful for debugging and testing, since it exposes
 via an API the underlying Redis implementation of the hashing algorithm.

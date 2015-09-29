@@ -1,3 +1,12 @@
+---
+layout: commands
+title: del 命令 -- Redis中文资料站
+permalink: commands/del.html
+disqusIdentifier: command_del
+disqusUrl: http://redis.cn/commands/del.html
+commandsType: keys
+---
+
 Removes the specified keys.
 A key is ignored if it does not exist.
 

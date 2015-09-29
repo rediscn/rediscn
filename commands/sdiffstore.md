@@ -1,3 +1,12 @@
+---
+layout: commands
+title: sdiffstore 命令 -- Redis中文资料站
+permalink: commands/sdiffstore.html
+disqusIdentifier: command_sdiffstore
+disqusUrl: http://redis.cn/commands/sdiffstore.html
+commandsType: keys
+---
+
 This command is equal to `SDIFF`, but instead of returning the resulting set, it
 is stored in `destination`.
 

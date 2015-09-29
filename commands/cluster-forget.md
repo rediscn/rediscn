@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster-forget 命令 -- Redis中文资料站
+permalink: commands/cluster-forget.html
+disqusIdentifier: command_cluster-forget
+disqusUrl: http://redis.cn/commands/cluster-forget.html
+commandsType: keys
+---
+
 The command is used in order to remove the node, specified via its node ID,
 from the set of nodes known by the Redis Cluster node receiving the command.
 In other words the specified node is removed from the *nodes table* of the

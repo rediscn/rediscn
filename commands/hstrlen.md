@@ -1,3 +1,12 @@
+---
+layout: commands
+title: hstrlen 命令 -- Redis中文资料站
+permalink: commands/hstrlen.html
+disqusIdentifier: command_hstrlen
+disqusUrl: http://redis.cn/commands/hstrlen.html
+commandsType: keys
+---
+
 Returns the string length of the value associated with `field` in the hash stored at `key`. If the `key` or the `field` do not exist, 0 is returned.
 
 @return

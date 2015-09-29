@@ -1,3 +1,12 @@
+---
+layout: commands
+title: publish 命令 -- Redis中文资料站
+permalink: commands/publish.html
+disqusIdentifier: command_publish
+disqusUrl: http://redis.cn/commands/publish.html
+commandsType: keys
+---
+
 Posts a message to the given channel.
 
 @return

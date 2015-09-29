@@ -1,3 +1,12 @@
+---
+layout: commands
+title: hincrbyfloat 命令 -- Redis中文资料站
+permalink: commands/hincrbyfloat.html
+disqusIdentifier: command_hincrbyfloat
+disqusUrl: http://redis.cn/commands/hincrbyfloat.html
+commandsType: keys
+---
+
 Increment the specified `field` of an hash stored at `key`, and representing a
 floating point number, by the specified `increment`.
 If the field does not exist, it is set to `0` before performing the operation.

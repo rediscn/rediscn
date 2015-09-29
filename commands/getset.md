@@ -1,3 +1,12 @@
+---
+layout: commands
+title: getset 命令 -- Redis中文资料站
+permalink: commands/getset.html
+disqusIdentifier: command_getset
+disqusUrl: http://redis.cn/commands/getset.html
+commandsType: keys
+---
+
 Atomically sets `key` to `value` and returns the old value stored at `key`.
 Returns an error when `key` exists but does not hold a string value.
 

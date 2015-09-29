@@ -1,3 +1,12 @@
+---
+layout: commands
+title: zrangebyscore 命令 -- Redis中文资料站
+permalink: commands/zrangebyscore.html
+disqusIdentifier: command_zrangebyscore
+disqusUrl: http://redis.cn/commands/zrangebyscore.html
+commandsType: keys
+---
+
 Returns all the elements in the sorted set at `key` with a score between `min`
 and `max` (including elements with score equal to `min` or `max`).
 The elements are considered to be ordered from low to high scores.

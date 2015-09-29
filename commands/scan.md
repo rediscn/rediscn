@@ -1,3 +1,12 @@
+---
+layout: commands
+title: scan 命令 -- Redis中文资料站
+permalink: commands/scan.html
+disqusIdentifier: command_scan
+disqusUrl: http://redis.cn/commands/scan.html
+commandsType: keys
+---
+
 The `SCAN` command and the closely related commands `SSCAN`, `HSCAN` and `ZSCAN` are used in order to incrementally iterate over a collection of elements.
 
 * `SCAN` iterates the set of keys in the currently selected Redis database.

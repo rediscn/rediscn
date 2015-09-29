@@ -1,3 +1,12 @@
+---
+layout: commands
+title: rename 命令 -- Redis中文资料站
+permalink: commands/rename.html
+disqusIdentifier: command_rename
+disqusUrl: http://redis.cn/commands/rename.html
+commandsType: keys
+---
+
 Renames `key` to `newkey`.
 It returns an error when the source and destination names are the same, or when
 `key` does not exist.

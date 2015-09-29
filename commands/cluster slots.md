@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster slots 命令 -- Redis中文资料站
+permalink: commands/cluster slots.html
+disqusIdentifier: command_cluster slots
+disqusUrl: http://redis.cn/commands/cluster slots.html
+commandsType: keys
+---
+
 `CLUSTER SLOTS` returns details about which cluster slots map to which
 Redis instances. The command is suitable to be used by Redis Cluster client
 libraries implementations in order to retrieve (or update when a redirection

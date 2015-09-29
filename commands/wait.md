@@ -1,3 +1,12 @@
+---
+layout: commands
+title: wait 命令 -- Redis中文资料站
+permalink: commands/wait.html
+disqusIdentifier: command_wait
+disqusUrl: http://redis.cn/commands/wait.html
+commandsType: keys
+---
+
 This command blocks the current client until all the previous write commands
 are successfully transferred and acknowledged by at least the specified number
 of slaves. If the timeout, specified in milliseconds, is reached, the command

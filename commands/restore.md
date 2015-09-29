@@ -1,3 +1,12 @@
+---
+layout: commands
+title: restore 命令 -- Redis中文资料站
+permalink: commands/restore.html
+disqusIdentifier: command_restore
+disqusUrl: http://redis.cn/commands/restore.html
+commandsType: keys
+---
+
 Create a key associated with a value that is obtained by deserializing the
 provided serialized value (obtained via `DUMP`).
 

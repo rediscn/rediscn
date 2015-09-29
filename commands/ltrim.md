@@ -1,3 +1,12 @@
+---
+layout: commands
+title: ltrim 命令 -- Redis中文资料站
+permalink: commands/ltrim.html
+disqusIdentifier: command_ltrim
+disqusUrl: http://redis.cn/commands/ltrim.html
+commandsType: keys
+---
+
 Trim an existing list so that it will contain only the specified range of
 elements specified.
 Both `start` and `stop` are zero-based indexes, where `0` is the first element

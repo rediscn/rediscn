@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster-count-failure-reports 命令 -- Redis中文资料站
+permalink: commands/cluster-count-failure-reports.html
+disqusIdentifier: command_cluster-count-failure-reports
+disqusUrl: http://redis.cn/commands/cluster-count-failure-reports.html
+commandsType: keys
+---
+
 The command returns the number of *failure reports* for the specified node.
 Failure reports are the way Redis Cluster uses in order to promote a
 `PFAIL` state, that means a node is not reachable, to a `FAIL` state,

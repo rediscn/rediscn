@@ -1,3 +1,12 @@
+---
+layout: commands
+title: slaveof 命令 -- Redis中文资料站
+permalink: commands/slaveof.html
+disqusIdentifier: command_slaveof
+disqusUrl: http://redis.cn/commands/slaveof.html
+commandsType: keys
+---
+
 The `SLAVEOF` command can change the replication settings of a slave on the fly.
 If a Redis server is already acting as slave, the command `SLAVEOF` NO ONE will
 turn off the replication, turning the Redis server into a MASTER.

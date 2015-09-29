@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster-meet 命令 -- Redis中文资料站
+permalink: commands/cluster-meet.html
+disqusIdentifier: command_cluster-meet
+disqusUrl: http://redis.cn/commands/cluster-meet.html
+commandsType: keys
+---
+
 `CLUSTER MEET` is used in order to connect different Redis nodes with cluster
 support enabled, into a working cluster.
 

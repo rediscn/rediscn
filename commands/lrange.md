@@ -1,3 +1,12 @@
+---
+layout: commands
+title: lrange 命令 -- Redis中文资料站
+permalink: commands/lrange.html
+disqusIdentifier: command_lrange
+disqusUrl: http://redis.cn/commands/lrange.html
+commandsType: keys
+---
+
 Returns the specified elements of the list stored at `key`.
 The offsets `start` and `stop` are zero-based indexes, with `0` being the first
 element of the list (the head of the list), `1` being the next element and so

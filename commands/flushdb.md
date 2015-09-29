@@ -1,3 +1,12 @@
+---
+layout: commands
+title: flushdb 命令 -- Redis中文资料站
+permalink: commands/flushdb.html
+disqusIdentifier: command_flushdb
+disqusUrl: http://redis.cn/commands/flushdb.html
+commandsType: keys
+---
+
 Delete all the keys of the currently selected DB.
 This command never fails.
 

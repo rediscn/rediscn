@@ -1,3 +1,12 @@
+---
+layout: commands
+title: zrem 命令 -- Redis中文资料站
+permalink: commands/zrem.html
+disqusIdentifier: command_zrem
+disqusUrl: http://redis.cn/commands/zrem.html
+commandsType: keys
+---
+
 Removes the specified members from the sorted set stored at `key`.
 Non existing members are ignored.
 

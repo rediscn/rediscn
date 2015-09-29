@@ -1,3 +1,12 @@
+---
+layout: commands
+title: script-kill 命令 -- Redis中文资料站
+permalink: commands/script-kill.html
+disqusIdentifier: command_script-kill
+disqusUrl: http://redis.cn/commands/script-kill.html
+commandsType: keys
+---
+
 Kills the currently executing Lua script, assuming no write operation was yet
 performed by the script.
 

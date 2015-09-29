@@ -1,3 +1,12 @@
+---
+layout: commands
+title: script-load 命令 -- Redis中文资料站
+permalink: commands/script-load.html
+disqusIdentifier: command_script-load
+disqusUrl: http://redis.cn/commands/script-load.html
+commandsType: keys
+---
+
 Load a script into the scripts cache, without executing it.
 After the specified command is loaded into the script cache it will be callable
 using `EVALSHA` with the correct SHA1 digest of the script, exactly like after

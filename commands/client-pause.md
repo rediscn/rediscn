@@ -1,3 +1,12 @@
+---
+layout: commands
+title: client-pause 命令 -- Redis中文资料站
+permalink: commands/client-pause.html
+disqusIdentifier: command_client-pause
+disqusUrl: http://redis.cn/commands/client-pause.html
+commandsType: keys
+---
+
 `CLIENT PAUSE` is a connections control command able to suspend all the Redis clients for the specified amount of time (in milliseconds).
 
 The command performs the following actions:

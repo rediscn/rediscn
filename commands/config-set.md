@@ -1,3 +1,12 @@
+---
+layout: commands
+title: config-set 命令 -- Redis中文资料站
+permalink: commands/config-set.html
+disqusIdentifier: command_config-set
+disqusUrl: http://redis.cn/commands/config-set.html
+commandsType: keys
+---
+
 The `CONFIG SET` command is used in order to reconfigure the server at run time
 without the need to restart Redis.
 You can change both trivial parameters or switch from one to another persistence

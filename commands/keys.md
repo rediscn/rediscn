@@ -1,3 +1,12 @@
+---
+layout: commands
+title: keys 命令 -- Redis中文资料站
+permalink: commands/keys.html
+disqusIdentifier: command_keys
+disqusUrl: http://redis.cn/commands/keys.html
+commandsType: keys
+---
+
 Returns all keys matching `pattern`.
 
 While the time complexity for this operation is O(N), the constant times are

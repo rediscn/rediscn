@@ -1,3 +1,12 @@
+---
+layout: commands
+title: object 命令 -- Redis中文资料站
+permalink: commands/object.html
+disqusIdentifier: command_object
+disqusUrl: http://redis.cn/commands/object.html
+commandsType: keys
+---
+
 The `OBJECT` command allows to inspect the internals of Redis Objects associated
 with keys.
 It is useful for debugging or to understand if your keys are using the specially

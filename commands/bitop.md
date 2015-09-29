@@ -1,3 +1,12 @@
+---
+layout: commands
+title: bitop 命令 -- Redis中文资料站
+permalink: commands/bitop.html
+disqusIdentifier: command_bitop
+disqusUrl: http://redis.cn/commands/bitop.html
+commandsType: keys
+---
+
 Perform a bitwise operation between multiple keys (containing string values) and
 store the result in the destination key.
 

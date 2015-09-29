@@ -1,3 +1,11 @@
+---
+layout: commands
+title: zunionstore 命令 -- Redis中文资料站
+permalink: commands/zunionstore.html
+disqusIdentifier: command_zunionstore
+disqusUrl: http://redis.cn/commands/zunionstore.html
+commandsType: keys
+---
 Computes the union of `numkeys` sorted sets given by the specified keys, and
 stores the result in `destination`.
 It is mandatory to provide the number of input keys (`numkeys`) before passing

@@ -1,3 +1,12 @@
+---
+layout: commands
+title: incrby 命令 -- Redis中文资料站
+permalink: commands/incrby.html
+disqusIdentifier: command_incrby
+disqusUrl: http://redis.cn/commands/incrby.html
+commandsType: keys
+---
+
 Increments the number stored at `key` by `increment`.
 If the key does not exist, it is set to `0` before performing the operation.
 An error is returned if the key contains a value of the wrong type or contains a

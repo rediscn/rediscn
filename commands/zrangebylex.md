@@ -1,3 +1,12 @@
+---
+layout: commands
+title: zrangebylex 命令 -- Redis中文资料站
+permalink: commands/zrangebylex.html
+disqusIdentifier: command_zrangebylex
+disqusUrl: http://redis.cn/commands/zrangebylex.html
+commandsType: keys
+---
+
 When all the elements in a sorted set are inserted with the same score, in order to force lexicographical ordering, this command returns all the elements in the sorted set at `key` with a value between `min` and `max`.
 
 If the elements in the sorted set have different scores, the returned elements are unspecified.

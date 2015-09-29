@@ -1,3 +1,12 @@
+---
+layout: commands
+title: ttl 命令 -- Redis中文资料站
+permalink: commands/ttl.html
+disqusIdentifier: command_ttl
+disqusUrl: http://redis.cn/commands/ttl.html
+commandsType: keys
+---
+
 Returns the remaining time to live of a key that has a timeout.
 This introspection capability allows a Redis client to check how many seconds a
 given key will continue to be part of the dataset.

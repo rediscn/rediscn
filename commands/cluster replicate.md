@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster replicate 命令 -- Redis中文资料站
+permalink: commands/cluster replicate.html
+disqusIdentifier: command_cluster_replicate
+disqusUrl: http://redis.cn/commands/cluster replicate.html
+commandsType: keys
+---
+
 The command reconfigures a node as a slave of the specified master.
 If the node receiving the command is an *empty master*, as a side effect
 of the command, the node role is changed from master to slave.

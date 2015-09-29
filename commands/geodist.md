@@ -1,3 +1,12 @@
+---
+layout: commands
+title: geodist 命令 -- Redis中文资料站
+permalink: commands/geodist.html
+disqusIdentifier: command_geodist
+disqusUrl: http://redis.cn/commands/geodist.html
+commandsType: keys
+---
+
 Return the distance between two members in the geospatial index represented by the sorted set.
 
 Given a sorted set representing a geospatial index, populated using the `GEOADD` command, the command returns the distance between the two specified members in the specified unit.

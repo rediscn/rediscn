@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster info 命令 -- Redis中文资料站
+permalink: commands/cluster info.html
+disqusIdentifier: command_cluster_info
+disqusUrl: http://redis.cn/commands/cluster info.html
+commandsType: keys
+---
+
 `CLUSTER INFO` provides `INFO` style information about Redis Cluster
 vital parameters. The following is a sample output, followed by the
 description of each field reported.

@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster reset 命令 -- Redis中文资料站
+permalink: commands/cluster reset.html
+disqusIdentifier: command_cluster_reset
+disqusUrl: http://redis.cn/commands/cluster reset.html
+commandsType: keys
+---
+
 Reset a Redis Cluster node, in a more or less drastic way depending on the
 reset type, that can be **hard** or **soft**. Note that this command
 **does not work for masters if they hold one or more keys**, in that case

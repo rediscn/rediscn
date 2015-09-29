@@ -1,3 +1,12 @@
+---
+layout: commands
+title: expire 命令 -- Redis中文资料站
+permalink: commands/expire.html
+disqusIdentifier: command_expire
+disqusUrl: http://redis.cn/commands/expire.html
+commandsType: keys
+---
+
 Set a timeout on `key`.
 After the timeout has expired, the key will automatically be deleted.
 A key with an associated timeout is often said to be _volatile_ in Redis

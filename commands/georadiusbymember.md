@@ -1,3 +1,12 @@
+---
+layout: commands
+title: georadiusbymember 命令 -- Redis中文资料站
+permalink: commands/georadiusbymember.html
+disqusIdentifier: command_georadiusbymember
+disqusUrl: http://redis.cn/commands/georadiusbymember.html
+commandsType: keys
+---
+
 This command is exactly like `GEORADIUS` with the sole difference that instead
 of taking, as the center of the area to query, a longitude and latitude value, it takes the name of a member already existing inside the geospatial index represented by the sorted set.
 

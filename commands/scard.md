@@ -1,3 +1,12 @@
+---
+layout: commands
+title: scard 命令 -- Redis中文资料站
+permalink: commands/scard.html
+disqusIdentifier: command_scard
+disqusUrl: http://redis.cn/commands/scard.html
+commandsType: keys
+---
+
 Returns the set cardinality (number of elements) of the set stored at `key`.
 
 @return

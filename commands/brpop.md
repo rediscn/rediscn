@@ -1,3 +1,12 @@
+---
+layout: commands
+title: brpop 命令 -- Redis中文资料站
+permalink: commands/brpop.html
+disqusIdentifier: command_brpop
+disqusUrl: http://redis.cn/commands/brpop.html
+commandsType: keys
+---
+
 `BRPOP` is a blocking list pop primitive.
 It is the blocking version of `RPOP` because it blocks the connection when there
 are no elements to pop from any of the given lists.

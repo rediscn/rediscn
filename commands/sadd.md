@@ -1,3 +1,12 @@
+---
+layout: commands
+title: sadd 命令 -- Redis中文资料站
+permalink: commands/sadd.html
+disqusIdentifier: command_sadd
+disqusUrl: http://redis.cn/commands/sadd.html
+commandsType: keys
+---
+
 Add the specified members to the set stored at `key`.
 Specified members that are already a member of this set are ignored.
 If `key` does not exist, a new set is created before adding the specified

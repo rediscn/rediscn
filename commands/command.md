@@ -1,3 +1,12 @@
+---
+layout: commands
+title: command 命令 -- Redis中文资料站
+permalink: commands/command.html
+disqusIdentifier: command_command
+disqusUrl: http://redis.cn/commands/command.html
+commandsType: keys
+---
+
 Returns @array-reply of details about all Redis commands.
 
 Cluster clients must be aware of key positions in commands so commands can go to matching instances,

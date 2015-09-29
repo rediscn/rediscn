@@ -1,3 +1,12 @@
+---
+layout: commands
+title: readonly 命令 -- Redis中文资料站
+permalink: commands/readonly.html
+disqusIdentifier: command_readonly
+disqusUrl: http://redis.cn/commands/readonly.html
+commandsType: keys
+---
+
 Enables read queries for a connection to a Redis Cluster slave node. 
 
 Normally slave nodes will redirect clients to the authoritative master for

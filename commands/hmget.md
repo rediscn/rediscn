@@ -1,3 +1,12 @@
+---
+layout: commands
+title: hmget 命令 -- Redis中文资料站
+permalink: commands/hmget.html
+disqusIdentifier: command_hmget
+disqusUrl: http://redis.cn/commands/hmget.html
+commandsType: keys
+---
+
 Returns the values associated with the specified `fields` in the hash stored at
 `key`.
 

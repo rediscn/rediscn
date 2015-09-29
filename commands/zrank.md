@@ -1,3 +1,13 @@
+
+---
+layout: commands
+title: zrank 命令 -- Redis中文资料站
+permalink: commands/zrank.html
+disqusIdentifier: command_zrank
+disqusUrl: http://redis.cn/commands/zrank.html
+commandsType: keys
+---
+
 Returns the rank of `member` in the sorted set stored at `key`, with the scores
 ordered from low to high.
 The rank (or index) is 0-based, which means that the member with the lowest

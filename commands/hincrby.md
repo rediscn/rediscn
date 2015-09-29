@@ -1,3 +1,12 @@
+---
+layout: commands
+title: hincrby 命令 -- Redis中文资料站
+permalink: commands/hincrby.html
+disqusIdentifier: command_hincrby
+disqusUrl: http://redis.cn/commands/hincrby.html
+commandsType: keys
+---
+
 Increments the number stored at `field` in the hash stored at `key` by
 `increment`.
 If `key` does not exist, a new key holding a hash is created.

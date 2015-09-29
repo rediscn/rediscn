@@ -1,3 +1,12 @@
+---
+layout: commands
+title: bitpos 命令 -- Redis中文资料站
+permalink: commands/bitpos.html
+disqusIdentifier: command_bitpos
+disqusUrl: http://redis.cn/commands/bitpos.html
+commandsType: keys
+---
+
 Return the position of the first bit set to 1 or 0 in a string.
 
 The position is returned, thinking of the string as an array of bits from left to

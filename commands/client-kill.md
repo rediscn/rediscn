@@ -1,3 +1,12 @@
+---
+layout: commands
+title: client-kill 命令 -- Redis中文资料站
+permalink: commands/client-kill.html
+disqusIdentifier: command_client-kill
+disqusUrl: http://redis.cn/commands/client-kill.html
+commandsType: keys
+---
+
 The `CLIENT KILL` command closes a given client connection. Up to Redis 2.8.11 it was possible to close a connection only by client address, using the following form:
 
     CLIENT KILL addr:port

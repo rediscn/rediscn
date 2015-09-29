@@ -1,3 +1,12 @@
+---
+layout: commands
+title: ping 命令 -- Redis中文资料站
+permalink: commands/ping.html
+disqusIdentifier: command_ping
+disqusUrl: http://redis.cn/commands/ping.html
+commandsType: keys
+---
+
 Returns `PONG` if no argument is provided, otherwise return a copy of the
 argument as a bulk.
 This command is often used to test if a connection is still alive, or to measure

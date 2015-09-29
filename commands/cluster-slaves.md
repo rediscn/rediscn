@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster-slaves 命令 -- Redis中文资料站
+permalink: commands/cluster-slaves.html
+disqusIdentifier: command_cluster-slaves
+disqusUrl: http://redis.cn/commands/cluster-slaves.html
+commandsType: keys
+---
+
 The command provides a list of slave nodes replicating from the specified
 master node. The list is provided in the same format used by `CLUSTER NODES` (please refer to its documentation for the specification of the format).
 

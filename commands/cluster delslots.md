@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster delslots 命令 -- Redis中文资料站
+permalink: commands/cluster delslots.html
+disqusIdentifier: command_cluster_delslots
+disqusUrl: http://redis.cn/commands/cluster delslots.html
+commandsType: keys
+---
+
 In Redis Cluster, each node keeps track of which master is serving
 a particular hash slot.
 

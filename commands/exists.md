@@ -1,3 +1,12 @@
+---
+layout: commands
+title: exists 命令 -- Redis中文资料站
+permalink: commands/exists.html
+disqusIdentifier: command_exists
+disqusUrl: http://redis.cn/commands/exists.html
+commandsType: keys
+---
+
 Returns if `key` exists.
 
 Since Redis 3.0.3 it is possible to specify multiple keys instead of a single one. In such a case, it returns the total number of keys existing. Note that returning 1 or 0 for a single key is just a special case of the variadic usage, so the command is completely backward compatible.

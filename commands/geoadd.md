@@ -1,3 +1,12 @@
+---
+layout: commands
+title: geoadd 命令 -- Redis中文资料站
+permalink: commands/geoadd.html
+disqusIdentifier: command_geoadd
+disqusUrl: http://redis.cn/commands/geoadd.html
+commandsType: keys
+---
+
 Adds the specified geospatial items (latitude, longitude, name) to the specified
 key. Data is stored into the key as a sorted set, in a way that makes it possible to later retrieve items using a query by radius with the `GEORADIUS` or `GEORADIUSBYMEMBER` commands.
 

@@ -1,3 +1,12 @@
+---
+layout: commands
+title: pfadd 命令 -- Redis中文资料站
+permalink: commands/pfadd.html
+disqusIdentifier: command_pfadd
+disqusUrl: http://redis.cn/commands/pfadd.html
+commandsType: keys
+---
+
 Adds all the element arguments to the HyperLogLog data structure stored at the variable name specified as first argument.
 
 As a side effect of this command the HyperLogLog internals may be updated to reflect a different estimation of the number of unique items added so far (the cardinality of the set).

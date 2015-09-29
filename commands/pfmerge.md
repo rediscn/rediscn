@@ -1,3 +1,12 @@
+---
+layout: commands
+title: pfmerge 命令 -- Redis中文资料站
+permalink: commands/pfmerge.html
+disqusIdentifier: command_pfmerge
+disqusUrl: http://redis.cn/commands/pfmerge.html
+commandsType: keys
+---
+
 Merge multiple HyperLogLog values into an unique value that will approximate
 the cardinality of the union of the observed Sets of the source HyperLogLog
 structures.

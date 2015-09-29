@@ -1,3 +1,12 @@
+---
+layout: commands
+title: shutdown 命令 -- Redis中文资料站
+permalink: commands/shutdown.html
+disqusIdentifier: command_shutdown
+disqusUrl: http://redis.cn/commands/shutdown.html
+commandsType: keys
+---
+
 The command behavior is the following:
 
 * Stop all the clients.

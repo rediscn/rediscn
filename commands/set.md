@@ -1,3 +1,12 @@
+---
+layout: commands
+title: set 命令 -- Redis中文资料站
+permalink: commands/set.html
+disqusIdentifier: command_set
+disqusUrl: http://redis.cn/commands/set.html
+commandsType: keys
+---
+
 Set `key` to hold the string `value`.
 If `key` already holds a value, it is overwritten, regardless of its type.
 Any previous time to live associated with the key is discarded on successful `SET` operation.

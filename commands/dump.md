@@ -1,3 +1,12 @@
+---
+layout: commands
+title: dump 命令 -- Redis中文资料站
+permalink: commands/dump.html
+disqusIdentifier: command_dump
+disqusUrl: http://redis.cn/commands/dump.html
+commandsType: keys
+---
+
 Serialize the value stored at key in a Redis-specific format and return it to
 the user.
 The returned value can be synthesized back into a Redis key using the `RESTORE`

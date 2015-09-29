@@ -1,3 +1,12 @@
+---
+layout: commands
+title: zrange 命令 -- Redis中文资料站
+permalink: commands/zrange.html
+disqusIdentifier: command_zrange
+disqusUrl: http://redis.cn/commands/zrange.html
+commandsType: keys
+---
+
 Returns the specified range of elements in the sorted set stored at `key`.
 The elements are considered to be ordered from the lowest to the highest score.
 Lexicographical order is used for elements with equal score.

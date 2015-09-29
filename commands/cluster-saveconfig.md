@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster-saveconfig 命令 -- Redis中文资料站
+permalink: commands/cluster-saveconfig.html
+disqusIdentifier: command_cluster-saveconfig
+disqusUrl: http://redis.cn/commands/cluster-saveconfig.html
+commandsType: keys
+---
+
 Forces a node to save the `nodes.conf` configuration on disk. Before to return
 the command calls `fsync(2)` in order to make sure the configuration is
 flushed on the computer disk.

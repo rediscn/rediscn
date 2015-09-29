@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster-nodes 命令 -- Redis中文资料站
+permalink: commands/cluster-nodes.html
+disqusIdentifier: command_cluster-nodes
+disqusUrl: http://redis.cn/commands/cluster-nodes.html
+commandsType: keys
+---
+
 Each node in a Redis Cluster has its view of the current cluster configuration,
 given by the set of known nodes, the state of the connection we have with such
 nodes, their flags, properties and assigned slots, and so forth.

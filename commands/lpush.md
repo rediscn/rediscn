@@ -1,3 +1,12 @@
+---
+layout: commands
+title: lpush 命令 -- Redis中文资料站
+permalink: commands/lpush.html
+disqusIdentifier: command_lpush
+disqusUrl: http://redis.cn/commands/lpush.html
+commandsType: keys
+---
+
 Insert all the specified values at the head of the list stored at `key`.
 If `key` does not exist, it is created as empty list before performing the push
 operations.

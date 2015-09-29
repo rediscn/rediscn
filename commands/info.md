@@ -1,3 +1,12 @@
+---
+layout: commands
+title: info 命令 -- Redis中文资料站
+permalink: commands/info.html
+disqusIdentifier: command_info
+disqusUrl: http://redis.cn/commands/info.html
+commandsType: keys
+---
+
 The `INFO` command returns information and statistics about the server in a
 format that is simple to parse by computers and easy to read by humans.
 

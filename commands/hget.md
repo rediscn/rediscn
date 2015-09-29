@@ -1,3 +1,12 @@
+---
+layout: commands
+title: hget 命令 -- Redis中文资料站
+permalink: commands/hget.html
+disqusIdentifier: command_hget
+disqusUrl: http://redis.cn/commands/hget.html
+commandsType: keys
+---
+
 Returns the value associated with `field` in the hash stored at `key`.
 
 @return

@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster failover 命令 -- Redis中文资料站
+permalink: commands/cluster failover.html
+disqusIdentifier: command_cluster_failover
+disqusUrl: http://redis.cn/commands/cluster failover.html
+commandsType: keys
+---
+
 This command, that can only be send to a Redis Cluster slave node, forces
 the slave to start a manual failover of its master instance.
 

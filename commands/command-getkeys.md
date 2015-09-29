@@ -1,3 +1,12 @@
+---
+layout: commands
+title: command-getkeys 命令 -- Redis中文资料站
+permalink: commands/command-getkeys.html
+disqusIdentifier: command_command-getkeys
+disqusUrl: http://redis.cn/commands/command-getkeys.html
+commandsType: keys
+---
+
 Returns @array-reply of keys from a full Redis command.
 
 `COMMAND GETKEYS` is a helper command to let you find the keys

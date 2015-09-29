@@ -1,3 +1,12 @@
+---
+layout: commands
+title: srem 命令 -- Redis中文资料站
+permalink: commands/srem.html
+disqusIdentifier: command_srem
+disqusUrl: http://redis.cn/commands/srem.html
+commandsType: keys
+---
+
 Remove the specified members from the set stored at `key`.
 Specified members that are not a member of this set are ignored.
 If `key` does not exist, it is treated as an empty set and this command returns

@@ -1,3 +1,12 @@
+---
+layout: commands
+title: msetnx 命令 -- Redis中文资料站
+permalink: commands/msetnx.html
+disqusIdentifier: command_msetnx
+disqusUrl: http://redis.cn/commands/msetnx.html
+commandsType: keys
+---
+
 Sets the given keys to their respective values.
 `MSETNX` will not perform any operation at all even if just a single key already
 exists.

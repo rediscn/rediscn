@@ -1,3 +1,12 @@
+---
+layout: commands
+title: decr 命令 -- Redis中文资料站
+permalink: commands/decr.html
+disqusIdentifier: command_decr
+disqusUrl: http://redis.cn/commands/decr.html
+commandsType: keys
+---
+
 Decrements the number stored at `key` by one.
 If the key does not exist, it is set to `0` before performing the operation.
 An error is returned if the key contains a value of the wrong type or contains a

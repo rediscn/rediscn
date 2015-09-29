@@ -1,3 +1,12 @@
+---
+layout: commands
+title: rpoplpush 命令 -- Redis中文资料站
+permalink: commands/rpoplpush.html
+disqusIdentifier: command_rpoplpush
+disqusUrl: http://redis.cn/commands/rpoplpush.html
+commandsType: keys
+---
+
 Atomically returns and removes the last element (tail) of the list stored at
 `source`, and pushes the element at the first element (head) of the list stored
 at `destination`.

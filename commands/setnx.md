@@ -1,3 +1,12 @@
+---
+layout: commands
+title: setnx 命令 -- Redis中文资料站
+permalink: commands/setnx.html
+disqusIdentifier: command_setnx
+disqusUrl: http://redis.cn/commands/setnx.html
+commandsType: keys
+---
+
 Set `key` to hold string `value` if `key` does not exist.
 In that case, it is equal to `SET`.
 When `key` already holds a value, no operation is performed.

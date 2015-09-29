@@ -1,3 +1,12 @@
+---
+layout: commands
+title: client-setname 命令 -- Redis中文资料站
+permalink: commands/client-setname.html
+disqusIdentifier: command_client-setname
+disqusUrl: http://redis.cn/commands/client-setname.html
+commandsType: keys
+---
+
 The `CLIENT SETNAME` command assigns a name to the current connection.
 
 The assigned name is displayed in the output of `CLIENT LIST` so that it is possible to identify the client that performed a given connection.

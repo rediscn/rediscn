@@ -1,3 +1,12 @@
+---
+layout: commands
+title: cluster-getkeysinslot 命令 -- Redis中文资料站
+permalink: commands/cluster-getkeysinslot.html
+disqusIdentifier: command_cluster-getkeysinslot
+disqusUrl: http://redis.cn/commands/cluster-getkeysinslot.html
+commandsType: keys
+---
+
 The command returns an array of keys names stored in the contacted node and
 hashing to the specified hash slot. The maximum number of keys to return
 is specified via the `count` argument, so that it is possible for the user
