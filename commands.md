@@ -6,6 +6,35 @@ disqusIdentifier: commands
 disqusUrl: http://redis.cn/commands.html
 ---
 <section id='commands'>
+<nav>
+          <div class='container'>
+            <label>
+              <span>Filter by group:</span>
+              <select class='command-reference-filter'>
+                <option value=''>All</option>
+                <option value='cluster'>Cluster</option>
+                <option value='connection'>Connection</option>
+                <option value='geo'>Geo</option>
+                <option value='hash'>Hashes</option>
+                <option value='hyperloglog'>HyperLogLog</option>
+                <option value='generic'>Keys</option>
+                <option value='list'>Lists</option>
+                <option value='pubsub'>Pub/Sub</option>
+                <option value='scripting'>Scripting</option>
+                <option value='server'>Server</option>
+                <option value='set'>Sets</option>
+                <option value='sorted_set'>Sorted Sets</option>
+                <option value='string'>Strings</option>
+                <option value='transactions'>Transactions</option>
+              </select>
+            </label>
+            or
+            <label>
+              <span>search for:</span>
+              <input autofocus='autofocus' class='js-command-reference-search' placeholder='e.g. PING' />
+            </label>
+          </div>
+        </nav>
 <div class='container'>
           <ul>
             <li data-group='string' data-name='append'>
