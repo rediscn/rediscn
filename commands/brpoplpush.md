@@ -4,7 +4,7 @@ title: brpoplpush 命令 -- Redis中文资料站
 permalink: commands/brpoplpush.html
 disqusIdentifier: command_brpoplpush
 disqusUrl: http://redis.cn/commands/brpoplpush.html
-commandsType: keys
+commandsType: lists
 ---
 
 `BRPOPLPUSH` is the blocking variant of `RPOPLPUSH`.

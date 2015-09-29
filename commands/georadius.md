@@ -4,7 +4,7 @@ title: georadius 命令 -- Redis中文资料站
 permalink: commands/georadius.html
 disqusIdentifier: command_georadius
 disqusUrl: http://redis.cn/commands/georadius.html
-commandsType: keys
+commandsType: geo
 ---
 
 Return the members of a sorted set populated with geospatial information using `GEOADD`, which are within the borders of the area specified with the center location and the maximum distance from the center (the radius).

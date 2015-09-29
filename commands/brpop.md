@@ -4,7 +4,7 @@ title: brpop 命令 -- Redis中文资料站
 permalink: commands/brpop.html
 disqusIdentifier: command_brpop
 disqusUrl: http://redis.cn/commands/brpop.html
-commandsType: keys
+commandsType: lists
 ---
 
 `BRPOP` is a blocking list pop primitive.

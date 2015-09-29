@@ -4,7 +4,7 @@ title: hincrbyfloat 命令 -- Redis中文资料站
 permalink: commands/hincrbyfloat.html
 disqusIdentifier: command_hincrbyfloat
 disqusUrl: http://redis.cn/commands/hincrbyfloat.html
-commandsType: keys
+commandsType: hashes
 ---
 
 Increment the specified `field` of an hash stored at `key`, and representing a

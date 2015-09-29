@@ -4,7 +4,7 @@ title: lpushx 命令 -- Redis中文资料站
 permalink: commands/lpushx.html
 disqusIdentifier: command_lpushx
 disqusUrl: http://redis.cn/commands/lpushx.html
-commandsType: keys
+commandsType: lists
 ---
 
 Inserts `value` at the head of the list stored at `key`, only if `key` already

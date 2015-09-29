@@ -4,7 +4,7 @@ title: msetnx 命令 -- Redis中文资料站
 permalink: commands/msetnx.html
 disqusIdentifier: command_msetnx
 disqusUrl: http://redis.cn/commands/msetnx.html
-commandsType: keys
+commandsType: strings
 ---
 
 Sets the given keys to their respective values.

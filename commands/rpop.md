@@ -4,7 +4,7 @@ title: rpop 命令 -- Redis中文资料站
 permalink: commands/rpop.html
 disqusIdentifier: command_rpop
 disqusUrl: http://redis.cn/commands/rpop.html
-commandsType: keys
+commandsType: lists
 ---
 
 Removes and returns the last element of the list stored at `key`.

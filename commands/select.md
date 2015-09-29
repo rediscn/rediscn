@@ -4,7 +4,7 @@ title: select 命令 -- Redis中文资料站
 permalink: commands/select.html
 disqusIdentifier: command_select
 disqusUrl: http://redis.cn/commands/select.html
-commandsType: keys
+commandsType: connection
 ---
 
 Select the DB with having the specified zero-based numeric index.

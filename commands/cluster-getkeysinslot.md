@@ -4,7 +4,7 @@ title: cluster-getkeysinslot 命令 -- Redis中文资料站
 permalink: commands/cluster-getkeysinslot.html
 disqusIdentifier: command_cluster-getkeysinslot
 disqusUrl: http://redis.cn/commands/cluster-getkeysinslot.html
-commandsType: keys
+commandsType: cluster
 ---
 
 The command returns an array of keys names stored in the contacted node and

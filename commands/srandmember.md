@@ -4,7 +4,7 @@ title: srandmember 命令 -- Redis中文资料站
 permalink: commands/srandmember.html
 disqusIdentifier: command_srandmember
 disqusUrl: http://redis.cn/commands/srandmember.html
-commandsType: keys
+commandsType: sets
 ---
 
 When called with just the `key` argument, return a random element from the set value stored at `key`.

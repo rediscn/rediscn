@@ -4,7 +4,7 @@ title: evalsha 命令 -- Redis中文资料站
 permalink: commands/evalsha.html
 disqusIdentifier: command_evalsha
 disqusUrl: http://redis.cn/commands/evalsha.html
-commandsType: keys
+commandsType: scripting
 ---
 
 Evaluates a script cached on the server side by its SHA1 digest.

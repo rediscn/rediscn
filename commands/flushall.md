@@ -4,7 +4,7 @@ title: flushall 命令 -- Redis中文资料站
 permalink: commands/flushall.html
 disqusIdentifier: command_flushall
 disqusUrl: http://redis.cn/commands/flushall.html
-commandsType: keys
+commandsType: server
 ---
 
 Delete all the keys of all the existing databases, not just the currently

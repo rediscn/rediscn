@@ -4,7 +4,7 @@ title: linsert 命令 -- Redis中文资料站
 permalink: commands/linsert.html
 disqusIdentifier: command_linsert
 disqusUrl: http://redis.cn/commands/linsert.html
-commandsType: keys
+commandsType: lists
 ---
 
 Inserts `value` in the list stored at `key` either before or after the reference

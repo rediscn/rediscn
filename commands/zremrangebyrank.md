@@ -4,7 +4,7 @@ title: zremrangebyrank 命令 -- Redis中文资料站
 permalink: commands/zremrangebyrank.html
 disqusIdentifier: command_zremrangebyrank
 disqusUrl: http://redis.cn/commands/zremrangebyrank.html
-commandsType: keys
+commandsType: sortedsets
 ---
 
 Removes all elements in the sorted set stored at `key` with rank between `start`

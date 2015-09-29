@@ -4,7 +4,7 @@ title: psetex 命令 -- Redis中文资料站
 permalink: commands/psetex.html
 disqusIdentifier: command_psetex
 disqusUrl: http://redis.cn/commands/psetex.html
-commandsType: keys
+commandsType: strings
 ---
 
 `PSETEX` works exactly like `SETEX` with the sole difference that the expire

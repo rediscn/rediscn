@@ -4,7 +4,7 @@ title: setnx 命令 -- Redis中文资料站
 permalink: commands/setnx.html
 disqusIdentifier: command_setnx
 disqusUrl: http://redis.cn/commands/setnx.html
-commandsType: keys
+commandsType: strings
 ---
 
 Set `key` to hold string `value` if `key` does not exist.

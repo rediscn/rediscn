@@ -4,7 +4,7 @@ title: monitor 命令 -- Redis中文资料站
 permalink: commands/monitor.html
 disqusIdentifier: command_monitor
 disqusUrl: http://redis.cn/commands/monitor.html
-commandsType: keys
+commandsType: server
 ---
 
 `MONITOR` is a debugging command that streams back every command processed by

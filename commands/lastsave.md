@@ -4,7 +4,7 @@ title: lastsave 命令 -- Redis中文资料站
 permalink: commands/lastsave.html
 disqusIdentifier: command_lastsave
 disqusUrl: http://redis.cn/commands/lastsave.html
-commandsType: keys
+commandsType: server
 ---
 
 Return the UNIX TIME of the last DB save executed with success.

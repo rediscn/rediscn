@@ -4,7 +4,7 @@ title: incr 命令 -- Redis中文资料站
 permalink: commands/incr.html
 disqusIdentifier: command_incr
 disqusUrl: http://redis.cn/commands/incr.html
-commandsType: keys
+commandsType: strings
 ---
 
 Increments the number stored at `key` by one.

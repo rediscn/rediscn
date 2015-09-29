@@ -4,7 +4,7 @@ title: lrange 命令 -- Redis中文资料站
 permalink: commands/lrange.html
 disqusIdentifier: command_lrange
 disqusUrl: http://redis.cn/commands/lrange.html
-commandsType: keys
+commandsType: lists
 ---
 
 Returns the specified elements of the list stored at `key`.

@@ -4,7 +4,7 @@ title: cluster-addslots 命令 -- Redis中文资料站
 permalink: commands/cluster-addslots.html
 disqusIdentifier: command_cluster-addslots
 disqusUrl: http://redis.cn/commands/cluster-addslots.html
-commandsType: keys
+commandsType: cluster
 ---
 
 This command is useful in order to modify a node's view of the cluster

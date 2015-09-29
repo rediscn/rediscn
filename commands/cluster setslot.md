@@ -4,7 +4,7 @@ title: cluster setslot 命令 -- Redis中文资料站
 permalink: commands/cluster_setslot.html
 disqusIdentifier: command_cluster setslot
 disqusUrl: http://redis.cn/commands/cluster setslot.html
-commandsType: keys
+commandsType: cluster
 ---
 
 `CLUSTER SETSLOT` is responsible of changing the state of an hash slot in the receiving node in different ways. It can, depending on the subcommand used:

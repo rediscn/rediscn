@@ -4,7 +4,7 @@ title: cluster reset 命令 -- Redis中文资料站
 permalink: commands/cluster reset.html
 disqusIdentifier: command_cluster_reset
 disqusUrl: http://redis.cn/commands/cluster reset.html
-commandsType: keys
+commandsType: cluster
 ---
 
 Reset a Redis Cluster node, in a more or less drastic way depending on the

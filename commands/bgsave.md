@@ -4,7 +4,7 @@ title: bgsave 命令 -- Redis中文资料站
 permalink: commands/bgsave.html
 disqusIdentifier: command_bgsave
 disqusUrl: http://redis.cn/commands/bgsave.html
-commandsType: keys
+commandsType: server
 ---
 
 Save the DB in background.

@@ -4,7 +4,7 @@ title: punsubscribe 命令 -- Redis中文资料站
 permalink: commands/punsubscribe.html
 disqusIdentifier: command_punsubscribe
 disqusUrl: http://redis.cn/commands/punsubscribe.html
-commandsType: keys
+commandsType: pubsub
 ---
 
 Unsubscribes the client from the given patterns, or from all of them if none is

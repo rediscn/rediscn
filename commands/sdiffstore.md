@@ -4,7 +4,7 @@ title: sdiffstore 命令 -- Redis中文资料站
 permalink: commands/sdiffstore.html
 disqusIdentifier: command_sdiffstore
 disqusUrl: http://redis.cn/commands/sdiffstore.html
-commandsType: keys
+commandsType: sets
 ---
 
 This command is equal to `SDIFF`, but instead of returning the resulting set, it

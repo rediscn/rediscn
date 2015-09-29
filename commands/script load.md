@@ -4,7 +4,7 @@ title: script load 命令 -- Redis中文资料站
 permalink: commands/script load.html
 disqusIdentifier: command_script-load
 disqusUrl: http://redis.cn/commands/script load.html
-commandsType: keys
+commandsType: scripting
 ---
 
 Load a script into the scripts cache, without executing it.

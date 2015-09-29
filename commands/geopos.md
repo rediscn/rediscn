@@ -4,7 +4,7 @@ title: geopos 命令 -- Redis中文资料站
 permalink: commands/geopos.html
 disqusIdentifier: command_geopos
 disqusUrl: http://redis.cn/commands/geopos.html
-commandsType: keys
+commandsType: geo
 ---
 
 Return the positions (longitude,latitude) of all the specified members of the geospatial index represented by the sorted set at *key*.

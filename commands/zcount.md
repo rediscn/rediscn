@@ -4,7 +4,7 @@ title: zcount 命令 -- Redis中文资料站
 permalink: commands/zcount.html
 disqusIdentifier: command_zcount
 disqusUrl: http://redis.cn/commands/zcount.html
-commandsType: keys
+commandsType: sortedsets
 ---
 
 Returns the number of elements in the sorted set at `key` with a score between

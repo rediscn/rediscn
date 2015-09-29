@@ -4,7 +4,7 @@ title: config set 命令 -- Redis中文资料站
 permalink: commands/config set.html
 disqusIdentifier: command_config_set
 disqusUrl: http://redis.cn/commands/config set.html
-commandsType: keys
+commandsType: server
 ---
 
 The `CONFIG SET` command is used in order to reconfigure the server at run time

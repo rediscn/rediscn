@@ -4,7 +4,7 @@ title: cluster-set-config-epoch 命令 -- Redis中文资料站
 permalink: commands/cluster-set-config-epoch.html
 disqusIdentifier: command_cluster-set-config-epoch
 disqusUrl: http://redis.cn/commands/cluster-set-config-epoch.html
-commandsType: keys
+commandsType: cluster
 ---
 
 This command sets a specific *config epoch* in a fresh node. It only works when:

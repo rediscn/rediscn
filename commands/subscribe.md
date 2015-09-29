@@ -4,7 +4,7 @@ title: subscribe 命令 -- Redis中文资料站
 permalink: commands/subscribe.html
 disqusIdentifier: command_subscribe
 disqusUrl: http://redis.cn/commands/subscribe.html
-commandsType: keys
+commandsType: pubsub
 ---
 
 Subscribes the client to the specified channels.

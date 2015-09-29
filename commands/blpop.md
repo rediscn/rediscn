@@ -4,7 +4,7 @@ title: blpop 命令 -- Redis中文资料站
 permalink: commands/blpop.html
 disqusIdentifier: command_blpop
 disqusUrl: http://redis.cn/commands/blpop.html
-commandsType: keys
+commandsType: lists
 ---
 
 `BLPOP` is a blocking list pop primitive.

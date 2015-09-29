@@ -4,7 +4,7 @@ title: psubscribe 命令 -- Redis中文资料站
 permalink: commands/psubscribe.html
 disqusIdentifier: command_psubscribe
 disqusUrl: http://redis.cn/commands/psubscribe.html
-commandsType: keys
+commandsType: pubsub
 ---
 
 Subscribes the client to the given patterns.

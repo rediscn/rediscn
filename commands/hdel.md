@@ -4,7 +4,7 @@ title: hdel 命令 -- Redis中文资料站
 permalink: commands/hdel.html
 disqusIdentifier: command_hdel
 disqusUrl: http://redis.cn/commands/hdel.html
-commandsType: keys
+commandsType: hashes
 ---
 
 Removes the specified fields from the hash stored at `key`.

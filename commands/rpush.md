@@ -4,7 +4,7 @@ title: rpush 命令 -- Redis中文资料站
 permalink: commands/rpush.html
 disqusIdentifier: command_rpush
 disqusUrl: http://redis.cn/commands/rpush.html
-commandsType: keys
+commandsType: lists
 ---
 
 Insert all the specified values at the tail of the list stored at `key`.

@@ -4,7 +4,7 @@ title: cluster-info 命令 -- Redis中文资料站
 permalink: commands/cluster-info.html
 disqusIdentifier: command_cluster-info
 disqusUrl: http://redis.cn/commands/cluster-info.html
-commandsType: keys
+commandsType: cluster
 ---
 
 `CLUSTER INFO` provides `INFO` style information about Redis Cluster

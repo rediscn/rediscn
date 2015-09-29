@@ -4,7 +4,7 @@ title: pubsub 命令 -- Redis中文资料站
 permalink: commands/pubsub.html
 disqusIdentifier: command_pubsub
 disqusUrl: http://redis.cn/commands/pubsub.html
-commandsType: keys
+commandsType: pubsub
 ---
 
 The PUBSUB command is an introspection command that allows to inspect the

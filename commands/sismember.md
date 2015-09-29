@@ -4,7 +4,7 @@ title: sismember 命令 -- Redis中文资料站
 permalink: commands/sismember.html
 disqusIdentifier: command_sismember
 disqusUrl: http://redis.cn/commands/sismember.html
-commandsType: keys
+commandsType: sets
 ---
 
 Returns if `member` is a member of the set stored at `key`.

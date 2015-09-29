@@ -4,7 +4,7 @@ title: mget 命令 -- Redis中文资料站
 permalink: commands/mget.html
 disqusIdentifier: command_mget
 disqusUrl: http://redis.cn/commands/mget.html
-commandsType: keys
+commandsType: strings
 ---
 
 Returns the values of all specified keys.

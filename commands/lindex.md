@@ -4,7 +4,7 @@ title: lindex 命令 -- Redis中文资料站
 permalink: commands/lindex.html
 disqusIdentifier: command_lindex
 disqusUrl: http://redis.cn/commands/lindex.html
-commandsType: keys
+commandsType: lists
 ---
 
 Returns the element at index `index` in the list stored at `key`.

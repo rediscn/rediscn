@@ -4,7 +4,7 @@ title: hgetall 命令 -- Redis中文资料站
 permalink: commands/hgetall.html
 disqusIdentifier: command_hgetall
 disqusUrl: http://redis.cn/commands/hgetall.html
-commandsType: keys
+commandsType: hashes
 ---
 
 Returns all fields and values of the hash stored at `key`.

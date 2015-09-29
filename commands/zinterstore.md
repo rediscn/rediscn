@@ -4,7 +4,7 @@ title: zinterstore 命令 -- Redis中文资料站
 permalink: commands/zinterstore.html
 disqusIdentifier: command_zinterstore
 disqusUrl: http://redis.cn/commands/zinterstore.html
-commandsType: keys
+commandsType: sortedsets
 ---
 
 Computes the intersection of `numkeys` sorted sets given by the specified keys,

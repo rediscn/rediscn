@@ -4,7 +4,7 @@ title: sadd 命令 -- Redis中文资料站
 permalink: commands/sadd.html
 disqusIdentifier: command_sadd
 disqusUrl: http://redis.cn/commands/sadd.html
-commandsType: keys
+commandsType: sets
 ---
 
 Add the specified members to the set stored at `key`.

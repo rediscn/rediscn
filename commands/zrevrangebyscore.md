@@ -4,7 +4,7 @@ title: zrevrangebyscore 命令 -- Redis中文资料站
 permalink: commands/zrevrangebyscore.html
 disqusIdentifier: command_zrevrangebyscore
 disqusUrl: http://redis.cn/commands/zrevrangebyscore.html
-commandsType: keys
+commandsType: sortedsets
 ---
 
 Returns all the elements in the sorted set at `key` with a score between `max`

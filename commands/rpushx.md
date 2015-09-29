@@ -4,7 +4,7 @@ title: rpushx 命令 -- Redis中文资料站
 permalink: commands/rpushx.html
 disqusIdentifier: command_rpushx
 disqusUrl: http://redis.cn/commands/rpushx.html
-commandsType: keys
+commandsType: lists
 ---
 
 Inserts `value` at the tail of the list stored at `key`, only if `key` already

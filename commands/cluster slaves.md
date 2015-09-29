@@ -4,7 +4,7 @@ title: cluster slaves 命令 -- Redis中文资料站
 permalink: commands/cluster slaves.html
 disqusIdentifier: command_cluster slaves
 disqusUrl: http://redis.cn/commands/cluster slaves.html
-commandsType: keys
+commandsType: cluster
 ---
 
 The command provides a list of slave nodes replicating from the specified

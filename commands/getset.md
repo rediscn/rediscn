@@ -4,7 +4,7 @@ title: getset 命令 -- Redis中文资料站
 permalink: commands/getset.html
 disqusIdentifier: command_getset
 disqusUrl: http://redis.cn/commands/getset.html
-commandsType: keys
+commandsType: strings
 ---
 
 Atomically sets `key` to `value` and returns the old value stored at `key`.

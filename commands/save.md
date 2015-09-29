@@ -4,7 +4,7 @@ title: save 命令 -- Redis中文资料站
 permalink: commands/save.html
 disqusIdentifier: command_save
 disqusUrl: http://redis.cn/commands/save.html
-commandsType: keys
+commandsType: server
 ---
 
 The `SAVE` commands performs a **synchronous** save of the dataset producing a

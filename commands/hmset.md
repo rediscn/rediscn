@@ -4,7 +4,7 @@ title: hmset 命令 -- Redis中文资料站
 permalink: commands/hmset.html
 disqusIdentifier: command_hmset
 disqusUrl: http://redis.cn/commands/hmset.html
-commandsType: keys
+commandsType: hashes
 ---
 
 Sets the specified fields to their respective values in the hash stored at

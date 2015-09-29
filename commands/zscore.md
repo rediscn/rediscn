@@ -4,7 +4,7 @@ title: zscore 命令 -- Redis中文资料站
 permalink: commands/zscore.html
 disqusIdentifier: command_zscore
 disqusUrl: http://redis.cn/commands/zscore.html
-commandsType: keys
+commandsType: sortedsets
 ---
 
 Returns the score of `member` in the sorted set at `key`.

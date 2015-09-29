@@ -4,7 +4,7 @@ title: eval 命令 -- Redis中文资料站
 permalink: commands/eval.html
 disqusIdentifier: command_eval
 disqusUrl: http://redis.cn/commands/eval.html
-commandsType: keys
+commandsType: scripting
 ---
 
 ## Introduction to EVAL

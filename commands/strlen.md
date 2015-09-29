@@ -4,7 +4,7 @@ title: strlen 命令 -- Redis中文资料站
 permalink: commands/strlen.html
 disqusIdentifier: command_strlen
 disqusUrl: http://redis.cn/commands/strlen.html
-commandsType: keys
+commandsType: strings
 ---
 
 Returns the length of the string value stored at `key`.

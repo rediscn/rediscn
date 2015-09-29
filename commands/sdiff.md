@@ -4,7 +4,7 @@ title: sdiff 命令 -- Redis中文资料站
 permalink: commands/sdiff.html
 disqusIdentifier: command_sdiff
 disqusUrl: http://redis.cn/commands/sdiff.html
-commandsType: keys
+commandsType: sets
 ---
 
 Returns the members of the set resulting from the difference between the first

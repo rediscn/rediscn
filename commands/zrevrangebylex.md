@@ -4,7 +4,7 @@ title: zrevrangebylex 命令 -- Redis中文资料站
 permalink: commands/zrevrangebylex.html
 disqusIdentifier: command_zrevrangebylex
 disqusUrl: http://redis.cn/commands/zrevrangebylex.html
-commandsType: keys
+commandsType: sortedsets
 ---
 
 When all the elements in a sorted set are inserted with the same score, in order to force lexicographical ordering, this command returns all the elements in the sorted set at `key` with a value between `max` and `min`.

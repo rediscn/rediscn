@@ -4,7 +4,7 @@ title: georadiusbymember 命令 -- Redis中文资料站
 permalink: commands/georadiusbymember.html
 disqusIdentifier: command_georadiusbymember
 disqusUrl: http://redis.cn/commands/georadiusbymember.html
-commandsType: keys
+commandsType: geo
 ---
 
 This command is exactly like `GEORADIUS` with the sole difference that instead

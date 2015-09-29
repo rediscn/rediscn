@@ -4,7 +4,7 @@ title: quit 命令 -- Redis中文资料站
 permalink: commands/quit.html
 disqusIdentifier: command_quit
 disqusUrl: http://redis.cn/commands/quit.html
-commandsType: keys
+commandsType: connection
 ---
 
 Ask the server to close the connection.

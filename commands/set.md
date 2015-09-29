@@ -4,7 +4,7 @@ title: set 命令 -- Redis中文资料站
 permalink: commands/set.html
 disqusIdentifier: command_set
 disqusUrl: http://redis.cn/commands/set.html
-commandsType: keys
+commandsType: strings
 ---
 
 Set `key` to hold the string `value`.

@@ -4,7 +4,7 @@ title: srem 命令 -- Redis中文资料站
 permalink: commands/srem.html
 disqusIdentifier: command_srem
 disqusUrl: http://redis.cn/commands/srem.html
-commandsType: keys
+commandsType: sets
 ---
 
 Remove the specified members from the set stored at `key`.

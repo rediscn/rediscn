@@ -4,7 +4,7 @@ title: geodist 命令 -- Redis中文资料站
 permalink: commands/geodist.html
 disqusIdentifier: command_geodist
 disqusUrl: http://redis.cn/commands/geodist.html
-commandsType: keys
+commandsType: geo
 ---
 
 Return the distance between two members in the geospatial index represented by the sorted set.

@@ -4,7 +4,7 @@ title: hset 命令 -- Redis中文资料站
 permalink: commands/hset.html
 disqusIdentifier: command_hset
 disqusUrl: http://redis.cn/commands/hset.html
-commandsType: keys
+commandsType: hashes
 ---
 
 Sets `field` in the hash stored at `key` to `value`.

@@ -4,7 +4,7 @@ title: cluster-count-failure-reports 命令 -- Redis中文资料站
 permalink: commands/cluster-count-failure-reports.html
 disqusIdentifier: command_cluster-count-failure-reports
 disqusUrl: http://redis.cn/commands/cluster-count-failure-reports.html
-commandsType: keys
+commandsType: cluster
 ---
 
 The command returns the number of *failure reports* for the specified node.

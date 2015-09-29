@@ -4,7 +4,7 @@ title: hlen 命令 -- Redis中文资料站
 permalink: commands/hlen.html
 disqusIdentifier: command_hlen
 disqusUrl: http://redis.cn/commands/hlen.html
-commandsType: keys
+commandsType: hashes
 ---
 
 Returns the number of fields contained in the hash stored at `key`.

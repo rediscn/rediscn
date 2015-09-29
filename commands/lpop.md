@@ -4,7 +4,7 @@ title: lpop 命令 -- Redis中文资料站
 permalink: commands/lpop.html
 disqusIdentifier: command_lpop
 disqusUrl: http://redis.cn/commands/lpop.html
-commandsType: keys
+commandsType: lists
 ---
 
 Removes and returns the first element of the list stored at `key`.

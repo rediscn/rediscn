@@ -4,7 +4,7 @@ title: llen 命令 -- Redis中文资料站
 permalink: commands/llen.html
 disqusIdentifier: command_llen
 disqusUrl: http://redis.cn/commands/llen.html
-commandsType: keys
+commandsType: lists
 ---
 
 Returns the length of the list stored at `key`.

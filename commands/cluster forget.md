@@ -4,7 +4,7 @@ title: cluster forget 命令 -- Redis中文资料站
 permalink: commands/cluster forget.html
 disqusIdentifier: command_cluster_forget
 disqusUrl: http://redis.cn/commands/cluster forget.html
-commandsType: keys
+commandsType: cluster
 ---
 
 The command is used in order to remove the node, specified via its node ID,

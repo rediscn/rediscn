@@ -4,7 +4,7 @@ title: hkeys 命令 -- Redis中文资料站
 permalink: commands/hkeys.html
 disqusIdentifier: command_hkeys
 disqusUrl: http://redis.cn/commands/hkeys.html
-commandsType: keys
+commandsType: hashes
 ---
 
 Returns all field names in the hash stored at `key`.

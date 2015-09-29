@@ -4,7 +4,7 @@ title: incrby 命令 -- Redis中文资料站
 permalink: commands/incrby.html
 disqusIdentifier: command_incrby
 disqusUrl: http://redis.cn/commands/incrby.html
-commandsType: keys
+commandsType: strings
 ---
 
 Increments the number stored at `key` by `increment`.

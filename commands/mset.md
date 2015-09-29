@@ -4,7 +4,7 @@ title: mset 命令 -- Redis中文资料站
 permalink: commands/mset.html
 disqusIdentifier: command_mset
 disqusUrl: http://redis.cn/commands/mset.html
-commandsType: keys
+commandsType: strings
 ---
 
 Sets the given keys to their respective values.

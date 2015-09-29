@@ -4,7 +4,7 @@ title: time 命令 -- Redis中文资料站
 permalink: commands/time.html
 disqusIdentifier: command_time
 disqusUrl: http://redis.cn/commands/time.html
-commandsType: keys
+commandsType: server
 ---
 
 The `TIME` command returns the current server time as a two items lists: a Unix

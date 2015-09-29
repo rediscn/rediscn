@@ -4,7 +4,7 @@ title: smove 命令 -- Redis中文资料站
 permalink: commands/smove.html
 disqusIdentifier: command_smove
 disqusUrl: http://redis.cn/commands/smove.html
-commandsType: keys
+commandsType: sets
 ---
 
 Move `member` from the set at `source` to the set at `destination`.

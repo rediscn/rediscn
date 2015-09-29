@@ -4,7 +4,7 @@ title: sinter 命令 -- Redis中文资料站
 permalink: commands/sinter.html
 disqusIdentifier: command_sinter
 disqusUrl: http://redis.cn/commands/sinter.html
-commandsType: keys
+commandsType: sets
 ---
 
 Returns the members of the set resulting from the intersection of all the given

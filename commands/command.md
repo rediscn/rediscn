@@ -4,7 +4,7 @@ title: command 命令 -- Redis中文资料站
 permalink: commands/command.html
 disqusIdentifier: command_command
 disqusUrl: http://redis.cn/commands/command.html
-commandsType: keys
+commandsType: server
 ---
 
 Returns @array-reply of details about all Redis commands.

@@ -4,7 +4,7 @@ title: setex 命令 -- Redis中文资料站
 permalink: commands/setex.html
 disqusIdentifier: command_setex
 disqusUrl: http://redis.cn/commands/setex.html
-commandsType: keys
+commandsType: strings
 ---
 
 Set `key` to hold the string `value` and set `key` to timeout after a given

@@ -4,7 +4,7 @@ title: zrange 命令 -- Redis中文资料站
 permalink: commands/zrange.html
 disqusIdentifier: command_zrange
 disqusUrl: http://redis.cn/commands/zrange.html
-commandsType: keys
+commandsType: sortedsets
 ---
 
 Returns the specified range of elements in the sorted set stored at `key`.

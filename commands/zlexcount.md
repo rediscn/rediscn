@@ -4,7 +4,7 @@ title: zlexcount 命令 -- Redis中文资料站
 permalink: commands/zlexcount.html
 disqusIdentifier: command_zlexcount
 disqusUrl: http://redis.cn/commands/zlexcount.html
-commandsType: keys
+commandsType: sortedsets
 ---
 
 When all the elements in a sorted set are inserted with the same score, in order to force lexicographical ordering, this command returns the number of elements in the sorted set at `key` with a value between `min` and `max`.

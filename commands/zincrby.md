@@ -4,7 +4,7 @@ title: zincrby 命令 -- Redis中文资料站
 permalink: commands/zincrby.html
 disqusIdentifier: command_zincrby
 disqusUrl: http://redis.cn/commands/zincrby.html
-commandsType: keys
+commandsType: sortedsets
 ---
 
 Increments the score of `member` in the sorted set stored at `key` by

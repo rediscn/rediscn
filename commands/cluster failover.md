@@ -4,7 +4,7 @@ title: cluster failover 命令 -- Redis中文资料站
 permalink: commands/cluster failover.html
 disqusIdentifier: command_cluster_failover
 disqusUrl: http://redis.cn/commands/cluster failover.html
-commandsType: keys
+commandsType: cluster
 ---
 
 This command, that can only be send to a Redis Cluster slave node, forces

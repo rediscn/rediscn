@@ -4,7 +4,7 @@ title: incrbyfloat 命令 -- Redis中文资料站
 permalink: commands/incrbyfloat.html
 disqusIdentifier: command_incrbyfloat
 disqusUrl: http://redis.cn/commands/incrbyfloat.html
-commandsType: keys
+commandsType: strings
 ---
 
 Increment the string representing a floating point number stored at `key` by the

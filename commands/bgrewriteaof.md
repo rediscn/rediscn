@@ -4,7 +4,7 @@ title: bgrewriteaof 命令 -- Redis中文资料站
 permalink: commands/bgrewriteaof.html
 disqusIdentifier: command_bgrewriteaof
 disqusUrl: http://redis.cn/commands/bgrewriteaof.html
-commandsType: keys
+commandsType: server
 ---
 
 Instruct Redis to start an [Append Only File][tpaof] rewrite process.

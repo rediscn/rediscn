@@ -4,7 +4,7 @@ title: setbit 命令 -- Redis中文资料站
 permalink: commands/setbit.html
 disqusIdentifier: command_setbit
 disqusUrl: http://redis.cn/commands/setbit.html
-commandsType: keys
+commandsType: strings
 ---
 
 Sets or clears the bit at _offset_ in the string value stored at _key_.

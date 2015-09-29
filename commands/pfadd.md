@@ -4,7 +4,7 @@ title: pfadd 命令 -- Redis中文资料站
 permalink: commands/pfadd.html
 disqusIdentifier: command_pfadd
 disqusUrl: http://redis.cn/commands/pfadd.html
-commandsType: keys
+commandsType: hyperloglog
 ---
 
 Adds all the element arguments to the HyperLogLog data structure stored at the variable name specified as first argument.

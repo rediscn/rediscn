@@ -4,7 +4,7 @@ title: lset 命令 -- Redis中文资料站
 permalink: commands/lset.html
 disqusIdentifier: command_lset
 disqusUrl: http://redis.cn/commands/lset.html
-commandsType: keys
+commandsType: lists
 ---
 
 Sets the list element at `index` to `value`.

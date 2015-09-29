@@ -4,7 +4,7 @@ title: readwrite 命令 -- Redis中文资料站
 permalink: commands/readwrite.html
 disqusIdentifier: command_readwrite
 disqusUrl: http://redis.cn/commands/readwrite.html
-commandsType: keys
+commandsType: cluster
 ---
 
 Disables read queries for a connection to a Redis Cluster slave node.

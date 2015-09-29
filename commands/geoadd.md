@@ -4,7 +4,7 @@ title: geoadd 命令 -- Redis中文资料站
 permalink: commands/geoadd.html
 disqusIdentifier: command_geoadd
 disqusUrl: http://redis.cn/commands/geoadd.html
-commandsType: keys
+commandsType: geo
 ---
 
 Adds the specified geospatial items (latitude, longitude, name) to the specified

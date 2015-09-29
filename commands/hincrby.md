@@ -4,7 +4,7 @@ title: hincrby 命令 -- Redis中文资料站
 permalink: commands/hincrby.html
 disqusIdentifier: command_hincrby
 disqusUrl: http://redis.cn/commands/hincrby.html
-commandsType: keys
+commandsType: hashes
 ---
 
 Increments the number stored at `field` in the hash stored at `key` by

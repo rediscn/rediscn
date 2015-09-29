@@ -4,7 +4,7 @@ title: cluster replicate 命令 -- Redis中文资料站
 permalink: commands/cluster replicate.html
 disqusIdentifier: command_cluster_replicate
 disqusUrl: http://redis.cn/commands/cluster replicate.html
-commandsType: keys
+commandsType: cluster
 ---
 
 The command reconfigures a node as a slave of the specified master.

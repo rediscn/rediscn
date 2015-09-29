@@ -4,7 +4,7 @@ title: zrevrank 命令 -- Redis中文资料站
 permalink: commands/zrevrank.html
 disqusIdentifier: command_zrevrank
 disqusUrl: http://redis.cn/commands/zrevrank.html
-commandsType: keys
+commandsType: sortedsets
 ---
 
 Returns the rank of `member` in the sorted set stored at `key`, with the scores

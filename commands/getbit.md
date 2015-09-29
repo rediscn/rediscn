@@ -4,7 +4,7 @@ title: getbit 命令 -- Redis中文资料站
 permalink: commands/getbit.html
 disqusIdentifier: command_getbit
 disqusUrl: http://redis.cn/commands/getbit.html
-commandsType: keys
+commandsType: strings
 ---
 
 Returns the bit value at _offset_ in the string value stored at _key_.

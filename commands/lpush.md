@@ -4,7 +4,7 @@ title: lpush 命令 -- Redis中文资料站
 permalink: commands/lpush.html
 disqusIdentifier: command_lpush
 disqusUrl: http://redis.cn/commands/lpush.html
-commandsType: keys
+commandsType: lists
 ---
 
 Insert all the specified values at the head of the list stored at `key`.

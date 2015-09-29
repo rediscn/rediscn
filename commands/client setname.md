@@ -4,7 +4,7 @@ title: client setname 命令 -- Redis中文资料站
 permalink: commands/client setname.html
 disqusIdentifier: command_client_setname
 disqusUrl: http://redis.cn/commands/client setname.html
-commandsType: keys
+commandsType: server
 ---
 
 The `CLIENT SETNAME` command assigns a name to the current connection.

@@ -4,7 +4,7 @@ title: cluster-keyslot 命令 -- Redis中文资料站
 permalink: commands/cluster-keyslot.html
 disqusIdentifier: command_cluster-keyslot
 disqusUrl: http://redis.cn/commands/cluster-keyslot.html
-commandsType: keys
+commandsType: cluster
 ---
 
 Returns an integer identifying the hash slot the specified key hashes to.

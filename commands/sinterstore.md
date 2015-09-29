@@ -4,7 +4,7 @@ title: sinterstore 命令 -- Redis中文资料站
 permalink: commands/sinterstore.html
 disqusIdentifier: command_sinterstore
 disqusUrl: http://redis.cn/commands/sinterstore.html
-commandsType: keys
+commandsType: sets
 ---
 
 This command is equal to `SINTER`, but instead of returning the resulting set,

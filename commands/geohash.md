@@ -4,7 +4,7 @@ title: geohash 命令 -- Redis中文资料站
 permalink: commands/geohash.html
 disqusIdentifier: command_geohash
 disqusUrl: http://redis.cn/commands/geohash.html
-commandsType: keys
+commandsType: geo
 ---
 
 Return valid [Geohash](https://en.wikipedia.org/wiki/Geohash) strings representing the position of one or more elements in a sorted set value representing a geospatial index (where elements were added using `GEOADD`).

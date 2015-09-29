@@ -4,7 +4,7 @@ title: get 命令 -- Redis中文资料站
 permalink: commands/get.html
 disqusIdentifier: command_get
 disqusUrl: http://redis.cn/commands/get.html
-commandsType: keys
+commandsType: strings
 ---
 
 Get the value of `key`.

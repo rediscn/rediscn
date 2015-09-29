@@ -4,7 +4,7 @@ title: bitcount 命令 -- Redis中文资料站
 permalink: commands/bitcount.html
 disqusIdentifier: command_bitcount
 disqusUrl: http://redis.cn/commands/bitcount.html
-commandsType: keys
+commandsType: strings
 ---
 
 Count the number of set bits (population counting) in a string.

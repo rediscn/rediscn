@@ -4,7 +4,7 @@ title: pfmerge 命令 -- Redis中文资料站
 permalink: commands/pfmerge.html
 disqusIdentifier: command_pfmerge
 disqusUrl: http://redis.cn/commands/pfmerge.html
-commandsType: keys
+commandsType: hyperloglog
 ---
 
 Merge multiple HyperLogLog values into an unique value that will approximate

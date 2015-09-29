@@ -4,7 +4,7 @@ title: lrem 命令 -- Redis中文资料站
 permalink: commands/lrem.html
 disqusIdentifier: command_lrem
 disqusUrl: http://redis.cn/commands/lrem.html
-commandsType: keys
+commandsType: lists
 ---
 
 Removes the first `count` occurrences of elements equal to `value` from the list

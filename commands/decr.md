@@ -4,7 +4,7 @@ title: decr 命令 -- Redis中文资料站
 permalink: commands/decr.html
 disqusIdentifier: command_decr
 disqusUrl: http://redis.cn/commands/decr.html
-commandsType: keys
+commandsType: strings
 ---
 
 Decrements the number stored at `key` by one.

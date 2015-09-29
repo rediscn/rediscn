@@ -4,7 +4,7 @@ title: command getkeys 命令 -- Redis中文资料站
 permalink: commands/command getkeys.html
 disqusIdentifier: command_command_getkeys
 disqusUrl: http://redis.cn/commands/command getkeys.html
-commandsType: keys
+commandsType: server
 ---
 
 Returns @array-reply of keys from a full Redis command.

@@ -4,7 +4,7 @@ title: decrby 命令 -- Redis中文资料站
 permalink: commands/decrby.html
 disqusIdentifier: command_decrby
 disqusUrl: http://redis.cn/commands/decrby.html
-commandsType: keys
+commandsType: strings
 ---
 
 Decrements the number stored at `key` by `decrement`.
