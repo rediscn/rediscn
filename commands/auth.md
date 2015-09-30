@@ -20,6 +20,6 @@ Otherwise, an error is returned and the clients needs to try a new password.
 a lot of passwords in parallel in very short time, so make sure to generate a
 strong and very long password so that this attack is infeasible.
 
-@return
+#返回值
 
-@simple-string-reply
+[simple-string-reply](/topics/protocol.html#simple-string-reply)
