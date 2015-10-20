@@ -1,7 +1,7 @@
 ---
 layout: index
-title: REDIS 3.0.4 下载 -- Redis中文资料站
-excerpt: redis下载中心，下载各种版本的redis，包括最新redis 3.0.4稳定版redid,3.0.4-Beta版本以及win32/64版本
+title: REDIS 3.0.5 下载 -- Redis中文资料站
+excerpt: redis下载中心，下载各种版本的redis，包括最新redis 3.0.5稳定版redid,3.0.5-Beta版本以及win32/64版本
 permalink: download.html
 disqusIdentifier: download
 disqusUrl: http://redis.cn/download.html
@@ -34,10 +34,10 @@ download
                   <i class='fa fa-file-text-o'></i>
                   Release notes
                 </a>
-                <a class='download-link' href='http://download.redis.io/releases/redis-3.0.4.tar.gz'>
+                <a class='download-link' href='http://download.redis.io/releases/redis-3.0.5.tar.gz'>
                   <i class='fa fa-arrow-circle-o-down'></i>
                   Download
-                  3.0.4
+                  3.0.5
                 </a>
               </div>
             </li>
@@ -114,7 +114,7 @@ download
           </p>
           <span id="installation" class=anchor></span><h2 ><a href="#installation" class=anchor-link>*</a>Installation</h2>
           <p>Download, extract and compile Redis with:</p>
-          <pre><code>$ wget http://download.redis.io/releases/redis-3.0.4.tar.gz&#x000A;$ tar xzf redis-3.0.4.tar.gz&#x000A;$ cd redis-3.0.4&#x000A;$ make</code></pre>
+          <pre><code>$ wget http://download.redis.io/releases/redis-3.0.5.tar.gz&#x000A;$ tar xzf redis-3.0.5.tar.gz&#x000A;$ cd redis-3.0.5&#x000A;$ make</code></pre>
           <p>
             The binaries that are now compiled are available in the
             <code>src</code>
