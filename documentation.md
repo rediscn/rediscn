@@ -7,121 +7,104 @@ disqusIdentifier: documentation
 disqusUrl: http://redis.cn/documentation.html
 ---
 
-Documentation
-===
+<h1>文档</h1>
+        
+<p>注意: Redis的文档在 <a href="http://github.com/antirez/redis-doc">redis-doc github repository</a>同样也有提供。</p>
 
-Note: The Redis Documentation is also available in raw (computer friendly) format in the [redis-doc github repository](http://github.com/antirez/redis-doc). The Redis Documentation is released under the [Creative Commons Attribution-ShareAlike 4.0 International license](https://creativecommons.org/licenses/by-sa/4.0/).
 
-Programming with Redis
----
+<h2>Redis 使用</h2>
 
-* [The full list of commands](/commands.html) implemented by Redis, along with thorough documentation for each of them.
-* [Pipelining](/topics/pipelining.html): Learn how to send multiple commands
-at once, saving on round trip time.
-* [Redis Pub/Sub](topics/pubsub.html): Redis is a fast and stable Publish/Subscribe messaging system! Check it out.
-* [Redis Lua scripting](/commands/eval.html): Redis 2.6 Lua scripting feature documentation.
-* [Memory optimization](/topics/memory-optimization.html): Understand how
-Redis uses RAM and learn some tricks to use less of it.
-* [Expires](/commands/expire.html): Redis allows to set a time to live different for every key so that the key will be automatically removed from the server when it expires.
-* [Redis as an LRU cache](/topics/lru-cache.html): How to configure and use Redis as a cache with a fixed amount of memory and auto eviction of keys.
-* [Redis transactions](/topics/transactions.html): It is possible to group commands together so that they are executed as a single transaction.
-* [Mass insertion of data](/topics/mass-insert.html): How to add a big amount of pre existing or generated data to a Redis instance in a short time.
-* [Partitioning](/topics/partitioning.html): How to distribute your data among multiple Redis instances.
-* [Distributed locks](/topics/distlock.html): Implementing a distributed lock manager with Redis.
-* [Redis keyspace notifications](/topics/notifications.html): Get notifications of keyspace events via Pub/Sub (Redis 2.8 or greater).
+<ul>
+<li><a href="/commands.html">Redis命令</a> redis完整的命令列表，以及他们的说明文档。</li>
+<li><a href="/topics/pipelining.html">管道（Pipelining）</a>：学习如何一次发送多个命令，节省往返时间。</li>
+<li><a href="topics/pubsub.html">Redis 发布/订阅（Pub/Sub）</a>：redis是一个快速、稳定的发布/订阅的信息系统。</li>
+<li><a href="/commands/eval.html">Redis Lua 脚本</a>：Redis 2.6 Lua 脚本相关文档。</li>
+<li><a href="/topics/memory-optimization.html">内存优化</a>：了解如何使用内存和学习一些使用技巧。</li>
+<li><a href="/commands/expire.html">过期（Expires）</a>：Redis允许为每一个key设置不同的过期时间，当它们到期时将自动从服务器上删除。</li>
+<li><a href="/topics/lru-cache.html">将Redis当做使用LRU算法的缓存来使用</a>：如何配置并且将Redis当做缓存来使用，通过限制内存及自动回收键。</li>
+<li><a href="/topics/transactions.html">Redis 事务</a>：将一组命令放在同一个事务中进行处理。</li>
+<li><a href="/topics/mass-insert.html">大量插入数据</a>：如何在短时间里向Redis写入大量数据。</li>
+<li><a href="/topics/partitioning.html">分区（Partitioning）</a>：如何将你的数据分布在多个Redis里面。</li>
+</ul>
 
-Tutorials & FAQ
----
+<h2>Redis 管理</h2>
 
-* [Introduction to Redis data types](/topics/data-types-intro.html): This is a good starting point to learn the Redis API and data model.
-* [Writing a simple Twitter clone with PHP and Redis](/topics/twitter-clone.html)
-* [Auto complete with Redis](http://autocomplete.redis.io)
-* [Data types short summary](/topics/data-types.html): A short summary of the different types of values that Redis supports, not as updated and info rich as the first tutorial listed in this section.
-* [FAQ](/topics/faq): Some common questions about Redis.
+<ul>
+<li><a href="/topics/config.html">配置（Configuration）</a>：怎么配置 redis。</li>
+<li><a href="/topics/replication.html">复制（Replication）</a>：你需要知道怎么设置主从复制。</li>
+<li><a href="/topics/persistence.html">持久化（Persistence）</a>：了解如何配置redis的持久化。</li>
+<li><a href="/topics/admin.html">Redis 管理（Redis Administration）</a>：学习redis管理方面的知识。</li>
+<li><a href="/topics/security.html">安全性（Security）</a>：概述Redis的安全。</li>
+<li><a href="/topics/signals.html">信号处理（Signals Handling）</a>：如何处理Redis信号。</li>
+<li><a href="/topics/clients.html">连接处理（Connections Handling）</a>：如何处理Redis客户端连接。</li>
+<li><a href="/topics/sentinel.html">高可用性（High Availability）</a>：Redis Sentinel是Redis官方的高可用性解决方案。目前工作进展情况（beta阶段，积极发展），已经可用。</li>
+<li><a href="/topics/benchmarks.html">基准（Benchmarks）</a>：看看Redis在不同平台上跑得有多快。</li>
+</ul>
 
-Administration
----
-* [Configuration](/topics/config.html): How to configure redis.
-* [Replication](/topics/replication.html): What you need to know in order to
-set up master-slave replication.
-* [Persistence](/topics/persistence.html): Know your options when configuring
-Redis' durability.
-* [Redis Administration](/topics/admin.html): Selected administration topics.
-* [Security](/topics/security.html): An overview of Redis security.
-* [Encryption](/topics/encryption.html): How to encrypt Redis client-server communication.
-* [Signals Handling](/topics/signals.html): How Redis handles signals.
-* [Connections Handling](/topics/clients.html): How Redis handles clients connections.
-* [High Availability](/topics/sentinel.html): Redis Sentinel is the official high availability solution for Redis.
-* [Latency monitoring](/topics/latency-monitor.html): Redis integrated latency monitoring and reporting capabilities are helpful to tune Redis instances for low latency workloads.
-* [Benchmarks](/topics/benchmarks.html): See how fast Redis is in different platforms.
-* [Redis Releases](/topics/releases.html): Redis development cycle and version numbering.
+<h2>故障排除</h2>
 
-Troubleshooting
----
+<ul>
+<li><a href="/topics/problems.html">Redis 的问题?</a>: 错误（Bugs）? 高延迟（High latency）? 其他问题? 使用 <a href="/topics/problems.html">我们的故障排除页面</a> 作为出发点，了解更多的信息。</li>
+</ul>
 
-* [Redis problems?](/topics/problems.html): Bugs? High latency? Other issues? Use [our problems troubleshooting page](/topics/problems) as a starting point to find more information.
+<h2>非稳定版的功能文档</h2>
 
-Redis Cluster
----
+<ul>
+<li><a href="/topics/notifications.html">Redis的密钥空间通知（Redis keyspace notifications）</a>：获得通过的Pub / Sub的密钥空间活动的通知。最近不稳定的分支合并到了此功能。这个实现的第一个稳定版本将在Redis的2.8。</li>
+</ul>
 
-* [Redis Cluster tutorial](/topics/cluster-tutorial.html): a gentle introduction and setup guide to Redis Cluster.
-* [Redis Cluster specification](/topics/cluster-spec.html): the more formal description of the behavior and algorithms used in Redis Cluster.
+<h2>产品规格（Specifications）</h2>
 
-Other distributed systems based on Redis
----
+<ul>
+<li><a href="/topics/protocol.html">Redis的协议规范（Redis Protocol specification）</a>如果你正在使用redis，或者对它好奇，这里将简单的介绍如何与redis交互。</li>
+<li><a href="https://github.com/sripathikrishnan/redis-rdb-tools/wiki/Redis-RDB-Dump-File-Format">Redis的RDB格式规范</a>，与 <a href="https://github.com/sripathikrishnan/redis-rdb-tools/blob/master/docs/RDB_Version_History.textile">RDB的版本历史记录</a>。</li>
+<li><a href="/topics/internals.html">内部机制（Internals）</a>:详细学习Redis内部引擎是如何实现的。</li>
+</ul>
 
-* [Roshi](https://github.com/soundcloud/roshi) is a large-scale CRDT set implementation for timestamped events based on Redis and implemented in Go. It was initially developed for [the SoundCloud stream](http://developers.soundcloud.com/blog/roshi-a-crdt-system-for-timestamped-events).
+<h2>教程 &amp; FAQ</h2>
 
-Specifications
----
+<ul>
+<li><a href="/topics/faq.html">FAQ</a>：关于Redis的一些常见问题。</li>
+<li><a href="/topics/data-types.html">数据类型（Data types）</a>：Redis支持不同类型值的摘要。</li>
+<li><a href="/topics/data-types-intro.html">15分钟快速了解Redis的数据结构</a></li>
+<li><a href="/topics/twitter-clone.html">用PHP+Redis编写一个简单的Twitter</a></li>
+<li><a href="http://antirez.com/post/autocomplete-with-redis.html">用Redis实现自动完成</a></li>
+</ul>
 
-* [Redis Design Drafts](/topics/rdd.html): Design drafts of new proposals.
-* [Redis Protocol specification](/topics/protocol.html): if you're implementing a
-client, or out of curiosity, learn how to communicate with Redis at a
-low level.
-* [Redis RDB format](https://github.com/sripathikrishnan/redis-rdb-tools/wiki/Redis-RDB-Dump-File-Format) specification, and [RDB version history](https://github.com/sripathikrishnan/redis-rdb-tools/blob/master/docs/RDB_Version_History.textile).
-* [Internals](/topics/internals.html): Learn details about how Redis is implemented under the hood.
+<h2>简报（Presentations）</h2>
 
-Resources
----
+<ul>
+<li>Salvatore Sanfilippo: <a href="http://redis.io/presentation/Redis_Cluster.pdf">Redis的集群概述</a></li>
+<li>Pieter Noordhuis: <a href="http://redis.io/presentation/Pnoordhuis_whats_new_in_2_2.pdf">Redis 2.2的新特性</a></li>
+</ul>
 
-* [Redis Cheat Sheet](http://www.cheatography.com/tasjaevan/cheat-sheets/redis/): Online or printable function reference for Redis.
+<p>如果你想在演示文稿中使用本标识（logo），请使用<a href="http://redis.io/images/redis-300dpi.png">高分辨率的版本</a>。 <a href="http://redis.io/images/redis-logo.svg">SVG版本</a>也是可用的。</p>
 
-Use cases
----
-* [Who is using Redis](/topics/whos-using-redis.html)
+<h2>使用案例（Use cases）</h2>
 
-Books
----
+<ul>
+<li><a href="/topics/whos-using-redis.html">谁正在使用 Redis</a></li>
+</ul>
 
-The following is a list of books covering Redis that are already published. Books are ordered by release date (newer books first).
+<h2>书籍</h2>
 
-* [Redis in Action (Manning, 2013)](http://www.manning.com/carlson/) by [Josiah L. Carlson](http://twitter.com/dr_josiah) (early access edition).
-* [Instant Redis Optimization How-to (Packt, 2013)](http://www.packtpub.com/redis-optimization-how-to/book) by [Arun Chinnachamy](http://twitter.com/ArunChinnachamy).
-* [Instant Redis Persistence (Packt, 2013)](http://www.packtpub.com/redis-persistence/book) by Matt Palmer.
-* [The Little Redis Book (Free Book, 2012)](http://openmymind.net/2012/1/23/The-Little-Redis-Book/) by [Karl Seguin](http://twitter.com/karlseguin) is a great *free* and concise book that will get you started with Redis.
-* [Redis Cookbook (O'Reilly Media, 2011)](http://shop.oreilly.com/product/0636920020127.do) by [Tiago Macedo](http://twitter.com/tmacedo) and [Fred Oliveira](http://twitter.com/f).
+<p>以下是已经发布的Redis书籍的列表：</p>
 
-The following books have Redis related content but are not specifically about Redis:
+<ul>
+<li>由 <a href="http://twitter.com/karlseguin">Karl Seguin</a> 编写的 <a href="http://openmymind.net/2012/1/23/The-Little-Redis-Book/">《The Little Redis Book》</a>  是一本非常简洁和开放的Reids入门书籍。</li>
+<li><a href="http://twitter.com/dr_josiah">Josiah L. Carlson</a> 编写的 <a href="http://www.manning.com/carlson/">《Redis in Action》</a> 是早期的阅读版本。</li>
+<li>还有 <a href="http://shop.oreilly.com/product/0636920020127.do">Redis Cookbook (O&#39;Reilly Media, 2011)</a></li>
+</ul>
 
-* [Seven databases in seven weeks (The Pragmatic Bookshelf, 2012)](http://pragprog.com/book/rwdata/seven-databases-in-seven-weeks).
-* [Mining the Social Web (O'Reilly Media, 2011)](http://shop.oreilly.com/product/0636920010203.do)
-* [Professional NoSQL (Wrox, 2011)](http://www.wrox.com/WileyCDA/WroxTitle/Professional-NoSQL.productCd-047094224X.html)
+<p>下列书籍有Redis的相关内容，但不是专门关于Redis的：</p>
 
-Credits
----
+<ul>
+<li><a href="http://pragprog.com/book/rwdata/seven-databases-in-seven-weeks">Seven databases in seven weeks</a> (Note: Redis chapter still coming soon).</li>
+<li><a href="http://shop.oreilly.com/product/0636920010203.do">Mining the Social Web (O&#39;Reilly Media, 2011)</a></li>
+<li><a href="http://www.wrox.com/WileyCDA/WroxTitle/Professional-NoSQL.productCd-047094224X.html">Professional NoSQL (Wrox, 2011)</a></li>
+</ul>
 
-Redis is maintained and developed by [Salvatore Sanfilippo](http://twitter.com/antirez). In the past [Pieter Noordhuis](http://twitter.com/pnoordhuis) and [Matt Stancliff](https://matt.sh) provided a very significant amount of code and ideas to both the Redis core and client libraries.
+<h2>保荐人</h2>
 
-The full list of Redis contributors can be found in the [Redis contributors page at Github](https://github.com/antirez/redis/graphs/contributors). However there are other forms of contributions such as ideas, testing, and bug reporting. When possible this contributions are acknowledged in the commit messages. The [mailing list archives](http://groups.google.com/group/redis-db) and the [Github issues page](https://github.com/antirez/redis/issues) are good sources to find people active in the Redis community providing ideas and helping other users.
-
-Sponsors
----
-
-The work [Salvatore Sanfilippo](http://antirez.com) does in order to develop Redis is sponsored by [Redis Labs](http://redislabs.com). Other sponsors and past sponsors of the Redis project are listed in the [Sponsors page](/topics/sponsors).
-
-License, Trademark and Logo
----
-
-* Redis is released under the three clause BSD license. You can find [additional information in our license page](/topics/license.html).
-* The Redis trademark and logos are owned by Salvatore Sanfilippo, please read the [Redis trademark guidelines](/topics/trademark.html) for our policy about the use of the Redis trademarks and logo.
+<p> <a href="http://antirez.com">Salvatore Sanfilippo</a> 和 <a href="http://twitter.com/pnoordhuis">Pieter Noordhuis</a> 发展redis的工作是由 <a href="http://vmware.com">VMware</a>发起的。在过去Redis接受过的捐赠中，将在<a href="/topics/sponsors.html">赞助商的页面</a>中列出的其他公司。 </p>
+      
