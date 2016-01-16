@@ -1,7 +1,7 @@
 ---
 layout: topics
 title: REDIS 许可 -- Redis中文资料站
-permalink: topics/license.html.html
+permalink: topics/license.html
 disqusIdentifier: license
 disqusUrl: http://redis.cn/topics/license.html
 ---
