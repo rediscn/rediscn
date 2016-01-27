@@ -6,57 +6,55 @@ disqusIdentifier: topics_quickstart
 disqusUrl: http://redis.cn/topics/quickstart.html
 ---
 
-Redis Quick Start
+快速上手Redis
 ===
 
-This is a quick start document that targets people without prior experience
-with Redis. Reading this document will help you:
+本文适用于于没有使用redis经验的新人，通过阅读本文档能帮助您学会以下一些事情：
 
-* Download and compile Redis to start hacking.
-* Use **redis-cli** to access the server.
-* Use Redis from your application.
-* Understand how Redis persistence works.
-* Install Redis more properly.
-* Find out what to read next to understand more about Redis.
+* 下载和编译Rieds
+* 使用 **redis-cli** 连接服务器
+* 在您的应用中实用Redis
+* 了解Redis持续性工作原理。
+* 更好的掌控Rieds安装
+* 发现和学习Redis的今后发展道路
 
-Installing Redis
+安装Redis
 ===
 
-The suggested way of installing Redis is compiling it from sources as
-Redis has no dependencies other than a working GCC compiler and libc.
-Installing it using the package manager of your Linux distribution is somewhat
-discouraged as usually the available version is not the latest.
+我们建议您直接从官网下载源码编译安装Redis,编译它仅仅需要GCC和libc库即可。
+当然您也可以实用liunx的安装管理器来安装Redis,但是我们不鼓励您这么做，因为这样安装的版本通常不是最新的稳定版本。
 
-You can either download the latest Redis tar ball from the [redis.io](http://redis.io) web site, or you can alternatively use this special URL that always points to the latest stable Redis version, that is, [http://download.redis.io/redis-stable.tar.gz](http://download.redis.io/redis-stable.tar.gz).
+您可以通过[本网站](/)直接下载最新稳定版本,同时也可以直接点击[http://download.redis.io/redis-stable.tar.gz](http://download.redis.io/redis-stable.tar.gz)下载。
 
-In order to compile Redis follow this simple steps:
+编译Redis只需要下面简单几个步骤：
 
     wget http://download.redis.io/redis-stable.tar.gz
     tar xvzf redis-stable.tar.gz
     cd redis-stable
     make
 
-At this point you can try if your build works correctly by typing **make test**, but this is an optional step. After the compilation the **src** directory inside the Redis distribution is populated with the different executables that are part of Redis:
+当然，在**make**之前，你可以使用**make test**命令（可选的）尝试编译一下，在**src**目录下有以下一些可执行文件：
 
-* **redis-server** is the Redis Server itself.
-* **redis-sentinel** is the Redis Sentinel executable (monitoring and failover).
-* **redis-cli** is the command line interface utility to talk with Redis.
-* **redis-benchmark** is used to check Redis performances.
-* **redis-check-aof** and **redis-check-dump** are useful in the rare event of corrupted data files.
 
-It is a good idea to copy both the Redis server and the command line interface in proper places, either manually using the following commands:
+* **redis-server** 启动Redis服务的脚本
+* **redis-sentinel** Redis 哨兵脚本 (监控和故障转移).
+* **redis-cli** Redis自带的命令行客户端
+* **redis-benchmark** Redis测试脚本
+* **redis-check-aof** 和 **redis-check-dump** 极少数情况下用于处理损坏的数据文件，但是非常有用。
+
+把redis的启动脚本和自带的命令行工具拷贝到系统的可执行目录是一个不错的主意，手动执行下面的命令即可：
 
 * sudo cp src/redis-server /usr/local/bin/
 * sudo cp src/redis-cli /usr/local/bin/
 
-Or just using `make install`.
+或者使用 `make install`也可以。
 
-In the following documentation we assume that /usr/local/bin is in your PATH environment variable so that you can execute both the binaries without specifying the full path.
+现在，我们假设您已经把/usr/local/bin添加到PATH环境变量，同时上面两个文件也拷贝到了这个目录。
 
-Starting Redis
+启动Redis
 ===
 
-The simplest way to start the Redis server is just executing the **redis-server** binary without any argument.
+下面是最简单的启动Redis服务的方法，不添加任何参数直接执行**redis-server**脚本：
 
     $ redis-server
     [28550] 01 Aug 19:29:28 # Warning: no config file specified, using the default config. In order to specify a config file use 'redis-server /path/to/redis.conf'
@@ -64,24 +62,25 @@ The simplest way to start the Redis server is just executing the **redis-server*
     [28550] 01 Aug 19:29:28 * The server is now ready to accept connections on port 6379
     ... more logs ...
 
-In the above example Redis was started without any explicit configuration file, so all the parameters will use the internal default.
-This is perfectly fine if you are starting Redis just to play a bit with it or for development, but for production environments you should use a configuration file.
+上面的例子中使用没有任何显式配置文件，所有的参数将使用内部默认配置。
+刚开始学习和开发环境时这样做很好，但是在生产环境中，你应该使用配置文件进行配置设置。
 
-In order to start Redis with a configuration file use the full path of the configuration file as first argument, like in the following example: **redis-server /etc/redis.conf**. You should use the `redis.conf` file included in the root directory of the Redis source code distribution as a template to write your configuration file.
+带配置文件启动Redis时，只需在启动命令后面指定配置文件即可，例如：**redis-server /etc/redis.conf**。
+Redis源码根目录下有默认的`redis.conf`配置文件，你应该参考这个文件来进行配置设置。
 
-Check if Redis is working
+检查Redis是否正常工作
 =========================
 
-External programs talk to Redis using a TCP socket and a Redis specific protocol. This protocol is implemented in the Redis client libraries for the different programming languages. However to make hacking with Redis simpler Redis provides a command line utility that can be used to send commands to Redis. This program is called **redis-cli**.
+不同语言的外部程序可以通过TCP socket和Redis具体协议来实现redis与的连接，但是Redis本身提供了一个简单的命令行工具**redis-cli**就可以直接连接到Redis服务。
 
-The first thing to do in order to check if Redis is working properly is sending a **PING** command using redis-cli:
+检查Redis是否正常工作要做的第一件事情就是发送一个**PING**命令：
 
     $ redis-cli ping
     PONG
 
-Running **redis-cli** followed by a command name and its arguments will send this command to the Redis instance running on localhost at port 6379. You can change the host and port used by redis-cli, just try the --help option to check the usage information.
+通过命令行运行**redis-cli**命令，它后面跟着的参数将会发送到本机的6379端口的Redis服务上。你也可以指定特定host和端口进行连接，试试**redis-cli --help**学习怎么连接到指定的host和端口。
 
-Another interesting way to run redis-cli is without arguments: the program will start in interactive mode, you can type different commands and see their replies.
+另一个有趣的方法是使用命令行运行不带参数：程序将在互动模式启动，你可以输入不同的命令和看到他们的回复。
 
     $ redis-cli                                                                
     redis 127.0.0.1:6379> ping
@@ -91,23 +90,16 @@ Another interesting way to run redis-cli is without arguments: the program will 
     redis 127.0.0.1:6379> get mykey
     "somevalue"
 
-At this point you are able to talk with Redis. It is the right time to pause a bit with this tutorial and start the [fifteen minutes introduction to Redis data types](http://redis.io/topics/data-types-intro) in order to learn a few Redis commands. Otherwise if you already know a few basic Redis commands you can keep reading.
+现在，你已经可以与Redis进行交互了，是时候去看看[十五分钟介绍Redis数据类型](/topics/data-types-intro.html)，如果你已经知道一些基本的Redis命令，那么恭喜你，你可以继续阅读下面的内容了。
 
-Using Redis from your application
+在应用程序中使用Redis
 ===
 
-Of course using Redis just from the command line interface is not enough as
-the goal is to use it from your application. In order to do so you need to
-download and install a Redis client library for your programming language.
-You'll find a [full list of clients for different languages in this page](http://redis.io/clients).
+仅仅知道Redis的命令行工具是不够的，我们的目标是在应用程序中实用Redis。为了在应用程序中使用Redis，您需要到[Redis的客户端](/clients.html)里面下载您编程语言的一个redis客户端库。
 
-For instance if you happen to use the Ruby programming language our best advice
-is to use the [Redis-rb](http://github.com/ezmobius/redis-rb) client.
-You can install it using the command **gem install redis** (also make sure to install the **SystemTimer** gem as well).
+例如，如果你使用Ruby编程语言，我们最好的建议是使用[Redis-rb](http://github.com/ezmobius/redis-rb)客户端。你可以使用**gem install redis**命令安装它（请确认您的系统已经安装好了gem命令）。
 
-These instructions are Ruby specific but actually many library clients for
-popular languages look quite similar: you create a Redis object and execute
-commands calling methods. A short interactive example using Ruby:
+这些命令是Ruby所特有的，但实际很多客户端类库语言和这很相似：创建一个Redis对象和执行命令调用方法。一个简单的用Ruby操作的例子：
 
     >> require 'rubygems'
     => false
@@ -122,17 +114,18 @@ commands calling methods. A short interactive example using Ruby:
     >> r.get('foo')
     => "bar"
 
-Redis persistence
+Redis 持久化
 =================
 
-You can learn [how Redis persistence works on this page](http://redis.io/topics/persistence), however what is important to understand for a quick start is that by default, if you start Redis with the default configuration, Redis will spontaneously save the dataset only from time to time (for instance after at least five minutes if you have at least 100 changes in your data), so if you want your database to persist and be reloaded after a restart make sure to call the **SAVE** command manually every time you want to force a data set snapshot. Otherwise make sure to shutdown the database using the **SHUTDOWN** command:
+你可以通过 [Redis持久化](/topics/persistence.html)学习更多相关内容,然而重要的是需要知道默认情况下，快速启动的Redis会时不时的保存数据 (例如至少五分钟后，如果至少有100个数据的变化),所以，如果你想让你的数据确切的保存下来，你需要手动执行**SAVE**命令以保存当前快照。否则请确保使用 **SHUTDOWN** 命令来关闭Redis。
 
     $ redis-cli shutdown
 
-This way Redis will make sure to save the data on disk before quitting.
-Reading the [persistence page](http://redis.io/topics/persistence) is strongly suggested in order to better understand how Redis persistence works.
+这样能确保将所有数据都保存到磁盘上。
 
-Installing Redis more properly
+强烈建议您阅读 [Redis持久化](/topics/persistence.html)。以便更好的了解Redis持久化。
+
+Redis高级安装使用篇
 ==============================
 
 Running Redis from the command line is fine just to hack a bit with it or for

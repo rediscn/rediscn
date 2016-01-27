@@ -6,390 +6,193 @@ disqusIdentifier: topics_protocol
 disqusUrl: http://redis.cn/topics/protocol.html
 ---
 
-# Redis Protocol specification
+# 协议说明
 
-Redis clients communicate with the Redis server using a protocol called **RESP** (REdis Serialization Protocol). While the protocol was designed specifically for Redis, it can be used for other client-server software projects.
+Redis协议在以下几点之间做出了折衷：
 
-RESP is a compromise between the following things:
+* 简单的实现
+* 快速地被计算机解析
+* 简单得可以能被人工解析
+* 
+## 网络层 ##
 
-* Simple to implement.
-* Fast to parse.
-* Human readable.
+Redis在TCP端口6379上监听到来的连接，客户端连接到来时，Redis服务器为此创建一个TCP连接。在客户端与服务器端之间传输的每个Redis命令或者数据都以\r\n结尾。
 
-RESP can serialize different data types like integers, strings, arrays. There is also a specific type for errors. Requests are sent from the client to the Redis server as arrays of strings representing the arguments of the command to execute. Redis replies with a command-specific data type.
+## 请求 ##
 
-RESP is binary-safe and does not require processing of bulk data transferred from one process to another, because it uses prefixed-length to transfer bulk data.
+Redis接收由不同参数组成的命令。一旦收到命令，将会立刻被处理，并回复给客户端。
 
-Note: the protocol outlined here is only used for client-server communication. Redis Cluster uses a different binary protocol in order to exchange messages between nodes.
+## 新的统一请求协议 ##
 
-Networking layer
-----------------
+新的统一协议已在Redis 1.2中引入，但是在Redis 2.0中，这就成为了与Redis服务器通讯的标准方式。
 
-A client connects to a Redis server creating a TCP connection to the port 6379.
+在这个统一协议里，发送给Redis服务端的所有参数都是二进制安全的。以下是通用形式：
 
-While RESP is technically non-TCP specific, in the context of Redis the protocol is only used with TCP connections (or equivalent stream oriented connections like Unix sockets).
+	*<number of arguments> CR LF
+	$<number of bytes of argument 1> CR LF
+	<argument data> CR LF
+	...
+	$<number of bytes of argument N> CR LF
+	<argument data> CR LF
 
-Request-Response model
-----------------------
+例子如下：
 
-Redis accepts commands composed of different arguments.
-Once a command is received, it is processed and a reply is sent back to the client.
+	*3
+	$3
+	SET
+	$5
+	mykey
+	$7
+	myvalue
 
-This is the simplest model possible, however there are two exceptions:
+上面的命令看上去像是单引号字符串，所以可以在查询中看到每个字节的准确值：
 
-* Redis supports pipelining (covered later in this document). So it is possible for clients to send multiple commands at once, and wait for replies later.
-* When a Redis client subscribes to a Pub/Sub channel, the protocol changes semantics and becomes a *push* protocol, that is, the client no longer requires to send commands, because the server will automatically send to the client new messages (for the channels the client is subscribed to) as soon as they are received.
+	"*3\r\n$3\r\nSET\r\n$5\r\nmykey\r\n$7\r\nmyvalue\r\n"
 
-Excluding the above two exceptions, the Redis protocol is a simple request-response protocol.
+在Redis的回复中也使用这样的格式。批量回复时，这种格式用于每个参数$6\r\nmydata\r\n。 实际的统一请求协议是Redis用于返回列表项，并调用 Multi-bulk回复。 仅仅是N个以以*<argc>\r\n为前缀的不同批量回复，<argc>是紧随的参数（批量回复）数目。
 
-RESP protocol description
--------------------------
+## 回复 ##
 
-The RESP protocol was introduced in Redis 1.2, but it became the
-standard way for talking with the Redis server in Redis 2.0.
-This is the protocol you should implement in your Redis client.
+Redis用不同的回复类型回复命令。它可能从服务器发送的第一个字节开始校验回复类型：
 
-RESP is actually a serialization protocol that supports the following
-data types: Simple Strings, Errors, Integers, Bulk Strings and Arrays.
+* 用单行回复，回复的第一个字节将是“+”
+* 错误消息，回复的第一个字节将是“-”
+* 整型数字，回复的第一个字节将是“:”
+* 批量回复，回复的第一个字节将是“$”
+* 多个批量回复，回复的第一个字节将是“*”
 
-The way RESP is used in Redis as a request-response protocol is the
-following:
+## 状态回复 ##
 
-* Clients send commands to a Redis server as a RESP Array of Bulk Strings.
-* The server replies with one of the RESP types according to the command implementation.
+状态回复（或者单行回复）以“+”开始以“\r\n”结尾的单行字符串形式。例如：
 
-In RESP, the type of some data depends on the first byte:
+	+OK
 
-* For **Simple Strings** the first byte of the reply is "+"
-* For **Errors** the first byte of the reply is "-"
-* For **Integers** the first byte of the reply is ":"
-* For **Bulk Strings** the first byte of the reply is "$"
-* For **Arrays** the first byte of the reply is "`*`"
+客户端库将在“+”后面返回所有数据，正如上例中字符串“OK”一样。
 
-Additionally RESP is able to represent a Null value using a special variation of Bulk Strings or Array as specified later.
+## 错误回复 ##
 
-In RESP different parts of the protocol are always terminated with "\r\n" (CRLF).
+错误回复发送类似于状态回复。唯一的不同是第一个字节用“-”代替“+”。
 
-<a name="simple-string-reply"></a>
+错误回复仅仅在一些意料之外的事情发生时发送，例如：如果你试图执行一个操作来应付错误的数据类型，或者如果命令不存在等等。所以当收到一个错误回复时，客户端将会出现一个异常。
 
-RESP Simple Strings
----
+## 整型回复 ##
 
-Simple Strings are encoded in the following way: a plus character, followed by a string that cannot contain a CR or LF character (no newlines are allowed), terminated by CRLF (that is "\r\n").
+这种回复类型只是用CRLF结尾字符串来表示整型，用一个字节的“：”作为前缀。例如：“：0\r\n”，或者“:1000\r\n”是整型回复。
 
-Simple Strings are used to transmit non binary safe strings with minimal overhead. For example many Redis commands reply with just "OK" on success, that as a RESP Simple String is encoded with the following 5 bytes:
+像INCR或者LASTAVE命令用整型回复作为实际回复值，此时对于返回的整型没有特殊的意思。它仅仅是为INCR、LASTSAVE的UNIX时间等增加数值。
 
-    "+OK\r\n"
+一些命令像EXISTS将为true返回1，为false返回0。
 
-In order to send binary-safe strings, RESP Bulk Strings are used instead.
+其它命令像SADD、SREM和SETNX如果操作实际完成了的话将返回1，否则返回0。
 
-When Redis replies with a Simple String, a client library should return
-to the caller a string composed of the first character after the '+'
-up to the end of the string, excluding the final CRLF bytes.
+接下来的命令将回复一个整型回复：SETNX、DEL、EXISTS、INCR、INCRBY、DECR、DECRBY、DBSIZE、LASTSAVE、RENAMENX、MOVE、LLEN、SADD、SREM、SISMEMBER、SCARD。
 
-<a name="error-reply"></a>
+## 批量回复（Bulk replies） ##
 
-RESP Errors
----
+批量回复被服务器用于返回一个单二进制安全字符串。
 
-RESP has a specific data type for errors. Actually errors are exactly like
-RESP Simple Strings, but the first character is a minus '-' character instead
-of a plus. The real difference between Simple Strings and Errors in RESP is that
-errors are treated by clients as exceptions, and the string that composes
-the Error type is the error message itself.
+	C: GET mykey
+	S: $6\r\nfoobar\r\n
 
-The basic format is:
+服务器发送第一行回复，该行以“$”开始后面跟随实际要发送的字节数，随后是CRLF，然后发送实际数据，随后是2个字节的额外数据用于最后的CRLF。服务器发送的准确序列如下：
 
-    "-Error message\r\n"
+	"$6\r\nfoobar\r\n"
 
-Error replies are only sent when something wrong happens, for instance if
-you try to perform an operation against the wrong data type, or if the command
-does not exist and so forth. An exception should be raised by the library
-client when an Error Reply is received.
+如果请求的值不存在，批量回复将使用特殊的值-1来作为数据长度，例如：
 
-The following are examples of error replies:
+	C: GET nonexistingkey
+	S: $-1
 
-    -ERR unknown command 'foobar'
-    -WRONGTYPE Operation against a key holding the wrong kind of value
+当请求的对象不存在时，客户端库API不会返回空字符串，而会返回空对象。例如：Ruby库返回‘nil’，而C库返回NULL（或者在回复的对象里设置指定的标志）等等。
 
-The first word after the "-", up to the first space or newline, represents
-the kind of error returned. This is just a convention used by Redis and is not
-part of the RESP Error format.
+## 多批量回复（Multi-bulk replies） ##
 
-For example, `ERR` is the generic error, while `WRONGTYPE` is a more specific
-error that implies that the client tried to perform an operation against the
-wrong data type. This is called an **Error Prefix** and is a way to allow
-the client to understand the kind of error returned by the server without
-to rely on the exact message given, that may change over the time.
+像命令LRNGE需要返回多个值（列表的每个元素是一个值，而LRANGE需要返回多于一个单元素）。使用多批量写是有技巧的，用一个初始行作为前缀来指示多少个批量写紧随其后。批量回复的第一个字节总是*，例如：
 
-A client implementation may return different kind of exceptions for different
-errors, or may provide a generic way to trap errors by directly providing
-the error name to the caller as a string.
+	C: LRANGE mylist 0 3
+	s: *4
+	s: $3
+	s: foo
+	s: $3
+	s: bar
+	s: $5
+	s: Hello
+	s: $5
+	s: World
 
-However, such a feature should not be considered vital as it is rarely useful, and a limited client implementation may simply return a generic error condition, such as `false`.
+正如您可以看到的多批量回复是以完全相同的格式使用Redis统一协议将命令发送给服务器。
 
-<a name="integer-reply"></a>
+服务器发送的第一行是*4\r\n，用于指定紧随着4个批量回复。然后传送每个批量写。
 
-RESP Integers
--------------
+如果指定的键不存在，则该键被认为是持有一个空的列表，且数值0被当作多批量计数值来发送，例如：
 
-This type is just a CRLF terminated string representing an integer,
-prefixed by a ":" byte. For example ":0\r\n", or ":1000\r\n" are integer
-replies.
+	C: LRANGE nokey 0 1
+	S: *0
 
-Many Redis commands return RESP Integers, like `INCR`, `LLEN` and `LASTSAVE`.
+当BLPOP命令超时时，它返回nil多批量回复。这种类型多批量回复的计数器是-1，且值被当作nil来解释。例如：
 
-There is no special meaning for the returned integer, it is just an
-incremental number for `INCR`, a UNIX time for `LASTSAVE` and so forth. However,
-the returned integer is guaranteed to be in the range of a signed 64 bit
-integer.
+	C: BLPOP key 1
+	S: *-1
 
-Integer replies are also extensively used in order to return true or false.
-For instance commands like `EXISTS` or `SISMEMBER` will return 1 for true
-and 0 for false.
+当这种情况发生时，客户端库API将返回空nil对象，且不是一个空列表。这必须有别于空列表和错误条件（例如：BLPOP命令的超时条件）。
 
-Other commands like `SADD`, `SREM` and `SETNX` will return 1 if the operation
-was actually performed, 0 otherwise.
+## 多批量回复中的Nil元素 ##
 
-The following commands will reply with an integer reply: `SETNX`, `DEL`,
-`EXISTS`, `INCR`, `INCRBY`, `DECR`, `DECRBY`, `DBSIZE`, `LASTSAVE`,
-`RENAMENX`, `MOVE`, `LLEN`, `SADD`, `SREM`, `SISMEMBER`, `SCARD`.
+多批量回复的单元素长度可能是-1，为了发出信号这个元素被丢失且不是空字符串。这种情况发送在SORT命令时，此时使用GET模式选项且指定的键丢失。一个多批量回复包含一个空元素的例子如下：
 
-<a name="nil-reply"></a>
-<a name="bulk-string-reply"></a>
+	S: *3
+	S: $3
+	S: foo
+	S: $-1
+	S: $3
+	S: bar
 
-RESP Bulk Strings
------------------
+第二个元素是空。客户端库返回如下:
 
-Bulk Strings are used in order to represent a single binary safe
-string up to 512 MB in length.
+	["foo",nil,"bar"]
 
-Bulk Strings are encoded in the following way:
+## **多命令和管道** ##
 
-* A "$" byte followed by the number of bytes composing the string (a prefixed length), terminated by CRLF.
-* The actual string data.
-* A final CRLF.
+客户端能使用同样条件为了发出多个命令。管道用于支持多命令能够被客户端用单写操作来发送，它不需要为了发送下一条命令而读取服务器的回复。所有回复都能在最后被读出。
 
-So the string "foobar" is encoded as follows:
+通常Redis服务器和客户端拥有非常快速的连接，所以在客户端的实现中支持这个特性不是那么重要，如果一个应用需要在短时间内发出大量的命令，管道仍然会非常快。
 
-    "$6\r\nfoobar\r\n"
+## 旧协议发送命令 ##
 
-When an empty string is just:
+在统一请求协议出现前，Redis用不同的协议发送命令，现在仍然支持，它简单通过手动telnet。在这种协议中，有两种类型的命令：
 
-    "$0\r\n\r\n"
+* 内联命令：简单命令其参数用空格分割字符串。非二进制安全。
+* 批量命令：批量命令准确如内联命令，但是最后的参数用特殊方式来处理用于保证最后参数二进制安全。
+内联命令
 
-RESP Bulk Strings can also be used in order to signal non-existence of a value
-using a special format that is used to represent a Null value. In this special
-format the length is -1, and there is no data, so a Null is represented as:
+最简单的发送Redis命令的方式是通过内联命令。下面是一个使用内联命令聊天的服务器/客户端的例子（服务器聊天用S:开始，客户端聊天用C:开始）。
 
-    "$-1\r\n"
+	C: PING
+	S: +PONG
 
-This is called a **Null Bulk String**.
+下面是另外一个内联命令返回整数的例子：
 
-The client library API should not return an empty string, but a nil object,
-when the server replies with a Null Bulk String.
-For example a Ruby library should return 'nil' while a C library should
-return NULL (or set a special flag in the reply object), and so forth.
+	C: EXISTS somekey
+	S: :0
 
-<a name="array-reply"></a>
+因为‘somekey’不存在，所以服务器返回‘:0’。
 
-RESP Arrays
------------
+注意：EXISTS命令带有一个参数。参数用空格分割。
 
-Clients send commands to the Redis server using RESP Arrays. Similarly
-certain Redis commands returning collections of elements to the client
-use RESP Arrays are reply type. An example is the `LRANGE` command that
-returns elements of a list.
+批量命令
 
-RESP Arrays are sent using the following format:
+一些命令当用内联命令发送时需要一种特殊的格式用于支持最后参数二进制安全。这种命令用最后参数作为“字节计数器”，然后发送批量数据（因为服务器知道读取多少个字节，所以是二进制安全的）。
 
-* A `*` character as the first byte, followed by the number of elements in the array as a decimal number, followed by CRLF.
-* An additional RESP type for every element of the Array.
+请看下面的例子：
 
-So an empty Array is just the following:
+	C: SET mykey 6
+	C: foobar
+	S: +OK
 
-    "*0\r\n"
+这条命令的最后一个参数是‘6’。这用于指定随后数据的字节数，即字符串“foobar”。注意：虽然这个字节流是以额外的两个CRLF字节结尾的。
 
-While an array of two RESP Bulk Strings "foo" and "bar" is encoded as:
+所有批量命令都是用这种准确的格式：用随后数据的字节数代替最后一个参数，紧跟着后面是组成参数本身的字节和CRLF。为了更清楚程序，下面是通过客户端发送字符串的例子：
 
-    "*2\r\n$3\r\nfoo\r\n$3\r\nbar\r\n"
+	"SET mykey 6\r\nfoobar\r\n"
 
-As you can see after the `*<count>CRLF` part prefixing the array, the other
-data types composing the array are just concatenated one after the other.
-For example an Array of three integers is encoded as follows:
-
-    "*3\r\n:1\r\n:2\r\n:3\r\n"
-
-Arrays can contain mixed types, it's not necessary for the
-elements to be of the same type. For instance, a list of four
-integers and a bulk string can be encoded as the follows:
-
-    *5\r\n
-    :1\r\n
-    :2\r\n
-    :3\r\n
-    :4\r\n
-    $6\r\n
-    foobar\r\n
-
-(The reply was split into multiple lines for clarity).
-
-The first line the server sent is `*5\r\n` in order to specify that five
-replies will follow. Then every reply constituting the items of the
-Multi Bulk reply are transmitted.
-
-The concept of Null Array exists as well, and is an alternative way to
-specify a Null value (usually the Null Bulk String is used, but for historical
-reasons we have two formats).
-
-For instance when the `BLPOP` command times out, it returns a Null Array
-that has a count of `-1` as in the following example:
-
-    "*-1\r\n"
-
-A client library API should return a null object and not an empty Array when
-Redis replies with a Null Array. This is necessary to distinguish
-between an empty list and a different condition (for instance the timeout
-condition of the `BLPOP` command).
-
-Arrays of arrays are possible in RESP. For example an array of two arrays
-is encoded as follows:
-
-    *2\r\n
-    *3\r\n
-    :1\r\n
-    :2\r\n
-    :3\r\n
-    *2\r\n
-    +Foo\r\n
-    -Bar\r\n
-
-(The format was split into multiple lines to make it easier to read).
-
-The above RESP data type encodes a two elements Array consisting of an Array that contains three Integers 1, 2, 3 and an array of a Simple String and an Error.
-
-Null elements in Arrays
------------------------
-
-Single elements of an Array may be Null. This is used in Redis replies  in
-order to signal that this elements are missing and not empty strings. This
-can happen with the SORT command when used with the GET _pattern_ option
-when the specified key is missing. Example of an Array reply containing a
-Null element:
-
-    *3\r\n
-    $3\r\n
-    foo\r\n
-    $-1\r\n
-    $3\r\n
-    bar\r\n
-
-The second element is a Null. The client library should return something
-like this:
-
-    ["foo",nil,"bar"]
-
-Note that this is not an exception to what said in the previous sections, but
-just an example to further specify the protocol.
-
-Sending commands to a Redis Server
-----------------------------------
-
-Now that you are familiar with the RESP serialization format, writing an
-implementation of a Redis client library will be easy. We can further specify
-how the interaction between the client and the server works:
-
-* A client sends to the Redis server a RESP Array consisting of just Bulk Strings.
-* A Redis server replies to clients sending any valid RESP data type as reply.
-
-So for example a typical interaction could be the following.
-
-The client sends the command **LLEN mylist** in order to get the length of the list stored at key *mylist*, and the server replies with an Integer reply as in the following example (C: is the client, S: the server).
-
-    C: *2\r\n
-    C: $4\r\n
-    C: LLEN\r\n
-    C: $6\r\n
-    C: mylist\r\n
-
-    S: :48293\r\n
-
-As usually we separate different parts of the protocol with newlines for simplicity, but the actual interaction is the client sending `*2\r\n$4\r\nLLEN\r\n$6\r\nmylist\r\n` as a whole.
-
-Multiple commands and pipelining
---------------------------------
-
-A client can use the same connection in order to issue multiple commands.
-Pipelining is supported so multiple commands can be sent with a single
-write operation by the client, without the need to read the server reply
-of the previous command before issuing the next one.
-All the replies can be read at the end.
-
-For more information please check our [page about Pipelining](/topics/pipelining).
-
-Inline Commands
----------------
-
-Sometimes you have only `telnet` in your hands and you need to send a command
-to the Redis server. While the Redis protocol is simple to implement it is
-not ideal to use in interactive sessions, and `redis-cli` may not always be
-available. For this reason Redis also accepts commands in a special way that
-is designed for humans, and is called the **inline command** format.
-
-The following is an example of a server/client chat using an inline command
-(the server chat starts with S:, the client chat with C:)
-
-    C: PING
-    S: +PONG
-
-The following is another example of an inline command returning an integer:
-
-    C: EXISTS somekey
-    S: :0
-
-Basically you simply write space-separated arguments in a telnet session.
-Since no command starts with `*` that is instead used in the unified request
-protocol, Redis is able to detect this condition and parse your command.
-
-High performance parser for the Redis protocol
-----------------------------------------------
-
-While the Redis protocol is very human readable and easy to implement it can
-be implemented with a performance similar to that of a binary protocol.
-
-RESP uses prefixed lengths to transfer bulk data, so there is
-never need to scan the payload for special characters like it happens for
-instance with JSON, nor to quote the payload that needs to be sent to the
-server.
-
-The Bulk and Multi Bulk lengths can be processed with code that performs
-a single operation per character while at the same time scanning for the
-CR character, like the following C code:
-
-```
-#include <stdio.h>
-
-int main(void) {
-    unsigned char *p = "$123\r\n";
-    int len = 0;
-
-    p++;
-    while(*p != '\r') {
-        len = (len*10)+(*p - '0');
-        p++;
-    }
-
-    /* Now p points at '\r', and the len is in bulk_len. */
-    printf("%d\n", len);
-    return 0;
-}
-```
-
-After the first CR is identified, it can be skipped along with the following
-LF without any processing. Then the bulk data can be read using a single
-read operation that does not inspect the payload in any way. Finally
-the remaining the CR and LF character are discarded without any processing.
-
-While comparable in performance to a binary protocol the Redis protocol is
-significantly simpler to implement in most very high level languages,
-reducing the number of bugs in client software.
+Redis有一个内部列表，用于表示哪些命令是内联，哪些命令是批量，所以你不得不发送相应的命令。强烈建议使用新的统一请求协议来代替老的协议。
