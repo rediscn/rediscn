@@ -22,14 +22,14 @@ The unit must be one of the following, and defaults to meters:
 
 The distance is computed assuming that the Earth is a perfect sphere, so errors up to 0.5% are possible in edge cases.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply, specifically:
 
 The command returns the distance as a double (represented as a string)
 in the specified unit, or NULL if one or both the elements are missing.
 
-@examples
+##Àý×Ó
 
 ```cli
 GEOADD Sicily 13.361389 38.115556 "Palermo" 15.087269 37.502669 "Catania"

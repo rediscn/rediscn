@@ -7,6 +7,6 @@ disqusUrl: http://redis.cn/commands/sync.html
 commandsType: server
 ---
 
-@examples
+##Àý×Ó
 
-@return
+## ·µ»ØÖµ

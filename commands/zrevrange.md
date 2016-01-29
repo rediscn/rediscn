@@ -13,12 +13,12 @@ Descending lexicographical order is used for elements with equal score.
 
 Apart from the reversed ordering, `ZREVRANGE` is similar to `ZRANGE`.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: list of elements in the specified range (optionally with
 their scores).
 
-@examples
+##Àý×Ó
 
 ```cli
 ZADD myzset 1 "one"

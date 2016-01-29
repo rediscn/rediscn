@@ -19,13 +19,13 @@ byte, -2 is the penultimate, and so forth.
 
 Non-existent keys are treated as empty strings, so the command will return zero.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply
 
 The number of bits set to 1.
 
-@examples
+##Àý×Ó
 
 ```cli
 SET mykey "foobar"

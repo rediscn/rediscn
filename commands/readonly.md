@@ -23,6 +23,6 @@ master node. This may happen because:
 1. The client sent a command about hash slots never served by the master of this slave.
 2. The cluster was reconfigured (for example resharded) and the slave is no longer able to serve commands for a given hash slot.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply

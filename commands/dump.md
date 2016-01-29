@@ -30,11 +30,11 @@ should be used.
 
 If `key` does not exist a nil bulk reply is returned.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: the serialized value.
 
-@examples
+##Àý×Ó
 
 ```cli
 SET mykey 10

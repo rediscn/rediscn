@@ -144,6 +144,6 @@ The string `->` is used to separate the key name from the hash field name.
 The key is substituted as documented above, and the hash stored at the resulting
 key is accessed to retrieve the specified hash field.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: list of sorted elements.

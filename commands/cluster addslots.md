@@ -55,6 +55,6 @@ orchestrating Redis Cluster, like `redis-trib`, and the command if used
 out of the right context can leave the cluster in a wrong state or cause
 data loss.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: `OK` if the command was successful. Otherwise an error is returned.

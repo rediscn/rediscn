@@ -10,12 +10,12 @@ commandsType: sortedsets
 Returns the sorted set cardinality (number of elements) of the sorted set stored
 at `key`.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the cardinality (number of elements) of the sorted set, or `0`
 if `key` does not exist.
 
-@examples
+##Àý×Ó
 
 ```cli
 ZADD myzset 1 "one"

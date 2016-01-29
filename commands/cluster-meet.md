@@ -44,6 +44,6 @@ the node to force the receiver to accept it as a trusted node, it sends a
 same format, but the former forces the receiver to acknowledge the node as
 trusted.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: `OK` if the command was successful. If the address or port specified are invalid an error is returned.

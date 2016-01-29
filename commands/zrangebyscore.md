@@ -48,12 +48,12 @@ ZRANGEBYSCORE zset (5 (10
 
 Will return all the elements with `5 < score < 10` (5 and 10 excluded).
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: list of elements in the specified score range (optionally
 with their scores).
 
-@examples
+##Àý×Ó
 
 ```cli
 ZADD myzset 1 "one"

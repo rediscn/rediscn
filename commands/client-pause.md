@@ -24,6 +24,6 @@ This command is useful as it makes able to switch clients from a Redis instance 
 
 It is possible to send `CLIENT PAUSE` in a MULTI/EXEC block together with the `INFO replication` command in order to get the current master offset at the time the clients are blocked. This way it is possible to wait for a specific offset in the slave side in order to make sure all the replication stream was processed.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: The command returns OK or an error if the timeout is invalid.

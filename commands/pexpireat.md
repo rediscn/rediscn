@@ -10,14 +10,14 @@ commandsType: keys
 `PEXPIREAT` has the same effect and semantic as `EXPIREAT`, but the Unix time at
 which the key will expire is specified in milliseconds instead of seconds.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply, specifically:
 
 * `1` if the timeout was set.
 * `0` if `key` does not exist or the timeout could not be set (see: `EXPIRE`).
 
-@examples
+##Àý×Ó
 
 ```cli
 SET mykey "Hello"

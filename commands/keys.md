@@ -35,11 +35,11 @@ Supported glob-style patterns:
 
 Use `\` to escape special characters if you want to match them verbatim.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: list of keys matching `pattern`.
 
-@examples
+##Àý×Ó
 
 ```cli
 MSET one 1 two 2 three 3 four 4

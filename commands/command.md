@@ -175,12 +175,12 @@ with `MGET` above where the step value is just 1.
 
 
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: nested list of command details.  Commands are returned
 in random order.
 
-@examples
+##Àı×Ó
 
 ```cli
 COMMAND

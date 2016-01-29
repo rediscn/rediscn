@@ -23,14 +23,14 @@ timeouts for the AOF persistence mode.
 Of course, it can be used directly to specify that a given key should expire at
 a given time in the future.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply, specifically:
 
 * `1` if the timeout was set.
 * `0` if `key` does not exist or the timeout could not be set (see: `EXPIRE`).
 
-@examples
+##Àý×Ó
 
 ```cli
 SET mykey "Hello"

@@ -26,7 +26,7 @@ byte, -2 is the penultimate, and so forth.
 
 Non-existent keys are treated as empty strings.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply
 
@@ -40,7 +40,7 @@ Basically, the function considers the right of the string as padded with zeros i
 
 However, this behavior changes if you are looking for clear bits and specify a range with both __start__ and __end__. If no clear bit is found in the specified range, the function returns -1 as the user specified a clear range and there are no 0 bits in that range.
 
-@examples
+##Àý×Ó
 
 ```cli
 SET mykey "\xff\xf0\x00"

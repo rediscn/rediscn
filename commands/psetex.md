@@ -10,7 +10,7 @@ commandsType: strings
 `PSETEX` works exactly like `SETEX` with the sole difference that the expire
 time is specified in milliseconds instead of seconds.
 
-@examples
+##Р§зг
 
 ```cli
 PSETEX mykey 1000 "Hello"

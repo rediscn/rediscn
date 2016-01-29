@@ -14,7 +14,7 @@ If `key` does not exist, it is treated as an empty set and this command returns
 
 An error is returned when the value stored at `key` is not a set.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the number of members that were removed from the set, not
 including non existing members.
@@ -24,7 +24,7 @@ including non existing members.
 * `>= 2.4`: Accepts multiple `member` arguments.
   Redis versions older than 2.4 can only remove a set member per call.
 
-@examples
+##Àý×Ó
 
 ```cli
 SADD myset "one"

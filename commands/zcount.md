@@ -15,11 +15,11 @@ The `min` and `max` arguments have the same semantic as described for
 
 Note: the command has a complexity of just O(log(N)) because it uses elements ranks (see `ZRANK`) to get an idea of the range. Because of this there is no need to do a work proportional to the size of the range.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the number of elements in the specified score range.
 
-@examples
+##Àý×Ó
 
 ```cli
 ZADD myzset 1 "one"

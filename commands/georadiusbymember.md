@@ -14,7 +14,7 @@ The position of the specified member is used as the center of the query.
 
 Please check the example below and the `GEORADIUS` documentation for more information about the command and its options.
 
-@examples
+##Р§зг
 
 ```cli
 GEOADD Sicily 13.583333 37.316667 "Agrigento"

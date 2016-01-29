@@ -29,12 +29,12 @@ the minimum or maximum score of an element across the inputs where it exists.
 
 If `destination` already exists, it is overwritten.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the number of elements in the resulting sorted set at
 `destination`.
 
-@examples
+##Àý×Ó
 
 ```cli
 ZADD zset1 1 "one"

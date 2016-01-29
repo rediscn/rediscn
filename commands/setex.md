@@ -23,11 +23,11 @@ because this operation is very common when Redis is used as a cache.
 
 An error is returned when `seconds` is invalid.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply
 
-@examples
+##Àý×Ó
 
 ```cli
 SETEX mykey 10 "Hello"

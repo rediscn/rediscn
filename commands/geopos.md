@@ -13,7 +13,7 @@ Given a sorted set representing a geospatial index, populated using the `GEOADD`
 
 The command can accept a variable number of arguments so it always returns an array of positions even when a single element is specified.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply, specifically:
 
@@ -23,7 +23,7 @@ argument to the command.
 
 Non existing elements are reported as NULL elements of the array.
 
-@examples
+##Àý×Ó
 
 ```cli
 GEOADD Sicily 13.361389 38.115556 "Palermo" 15.087269 37.502669 "Catania"

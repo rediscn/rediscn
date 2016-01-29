@@ -57,6 +57,6 @@ that means, save after 900 seconds if there is at least 1 change to the dataset,
 and after 300 seconds if there are at least 10 changes to the dataset, will be
 reported by `CONFIG GET` as "900 1 300 10".
 
-@return
+## ·µ»ØÖµ
 
 The return type of the command is a @array-reply.

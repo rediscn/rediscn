@@ -17,7 +17,7 @@ not modified, allowing for a [check-and-set mechanism][ttc].
 
 [ttc]: /topics/transactions#cas
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: each element being the reply to each of the commands in the
 atomic transaction.

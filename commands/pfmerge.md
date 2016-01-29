@@ -14,11 +14,11 @@ structures.
 The computed merged HyperLogLog is set to the destination variable, which is
 created if does not exist (defaulting to an empty HyperLogLog).
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: The command just returns `OK`.
 
-@examples
+##Àý×Ó
 
 ```cli
 PFADD hll1 foo bar zap a

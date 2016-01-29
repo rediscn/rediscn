@@ -12,7 +12,7 @@ Non existing members are ignored.
 
 An error is returned when `key` exists and does not hold a sorted set.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply, specifically:
 
@@ -25,7 +25,7 @@ An error is returned when `key` exists and does not hold a sorted set.
   In Redis versions older than 2.4 it was possible to remove a single member per
   call.
 
-@examples
+##Àý×Ó
 
 ```cli
 ZADD myzset 1 "one"

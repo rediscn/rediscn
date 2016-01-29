@@ -13,11 +13,11 @@ This operation is similar to `SRANDMEMBER`, that returns one or more random elem
 
 The `count` argument will be available in a later version and is not available in 2.6, 2.8, 3.0
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: the removed element, or `nil` when `key` does not exist.
 
-@examples
+##Àý×Ó
 
 ```cli
 SADD myset "one"

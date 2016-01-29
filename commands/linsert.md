@@ -15,12 +15,12 @@ performed.
 
 An error is returned when `key` exists but does not hold a list value.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the length of the list after the insert operation, or `-1` when
 the value `pivot` was not found.
 
-@examples
+##Àý×Ó
 
 ```cli
 RPUSH mylist "Hello"

@@ -15,11 +15,11 @@ See `MSETNX` if you don't want to overwrite existing values.
 It is not possible for clients to see that some of the keys were updated while
 others are unchanged.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: always `OK` since `MSET` can't fail.
 
-@examples
+##Àý×Ó
 
 ```cli
 MSET key1 "Hello" key2 "World"

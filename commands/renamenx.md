@@ -10,14 +10,14 @@ commandsType: keys
 Renames `key` to `newkey` if `newkey` does not yet exist.
 It returns an error under the same conditions as `RENAME`.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply, specifically:
 
 * `1` if `key` was renamed to `newkey`.
 * `0` if `newkey` already exists.
 
-@examples
+##Àý×Ó
 
 ```cli
 SET mykey "Hello"

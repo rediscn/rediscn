@@ -11,11 +11,11 @@ When all the elements in a sorted set are inserted with the same score, in order
 
 Apart from the reversed ordering, `ZREVRANGEBYLEX` is similar to `ZRANGEBYLEX`.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: list of elements in the specified score range.
 
-@examples
+##Àý×Ó
 
 ```cli
 ZADD myzset 0 a 0 b 0 c 0 d 0 e 0 f 0 g

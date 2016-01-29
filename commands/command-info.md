@@ -16,11 +16,11 @@ If you request details about non-existing commands, their return
 position will be nil.
 
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: nested list of command details.
 
-@examples
+##Àý×Ó
 
 ```cli
 COMMAND INFO get set eval

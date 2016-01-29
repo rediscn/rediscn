@@ -15,11 +15,11 @@ This operation is limited to **64 bit signed integers**.
 
 See `INCR` for extra information on increment/decrement operations.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the value of `key` after the decrement
 
-@examples
+##Àý×Ó
 
 ```cli
 SET mykey "10"

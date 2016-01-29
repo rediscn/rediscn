@@ -37,7 +37,7 @@ Specifically:
   (You can think at this variant as an hypothetical **ABORT** command that just
   stops the server).
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply on error.
 On success nothing is returned since the server quits and the connection is

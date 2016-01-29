@@ -30,6 +30,6 @@ only if the following additional conditions are met:
 
 If the command succeeds the new slave will immediately try to contact its master in order to replicate from it.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: `OK` if the command was executed successfully, otherwise an error is returned.

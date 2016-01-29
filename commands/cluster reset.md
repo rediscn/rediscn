@@ -29,6 +29,6 @@ reset the state of the cluster every time a new test unit is executed.
 
 If no reset type is specified, the default is **soft**.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: `OK` if the command was successful. Otherwise an error is returned.

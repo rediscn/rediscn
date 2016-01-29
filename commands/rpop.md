@@ -9,11 +9,11 @@ commandsType: lists
 
 Removes and returns the last element of the list stored at `key`.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: the value of the last element, or `nil` when `key` does not exist.
 
-@examples
+##Àý×Ó
 
 ```cli
 RPUSH mylist "one"

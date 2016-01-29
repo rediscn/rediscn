@@ -30,11 +30,11 @@ Trailing zeroes are always removed.
 The precision of the output is fixed at 17 digits after the decimal point
 regardless of the actual internal precision of the computation.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: the value of `key` after the increment.
 
-@examples
+##Àý×Ó
 
 ```cli
 SET mykey 10.50

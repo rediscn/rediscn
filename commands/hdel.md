@@ -12,7 +12,7 @@ Specified fields that do not exist within this hash are ignored.
 If `key` does not exist, it is treated as an empty hash and this command returns
 `0`.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the number of fields that were removed from the hash, not
 including specified but non existing fields.
@@ -25,7 +25,7 @@ including specified but non existing fields.
     To remove multiple fields from a hash in an atomic fashion in earlier
     versions, use a `MULTI` / `EXEC` block.
 
-@examples
+##Àý×Ó
 
 ```cli
 HSET myhash field1 "foo"

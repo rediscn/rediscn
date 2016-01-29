@@ -91,7 +91,7 @@ thing that happens when the timeout is reached.
 If you like science fiction, think of time flowing at infinite speed inside a
 `MULTI` / `EXEC` block...
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: specifically:
 
@@ -100,7 +100,7 @@ If you like science fiction, think of time flowing at infinite speed inside a
   where an element was popped and the second element being the value of the
   popped element.
 
-@examples
+##Àı×Ó
 
 ```
 redis> DEL list1 list2

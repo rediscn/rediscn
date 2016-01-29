@@ -9,12 +9,12 @@ commandsType: hashes
 
 Returns all field names in the hash stored at `key`.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: list of fields in the hash, or an empty list when `key` does
 not exist.
 
-@examples
+##Àý×Ó
 
 ```cli
 HSET myhash field1 "Hello"

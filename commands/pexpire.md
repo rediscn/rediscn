@@ -15,7 +15,7 @@ specified in milliseconds instead of seconds.
 * `1` if the timeout was set.
 * `0` if `key` does not exist or the timeout could not be set.
 
-@examples
+##Р§зг
 
 ```cli
 SET mykey "Hello"

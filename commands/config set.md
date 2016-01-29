@@ -61,7 +61,7 @@ Redis server that started with AOF turned on since the start.
 You can have both the AOF enabled with RDB snapshotting if you want, the two
 options are not mutually exclusive.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: `OK` when the configuration was set properly.
 Otherwise an error is returned.

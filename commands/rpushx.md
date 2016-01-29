@@ -12,11 +12,11 @@ exists and holds a list.
 In contrary to `RPUSH`, no operation will be performed when `key` does not yet
 exist.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the length of the list after the push operation.
 
-@examples
+##Àý×Ó
 
 ```cli
 RPUSH mylist "Hello"

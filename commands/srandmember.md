@@ -13,12 +13,12 @@ Starting from Redis version 2.6, when called with the additional `count` argumen
 
 When called with just the key argument, the operation is similar to `SPOP`, however while `SPOP` also removes the randomly selected element from the set, `SRANDMEMBER` will just return a random element without altering the original set in any way.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: without the additional `count` argument the command returns a Bulk Reply with the randomly selected element, or `nil` when `key` does not exist.
 @array-reply: when the additional `count` argument is passed the command returns an array of elements, or an empty array when `key` does not exist.
 
-@examples
+##Àý×Ó
 
 ```cli
 SADD myset one two three

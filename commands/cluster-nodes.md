@@ -111,6 +111,6 @@ Note that:
 1. Migration and importing slots are only added to the node flagged as `myself`. This information is local to a node, for its own slots.
 2. Importing and migrating slots are provided as **additional info**. If the node has a given hash slot assigned, it will be also a plain number in the list of hash slots, so clients that don't have a clue about hash slots migrations can just skip this special fields.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: The serialized cluster configuration.

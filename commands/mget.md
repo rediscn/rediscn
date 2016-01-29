@@ -12,11 +12,11 @@ For every key that does not hold a string value or does not exist, the special
 value `nil` is returned.
 Because of this, the operation never fails.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: list of values at the specified keys.
 
-@examples
+##Àý×Ó
 
 ```cli
 SET key1 "Hello"

@@ -17,6 +17,6 @@ zero being returned.
 (integer) 50341
 ```
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: The number of keys in the specified hash slot, or an error if the hash slot is invalid.

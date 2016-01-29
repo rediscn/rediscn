@@ -10,11 +10,11 @@ commandsType: keys
 Removes the specified keys.
 A key is ignored if it does not exist.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: The number of keys that were removed.
 
-@examples
+##Àý×Ó
 
 ```cli
 SET key1 "Hello"

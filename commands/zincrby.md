@@ -20,12 +20,12 @@ The `score` value should be the string representation of a numeric value, and
 accepts double precision floating point numbers.
 It is possible to provide a negative value to decrement the score.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: the new score of `member` (a double precision floating point
 number), represented as string.
 
-@examples
+##Àý×Ó
 
 ```cli
 ZADD myzset 1 "one"

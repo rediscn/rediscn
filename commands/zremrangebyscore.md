@@ -13,11 +13,11 @@ Removes all elements in the sorted set stored at `key` with a score between
 Since version 2.1.6, `min` and `max` can be exclusive, following the syntax of
 `ZRANGEBYSCORE`.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the number of elements removed.
 
-@examples
+##Àý×Ó
 
 ```cli
 ZADD myzset 1 "one"

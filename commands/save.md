@@ -22,6 +22,6 @@ Please refer to the [persistence documentation][tp] for detailed information.
 
 [tp]: /topics/persistence
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: The commands returns OK on success.

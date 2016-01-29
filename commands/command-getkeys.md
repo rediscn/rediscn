@@ -18,11 +18,11 @@ keys.  You can use `COMMAND GETKEYS` to discover key positions
 directly from how Redis parses the commands.
 
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: list of keys from your command.
 
-@examples
+##Àý×Ó
 
 ```cli
 COMMAND GETKEYS MSET a b c d e f

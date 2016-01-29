@@ -43,14 +43,14 @@ is the Haversine formula. This formula is only an approximation when applied to 
 and most other applications. However in the worst case the error may be up to
 0.5%, so you may want to consider other systems for error-critical applications.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply, specifically:
 
 * The number of elements added to the sorted set, not including elements
   already existing for which the score was updated.
 
-@examples
+##Àý×Ó
 
 ```cli
 GEOADD Sicily 13.361389 38.115556 "Palermo" 15.087269 37.502669 "Catania"

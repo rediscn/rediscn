@@ -24,6 +24,6 @@ master and set the application to use this new master in read/write.
 Later when the other Redis server is fixed, it can be reconfigured to work as a
 slave.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply

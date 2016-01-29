@@ -12,11 +12,11 @@ For more information on the `index` argument, see `LINDEX`.
 
 An error is returned for out of range indexes.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply
 
-@examples
+##Àý×Ó
 
 ```cli
 RPUSH mylist "one"

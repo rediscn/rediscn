@@ -7,17 +7,10 @@ disqusUrl: http://redis.cn/commands/bgsave.html
 commandsType: server
 ---
 
-Save the DB in background.
-The OK code is immediately returned.
-Redis forks, the parent continues to serve the clients, the child saves the DB
-on disk then exits.
-A client may be able to check if the operation succeeded using the `LASTSAVE`
-command.
+后台保存DB。会立即返回 OK 状态码。 Redis forks, 父进程继续提供服务以供客户端调用，子进程将DB数据保存到磁盘然后退出。如果操作成功，可以通过客户端命令LASTSAVE来检查操作结果。
 
-Please refer to the [persistence documentation][tp] for detailed information.
+详细信息请参阅[persistence documentation](/topics/persistence.html)。
 
-[tp]: /topics/persistence
+##返回值
 
-@return
-
-@simple-string-reply
+[simple-string-reply](/topics/protocol.html#simple-string-reply)

@@ -9,11 +9,11 @@ commandsType: lists
 
 Removes and returns the first element of the list stored at `key`.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: the value of the first element, or `nil` when `key` does not exist.
 
-@examples
+##Àý×Ó
 
 ```cli
 RPUSH mylist "one"

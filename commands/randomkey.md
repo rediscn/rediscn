@@ -9,6 +9,6 @@ commandsType: keys
 
 Return a random key from the currently selected database.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: the random key, or `nil` when the database is empty.

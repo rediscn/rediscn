@@ -25,7 +25,7 @@ Use case
 
 As already specified this command is mostly not needed if not for debugging. However there are actual use cases, which is, when there is to query for the same areas multiple times, or with a different granularity or area shape compared to what Redis `GEORADIUS` is able to provide, the client may implement using this command part of the logic on the client side. Score ranges representing given areas can be cached client side and used to retrieve elements directly using `ZRANGEBYSCORE`.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply, specifically:
 
@@ -37,7 +37,7 @@ The command returns an array of give elements in the following order:
 * center-longitude, center-latitude
 * min-score and max-score of the sorted set to retrieve the members inside the area
 
-@examples
+##Àý×Ó
 
 ```cli
 GEOADD Sicily 13.361389 38.115556 "Palermo" 15.087269 37.502669 "Catania"

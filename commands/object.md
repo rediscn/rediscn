@@ -49,7 +49,7 @@ All the specially encoded types are automatically converted to the general type
 once you perform an operation that makes it impossible for Redis to retain the
 space saving encoding.
 
-@return
+## ·µ»ØÖµ
 
 Different return values are used for different subcommands.
 
@@ -58,7 +58,7 @@ Different return values are used for different subcommands.
 
 If the object you try to inspect is missing, a null bulk reply is returned.
 
-@examples
+##Àý×Ó
 
 ```
 redis> lpush mylist "Hello World"

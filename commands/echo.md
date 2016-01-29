@@ -9,11 +9,11 @@ commandsType: connection
 
 Returns `message`.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply
 
-@examples
+##Àý×Ó
 
 ```cli
 ECHO "Hello World!"

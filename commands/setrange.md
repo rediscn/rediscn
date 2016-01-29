@@ -35,11 +35,11 @@ Thanks to `SETRANGE` and the analogous `GETRANGE` commands, you can use Redis
 strings as a linear array with O(1) random access.
 This is a very fast and efficient storage in many real world use cases.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the length of the string after it was modified by the command.
 
-@examples
+##Àý×Ó
 
 Basic usage:
 

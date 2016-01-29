@@ -14,7 +14,7 @@ For every `field` that does not exist in the hash, a `nil` value is returned.
 Because a non-existing keys are treated as empty hashes, running `HMGET` against
 a non-existing `key` will return a list of `nil` values.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: list of values associated with the given fields, in the same
 order as they are requested.

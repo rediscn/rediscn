@@ -48,11 +48,11 @@ write command was executed in the context of a given client. When `WAIT` is
 called Redis checks if the specified number of slaves already acknowledged
 this offset or a greater one.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: The command returns the number of slaves reached by all the writes performed in the context of the current connection.
 
-@examples
+##Àý×Ó
 
 ```
 > SET foo bar

@@ -28,11 +28,11 @@ allocation) takes ~8ms.
 Note that once this first allocation is done, subsequent calls to `SETBIT` for
 the same _key_ will not have the allocation overhead.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the original bit value stored at _offset_.
 
-@examples
+##Àý×Ó
 
 ```cli
 SETBIT mykey 7 1

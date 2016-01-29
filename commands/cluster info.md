@@ -39,6 +39,6 @@ cluster_stats_messages_received:1483968
 
 More information about the Current Epoch and Config Epoch variables are available in the Redis Cluster specification document.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: A map between named fields and values in the form of `<field>:<value>` lines separated by newlines composed by the two bytes `CRLF`.

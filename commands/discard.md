@@ -14,6 +14,6 @@ connection state to normal.
 
 If `WATCH` was used, `DISCARD` unwatches all keys watched by the connection.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: always `OK`.

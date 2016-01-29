@@ -78,7 +78,7 @@ The sentinel output is composed of the following parts:
 1. The string `sentinel`.
 2. An array of master names monitored by this Sentinel instance.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: where the first element is one of `master`, `slave`, `sentinel` and the additional elements are role-specific as illustrated above.
 
@@ -86,7 +86,7 @@ The sentinel output is composed of the following parts:
 
 * This command was introduced in the middle of a Redis stable release, specifically with Redis 2.8.12.
 
-@examples
+##Àý×Ó
 
 ```cli
 ROLE

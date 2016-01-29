@@ -23,6 +23,6 @@ Every new connection starts without an assigned name.
 
 Tip: setting names to connections is a good way to debug connection leaks due to bugs in the application using Redis.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: `OK` if the connection name was successfully set.

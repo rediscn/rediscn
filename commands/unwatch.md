@@ -13,6 +13,6 @@ Flushes all the previously watched keys for a [transaction][tt].
 
 If you call `EXEC` or `DISCARD`, there's no need to manually call `UNWATCH`.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: always `OK`.

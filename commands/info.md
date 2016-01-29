@@ -30,7 +30,7 @@ It can also take the following values:
 
 When no parameter is provided, the `default` option is assumed.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: as a collection of text lines.
 

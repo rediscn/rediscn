@@ -17,11 +17,11 @@ multi-bulk with a "pong" in the first position and an empty bulk in the second
 position, unless an argument is provided in which case it returns a copy
 of the argument.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply
 
-@examples
+##Àý×Ó
 
 ```cli
 PING

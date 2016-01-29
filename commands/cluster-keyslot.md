@@ -28,6 +28,6 @@ Example use cases for this command:
 
 Note that the command implements the full hashing algorithm, including support for **hash tags**, that is the special property of Redis Cluster key hashing algorithm, of hashing just what is between `{` and `}` if such a pattern is found inside the key name, in order to force multiple keys to be handled by the same node.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: The hash slot number.

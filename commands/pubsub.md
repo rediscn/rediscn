@@ -22,7 +22,7 @@ If no `pattern` is specified, all the channels are listed, otherwise if pattern
 is specified only channels matching the specified glob-style pattern are
 listed.
 
-@return
+## 返回值
 
 @array-reply: a list of active channels, optionally matching the specified pattern.
 
@@ -31,7 +31,7 @@ listed.
 Returns the number of subscribers (not counting clients subscribed to patterns)
 for the specified channels.
 
-@return
+## 返回值
 
 @array-reply: a list of channels and number of subscribers for every channel. The format is channel, count, channel, count, ..., so the list is flat.
 The order in which the channels are listed is the same as the order of the
@@ -46,6 +46,6 @@ Returns the number of subscriptions to patterns (that are performed using the
 `PSUBSCRIBE` command). Note that this is not just the count of clients subscribed
 to patterns but the total number of patterns all the clients are subscribed to.
 
-@return
+## 返回值
 
 @integer-reply: the number of patterns all the clients are subscribed to.

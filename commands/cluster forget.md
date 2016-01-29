@@ -51,6 +51,6 @@ The command does not succeed and returns an error in the following cases:
 2. The node receiving the command is a slave, and the specified node ID identifies its current master.
 3. The node ID identifies the same node we are sending the command to.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: `OK` if the command was executed successfully, otherwise an error is returned.

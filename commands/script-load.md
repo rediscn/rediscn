@@ -21,7 +21,7 @@ script cache.
 Please refer to the `EVAL` documentation for detailed information about Redis
 Lua scripting.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply This command returns the SHA1 digest of the script added into the
 script cache.

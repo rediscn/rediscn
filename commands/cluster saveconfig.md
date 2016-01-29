@@ -19,6 +19,6 @@ is persisted on disk, however all the commands should normally be able to
 auto schedule to persist the configuration on disk when it is important
 to do so for the correctness of the system in the event of a restart.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: `OK` or an error if the operation fails.

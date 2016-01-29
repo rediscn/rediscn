@@ -20,6 +20,6 @@ These are the counters that are reset:
 * Latest fork(2) time
 * The `aof_delayed_fsync` counter
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: always `OK`.

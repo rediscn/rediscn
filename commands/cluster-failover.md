@@ -68,6 +68,6 @@ bypassing the failure detection stage, so to check if the failover actually
 happened, `CLUSTER NODES` or other means should be used in order to verify
 that the state of the cluster changes after some time the command was sent.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: `OK` if the command was accepted and a manual failover is going to be attempted. An error if the operation cannot be executed, for example if we are talking with a node which is already a master.

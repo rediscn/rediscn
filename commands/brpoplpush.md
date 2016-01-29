@@ -16,7 +16,7 @@ A `timeout` of zero can be used to block indefinitely.
 
 See `RPOPLPUSH` for more information.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: the element being popped from `source` and pushed to `destination`.
 If `timeout` is reached, a @nil-reply is returned.

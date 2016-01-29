@@ -13,7 +13,7 @@ Since Redis 3.0.3 it is possible to specify multiple keys instead of a single on
 
 The user should be aware that if the same existing key is mentioned in the arguments multiple times, it will be counted multiple times. So if `somekey` exists, `EXISTS somekey somekey` will return 2.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply, specifically:
 
@@ -24,7 +24,7 @@ Since Redis 3.0.3 the command accepts a variable number of keys and the return v
 
 * The number of keys existing among the ones specified as arguments. Keys mentioned multiple times and existing are counted multiple times.
 
-@examples
+##Àý×Ó
 
 ```cli
 SET key1 "Hello"

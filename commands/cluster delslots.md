@@ -51,7 +51,7 @@ debugging and in order to manually orchestrate a cluster configuration
 when a new cluster is created. It is currently not used by `redis-trib`,
 and mainly exists for API completeness.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: `OK` if the command was successful. Otherwise
 an error is returned.

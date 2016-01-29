@@ -11,11 +11,11 @@ When all the elements in a sorted set are inserted with the same score, in order
 
 The meaning of `min` and `max` are the same of the `ZRANGEBYLEX` command. Similarly, this command actually returns the same elements that `ZRANGEBYLEX` would return if called with the same `min` and `max` arguments.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the number of elements removed.
 
-@examples
+##Àý×Ó
 
 ```cli
 ZADD myzset 0 aaaa 0 b 0 c 0 d 0 e

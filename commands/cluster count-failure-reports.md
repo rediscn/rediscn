@@ -26,6 +26,6 @@ This command returns the number of failure reports for the current node which ar
 This command is mainly useful for debugging, when the failure detector of
 Redis Cluster is not operating as we believe it should.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the number of active failure reports for the node.

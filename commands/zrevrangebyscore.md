@@ -18,12 +18,12 @@ order.
 Apart from the reversed ordering, `ZREVRANGEBYSCORE` is similar to
 `ZRANGEBYSCORE`.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: list of elements in the specified score range (optionally
 with their scores).
 
-@examples
+##Àý×Ó
 
 ```cli
 ZADD myzset 1 "one"

@@ -16,11 +16,11 @@ the element with the highest score.
 For example: `-1` is the element with the highest score, `-2` the element with
 the second highest score and so forth.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the number of elements removed.
 
-@examples
+##Àý×Ó
 
 ```cli
 ZADD myzset 1 "one"

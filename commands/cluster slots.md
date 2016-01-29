@@ -37,7 +37,7 @@ If a cluster instance has non-contiguous slots (e.g. 1-400,900,1800-6000) then
 master and replica IP/Port results will be duplicated for each top-level
 slot range reply.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: nested list of slot ranges with IP/Port mappings.
 

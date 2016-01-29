@@ -18,7 +18,7 @@ This command usefulness is limited to the rare situations where you want to
 fetch raw data from the sorted set, for example with `ZRANGE`, and later
 need to decode the scores into positions. The other obvious use is debugging.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply, specifically:
 
@@ -28,7 +28,7 @@ The command returns an array of three elements. Each element of the main array i
 * min-longitude, min-latitude
 * max-longitude, max-latitude
 
-@examples
+##Àý×Ó
 
 ```cli
 GEOADD Sicily 13.361389 38.115556 "Palermo" 15.087269 37.502669 "Catania"

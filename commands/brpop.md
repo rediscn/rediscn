@@ -19,7 +19,7 @@ the tail of a list instead of popping from the head.
 
 [cb]: /commands/blpop
 
-@return
+## ·µ»ØÖµ
 
 @array-reply: specifically:
 
@@ -28,7 +28,7 @@ the tail of a list instead of popping from the head.
   where an element was popped and the second element being the value of the
   popped element.
 
-@examples
+##Àı×Ó
 
 ```
 redis> DEL list1 list2

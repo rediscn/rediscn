@@ -69,7 +69,7 @@ command:
 
 It is important to note that step 3 is the only time when a Redis Cluster node will create a new config epoch without agreement from other nodes. This only happens when a manual configuration is operated. However it is impossible that this creates a non-transient setup where two nodes have the same config epoch, since Redis Cluster uses a config epoch collision resolution algorithm.
 
-@return
+## ·µ»ØÖµ
 
 @simple-string-reply: All the subcommands return `OK` if the command was successful. Otherwise an error is returned.
 

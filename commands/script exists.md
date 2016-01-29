@@ -20,7 +20,7 @@ bandwidth.
 Please refer to the `EVAL` documentation for detailed information about Redis
 Lua scripting.
 
-@return
+## ·µ»ØÖµ
 
 @array-reply The command returns an array of integers that correspond to
 the specified SHA1 digest arguments.

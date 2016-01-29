@@ -10,7 +10,7 @@ commandsType: server
 The `CLIENT LIST` command returns information and statistics about the client
 connections server in a mostly human readable format.
 
-@return
+## ·µ»ØÖµ
 
 @bulk-string-reply: a unique string, formatted as follows:
 

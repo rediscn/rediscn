@@ -14,7 +14,7 @@ members.
 
 An error is returned when the value stored at `key` is not a set.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the number of elements that were added to the set, not including
 all the elements already present into the set.
@@ -24,7 +24,7 @@ all the elements already present into the set.
 * `>= 2.4`: Accepts multiple `member` arguments.
   Redis versions before 2.4 are only able to add a single member per call.
 
-@examples
+##Àý×Ó
 
 ```cli
 SADD myset "Hello"

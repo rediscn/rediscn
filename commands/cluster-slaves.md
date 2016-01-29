@@ -19,6 +19,6 @@ configuration update, it may show stale information. However eventually
 (in a matter of seconds if there are no network partitions) all the nodes
 will agree about the set of nodes associated with a given master.
 
-@return
+## ·µ»ØÖµ
 
 The command returns data in the same format as `CLUSTER NODES`.

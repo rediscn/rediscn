@@ -9,11 +9,11 @@ commandsType: keys
 
 Returns @integer-reply of number of total commands in this Redis server.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: number of commands returned by `COMMAND`
 
-@examples
+##Àý×Ó
 
 ```cli
 COMMAND COUNT

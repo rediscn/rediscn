@@ -19,7 +19,7 @@ leftmost element to the rightmost element.
 So for instance the command `RPUSH mylist a b c` will result into a list
 containing `a` as first element, `b` as second element and `c` as third element.
 
-@return
+## ·µ»ØÖµ
 
 @integer-reply: the length of the list after the push operation.
 
@@ -29,7 +29,7 @@ containing `a` as first element, `b` as second element and `c` as third element.
   In Redis versions older than 2.4 it was possible to push a single value per
   command.
 
-@examples
+##Àý×Ó
 
 ```cli
 RPUSH mylist "hello"
