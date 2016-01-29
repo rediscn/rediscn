@@ -19,20 +19,18 @@ byte, -2 is the penultimate, and so forth.
 
 Non-existent keys are treated as empty strings, so the command will return zero.
 
-@return
+## 返回
 
 @integer-reply
 
 The number of bits set to 1.
 
-@examples
+## 例子
 
-```cli
-SET mykey "foobar"
-BITCOUNT mykey
-BITCOUNT mykey 0 0
-BITCOUNT mykey 1 1
-```
+	SET mykey "foobar"
+	BITCOUNT mykey
+	BITCOUNT mykey 0 0
+	BITCOUNT mykey 1 1
 
 ## Pattern: real-time metrics using bitmaps
 

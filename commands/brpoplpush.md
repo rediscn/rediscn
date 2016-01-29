@@ -7,24 +7,16 @@ disqusUrl: http://redis.cn/commands/brpoplpush.html
 commandsType: lists
 ---
 
-`BRPOPLPUSH` is the blocking variant of `RPOPLPUSH`.
-When `source` contains elements, this command behaves exactly like `RPOPLPUSH`.
-When used inside a `MULTI`/`EXEC` block, this command behaves exactly like `RPOPLPUSH`.
-When `source` is empty, Redis will block the connection until another client
-pushes to it or until `timeout` is reached.
-A `timeout` of zero can be used to block indefinitely.
+`BRPOPLPUSH` 是 [RPOPLPUSH](/commands/rpoplpush.html) 的阻塞版本。 当 source 包含元素的时候，这个命令表现得跟 [RPOPLPUSH](/commands/rpoplpush.html) 一模一样。 当 source 是空的时候，Redis将会阻塞这个连接，直到另一个客户端 push 元素进入或者达到 timeout 时限。 timeout 为 0 能用于无限期阻塞客户端。
 
-See `RPOPLPUSH` for more information.
+查看 [RPOPLPUSH](/commands/rpoplpush.html) 以了解更多信息。
 
-@return
+## 返回值
 
-@bulk-string-reply: the element being popped from `source` and pushed to `destination`.
-If `timeout` is reached, a @nil-reply is returned.
+[批量回复(bulk-reply)](/topics/protocol.html#bulk-reply): 元素从 source 中弹出来，并压入 destination 中。 如果达到 timeout 时限，会返回一个[空的多批量回复(nil-reply)](/topics/protocol.html#nil-reply)。
 
-## Pattern: Reliable queue
+## 模式：可靠的队列
+请参考[RPOPLPUSH](/commands/rpoplpush.html) 命令文档。
 
-Please see the pattern description in the `RPOPLPUSH` documentation.
-
-## Pattern: Circular list
-
-Please see the pattern description in the `RPOPLPUSH` documentation.
+## 模式：循环列表
+请参考[RPOPLPUSH](/commands/rpoplpush.html) 命令文档。
