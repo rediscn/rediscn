@@ -9,181 +9,109 @@ disqusUrl: http://redis.cn/topics/pubsub.html
 Pub/Sub
 =======
 
-`SUBSCRIBE`, `UNSUBSCRIBE` and `PUBLISH`
-implement the [Publish/Subscribe messaging
-paradigm](http://en.wikipedia.org/wiki/Publish/subscribe) where
-(citing Wikipedia) senders (publishers) are not programmed to send
-their messages to specific receivers (subscribers). Rather, published
-messages are characterized into channels, without knowledge of what (if
-any) subscribers there may be. Subscribers express interest in one or
-more channels, and only receive messages that are of interest, without
-knowledge of what (if any) publishers there are. This decoupling of
-publishers and subscribers can allow for greater scalability and a more
-dynamic network topology.
+订阅，取消订阅和发布实现了发布/订阅消息范式(引自wikipedia)，发送者（发布者）不是计划发送消息给特定的接收者（订阅者）。而是发布的消息分到不同的频道，不需要知道什么样的订阅者订阅。订阅者对一个或多个频道感兴趣，只需接收感兴趣的消息，不需要知道什么样的发布者发布的。这种发布者和订阅者的解耦合可以带来更大的扩展性和更加动态的网络拓扑。
 
-For instance in order to subscribe to channels `foo` and `bar` the
-client issues a `SUBSCRIBE` providing the names of the channels:
+F为了订阅foo和bar，客户端发出一个订阅的频道名称:
 
-    SUBSCRIBE foo bar
+	SUBSCRIBE foo bar
 
-Messages sent by other clients to these channels will be pushed by Redis
-to all the subscribed clients.
+其他客户端发到这些频道的消息将会被推送到所有订阅的客户端。
 
-A client subscribed to one or more channels should not issue commands,
-although it can subscribe and unsubscribe to and from other channels.
-The reply of the `SUBSCRIBE` and `UNSUBSCRIBE` operations are sent in
-the form of messages, so that the client can just read a coherent stream
-of messages where the first element indicates the type of message.
+客户端订阅到一个或多个频道不必发出命令，尽管他能订阅和取消订阅其他频道。订阅和取消订阅的响应被封装在发送的消息中，以便客户端只需要读一个连续的消息流，其中第一个元素表示消息类型。
 
-## Format of pushed messages
+## 推送消息的格式 ##
 
-A message is a @array-reply with three elements.
+消息是一个有三个元素的多块响应 。
 
-The first element is the kind of message:
+第一个元素是消息类型:
 
-* `subscribe`: means that we successfully subscribed to the channel
-given as the second element in the reply. The third argument represents
-the number of channels we are currently subscribed to.
+* subscribe: 表示我们成功订阅到响应的第二个元素提供的频道。第三个参数代表我们现在订阅的频道的数量。
+* unsubscribe:表示我们成功取消订阅到响应的第二个元素提供的频道。第三个参数代表我们目前订阅的频道的数量。当最后一个参数是0的时候，我们不再订阅到任何频道。当我们在Pub/Sub以外状态，客户端可以发出任何redis命令。
+* message: 这是另外一个客户端发出的发布命令的结果。第二个元素是来源频道的名称，第三个参数是实际消息的内容。
+* 
+报文协议示例
 
-* `unsubscribe`: means that we successfully unsubscribed from the
-channel given as second element in the reply. The third argument
-represents the number of channels we are currently subscribed to. When
-the last argument is zero, we are no longer subscribed to any channel,
-and the client can issue any kind of Redis command as we are outside the
-Pub/Sub state.
+	SUBSCRIBE first second
+	*3
+	$9
+	subscribe
+	$5
+	first
+	:1
+	*3
+	$9
+	subscribe
+	$6
+	second
+	:2
 
-* `message`: it is a message received as result of a `PUBLISH` command
-issued by another client. The second element is the name of the
-originating channel, and the third argument is the actual message
-payload.
+此时，从另一个客户端我们发出关于频道名称为second的发布操作:
 
-## Database & Scoping
+	> PUBLISH second Hello
 
-Pub/Sub has no relation to the key space.  It was made to not interfere with
-it on any level, including database numbers.
+这是第一个客户端收到的：
 
-Publishing on db 10, will be heard by a subscriber on db 1.
+	*3
+	$7
+	message
+	$6
+	second
+	$5
+	Hello
 
-If you need scoping of some kind, prefix the channels with the name of the
-environment (test, staging, production, ...).
+现在客户端用没有任何参数的 [UNSUBSCRIBE](/commands/unsubscribe.html)命令取消订阅所有频道:
 
-## Wire protocol example
+	UNSUBSCRIBE
+	*3
+	$11
+	unsubscribe
+	$6
+	second
+	:1
+	*3
+	$11
+	unsubscribe
+	$5
+	first
+	:0
 
-    SUBSCRIBE first second
-    *3
-    $9
-    subscribe
-    $5
-    first
-    :1
-    *3
-    $9
-    subscribe
-    $6
-    second
-    :2
+## 模式匹配订阅 ##
 
-At this point, from another client we issue a `PUBLISH` operation
-against the channel named `second`:
+Redis 的Pub/Sub实现支持模式匹配。客户端可以订阅全风格的模式以便接收所有来自能匹配到给定模式的频道的消息。
 
-    > PUBLISH second Hello
+比如:
 
-This is what the first client receives:
+	PSUBSCRIBE news.*
 
-    *3
-    $7
-    message
-    $6
-    second
-    $5
-    Hello
+将接收所有发到news.art.figurative, news.music.jazz等等的消息，所有模式都是有效的，所以支持多通配符。
 
-Now the client unsubscribes itself from all the channels using the
-`UNSUBSCRIBE` command without additional arguments:
+	PUNSUBSCRIBE news.*
 
-    UNSUBSCRIBE
-    *3
-    $11
-    unsubscribe
-    $6
-    second
-    :1
-    *3
-    $11
-    unsubscribe
-    $5
-    first
-    :0
+将取消订阅匹配该模式的客户端，这个调用不影响其他订阅。
 
-## Pattern-matching subscriptions
+当作模式匹配结果的消息会以不同的格式发送:
 
-The Redis Pub/Sub implementation supports pattern matching. Clients may
-subscribe to glob-style patterns in order to receive all the messages
-sent to channel names matching a given pattern.
+* 消息类型是pmessage:这是另一客户端发出的PUBLISH命令的结果,匹配一个模式匹配订阅。第一个元素是原匹配的模式，第三个元素是原频道名称，最后一个元素是实际消息内容。
 
-For instance:
+同样的，系统默认 SUBSCRIBE 和 UNSUBSCRIBE, PSUBSCRIBE 和 PUNSUBSCRIBE 命令在发送 psubscribe 和punsubscribe类型的消息时使用像subscribe 和 unsubscribe一样的消息格式。
 
-    PSUBSCRIBE news.*
+## 同时匹配模式和频道订阅的消息 ##
 
-Will receive all the messages sent to the channel `news.art.figurative`,
-`news.music.jazz`, etc.  All the glob-style patterns are valid, so
-multiple wildcards are supported.
+客户端可能多次接收一个消息，如果它订阅的多个模式匹配了同一个发布的消息，或者它订阅的模式和频道同时匹配到一个消息。就像下面的例子：
 
-    PUNSUBSCRIBE news.*
+	SUBSCRIBE foo
+	PSUBSCRIBE f*
 
-Will then unsubscribe the client from that pattern.  No other subscriptions
-will be affected by this call.
+上面的例子中，如果一个消息被发送到foo,客户端会接收到两条消息：一条message类型，一条pmessage类型。
 
-Messages received as a result of pattern matching are sent in a
-different format:
+## 模式匹配统计的意义 ##
 
-* The type of the message is `pmessage`: it is a message received
-as result of a `PUBLISH` command issued by another client, matching
-a pattern-matching subscription. The second element is the original
-pattern matched, the third element is the name of the originating
-channel, and the last element the actual message payload.
+在 subscribe, unsubscribe, psubscribe 和 punsubscribe 消息类型中，最后一个参数是依然活跃的订阅数。 这个数字是客户端依然订阅的频道和模式的总数。只有当退订频道和模式的数量下降到0时客户端才会退出Pub/Sub状态。
 
-Similarly to `SUBSCRIBE` and `UNSUBSCRIBE`, `PSUBSCRIBE` and
-`PUNSUBSCRIBE` commands are acknowledged by the system sending a message
-of type `psubscribe` and `punsubscribe` using the same format as the
-`subscribe` and `unsubscribe` message format.
+## 程序示例： ##
 
-## Messages matching both a pattern and a channel subscription
+Peter Noordhuis 提供了一个使用EventMachine 和Redis创建多用户高性能网路聊天的很棒的例子。
 
-A client may receive a single message multiple times if it's subscribed
-to multiple patterns matching a published message, or if it is
-subscribed to both patterns and channels matching the message. Like in
-the following example:
+## 客户端库实现提示 ##
 
-    SUBSCRIBE foo
-    PSUBSCRIBE f*
-
-In the above example, if a message is sent to channel `foo`, the client
-will receive two messages: one of type `message` and one of type
-`pmessage`.
-
-## The meaning of the subscription count with pattern matching
-
-In `subscribe`, `unsubscribe`, `psubscribe` and `punsubscribe`
-message types, the last argument is the count of subscriptions still
-active. This number is actually the total number of channels and
-patterns the client is still subscribed to. So the client will exit
-the Pub/Sub state only when this count drops to zero as a result of
-unsubscribing from all the channels and patterns.
-
-## Programming example
-
-Pieter Noordhuis provided a great example using EventMachine
-and Redis to create [a multi user high performance web
-chat](https://gist.github.com/pietern/348262).
-
-## Client library implementation hints
-
-Because all the messages received contain the original subscription
-causing the message delivery (the channel in the case of message type,
-and the original pattern in the case of pmessage type) client libraries
-may bind the original subscription to callbacks (that can be anonymous
-functions, blocks, function pointers), using an hash table.
-
-When a message is received an O(1) lookup can be done in order to
-deliver the message to the registered callback.
+因为所有接收到的消息包含原订阅导致消息传递（message类型时是频道，pmessage类型时是原模式）客户端库可能绑定原订阅到回调方法（可能是匿名函数，块，函数指针），使用hash table。当消息被接收的时候可以做到时间复杂度为O(1)的查找以便传递消息到已注册的回调。

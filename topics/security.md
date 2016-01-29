@@ -1,241 +1,94 @@
 ---
 layout: topics
-title: REDIS sentinel-old -- Redis中文资料站
+title: Redis安全性 -- Redis中文资料站
 permalink: topics/security.html
 disqusIdentifier: topics_security
 disqusUrl: http://redis.cn/topics/security.html
 ---
 
-Redis Security
+Redis安全性
 ===
 
-This document provides an introduction to the topic of security from the point of
-view of Redis: the access control provided by Redis, code security concerns,
-attacks that can be triggered from the outside by selecting malicious inputs and
-other similar topics are covered.
+本文档从以下几点提供了关于Redis安全主题的介绍：Redis提供的访问控制，代码安全问题，通过外部的恶意输入触发的攻击和其它类似的主题也包含在内。
 
-For security related contacts please open an issue on GitHub, or when you feel it
-is really important that the security of the communication is preserved, use the
-GPG key at the end of this document.
+## Redis常规安全模式 ##
 
-Redis general security model
-----
+Redis被设计成仅有可信环境下的可信用户才可以访问。这意味着将Redis实例直接暴露在网络上或者让不可信用户可以直接访问Redis的tcp端口或Unix套接字，是不安全的。
 
-Redis is designed to be accessed by trusted clients inside trusted environments.
-This means that usually it is not a good idea to expose the Redis instance
-directly to the internet or, in general, to an environment where untrusted
-clients can directly access the Redis TCP port or UNIX socket.
+正常情况下，使用Redis的web应用程序是将Redis作为数据库，缓存，消息系统，网站的前端用户将会查询Redis来生成页面，或者执行所请求的操作，或者被web应用程序用户所触发。
 
-For instance, in the common context of a web application implemented using Redis
-as a database, cache, or messaging system, the clients inside the front-end
-(web side) of the application will query Redis to generate pages or
-to perform operations requested or triggered by the web application user.
+这种情况下，web应用程序需要对不可信的用户(访问web应用程序的用户浏览器)访问Redis进行处理。
 
-In this case, the web application mediates access between Redis and
-untrusted clients (the user browsers accessing the web application).
+这是个特殊的例子，但是，正常情况下，对Redis的非法访问需要通过实现ACLs，验证用户输入和决定Redis实例上可以执行哪些操作这些方式来控制。
 
-This is a specific example, but, in general, untrusted access to Redis should
-always be mediated by a layer implementing ACLs, validating user input,
-and deciding what operations to perform against the Redis instance.
+总而言之，Redis并没有最大地去优化安全方面，而是尽最大可能去优化高性能和易用性。
 
-In general, Redis is not optimized for maximum security but for maximum
-performance and simplicity.
+## 网络安全 ##
 
-Network security
----
+仅有可信的网络用户才可以访问Redis的端口，因此运行Redis的服务器应该只能被用Redis实现的应用程序的计算机直接访问。
 
-Access to the Redis port should be denied to everybody but trusted clients
-in the network, so the servers running Redis should be directly accessible
-only by the computers implementing the application using Redis.
+一般情况下一台直接暴露在Internet的计算机，例如一个虚拟化Linux实例(Linode, EC2,…)，防火墙应该防止外部用户访问它的redis端口。用户仍可以通过本地接口来访问Redis。
 
-In the common case of a single computer directly exposed to the internet, such
-as a virtualized Linux instance (Linode, EC2, ...), the Redis port should be
-firewalled to prevent access from the outside. Clients will still be able to
-access Redis using the loopback interface.
+记住在redis.conf文件中增加下面这一行配置就可以把Redis绑定在单个接口上。
 
-Note that it is possible to bind Redis to a single interface by adding a line
-like the following to the **redis.conf** file:
+	bind 127.0.0.1
 
-    bind 127.0.0.1
+不禁止外部访问redis的话，将会产生非常严重的后果。比如，一个FLUSHALL操作就可以当做外部攻击来删除Redis上的所有数据。
 
-Failing to protect the Redis port from the outside can have a big security
-impact because of the nature of Redis. For instance, a single **FLUSHALL** command
-can be used by an external attacker to delete the whole data set.
+## 认证的特性 ##
 
-Authentication feature
----
+虽然Redis没有尝试去实现访问控制，但是提供了一个轻量级的认证方式，可以编辑redis.conf文件来启用。
 
-While Redis does not try to implement Access Control, it provides
-a tiny layer of authentication that is optionally turned on editing the
-**redis.conf** file.
+当认证授权方式启用后，Redis将会拒绝来自没有认证的用户的任何查询。一个客户端可以通过发送AUTH命令并带上密码来给自己授权。
 
-When the authorization layer is enabled, Redis will refuse any query by
-unauthenticated clients. A client can authenticate itself by sending the
-**AUTH** command followed by the password.
+这个密码由系统管理员在redis.conf文件里面用明文设置，它需要足够长以应对暴力攻击，这样子设置有以下两个原因：
 
-The password is set by the system administrator in clear text inside the
-redis.conf file. It should be long enough to prevent brute force attacks 
-for two reasons:
+* Redis的查询速度非常快。外部用户每秒可以尝试非常多个密码。
+* Redis的密码存储在redis.conf文件中和存储在客户端的配置中，因此系统管理员没必要去记住它，因此可以设置得非常长。
 
-* Redis is very fast at serving queries. Many passwords per second can be tested by an external client.
-* The Redis password is stored inside the **redis.conf** file and inside the client configuration, so it does not need to be remembered by the system administrator, and thus it can be very long.
+认证层的目标是提供多一层的保护。假如防火墙或者其它任何系统防护攻击失败的话，外部客户端如果没有认证密码的话将依然无法访问Redis实例。
 
-The goal of the authentication layer is to optionally provide a layer of
-redundancy. If firewalling or any other system implemented to protect Redis
-from external attackers fail, an external client will still not be able to 
-access the Redis instance without knowledge of the authentication password.
+AUTH命令就像其它Redis命令一样，是通过非加密方式发送的，因此无法防止拥有足够的访问网络权限的攻击者进行窃听。
+数据加密支持
 
-The AUTH command, like every other Redis command, is sent unencrypted, so it 
-does not protect against an attacker that has enough access to the network to 
-perform eavesdropping.
+Redis并不支持加密。为了实现在网络上或者其它非可信网络访问Redis实例，需要实现新增的保护层，例如SSL代理。
 
-Data encryption support
----
+## 禁用的特殊命令 ##
 
-Redis does not support encryption. In order to implement setups where
-trusted parties can access a Redis instance over the internet or other
-untrusted networks, an additional layer of protection should be implemented,
-such as an SSL proxy.
+在Redis中可以禁用命令或者将它们重命名成难以推测的名称，这样子普通用户就只能使用部分命令了。
 
-Disabling of specific commands
----
+例如，一个虚拟化的服务器提供商可能提供管理Redis实例的服务。在这种情况下，普通用户可能不被允许调用CONFIG命令去修改实例的配置，但是能够提供删除实例的系统需要支持修改配置。
 
-It is possible to disable commands in Redis or to rename them into an unguessable
-name, so that normal clients are limited to a specified set of commands.
+在这种情况下，你可以从命令表中重命名命令或者禁用命令。这个特性可以在redis.conf文件中进行配置。例如：
 
-For instance, a virtualized server provider may offer a managed Redis instance
-service. In this context, normal users should probably not be able to
-call the Redis **CONFIG** command to alter the configuration of the instance,
-but the systems that provide and remove instances should be able to do so.
+	rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52
 
-In this case, it is possible to either rename or completely shadow commands from 
-the command table. This feature is available as a statement that can be used 
-inside the redis.conf configuration file. For example:
+在上面这个例子中，CONFIG命令被重命名成一个不好猜测的名称。把命令重命名成一个空字符串可以禁用掉该命令，例如下面这个例子：
 
-    rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52
+	rename-command CONFIG ""
 
-In the above example, the **CONFIG** command was renamed into an unguessable name.
-It is also possible to completely disable it (or any other command) by renaming it
-to the empty string, like in the following example:
+## 外部客户端通过仔细构造的输入触发的攻击 ##
 
-    rename-command CONFIG ""
+即便没有外部访问权限，也有种攻击可以让攻击者从外部触发。例如一些攻击者有能力向Redis中插入数据，触发Redis内部数据结构中最差的算法复杂度，
 
-Attacks triggered by carefully selected inputs from external clients
----
+例如一个攻击者可以通过提交表单提交大量一样的字符串到哈希表里，使得 O(1) 的算法复杂度(平均时间)达到最差的O(N) ，Redis将需要更多的CPU来处理，到最后会导致无法提供服务
 
-There is a class of attacks that an attacker can trigger from the outside even
-without external access to the instance. An example of such attacks are
-the ability to insert data into Redis that triggers pathological (worst case)
-algorithm complexity on data structures implemented inside Redis internals.
+为了防范这类特殊的攻击，redis的哈希函数使用per-excution的伪随机种子。
 
-For instance an attacker could supply, via a web form, a set of strings that
-is known to hash to the same bucket into an hash table in order to turn the
-O(1) expected time (the average time) to the O(N) worst case, consuming more
-CPU than expected, and ultimately causing a Denial of Service.
+Redis用qsort算法来实现SORT命令。当前这个算法还不算随机的，所以通过有意构造输入可能引发最糟糕情况的算法复杂度。
 
-To prevent this specific attack, Redis uses a per-execution pseudo-random
-seed to the hash function.
+## 字符串转义和NoSQL注入 ##
 
-Redis implements the SORT command using the qsort algorithm. Currently, 
-the algorithm is not randomized, so it is possible to trigger a quadratic
-worst-case behavior by carefully selecting the right set of inputs.
+Redis的协议没有字符串转移的概念，因此一般情况下普通客户端无法实现注入的。该协议采用二进制安全的前缀长度字符串。
 
-String escaping and NoSQL injection
----
+通过EVAL和EVALSHA命令运行Lua脚本也是安全的。
 
-The Redis protocol has no concept of string escaping, so injection 
-is impossible under normal circumstances using a normal client library.
-The protocol uses prefixed-length strings and is completely binary safe.
+虽然这是个很奇怪的用法，应用程序应避免使用不明来源的字符串来写Lua脚本。
 
-Lua scripts executed by the **EVAL** and **EVALSHA** commands follow the
-same rules, and thus those commands are also safe.
+## 代码安全 ##
 
-While it would be a very strange use case, the application should avoid composing 
-the body of the Lua script using strings obtained from untrusted sources.
+在传统架构的Redis中，客户端是可以使用全部命令的，但是访问redis实例时是没有能力控制运行着Redis的系统的。
 
-Code security
----
+本质上，Redis使用一直的最好的编程方法来写安全的代码，防止出现缓存溢出，格式错误和其他内存损坏问题。但是，使用CONFIG命令修改服务器配置的能力使得用户可以改变程序的工作目录和备份文件的名字。这让用户可以将RDB文件写在任意路径，这个安全问题容易引起不受信任的代码在Redis上运行。
 
-In a classical Redis setup, clients are allowed full access to the command set, 
-but accessing the instance should never result in the ability to control the 
-system where Redis is running.
-
-Internally, Redis uses all the well known practices for writing secure code, to
-prevent buffer overflows, format bugs and other memory corruption issues.
-However, the ability to control the server configuration using the **CONFIG**
-command makes the client able to change the working dir of the program and
-the name of the dump file. This allows clients to write RDB Redis files
-at random paths, that is a security issue that may easily lead to the ability
-to run untrusted code as the same user as Redis is running.
-
-Redis does not requires root privileges to run. It is recommended to
-run it as an unprivileged *redis* user that is only used for this purpose.
-The Redis authors are currently investigating the possibility of adding a new
-configuration parameter to prevent **CONFIG SET/GET dir** and other similar run-time
-configuration directives. This would prevent clients from forcing the server to
-write Redis dump files at arbitrary locations.
-
-GPG key
----
-
-```
------BEGIN PGP PUBLIC KEY BLOCK-----
-Version: GnuPG v1.4.13 (Darwin)
-
-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
-vI1sAEeV6ZM/uc4CDI3E2TxEbQ==
-```
-
-**Key fingerprint**
-
-```
-pub   4096R/0E5C88D6 2013-11-07 [expires: 2063-10-26]
-      Key fingerprint = E5F3 DA80 35F0 2EC1 47F9  020F 3181 3728 0E5C 88D6
-      uid                  Salvatore Sanfilippo <antirez@gmail.com>
-      sub   4096R/3B34D15F 2013-11-07 [expires: 2063-10-26]
-```
+Redis不需要root权限来运行，建议使用仅能运行redis的用户运行。Redis的作者正在调查给Redis增加一个新参数来防止CONFIG SET/GET dir和其它命令运行时配置指令的可能。这可以防止客户端强制要求服务器在任意位置写文件。

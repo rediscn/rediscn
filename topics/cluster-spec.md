@@ -5,215 +5,137 @@ permalink: topics/cluster-spec.html
 disqusIdentifier: topics_cluster-spec
 disqusUrl: http://redis.cn/topics/cluster-spec.html
 ---
-
-Redis Cluster Specification
+Redis 集群规范
 ===
 
-Welcome to the **Redis Cluster Specification**. Here you'll find information
-about algorithms and design rationales of Redis Cluster. This document is a work
-in progress as it is continuously synchronized with the actual implementation
-of Redis.
 
-Main properties and rationales of the design
-===
-
-Redis Cluster goals
+Redis 集群的目标
 ---
 
-Redis Cluster is a distributed implementation of Redis with the following goals, in order of importance in the design:
+Redis 集群是 Redis 的一个分布式实现，主要是为了实现以下这些目标（按在设计中的重要性排序）：
 
-* High performance and linear scalability up to 1000 nodes. There are no proxies, asynchronous replication is used, and no merge operations are performed on values.
-* Acceptable degree of write safety: the system tries (in a best-effort way) to retain all the writes originating from clients connected with the majority of the master nodes. Usually there are small windows where acknowledged writes can be lost. Windows to lose acknowledged writes are larger when clients are in a minority partition.
-* Availability: Redis Cluster is able to survive partitions where the majority of the master nodes are reachable and there is at least one reachable slave for every master node that is no longer reachable. Moreover using *replicas migration*, masters no longer replicated by any slave will receive one from a master which is covered by multiple slaves.
++ 在1000个节点的时候仍能表现得很好并且可扩展性（scalability）是线性的。
++ 没有合并操作，这样在 Redis 的数据模型中最典型的大数据值中也能有很好的表现。
++ 写入安全（Write safety）：那些与大多数节点相连的客户端所做的写入操作，系统尝试全部都保存下来。不过公认的，还是会有小部分（small windows?）写入会丢失。
++ 可用性（Availability）：在绝大多数的主节点（master node）是可达的，并且对于每一个不可达的主节点都至少有一个它的从节点（slave）可达的情况下，Redis 集群仍能进行分区（partitions）操作。
 
-What is described in this document is implemented in Redis 3.0 or greater.
+这篇文档要讲的是，在 Redis 仓库（放在Github上）中的 unstable 分支中实现的功能。
 
-Implemented subset
+实现的功能子集
 ---
 
-Redis Cluster implements all the single key commands available in the
-non-distributed version of Redis. Commands performing complex multi-key
-operations like Set type unions or intersections are implemented as well
-as long as the keys all belong to the same node.
+Redis 集群实现了所有在非分布式 Redis 版本中出现的处理单一键值（key）的命令。那些使用多个键值的复杂操作， 比如 set 里的并集（unions）和交集（intersections）操作，就没有实现。通常来说，那些处理命令的节点获取不到键值的所有操作都不会被实现。
+在将来，用户或许可以通过使用 MIGRATE COPY 命令，在集群上用 计算节点（Computation Nodes） 来执行多键值的只读操作， 但 Redis 集群本身不会执行复杂的多键值操作来把键值在节点间移来移去。
+Redis 集群不像单机版本的 Redis 那样支持多个数据库，集群只有数据库 0，而且也不支持 SELECT 命令。
 
-Redis Cluster implements a concept called **hash tags** that can be used
-in order to force certain keys to be stored in the same node. However during
-manual reshardings, multi-key operations may become unavailable for some time
-while single key operations are always available.
-
-Redis Cluster does not support multiple databases like the stand alone version
-of Redis. There is just database 0 and the `SELECT` command is not allowed.
-
-Clients and Servers roles in the Redis Cluster protocol
+Redis 集群协议中的客户端和服务器端
 ---
 
-In Redis Cluster nodes are responsible for holding the data,
-and taking the state of the cluster, including mapping keys to the right nodes.
-Cluster nodes are also able to auto-discover other nodes, detect non-working
-nodes, and promote slave nodes to master when needed in order
-to continue to operate when a failure occurs.
+在 Redis 集群中，节点负责存储数据、记录集群的状态（包括键值到正确节点的映射）。集群节点同样能自动发现其他节点，检测出没正常工作的节点， 并且在需要的时候在从节点中推选出主节点。
 
-To perform their tasks all the cluster nodes are connected using a
-TCP bus and a binary protocol, called the **Redis Cluster Bus**.
-Every node is connected to every other node in the cluster using the cluster
-bus. Nodes use a gossip protocol to propagate information about the cluster
-in order to discover new nodes, to send ping packets to make sure all the
-other nodes are working properly, and to send cluster messages needed to
-signal specific conditions. The cluster bus is also used in order to
-propagate Pub/Sub messages across the cluster and to orchestrate manual
-failovers when requested by users (manual failovers are failovers which
-are not initiated by the Redis Cluster failure detector, but by the
-system administrator directly).
+为了执行这些任务，所有的集群节点都通过TCP连接（TCP bus？）和一个二进制协议（集群连接，cluster bus）建立通信。 每一个节点都通过集群连接（cluster bus）与集群上的其余每个节点连接起来。节点们使用一个 gossip 协议来传播集群的信息，这样可以：发现新的节点、 发送ping包（用来确保所有节点都在正常工作中）、在特定情况发生时发送集群消息。集群连接也用于在集群中发布或订阅消息。
 
-Since cluster nodes are not able to proxy requests, clients may be redirected
-to other nodes using redirection errors `-MOVED` and `-ASK`.
-The client is in theory free to send requests to all the nodes in the cluster,
-getting redirected if needed, so the client is not required to hold the
-state of the cluster. However clients that are able to cache the map between
-keys and nodes can improve the performance in a sensible way.
+由于集群节点不能代理（proxy）请求，所以客户端在接收到重定向错误（redirections errors） -MOVED 和 -ASK 的时候， 将命令重定向到其他节点。理论上来说，客户端是可以自由地向集群中的所有节点发送请求，在需要的时候把请求重定向到其他节点，所以客户端是不需要保存集群状态。 不过客户端可以缓存键值和节点之间的映射关系，这样能明显提高命令执行的效率。
 
-Write safety
+安全写入
 ---
 
-Redis Cluster uses asynchronous replication between nodes, and **last failover wins** implicit merge function. This means that the last elected master dataset eventually replaces all the other replicas. There is always a window of time when it is possible to lose writes during partitions. However these windows are very different in the case of a client that is connected to the majority of masters, and a client that is connected to the minority of masters.
+Redis 集群节点间使用异步冗余备份（asynchronous replication），所以在分区过程中总是存在一些时间段（windows？），在这些时间段里容易丢失写入数据。 但是一个连接到绝大部分主节点的客户端的时间段，与一个连接到极小部分主节点的客户端的时间段是相当不同的。
+Redis 集群会努力尝试保存所有与大多数主节点连接的客户端执行的写入，但以下两种情况除外：
+1) 一个写入操作能到达一个主节点，但当主节点要回复客户端的时候，这个写入有可能没有通过主从节点间的异步冗余备份传播到从节点那里。 如果在某个写入操作没有到达从节点的时候主节点已经宕机了，那么该写入会永远地丢失掉，以防主节点长时间不可达而它的一个从节点已经被提升为主节点。
+2) 另一个理论上可能会丢失写入操作的模式是：
 
-Redis Cluster tries harder to retain writes that are performed by clients connected to the majority of masters, compared to writes performed in the minority side.
-The following are examples of scenarios that lead to loss of acknowledged
-writes received in the majority partitions during failures:
+* 因为分区使一个主节点变得不可达。
+* 故障转移（fail over）到主节点的一个从节点。（即从节点被提升为主节点）
+* 过一段时间之后主节点再次变得可达。
+* 一个没有更新路由表（routing table）的客户端或许会在集群把这个主节点变成一个从节点（新主节点的从节点）之前对它进行写入操作。
 
-1. A write may reach a master, but while the master may be able to reply to the client, the write may not be propagated to slaves via the asynchronous replication used between master and slave nodes. If the master dies without the write reaching the slaves, the write is lost forever if the master is unreachable for a long enough period that one of its slaves is promoted. This is usually hard to observe in the case of a total, sudden failure of a master node since masters try to reply to clients (with the acknowledge of the write) and slaves (propagating the write) at about the same time. However it is a real world failure mode.
+实际上这是极小概率事件，这是因为，那些由于长时间无法被大多数主节点访问到的节点会被故障转移掉，不再接受任何写入操作，当其分区修复好以后仍然会在一小段时间内拒绝写入操作好让其他节点有时间被告知配置信息的变更。通常所有节点都会尝试通过非阻塞连接尝试（non-blocking connection attempt）尽快去访问一个再次加入到集群里的节点，一旦跟该节点建立一个新的连接就会发送一个ping包过去（这足够升级节点配置信息）。这就使得一个节点很难在恢复可写入状态之前没被告知配置信息更改。
+Redis 集群在拥有少数主节点和至少一个客户端的分区上容易丢失为数不少的写入操作，这是因为如果主节点被故障转移到集群中多数节点那边的节点上， 那么所有发送到这些主节点的写入操作都会永久性丢失。
 
-2. Another theoretically possible failure mode where writes are lost is the following:
+一个主节点要被故障转移，必须是大多数主节点在至少 NODE_TIMEOUT 这么长时间里无法访问该节点，所以如果分区在这段时间之前修复好了，就没有写入操作会丢失。当分区故障持续超过 NODE_TIMEOUT，集群的多数节点这边会在一超过 NODE_TIMEOUT 这个时间段后开始拒绝往受损分区进行写入，所以在少数节点这边（指分区）变得不再可用后，会有一个写入操作最大损失范围（因为在指定时间段后将不会再有写入操作被接收或丢失）。
 
-* A master is unreachable because of a partition.
-* It gets failed over by one of its slaves.
-* After some time it may be reachable again.
-* A client with an out-of-date routing table may write to the old master before it is converted into a slave (of the new master) by the cluster.
-
-The second failure mode is unlikely to happen because master nodes unable to communicate with the majority of the other masters for enough time to be failed over will no longer accept writes, and when the partition is fixed writes are still refused for a small amount of time to allow other nodes to inform about configuration changes. This failure mode also requires that the client's routing table has not yet been updated.
-
-Writes targeting the minority side of a partition have a larger window in which to get lost. For example, Redis Cluster loses a non-trivial number of writes on partitions where there is a minority of masters and at least one or more clients, since all the writes sent to the masters may potentially get lost if the masters are failed over in the majority side.
-
-Specifically, for a master to be failed over it must be unreachable by the majority of masters for at least `NODE_TIMEOUT`, so if the partition is fixed before that time, no writes are lost. When the partition lasts for more than `NODE_TIMEOUT`, all the writes performed in the minority side up to that point may be lost. However the minority side of a Redis Cluster will start refusing writes as soon as `NODE_TIMEOUT` time has elapsed without contact with the majority, so there is a maximum window after which the minority becomes no longer available. Hence, no writes are accepted or lost after that time.
-
-Availability
+可用性
 ---
 
-Redis Cluster is not available in the minority side of the partition. In the majority side of the partition assuming that there are at least the majority of masters and a slave for every unreachable master, the cluster becomes available again after `NODE_TIMEOUT` time plus a few more seconds required for a slave to get elected and failover its master (failovers are usually executed in a matter of 1 or 2 seconds).
+Redis 集群在分区的少数节点那边不可用。集群假设在分区的多数节点这边至少有大多数可达的主节点，并且对于每个不可达主节点都至少有一个从节点可达，在经过了差不多 NODE_TIMEOUT 这么长时间后，有个从节点被推选出来并故障转移掉它的主节点，这时集群又再恢复可用。
 
-This means that Redis Cluster is designed to survive failures of a few nodes in the cluster, but it is not a suitable solution for applications that require availability in the event of large net splits.
+这意味着 Redis 集群的设计是能容忍集群中少数节点的出错，但对于要求大量网络分块（large net splits）的可用性的应用来说，这并不是一个合适的解决方案。
 
-In the example of a cluster composed of N master nodes where every node has a single slave, the majority side of the cluster will remain available as long as a single node is partitioned away, and will remain available with a probability of `1-(1/(N*2-1))` when two nodes are partitioned away (after the first node fails we are left with `N*2-1` nodes in total, and the probability of the only master without a replica to fail is `1/(N*2-1))`.
+举个例子，一个由 N 个主节点组成的集群，每个主节点都只有一个从节点。当有一个节点（因为故障）被分割出去后，集群的多数节点这边仍然是可访问的。当有两个节点（因故障）被分割出去后集群仍可用的概率是 1-(1/(N*2-1))（在第一个节点故障出错后总共剩下 N*2-1 个节点，那么失去冗余备份（即失去从节点）的那个主节点也故障出错的概率是 1/(N*2-1))）。
 
-For example, in a cluster with 5 nodes and a single slave per node, there is a `1/(5*2-1) = 11.11%` probability that after two nodes are partitioned away from the majority, the cluster will no longer be available.
+比如一个拥有5个节点的集群，每个节点都只有一个从节点，那么在两个节点从多数节点这边分割出去后集群不再可用的概率是 1/(5*2-1) = 0.1111，即有大约 11% 的概率。
 
-Thanks to a Redis Cluster feature called **replicas migration** the Cluster
-availability is improved in many real world scenarios by the fact that
-replicas migrate to orphaned masters (masters no longer having replicas).
-So at every successful failure event, the cluster may reconfigure the slaves
-layout in order to better resist the next failure.
-
-Performance
+表现
 ---
 
-In Redis Cluster nodes don't proxy commands to the right node in charge for a given key, but instead they redirect clients to the right nodes serving a given portion of the key space.
+在 Redis 集群中节点并不是把命令转发到管理所给出的键值的正确节点上，而是把客户端重定向到服务一定范围内的键值的节点上。 最终客户端获得一份最新的集群表示，里面有写着哪些节点服务哪些键值子集，所以在正常操作中客户端是直接联系到对应的节点并把给定的命令发过去。
 
-Eventually clients obtain an up-to-date representation of the cluster and which node serves which subset of keys, so during normal operations clients directly contact the right nodes in order to send a given command.
+由于使用了异步冗余备份，节点不会等待其他节点对写入操作的承认。（目前正在开发可选同步冗余备份，极有可能会添加入将来的代码发布中）
 
-Because of the use of asynchronous replication, nodes do not wait for other nodes' acknowledgment of writes (if not explicitly requested using the `WAIT` command).
+同样，由于一些命令不支持操作多个键值，如果不是碎片重整（resharding），那么数据是永远不会在节点间移动的。
 
-Also, because multi-key commands are only limited to *near* keys, data is never moved between nodes except when resharding.
+所以普通操作是可以被处理得跟在单一 Redis 上一样的。这意味着，在一个拥有 N 个主节点的 Redis 集群中，由于 Redis 的设计是支持线性扩展的，所以你可以认为同样的操作在集群上的表现会跟在单一 Redis 上的表现乘以 N 一样。同时，询问（query）通常在一次循环中被执行，客户端会保持跟节点持续不断的连接，所以延迟数据跟在单一 Reids 上是一样的。
 
-Normal operations are handled exactly as in the case of a single Redis instance. This means that in a Redis Cluster with N master nodes you can expect the same performance as a single Redis instance multiplied by N as the design scales linearly. At the same time the query is usually performed in a single round trip, since clients usually retain persistent connections with the nodes, so latency figures are also the same as the single standalone Redis node case.
-
-Very high performance and scalability while preserving weak but
-reasonable forms of data safety and availability is the main goal of
-Redis Cluster.
-
-Why merge operations are avoided
+为什么要避免使用合并操作
 ---
 
-Redis Cluster design avoids conflicting versions of the same key-value pair in multiple nodes as in the case of the Redis data model this is not always desirable. Values in Redis are often very large; it is common to see lists or sorted sets with millions of elements. Also data types are semantically complex. Transferring and merging these kind of values can be a major bottleneck and/or may require the non-trivial involvement of application-side logic, additional memory to store meta-data, and so forth.
-
-There are no strict technological limits here. CRDTs or synchronously replicated
-state machines can model complex data types similar to Redis. However, the
-actual run time behavior of such systems would not be similar to Redis Cluster.
-Redis Cluster was designed in order to cover the exact use cases of the
-non-clustered Redis version.
+Redis 集群的设计是避免在多个节点中存在同个键值对的冲突版本，这是因为 Redis 数据模型并不提倡这么做：Redis 中的值通常都是比较大的，经常可以看到列表或者排序好的集合中有数以百万计的元素。数据类型也是语义复杂的。传输和合并这样的值将会变成一个主要的性能瓶颈。
 
 Overview of Redis Cluster main components
 ===
 
-Keys distribution model
+键分布模型
 ---
 
-The key space is split into 16384 slots, effectively setting an upper limit
-for the cluster size of 16384 master nodes (however the suggested max size of
-nodes is in the order of ~ 1000 nodes).
+键空间被分割为 16384 槽（slot），事实上集群的最大节点数量是 16384 个。（然而建议最大节点数量设置在1000这个数量级上）
 
-Each master node in a cluster handles a subset of the 16384 hash slots.
-The cluster is **stable** when there is no cluster reconfiguration in
-progress (i.e. where hash slots are being moved from one node to another).
-When the cluster is stable, a single hash slot will be served by a single node
-(however the serving node can have one or more slaves that will replace it in the case of net splits or failures,
-and that can be used in order to scale read operations where reading stale data is acceptable).
+所有的主节点都负责 16384 个哈希槽中的一部分。当集群处于稳定状态时，集群中没有在执行重配置（reconfiguration）操作，每个哈希槽都只由一个节点进行处理（不过主节点可以有一个或多个从节点，可以在网络断线或节点失效时替换掉主节点）。
 
-The base algorithm used to map keys to hash slots is the following
-(read the next paragraph for the hash tag exception to this rule):
+以下是用来把键映射到哈希槽的算法（下一段哈希标签例外就是按照这个规则）：
 
     HASH_SLOT = CRC16(key) mod 16384
 
-The CRC16 is specified as follows:
+其中，CRC16的定义如下：
 
-* Name: XMODEM (also known as ZMODEM or CRC-16/ACORN)
-* Width: 16 bit
-* Poly: 1021 (That is actually x^16 + x^12 + x^5 + 1)
-* Initialization: 0000
-* Reflect Input byte: False
-* Reflect Output CRC: False
-* Xor constant to output CRC: 0000
-* Output for "123456789": 31C3
+* 名称：XMODEM（也可以称为 ZMODEM 或 CRC-16/ACORN）
+* 输出长度：16 bit
+* 多项数（poly）：1021（即是 x16 + x12 + x5 + 1 ）
+* 初始化：0000
+* 反射输入字节（Reflect Input byte）：False
+* 反射输入CRC（Reflect Output CRC）：False
+* 用于输出CRC的异或常量（Xor constant to output CRC）：0000
+* 该算法对于输入"123456789"的输出：31C3
 
-14 out of 16 CRC16 output bits are used (this is why there is
-a modulo 16384 operation in the formula above).
+CRC16的16位输出中的14位会被使用（这也是为什么上面的式子中有一个对 16384 取余的操作）。
+在我们的测试中，CRC16能相当好地把不同的键均匀地分配到 16384 个槽中。
 
-In our tests CRC16 behaved remarkably well in distributing different kinds of
-keys evenly across the 16384 slots.
+**注意：** 在本文档的附录A中有CRC16算法的实现。
 
-**Note**: A reference implementation of the CRC16 algorithm used is available in the Appendix A of this document.
-
-Keys hash tags
+键哈希标签（Keys hash tags）
 ---
 
-There is an exception for the computation of the hash slot that is used in order
-to implement **hash tags**. Hash tags are a way to ensure that multiple keys
-are allocated in the same hash slot. This is used in order to implement
-multi-key operations in Redis Cluster.
+计算哈希槽可以实现**哈希标签（hash tags）**，但这有一个例外。哈希标签是确保两个键都在同一个哈希槽里的一种方式。将来也许会使用到哈希标签，例如为了在集群稳定的情况下（没有在做碎片重组操作）允许某些多键操作。
 
-In order to implement hash tags, the hash slot for a key is computed in a
-slightly different way in certain conditions.
-If the key contains a "{...}" pattern only the substring between
-`{` and `}` is hashed in order to obtain the hash slot. However since it is
-possible that there are multiple occurrences of `{` or `}` the algorithm is
-well specified by the following rules:
+为了实现哈希标签，哈希槽是用另一种不同的方式计算的。基本来说，如果一个键包含一个 "{...}" 这样的模式，只有 { 和 } 之间的字符串会被用来做哈希以获取哈希槽。但是由于可能出现多个 { 或 }，计算的算法如下：
 
-* IF the key contains a `{` character.
-* AND IF there is a `}` character to the right of `{`
-* AND IF there are one or more characters between the first occurrence of `{` and the first occurrence of `}`.
+* 如果键包含一个 { 字符。
+* 那么在 { 的右边就会有一个 }。
+* 在 { 和 } 之间会有一个或多个字符，第一个 } 一定是出现在第一个 { 之后。
 
-Then instead of hashing the key, only what is between the first occurrence of `{` and the following first occurrence of `}` is hashed.
+然后不是直接计算键的哈希，只有在第一个 { 和它右边第一个 } 之间的内容会被用来计算哈希值。
 
-Examples:
+例子：
 
-* The two keys `{user1000}.following` and `{user1000}.followers` will hash to the same hash slot since only the substring `user1000` will be hashed in order to compute the hash slot.
-* For the key `foo{}{bar}` the whole key will be hashed as usually since the first occurrence of `{` is followed by `}` on the right without characters in the middle.
-* For the key `foo{{bar}}zap` the substring `{bar` will be hashed, because it is the substring between the first occurrence of `{` and the first occurrence of `}` on its right.
-* For the key `foo{bar}{zap}` the substring `bar` will be hashed, since the algorithm stops at the first valid or invalid (without bytes inside) match of `{` and `}`.
-* What follows from the algorithm is that if the key starts with `{}`, it is guaranteed to be hashed as a whole. This is useful when using binary data as key names.
+* 比如这两个键 {user1000}.following 和 {user1000}.followers 会被哈希到同一个哈希槽里，因为只有 user1000 这个子串会被用来计算哈希值。
+* 对于 foo{}{bar} 这个键，整个键都会被用来计算哈希值，因为第一个出现的 { 和它右边第一个出现的 } 之间没有任何字符。
+* 对于 foo{{bar}}zap 这个键，用来计算哈希值的是 {bar 这个子串，因为它是第一个 { 及其右边第一个 } 之间的内容。
+* 对于 foo{bar}{zap} 这个键，用来计算哈希值的是 bar 这个子串，因为算法会在第一次有效或无效（比如中间没有任何字节）地匹配到 { 和 } 的时候停止。
+* 按照这个算法，如果一个键是以 {} 开头的话，那么就当作整个键会被用来计算哈希值。当使用二进制数据做为键名称的时候，这是非常有用的。
 
-Adding the hash tags exception, the following is an implementation of the `HASH_SLOT` function in Ruby and C language.
+下面是用 Ruby 和 C 语言实现的 HASH_SLOT 函数，有加上哈希标签例外。
 
-Ruby example code:
+Ruby 样例代码：
 
     def HASH_SLOT(key)
         s = key.index "{"
@@ -226,7 +148,7 @@ Ruby example code:
         crc16(key) % 16384
     end
 
-C example code:
+C 样例代码：
 
     unsigned int HASH_SLOT(char *key, int keylen) {
         int s, e; /* start-end indexes of { and } */
@@ -250,95 +172,48 @@ C example code:
         return crc16(key+s+1,e-s-1) & 16383;
     }
 
-Cluster nodes attributes
+集群节点属性
 ---
 
-Every node has a unique name in the cluster. The node name is the
-hex representation of a 160 bit random number, obtained the first time a
-node is started (usually using /dev/urandom).
-The node will save its ID in the node configuration file, and will use the
-same ID forever, or at least as long as the node configuration file is not
-deleted by the system administrator, or a *hard reset* is requested
-via the `CLUSTER RESET` command.
+在集群中，每个节点都有一个唯一的名字。节点名字是一个十六进制表示的160 bit 随机数，这个随机数是节点第一次启动时获得的（通常是用 /dev/urandom）。 节点会把它的ID保存在配置文件里，以后永远使用这个ID，只要这个节点配置文件没有被系统管理员删除掉。
 
-The node ID is used to identify every node across the whole cluster.
-It is possible for a given node to change its IP address without any need
-to also change the node ID. The cluster is also able to detect the change
-in IP/port and reconfigure using the gossip protocol running over the cluster
-bus.
+节点ID是用于在整个集群中标识每个节点。一个给定的节点可以在不改变节点ID的情况下改变 IP 和地址。集群能检测到 IP 或端口的变化，然后使用在集群连接（cluster bus）上的 gossip 协议来发布广播消息，通知配置变更。
 
-The node ID is not the only information associated with each node, but is
-the only one that is always globally consistent. Every node has also the
-following set of information associated. Some information is about the
-cluster configuration detail of this specific node, and is eventually
-consistent across the cluster. Some other information, like the last time
-a node was pinged, is instead local to each node.
+每个节点都有其他相关信息是所有节点都知道的：
 
-Every node maintains the following information about other nodes that it is
-aware of in the cluster: The node ID, IP and port of the node, a set of
-flags, what is the master of the node if it is flagged as `slave`, last time
-the node was pinged and the last time the pong was received, the current
-*configuration epoch* of the node (explained later in this specification),
-the link state and finally the set of hash slots served.
+* 节点的 IP 地址和 TCP 端口号。
+* 各种标识。
+* 节点使用的哈希槽。
+* 最近一次用集群连接发送 ping 包的时间。
+* 最近一次在回复中收到一个 pong 包的时间。
+* 最近一次标识节点失效的时间。
+* 该节点的从节点个数。
+* 如果该节点是从节点，会有主节点ID信息。（如果它是个主节点则该信息置为0000000...）
 
-A detailed [explanation of all the node fields](http://redis.io/commands/cluster-nodes) is described in the `CLUSTER NODES` documentation.
-
-The `CLUSTER NODES` command can be sent to any node in the cluster and provides the state of the cluster and the information for each node according to the local view the queried node has of the cluster.
-
-The following is sample output of the `CLUSTER NODES` command sent to a master
-node in a small cluster of three nodes.
+使用 CLUSTER NODES 命令可以获得以上的一些信息，这个命令可以发送到集群中的所有节点，无论主节点还是从节点。
+下面的例子是在一个只有三个节点的小集群中发送 CLUSTER NODES 命令到一个主节点得到的输出。
 
     $ redis-cli cluster nodes
     d1861060fe6a534d42d8a19aeb36600e18785e04 127.0.0.1:6379 myself - 0 1318428930 1 connected 0-1364
     3886e65cc906bfd9b1f7e7bde468726a052d1dae 127.0.0.1:6380 master - 1318428930 1318428931 2 connected 1365-2729
     d289c575dcbc4bdd2931585fd4339089e461a27d 127.0.0.1:6381 master - 1318428931 1318428931 3 connected 2730-4095
 
-In the above listing the different fields are in order: node id, address:port, flags, last ping sent, last pong received, configuration epoch, link state, slots. Details about the above fields will be covered as soon as we talk of specific parts of Redis Cluster.
+在上面罗列出来的信息中，各个域依次表示的是：节点ID，IP地址：端口号，标识，上一次发送 ping 包的时间，上一次收到 pong 包的时间，连接状态，节点使用的哈希槽。
 
-The Cluster bus
+集群拓扑结构
 ---
 
-Every Redis Cluster node has an additional TCP port for receiving
-incoming connections from other Redis Cluster nodes. This port is at a fixed
-offset from the normal TCP port used to receive incoming connections
-from clients. To obtain the Redis Cluster port, 10000 should be added to
-the normal commands port. For example, if a Redis node is listening for
-client connections on port 6379, the Cluster bus port 16379 will also be
-opened.
+Redis 集群是一个网状结构，每个节点都通过 TCP 连接跟其他每个节点连接。
 
-Node-to-node communication happens exclusively using the Cluster bus and
-the Cluster bus protocol: a binary protocol composed of frames
-of different types and sizes. The Cluster bus binary protocol is not
-publicly documented since it is not intended for external software devices
-to talk with Redis Cluster nodes using this protocol. However you can
-obtain more details about the Cluster bus protocol by reading the
-`cluster.h` and `cluster.c` files in the Redis Cluster source code.
+在一个有 N 个节点的集群中，每个节点都有 N-1 个流出的 TCP 连接，和 N-1 个流入的连接。
+这些 TCP 连接会永久保持，并不是按需创建的。
 
-Cluster topology
+节点握手
 ---
 
-Redis Cluster is a full mesh where every node is connected with every other node using a TCP connection.
+节点总是在集群连接端口接受连接，甚至会回复接收到的 ping 包，即使发送 ping 包的节点是不可信的。 然而如果某个节点不被认为是在集群中，那么所有它发出的数据包都会被丢弃掉。
 
-In a cluster of N nodes, every node has N-1 outgoing TCP connections, and N-1 incoming connections.
-
-These TCP connections are kept alive all the time and are not created on demand.
-When a node expects a pong reply in response to a ping in the cluster bus, before waiting long enough to mark the node as unreachable, it will try to
-refresh the connection with the node by reconnecting from scratch.
-
-While Redis Cluster nodes form a full mesh, **nodes use a gossip protocol and
-a configuration update mechanism in order to avoid exchanging too many
-messages between nodes during normal conditions**, so the number of messages
-exchanged is not exponential.
-
-Nodes handshake
----
-
-Nodes always accept connections on the cluster bus port, and even reply to
-pings when received, even if the pinging node is not trusted.
-However, all other packets will be discarded by the receiving node if the
-sending node is not considered part of the cluster.
-
-A node will accept another node as part of the cluster only in two ways:
+只有在两种方式下，一个节点才会认为另一个节点是集群中的一部分：
 
 * If a node presents itself with a `MEET` message. A meet message is exactly
 like a `PING` message, but forces the receiver to accept the node as part of
@@ -346,889 +221,349 @@ the cluster. Nodes will send `MEET` messages to other nodes **only if** the syst
 
     CLUSTER MEET ip port
 
-* A node will also register another node as part of the cluster if a node that is already trusted will gossip about this other node. So if A knows B, and B knows C, eventually B will send gossip messages to A about C. When this happens, A will register C as part of the network, and will try to connect with C.
+* 当一个节点使用 MEET 消息介绍自己。一个 meet 消息跟一个 PING 消息完全一样，但它会强制让接收者接受发送者为集群中的一部分。 只有在系统管理员使用以下命令要求的时候，节点才会发送 MEET 消息给其他节点：
+* 一个已被信任的节点能通过传播gossip消息让另一个节点被注册为集群中的一部分。也就是说，如果 A 知道 B，B 知道 C，那么 B 会向 A 发送 C 的gossip消息。A 收到后就会把 C 当作是网络中的一部分，并且尝试连接 C。
+这意味着，只要我们往任何连接图中加入节点，它们最终会自动形成一个完全连接图。从根本上来说，这表示集群能自动发现其他节点，但前提是有一个由系统管理员强制创建的信任关系。
+这个机制能防止不同的 Redis 集群因为 IP 地址变更或者其他网络事件而意外混合起来，从而使集群更具健壮性。
+当节点的网络连接断掉时，它会积极尝试连接所有其他已知节点。
 
-This means that as long as we join nodes in any connected graph, they'll eventually form a fully connected graph automatically. This means that the cluster is able to auto-discover other nodes, but only if there is a trusted relationship that was forced by the system administrator.
-
-This mechanism makes the cluster more robust but prevents different Redis clusters from accidentally mixing after change of IP addresses or other network related events.
-
-Redirection and resharding
-===
-
-MOVED Redirection
+MOVED 重定向
 ---
 
-A Redis client is free to send queries to every node in the cluster, including
-slave nodes. The node will analyze the query, and if it is acceptable
-(that is, only a single key is mentioned in the query, or the multiple keys
-mentioned are all to the same hash slot) it will lookup what
-node is responsible for the hash slot where the key or keys belong.
+一个 Redis 客户端可以自由地向集群中的任意节点（包括从节点）发送查询。接收的节点会分析查询，如果这个命令是集群可以执行的（就是查询中只涉及一个键），那么节点会找这个键所属的哈希槽对应的节点。
 
-If the hash slot is served by the node, the query is simply processed, otherwise
-the node will check its internal hash slot to node map, and will reply
-to the client with a MOVED error, like in the following example:
+如果刚好这个节点就是对应这个哈希槽，那么这个查询就直接被节点处理掉。否则这个节点会查看它内部的 哈希槽 -> 节点ID 映射，然后给客户端返回一个 MOVED 错误。
+
+一个 MOVED 错误如下：
 
     GET x
     -MOVED 3999 127.0.0.1:6381
 
-The error includes the hash slot of the key (3999) and the ip:port of the
-instance that can serve the query. The client needs to reissue the query
-to the specified node's IP address and port.
-Note that even if the client waits a long time before reissuing the query,
-and in the meantime the cluster configuration changed, the destination node
-will reply again with a MOVED error if the hash slot 3999 is now served by
-another node. The same happens if the contacted node had no updated information.
+这个错误包括键（3999）的哈希槽和能处理这个查询的节点的 ip：端口号（127.0.0.1:6381）。客户端需要重新发送查询到给定 ip 地址和端口号的节点。 注意，即使客户端在重发查询之前等待了很长一段时间，与此同时集群的配置信息发生改变，如果哈希槽 3999 现在是为其他节点服务，那么目标节点会再向客户端回复一个 MOVED 错误。
 
-So while from the point of view of the cluster nodes are identified by
-IDs we try to simplify our interface with the client just exposing a map
-between hash slots and Redis nodes identified by IP:port pairs.
+从集群的角度看，节点是以 ID 来标识的。我们尝试简化接口，所以只向客户端暴露哈希槽和用“ip:端口号”标识的 Redis 节点之间的映射。
 
-The client is not required to, but should try to memorize that hash slot
-3999 is served by 127.0.0.1:6381. This way once a new command needs to
-be issued it can compute the hash slot of the target key and have a
-greater chance of choosing the right node.
+虽然并没有要求，但是客户端应该尝试记住哈希槽 3999 是服务于 127.0.0.1:6381。这样的话一旦有一个新的命令需要发送，它能计算出目标键的哈希槽，提高找到正确节点的机率。
 
-An alternative is to just refresh the whole client-side cluster layout
-using the `CLUSTER NODES` or `CLUSTER SLOTS` commands
-when a MOVED redirection is received. When a redirection is encountered, it
-is likely multiple slots were reconfigured rather than just one, so updating
-the client configuration as soon as possible is often the best strategy.
+注意，当集群是稳定的时候，所有客户端最终都会得到一份哈希槽 -> 节点的映射表，这样能使得集群效率非常高：客户端直接定位目标节点，不用重定向、或代理或发生其他单点故障（single point of failure entities）。
 
-Note that when the Cluster is stable (no ongoing changes in the configuration),
-eventually all the clients will obtain a map of hash slots -> nodes, making
-the cluster efficient, with clients directly addressing the right nodes
-without redirections, proxies or other single point of failure entities.
+一个客户端也应该能处理本文后面将提到的 -ASK 重定向错误。
 
-A client **must be also able to handle -ASK redirections** that are described
-later in this document, otherwise it is not a complete Redis Cluster client.
-
-Cluster live reconfiguration
+集群在线重配置（live reconfiguration）
 ---
 
-Redis Cluster supports the ability to add and remove nodes while the cluster
-is running. Adding or removing a node is abstracted into the same
-operation: moving a hash slot from one node to another. This means
-that the same basic mechanism can be used in order to rebalance the cluster, add
-or remove nodes, and so forth.
+Redis 集群支持在集群运行过程中添加或移除节点。实际上，添加或移除节点都被抽象为同一个操作，那就是把哈希槽从一个节点移到另一个节点。
 
-* To add a new node to the cluster an empty node is added to the cluster and some set of hash slots are moved from existing nodes to the new node.
-* To remove a node from the cluster the hash slots assigned to that node are moved to other existing nodes.
-* To rebalance the cluster a given set of hash slots are moved between nodes.
+- 向集群添加一个新节点，就是把一个空节点加入到集群中并把某些哈希槽从已存在的节点移到新节点上。
+-  从集群中移除一个节点，就是把该节点上的哈希槽移到其他已存在的节点上。
+-  
+所以实现这个的核心是能把哈希槽移来移去。从实际角度看，哈希槽就只是一堆键，所以 Redis 集群在重组碎片（reshard）时做的就是把键从一个节点移到另一个节点。
 
-The core of the implementation is the ability to move hash slots around.
-From a practical point of view a hash slot is just a set of keys, so
-what Redis Cluster really does during *resharding* is to move keys from
-an instance to another instance. Moving a hash slot means moving all the keys
-that happen to hash into this hash slot.
+为了理解这是怎么工作的，我们需要介绍 CLUSTER 的子命令，这些命令是用来操作 Redis 集群节点上的哈希槽转换表（slots translation table）。
 
-To understand how this works we need to show the `CLUSTER` subcommands
-that are used to manipulate the slots translation table in a Redis Cluster node.
-
-The following subcommands are available (among others not useful in this case):
+以下是可用的子命令：
 
 * `CLUSTER ADDSLOTS` slot1 [slot2] ... [slotN]
 * `CLUSTER DELSLOTS` slot1 [slot2] ... [slotN]
 * `CLUSTER SETSLOT` slot NODE node
 * `CLUSTER SETSLOT` slot MIGRATING node
 * `CLUSTER SETSLOT` slot IMPORTING node
+* 
+头两个命令，ADDSLOTS 和 DELSLOTS，就是简单地用来给一个 Redis 节点指派（assign）或移除哈希槽。 在哈希槽被指派后，节点会将这个消息通过 gossip 协议向整个集群传播。ADDSLOTS 命令通常是用于在一个集群刚建立的时候快速给所有节点指派哈希槽。
 
-The first two commands, `ADDSLOTS` and `DELSLOTS`, are simply used to assign
-(or remove) slots to a Redis node. Assigning a slot means to tell a given
-master node that it will be in charge of storing and serving content for
-the specified hash slot.
+当 SETSLOT 子命令使用 NODE 形式的时候，用来给指定 ID 的节点指派哈希槽。 除此之外哈希槽能通过两个特殊的状态来设定，MIGRATING 和 IMPORTING：
 
-After the hash slots are assigned they will propagate across the cluster
-using the gossip protocol, as specified later in the
-*configuration propagation* section.
+- 当一个槽被设置为 MIGRATING，原来持有该哈希槽的节点仍会接受所有跟这个哈希槽有关的请求，但只有当查询的键还存在原节点时，原节点会处理该请求，否则这个查询会通过一个 -ASK 重定向（-ASK redirection）转发到迁移的目标节点。
+- 当一个槽被设置为 IMPORTING，只有在接受到 ASKING 命令之后节点才会接受所有查询这个哈希槽的请求。如果客户端一直没有发送 ASKING 命令，那么查询都会通过 -MOVED 重定向错误转发到真正处理这个哈希槽的节点那里。
 
-The `ADDSLOTS` command is usually used when a new cluster is created
-from scratch to assign each master node a subset of all the 16384 hash
-slots available.
+这么讲可能显得有点奇怪，现在我们用实例让它更清晰些。假设我们有两个 Redis 节点，称为 A 和 B。我们想要把哈希槽 8 从 节点A 移到 节点B，所以我们发送了这样的命令：
 
-The `DELSLOTS` is mainly used for manual modification of a cluster configuration
-or for debugging tasks: in practice it is rarely used.
+- 我们向 节点B 发送：CLUSTER SETSLOT 8 IMPORTING A
+- 我们向 节点A 发送：CLUSTER SETSLOT 8 MIGRATING B
 
-The `SETSLOT` subcommand is used to assign a slot to a specific node ID if
-the `SETSLOT <slot> NODE` form is used. Otherwise the slot can be set in the
-two special states `MIGRATING` and `IMPORTING`. Those two special states
-are used in order to migrate a hash slot from one node to another.
+其他所有节点在每次被询问到的一个键是属于哈希槽 8 的时候，都会把客户端引向节点"A"。具体如下：
 
-* When a slot is set as MIGRATING, the node will accept all queries that
-are about this hash slot, but only if the key in question
-exists, otherwise the query is forwarded using a `-ASK` redirection to the
-node that is target of the migration.
-* When a slot is set as IMPORTING, the node will accept all queries that
-are about this hash slot, but only if the request is
-preceded by an `ASKING` command. If the `ASKING` command was not given
-by the client, the query is redirected to the real hash slot owner via
-a `-MOVED` redirection error, as would happen normally.
+- 所有关于已存在的键的查询都由节点"A"处理。
+- 所有关于不存在于节点 A 的键都由节点"B"处理。
 
-Let's make this clearer with an example of hash slot migration.
-Assume that we have two Redis master nodes, called A and B.
-We want to move hash slot 8 from A to B, so we issue commands like this:
-
-* We send B: CLUSTER SETSLOT 8 IMPORTING A
-* We send A: CLUSTER SETSLOT 8 MIGRATING B
-
-All the other nodes will continue to point clients to node "A" every time
-they are queried with a key that belongs to hash slot 8, so what happens
-is that:
-
-* All queries about existing keys are processed by "A".
-* All queries about non-existing keys in A are processed by "B", because "A" will redirect clients to "B".
-
-This way we no longer create new keys in "A".
-In the meantime, a special program called `redis-trib` used during reshardings
-and Redis Cluster configuration will migrate existing keys in
-hash slot 8 from A to B.
-This is performed using the following command:
+这种方式让我们可以不用在节点 A 中创建新的键。同时，一个叫做 redis-trib 的特殊客户端，它也是 Redis 集群的配置程序（configuration utility），会确保把已存在的键从节点 A 移到节点 B。这通过以下命令实现：
 
     CLUSTER GETKEYSINSLOT slot count
 
-The above command will return `count` keys in the specified hash slot.
-For every key returned, `redis-trib` sends node "A" a `MIGRATE` command, that
-will migrate the specified key from A to B in an atomic way (both instances
-are locked for the time (usually very small time) needed to migrate a key so
-there are no race conditions). This is how `MIGRATE` works:
+上面这个命令会返回指定的哈希槽中 count 个键。对于每个返回的键，redis-trib 向节点 A 发送一个 [MIGRATE](/commands/migrate.html) 命令，这样会以原子性的方式（在移动键的过程中两个节点都被锁住，以免出现竞争状况）把指定的键从节点 A 移到节点 B。以下是 [MIGRATE](/commands/migrate.html) 的工作原理：
 
     MIGRATE target_host target_port key target_database id timeout
 
-`MIGRATE` will connect to the target instance, send a serialized version of
-the key, and once an OK code is received will delete the old key from its own
-dataset. From the point of view of an external client a key exists either
-in A or B at any given time.
+执行 MIGRATE 命令的节点会连接到目标节点，把序列化后的 key 发送过去，一旦收到 OK 回复就会从它自己的数据集中删除老的 key。所以从一个外部客户端看来，在某个时间点，一个 key 要不就存在于节点 A 中要不就存在于节点 B 中。
 
-In Redis Cluster there is no need to specify a database other than 0, but
-`MIGRATE` is a general command that can be used for other tasks not
-involving Redis Cluster.
-`MIGRATE` is optimized to be as fast as possible even when moving complex
-keys such as long lists, but in Redis Cluster reconfiguring the
-cluster where big keys are present is not considered a wise procedure if
-there are latency constraints in the application using the database.
+在 Redis 集群中，不需要指定一个除了 0 号之外的数据库，但 [MIGRATE](/commands/migrate.html) 命令能用于其他跟 Redis 集群无关的的任务，所以它是一个足够通用的命令。[MIGRATE](/commands/migrate.html) 命令被优化了，使得即使在移动像长列表这样的复杂键仍然能做到快速。 不过当在重配置一个拥有很多键且键的数据量都很大的集群的时候，这个过程就并不那么好了，对于使用数据库的应用程序来说就会有延时这个限制。
 
-When the migration process is finally finished, the `SETSLOT <slot> NODE <node-id>` command is sent to the two nodes involved in the migration in order to
-set the slots to their normal state again. The same command is usually
-sent to all other nodes to avoid waiting for the natural
-propagation of the new configuration across the cluster.
-
-ASK redirection
+ASK 重定向
 ---
 
-In the previous section we briefly talked about ASK redirection. Why can't
-we simply use MOVED redirection? Because while MOVED means that
-we think the hash slot is permanently served by a different node and the
-next queries should be tried against the specified node, ASK means to
-send only the next query to the specified node.
+在前面的章节中，我们简短地提到了 ASK 重定向（ASK redirection），为什么我们不能单纯地使用 MOVED 重定向呢？因为当我们使用 MOVED 的时候，意味着我们认为哈希槽永久地被另一个不同的节点处理，并且希望接下来的所有查询都尝试发到这个指定的节点上去。而 ASK 意味着我们只要下一个查询发送到指定节点上去。
 
-This is needed because the next query about hash slot 8 can be about a
-key that is still in A, so we always want the client to try A and
-then B if needed. Since this happens only for one hash slot out of 16384
-available, the performance hit on the cluster is acceptable.
+这个命令是必要的，因为下一个关于哈希槽 8 的查询需要的键或许还在节点 A 中，所以我们希望客户端尝试在节点 A 中查找，如果需要的话也在节点 B 中查找。 由于这是发生在 16384 个槽的其中一个槽，所以对于集群的性能影响是在可接受的范围。
 
-We need to force that client behavior, so to make sure
-that clients will only try node B after A was tried, node B will only
-accept queries of a slot that is set as IMPORTING if the client sends the
-ASKING command before sending the query.
+然而我们需要强制客户端的行为，以确保客户端会在尝试 A 中查找后去尝试在 B 中查找。如果客户端在发送查询前发送了 ASKING 命令，那么节点 B 只会接受被设为 IMPORTING 的槽的查询。
+本质上来说，ASKING 命令在客户端设置了一个一次性标识（one-time flag），强制一个节点可以执行一次关于带有 IMPORTING 状态的槽的查询。
 
-Basically the ASKING command sets a one-time flag on the client that forces
-a node to serve a query about an IMPORTING slot.
+所以从客户端看来，ASK 重定向的完整语义如下：
 
-The full semantics of ASK redirection from the point of view of the client is as follows:
+- 如果接受到 ASK 重定向，那么把查询的对象调整为指定的节点。
+- 先发送 ASKING 命令，再开始发送查询。
+- 现在不要更新本地客户端的映射表把哈希槽 8 映射到节点 B。
 
-* If ASK redirection is received, send only the query that was redirected to the specified node but continue sending subsequent queries to the old node.
-* Start the redirected query with the ASKING command.
-* Don't yet update local client tables to map hash slot 8 to B.
+一旦完成了哈希槽 8 的转移，节点 A 会发送一个 MOVED 消息，客户端也许会永久地把哈希槽 8 映射到新的 ip:端口号 上。 注意，即使客户端出现bug，过早地执行这个映射更新，也是没有问题的，因为它不会在查询前发送 ASKING 命令，节点 B 会用 MOVED 重定向错误把客户端重定向到节点 A 上。
 
-Once hash slot 8 migration is completed, A will send a MOVED message and
-the client may permanently map hash slot 8 to the new IP and port pair.
-Note that if a buggy client performs the map earlier this is not
-a problem since it will not send the ASKING command before issuing the query,
-so B will redirect the client to A using a MOVED redirection error.
 
-Slots migration is explained in similar terms but with different wording
-(for the sake of redundancy in the documentation) in the `CLUSTER SETSLOT`
-command documentation.
-
-Clients first connection and handling of redirections
+失效检测（Failure detection）
 ---
 
-While it is possible to have a Redis Cluster client implementation that does not
-remember the slots configuration (the map between slot numbers and addresses of
-nodes serving it) in memory and only works by contacting random nodes waiting to
-be redirected, such a client would be very inefficient.
+Redis 集群失效检测是用来识别出大多数节点何时无法访问某一个主节点或从节点。当这个事件发生时，就提升一个从节点来做主节点；若如果无法提升从节点来做主节点的话，那么整个集群就置为错误状态并停止接收客户端的查询。
 
-Redis Cluster clients should try to be smart enough to memorize the slots
-configuration. However this configuration is not *required* to be up to date.
-Since contacting the wrong node will simply result in a redirection, that
-should trigger an update of the client view.
+每个节点都有一份跟其他已知节点相关的标识列表。其中有两个标识是用于失效检测，分别是 PFAIL 和 FAIL。PFAIL 表示可能失效（Possible failure），这是一个非公认的（non acknowledged）失效类型。FAIL 表示一个节点已经失效，而且这个情况已经被大多数主节点在某段固定时间内确认过的了。
 
-Clients usually need to fetch a complete list of slots and mapped node
-addresses in two different situations:
+**PFAIL 标识:** 
 
-* At startup in order to populate the initial slots configuration.
-* When a `MOVED` redirection is received.
+当一个节点在超过 NODE_TIMEOUT 时间后仍无法访问某个节点，那么它会用 PFAIL 来标识这个不可达的节点。无论节点类型是什么，主节点和从节点都能标识其他的节点为 PFAIL。
 
-Note that a client may handle the `MOVED` redirection by updating just the
-moved slot in its table, however this is usually not efficient since often
-the configuration of multiple slots is modified at once (for example if a
-slave is promoted to master, all the slots served by the old master will
-be remapped). It is much simpler to react to a `MOVED` redirection by
-fetching the full map of slots to nodes from scratch.
+Redis 集群节点的不可达性（non reachability）是指，发送给某个节点的一个活跃的 ping 包（active ping）(一个我们发送后要等待其回复的 ping 包)已经等待了超过 NODE_TIMEOUT 时间，那么我们认为这个节点具有不可达性。为了让这个机制能正常工作，NODE_TIMEOUT 必须比网络往返时间（network round trip time）大。节点为了在普通操作中增加可达性，当在经过一半 NODE_TIMEOUT 时间还没收到目标节点对于 ping 包的回复的时候，就会马上尝试重连接该节点。这个机制能保证连接都保持有效，所以节点间的失效连接通常都不会导致错误的失效报告。
 
-In order to retrieve the slots configuration Redis Cluster offers
-an alternative to the `CLUSTER NODES` command that does not
-require parsing, and only provides the information strictly needed to clients.
+**FAIL 标识:**
 
-The new command is called `CLUSTER SLOTS` and provides an array of slots
-ranges, and the associated master and slave nodes serving the specified range.
+单独一个 PFAIL 标识只是每个节点的一些关于其他节点的本地信息，它不是为了起作用而使用的，也不足够触发从节点的提升。要让一个节点真正被认为失效了，那需要让 PFAIL 状态上升为 FAIL 状态。
+在本文的节点心跳章节有提到的，每个节点向其他每个节点发送的 gossip 消息中有包含一些随机的已知节点的状态。最终每个节点都能收到一份其他每个节点的节点标识。使用这种方法，每个节点都有一套机制去标记他们检查到的关于其他节点的失效状态。
 
-The following is an example of output of `CLUSTER SLOTS`:
+当下面的条件满足的时候，会使用这个机制来让 PFAIL 状态升级为 FAIL 状态：
 
-```
-127.0.0.1:7000> cluster slots
-1) 1) (integer) 5461
-   2) (integer) 10922
-   3) 1) "127.0.0.1"
-      2) (integer) 7001
-   4) 1) "127.0.0.1"
-      2) (integer) 7004
-2) 1) (integer) 0
-   2) (integer) 5460
-   3) 1) "127.0.0.1"
-      2) (integer) 7000
-   4) 1) "127.0.0.1"
-      2) (integer) 7003
-3) 1) (integer) 10923
-   2) (integer) 16383
-   3) 1) "127.0.0.1"
-      2) (integer) 7002
-   4) 1) "127.0.0.1"
-      2) (integer) 7005
-```
+- 某个节点，我们称为节点 A，标记另一个节点 B 为 PFAIL。
+- 节点 A 通过 gossip 字段收集到集群中大部分主节点标识的节点 B 的状态信息。
+- 大部分主节点标记节点 B 为 PFAIL 状态，或者在 NODE_TIMEOUT * FAIL_REPORT_VALIDITY_MULT 这个时间内是处于 PFAIL 状态。
 
-The first two sub-elements of every element of the returned array are the
-start-end slots of the range. The additional elements represent address-port
-pairs. The first address-port pair is the master serving the slot, and the
-additional address-port pairs are all the slaves serving the same slot
-that are not in an error condition (i.e. the FAIL flag is not set).
+如果以上所有条件都满足了，那么节点 A 会：
 
-For example the first element of the output says that slots from 5461 to 10922
-(start and end included) are served by 127.0.0.1:7001, and it is possible
-to scale read-only load contacting the slave at 127.0.0.1:7004.
+- 标记节点 B 为 FAIL。
+- 向所有可达节点发送一个 FAIL 消息。
 
-`CLUSTER SLOTS` is not guaranteed to return ranges that cover the full
-16384 slots if the cluster is misconfigured, so clients should initialize the
-slots configuration map filling the target nodes with NULL objects, and
-report an error if the user tries to execute commands about keys
-that belong to unassigned slots.
+FAIL 消息会强制每个接收到这消息的节点把节点 B 标记为 FAIL 状态。
 
-Before returning an error to the caller when a slot is found to
-be unassigned, the client should try to fetch the slots configuration
-again to check if the cluster is now configured properly.
+注意，FAIL 标识基本都是单向的，也就是说，一个节点能从 PFAIL 状态升级到 FAIL 状态，但要清除 FAIL 标识只有以下两种可能方法：
 
-Multiple keys operations
+- 节点已经恢复可达的，并且它是一个从节点。在这种情况下，FAIL 标识可以清除掉，因为从节点并没有被故障转移。
+- 节点已经恢复可达的，而且它是一个主节点，但经过了很长时间（N * NODE_TIMEOUT）后也没有检测到任何从节点被提升了。
+
+**PFAIL -> FAIL 的转变使用一种弱协议（agreement）：**
+
+1) 节点是在一段时间内收集其他节点的信息，所以即使大多数主节点要去"同意"标记某节点为 FAIL，实际上这只是表明说我们在不同时间里从不同节点收集了信息，得出当前的状态不一定是稳定的结论。
+2) 当每个节点检测到 FAIL 节点的时候会强迫集群里的其他节点把各自对该节点的记录更新为 FAIL，但没有一种方式能保证这个消息能到达所有节点。比如有个节点可能检测到了 FAIL 的节点，但是因为分区，这个节点无法到达其他任何一个节点。
+
+然而 Redis 集群的失效检测有一个要求：最终所有节点都应该同意给定节点的状态是 FAIL，哪怕它处于分区。有两种情况是来源于脑裂情况（？），或者是小部分节点相信该节点处于 FAIL 状态，或者是相信节点不处于 FAIL 状态。在这两种情况中，最后集群都会认为给定的节点只有一个状态：
+
+**第 1 种情况: **如果大多数节点都标记了某个节点为 FAIL，由于链条反应，这个主节点最终会被标记为 FAIL。
+
+**第 2 种情况:** 当只有小部分的主节点标记某个节点为 FAIL 的时候，从节点的提升并不会发生（它是使用一个更正式的算法来保证每个节点最终都会知道节点的提升。），并且每个节点都会根据上面的清除规则（在经过了一段时间 > N * NODE_TIMEOUT 后仍没有从节点提升操作）来清除 FAIL 状态。
+
+**本质上来说，FAIL 标识只是用来触发从节点提升（slave promotion）算法的安全部分。**理论上一个从节点会在它的主节点不可达的时候独立起作用并且启动从节点提升程序，然后等待主节点来拒绝认可该提升（如果主节点对大部分节点恢复连接）。PFAIL -> FAIL 的状态变化、弱协议、强制在集群的可达部分用最短的时间传播状态变更的 FAIL 消息，这些东西增加的复杂性有实际的好处。由于这种机制，如果集群处于错误状态的时候，所有节点都会在同一时间停止接收写入操作，这从使用 Redis 集群的应用的角度来看是个很好的特性。还有非必要的选举，是从节点在无法访问主节点的时候发起的，若该主节点能被其他大多数主节点访问的话，这个选举会被拒绝掉。
+
+集群阶段（Cluster epoch）
 ---
 
-Using hash tags, clients are free to use multi-key operations.
-For example the following operation is valid:
+Redis 集群使用一个类似于木筏算法（Raft algorithm）"术语"的概念。在 Redis 集群中这个术语叫做 阶段（epoch），它是用来记录事件的版本号，所以当有多个节点提供了冲突的信息的时候，另外的节点就可以通过这个状态来了解哪个是最新的。
+currentEpoch 是一个 64bit 的 unsigned 数。
 
-    MSET {user:1000}.name Angela {user:1000}.surname White
+Redis 集群中的每个节点，包括主节点和从节点，都在创建的时候设置了 currentEpoch 为0。
 
-Multi-key operations may become unavailable when a resharding of the
-hash slot the keys belong to is in progress.
+当节点接收到来自其他节点的 ping 包或 pong 包的时候，如果发送者的 epoch（集群连接消息头部的一部分）大于该节点的 epoch，那么更新发送者的 epoch 为 currentEpoch。
 
-More specifically, even during a resharding the multi-key operations
-targeting keys that all exist and are all still in the same node (either
-the source or destination node) are still available.
+由于这个语义，最终所有节点都会支持集群中较大的 epoch。
 
-Operations on keys that don't exist or are - during the resharding - split
-between the source and destination nodes, will generate a `-TRYAGAIN` error.
-The client can try the operation after some time, or report back the error.
+这个信息在此处是用于，当一个节点的状态发生改变的时候为了执行一些动作寻求其他节点的同意（agreement）。
 
-As soon as migration of the specified hash slot has terminated, all
-multi-key operations are available again for that hash slot.
+目前这个只发生在从节点的提升过程，这个将在下一节中详述。本质上说，epoch 是一个集群里的逻辑时钟，并决定一个给定的消息赢了另一个带着更小 epoch 的消息。
 
-Scaling reads using slave nodes
+配置阶段（Configuration epoch）
 ---
 
-Normally slave nodes will redirect clients to the authoritative master for
-the hash slot involved in a given command, however clients can use slaves
-in order to scale reads using the `READONLY` command.
+每一个主节点总是通过发送 ping 包和 pong 包向别人宣传它的 configEpoch 和一份表示它负责的哈希槽的位图。
 
-`READONLY` tells a Redis Cluster slave node that the client is ok reading
-possibly stale data and is not interested in running write queries.
+当一个新节点被创建的时候，主节点中的 configEpoch 设为零。
 
-When the connection is in readonly mode, the cluster will send a redirection
-to the client only if the operation involves keys not served
-by the slave's master node. This may happen because:
+从节点由于故障转移事件被提升为主节点时，为了取代它那失效的主节点，会把 configEpoch 设置为它赢得选举的时候的 configEpoch 值。
 
-1. The client sent a command about hash slots never served by the master of this slave.
-2. The cluster was reconfigured (for example resharded) and the slave is no longer able to serve commands for a given hash slot.
+configEpoch 用于在不同节点提出不同的配置信息的时候（这种情况或许会在分区之后发生）解决冲突，这将在下一节解释。
 
-When this happens the client should update its hashslot map as explained in
-the previous sections.
+从节点也会在 ping 包和 pong 包中向别人宣传它的 configEpoch 域，不过从节点的这个域表示的是上一次跟它的主节点交换数据的时候主节点的 configEpoch 值。这能让其他个体检测出从节点的配置信息是不是需要更新了（主节点不会给一个配置信息过时的从节点投票）。
 
-The readonly state of the connection can be cleared using the `READWRITE` command.
+每次由于一些已知节点的值比自己的值大而更新 configEpoch 值，它都会永久性地存储在 nodes.conf 文件中。
 
-Fault Tolerance
-===
+当一个节点重启，它的 configEpoch 值被设为所有已知节点中最大的那个 configEpoch 值。
 
-Heartbeat and gossip messages
+丛节点的选举和提升
 ---
 
-Redis Cluster nodes continuously exchange ping and pong packets. Those two kind of packets have the same structure, and both carry important configuration information. The only actual difference is the message type field. We'll refer to the sum of ping and pong packets as *heartbeat packets*.
+从节点的选举和提升都是由从节点处理的，主节点会投票要提升哪个从节点。一个从节点的选举是在主节点被至少一个具有成为主节点必备条件的从节点标记为 FAIL 的状态的时候发生的。
 
-Usually nodes send ping packets that will trigger the receivers to reply with pong packets. However this is not necessarily true. It is possible for nodes to just send pong packets to send information to other nodes about their configuration, without triggering a reply. This is useful, for example, in order to broadcast a new configuration as soon as possible.
+当以下条件满足时，一个从节点可以发起选举：
 
-Usually a node will ping a few random nodes every second so that the total number of ping packets sent (and pong packets received) by each node is a constant amount regardless of the number of nodes in the cluster.
+- 该从节点的主节点处于 FAIL 状态。
+- 这个主节点负责的哈希槽数目不为零。
+- 从节点和主节点之间的重复连接（replication link）断线不超过一段给定的时间，这是为了确保从节点的数据是可靠的。
+- 
+一个从节点想要被推选出来，那么第一步应该是提高它的 currentEpoch 计数，并且向主节点们请求投票。
 
-However every node makes sure to ping every other node that hasn't sent a ping or received a pong for longer than half the `NODE_TIMEOUT` time. Before `NODE_TIMEOUT` has elapsed, nodes also try to reconnect the TCP link with another node to make sure nodes are not believed to be unreachable only because there is a problem in the current TCP connection.
+从节点通过广播一个 FAILOVER_AUTH_REQUEST 数据包给集群里的每个主节点来请求选票。然后等待回复（最多等 NODE_TIMEOUT 这么长时间）。一旦一个主节点给这个从节点投票，会回复一个 FAILOVER_AUTH_ACK，并且在 NODE_TIMEOUT * 2 这段时间内不能再给同个主节点的其他从节点投票。在这段时间内它完全不能回复其他授权请求。
 
-The number of messages globally exchanged can be sizable if `NODE_TIMEOUT` is set to a small figure and the number of nodes (N) is very large, since every node will try to ping every other node for which they don't have fresh information every half the `NODE_TIMEOUT` time.
+从节点会忽视所有带有的时期（epoch）参数比 currentEpoch 小的回应（ACKs），这样能避免把之前的投票的算为当前的合理投票。
 
-For example in a 100 node cluster with a node timeout set to 60 seconds, every node will try to send 99 pings every 30 seconds, with a total amount of pings of 3.3 per second. Multiplied by 100 nodes, this is 330 pings per second in the total cluster.
+一旦某个从节点收到了大多数主节点的回应，那么它就赢得了选举。否则，如果无法在 NODE_TIMEOUT 时间内访问到大多数主节点，那么当前选举会被中断并在 NODE_TIMEOUT * 4 这段时间后由另一个从节点尝试发起选举。
 
-There are ways to lower the number of messages, however there have been no
-reported issues with the bandwidth currently used by Redis Cluster failure
-detection, so for now the obvious and direct design is used. Note that even
-in the above example, the 330 packets per second exchanged are evenly
-divided among 100 different nodes, so the traffic each node receives
-is acceptable.
+从节点并不是在主节点一进入 FAIL 状态就马上尝试发起选举，而是有一点点延迟，这段延迟是这么计算的：
 
-Heartbeat packet content
----
-
-Ping and pong packets contain a header that is common to all types of packets (for instance packets to request a failover vote), and a special Gossip Section that is specific of Ping and Pong packets.
-
-The common header has the following information:
-
-* Node ID, a 160 bit pseudorandom string that is assigned the first time a node is created and remains the same for all the life of a Redis Cluster node.
-* The `currentEpoch` and `configEpoch` fields of the sending node that are used to mount the distributed algorithms used by Redis Cluster (this is explained in detail in the next sections). If the node is a slave the `configEpoch` is the last known `configEpoch` of its master.
-* The node flags, indicating if the node is a slave, a master, and other single-bit node information.
-* A bitmap of the hash slots served by the sending node, or if the node is a slave, a bitmap of the slots served by its master.
-* The sender TCP base port (that is, the port used by Redis to accept client commands; add 10000 to this to obtain the cluster bus port).
-* The state of the cluster from the point of view of the sender (down or ok).
-* The master node ID of the sending node, if it is a slave.
-
-Ping and pong packets also contain a gossip section. This section offers to the receiver a view of what the sender node thinks about other nodes in the cluster. The gossip section only contains information about a few random nodes among the set of nodes known to the sender. The number of nodes mentioned in a gossip section is proportional to the cluster size.
-
-For every node added in the gossip section the following fields are reported:
-
-* Node ID.
-* IP and port of the node.
-* Node flags.
-
-Gossip sections allow receiving nodes to get information about the state of other nodes from the point of view of the sender. This is useful both for failure detection and to discover other nodes in the cluster.
-
-Failure detection
----
-
-Redis Cluster failure detection is used to recognize when a master or slave node is no longer reachable by the majority of nodes and then respond by promoting a slave to the role of master. When slave promotion is not possible the cluster is put in an error state to stop receiving queries from clients.
-
-As already mentioned, every node takes a list of flags associated with other known nodes. There are two flags that are used for failure detection that are called `PFAIL` and `FAIL`. `PFAIL` means *Possible failure*, and is a non-acknowledged failure type. `FAIL` means that a node is failing and that this condition was confirmed by a majority of masters within a fixed amount of time.
-
-**PFAIL flag:**
-
-A node flags another node with the `PFAIL` flag when the node is not reachable for more than `NODE_TIMEOUT` time. Both master and slave nodes can flag another node as `PFAIL`, regardless of its type.
-
-The concept of non-reachability for a Redis Cluster node is that we have an **active ping** (a ping that we sent for which we have yet to get a reply) pending for longer than `NODE_TIMEOUT`. For this mechanism to work the `NODE_TIMEOUT` must be large compared to the network round trip time. In order to add reliability during normal operations, nodes will try to reconnect with other nodes in the cluster as soon as half of the `NODE_TIMEOUT` has elapsed without a reply to a ping. This mechanism ensures that connections are kept alive so broken connections usually won't result in false failure reports between nodes.
-
-**FAIL flag:**
-
-The `PFAIL` flag alone is just local information every node has about other nodes, but it is not sufficient to trigger a slave promotion. For a node to be considered down the `PFAIL` condition needs to be escalated to a `FAIL` condition.
-
-As outlined in the node heartbeats section of this document, every node sends gossip messages to every other node including the state of a few random known nodes. Every node eventually receives a set of node flags for every other node. This way every node has a mechanism to signal other nodes about failure conditions they have detected.
-
-A `PFAIL` condition is escalated to a `FAIL` condition when the following set of conditions are met:
-
-* Some node, that we'll call A, has another node B flagged as `PFAIL`.
-* Node A collected, via gossip sections, information about the state of B from the point of view of the majority of masters in the cluster.
-* The majority of masters signaled the `PFAIL` or `PFAIL` condition within `NODE_TIMEOUT * FAIL_REPORT_VALIDITY_MULT` time. (The validity factor is set to 2 in the current implementation, so this is just two times the `NODE_TIMEOUT` time).
-
-If all the above conditions are true, Node A will:
-
-* Mark the node as `FAIL`.
-* Send a `FAIL` message to all the reachable nodes.
-
-The `FAIL` message will force every receiving node to mark the node in `FAIL` state, whether or not it already flagged the node in `PFAIL` state.
-
-Note that *the FAIL flag is mostly one way*. That is, a node can go from `PFAIL` to `FAIL`, but a `FAIL` flag can only be cleared in the following situations:
-
-* The node is already reachable and is a slave. In this case the `FAIL` flag can be cleared as slaves are not failed over.
-* The node is already reachable and is a master not serving any slot. In this case the `FAIL` flag can be cleared as masters without slots do not really participate in the cluster and are waiting to be configured in order to join the cluster.
-* The node is already reachable and is a master, but a long time (N times the `NODE_TIMEOUT`) has elapsed without any detectable slave promotion. It's better for it to rejoin the cluster and continue in this case.
-
-It is useful to note that while the `PFAIL` -> `FAIL` transition uses a form of agreement, the agreement used is weak:
-
-1. Nodes collect views of other nodes over some time period, so even if the majority of master nodes need to "agree", actually this is just state that we collected from different nodes at different times and we are not sure, nor we require, that at a given moment the majority of masters agreed. However we discard failure reports which are old, so the failure was signaled by the majority of masters within a window of time.
-2. While every node detecting the `FAIL` condition will force that condition on other nodes in the cluster using the `FAIL` message, there is no way to ensure the message will reach all the nodes. For instance a node may detect the `FAIL` condition and because of a partition will not be able to reach any other node.
-
-However the Redis Cluster failure detection has a liveness requirement: eventually all the nodes should agree about the state of a given node. There are two cases that can originate from split brain conditions. Either some minority of nodes believe the node is in `FAIL` state, or a minority of nodes believe the node is not in `FAIL` state. In both the cases eventually the cluster will have a single view of the state of a given node:
-
-**Case 1**: If a majority of masters have flagged a node as `FAIL`, because of failure detection and the *chain effect* it generates, every other node will eventually flag the master as `FAIL`, since in the specified window of time enough failures will be reported.
-
-**Case 2**: When only a minority of masters have flagged a node as `FAIL`, the slave promotion will not happen (as it uses a more formal algorithm that makes sure everybody knows about the promotion eventually) and every node will clear the `FAIL` state as per the `FAIL` state clearing rules above (i.e. no promotion after N times the `NODE_TIMEOUT` has elapsed).
-
-**The `FAIL` flag is only used as a trigger to run the safe part of the algorithm** for the slave promotion. In theory a slave may act independently and start a slave promotion when its master is not reachable, and wait for the masters to refuse to provide the acknowledgment if the master is actually reachable by the majority. However the added complexity of the `PFAIL -> FAIL` state, the weak agreement, and the `FAIL` message forcing the propagation of the state in the shortest amount of time in the reachable part of the cluster, have practical advantages. Because of these mechanisms, usually all the nodes will stop accepting writes at about the same time if the cluster is in an error state. This is a desirable feature from the point of view of applications using Redis Cluster. Also erroneous election attempts initiated by slaves that can't reach its master due to local problems (the master is otherwise reachable by the majority of other master nodes) are avoided.
-
-Configuration handling, propagation, and failovers
-===
-
-Cluster current epoch
----
-
-Redis Cluster uses a concept similar to the Raft algorithm "term". In Redis Cluster the term is called epoch instead, and it is used in order to give incremental versioning to events. When multiple nodes provide conflicting information, it becomes possible for another node to understand which state is the most up to date.
-
-The `currentEpoch` is a 64 bit unsigned number.
-
-At node creation every Redis Cluster node, both slaves and master nodes, set the `currentEpoch` to 0.
-
-Every time a packet is received from another node, if the epoch of the sender (part of the cluster bus messages header) is greater than the local node epoch, the `currentEpoch` is updated to the sender epoch.
-
-Because of these semantics, eventually all the nodes will agree to the greatest `configEpoch` in the cluster.
-
-This information is used when the state of the cluster is changed and a node seeks agreement in order to perform some action.
-
-Currently this happens only during slave promotion, as described in the next section. Basically the epoch is a logical clock for the cluster and dictates that given information wins over one with a smaller epoch.
-
-Configuration epoch
----
-
-Every master always advertises its `configEpoch` in ping and pong packets along with a bitmap advertising the set of slots it serves.
-
-The `configEpoch` is set to zero in masters when a new node is created.
-
-A new `configEpoch` is created during slave election. Slaves trying to replace
-failing masters increment their epoch and try to get authorization from
-a majority of masters. When a slave is authorized, a new unique `configEpoch`
-is created and the slave turns into a master using the new `configEpoch`.
-
-As explained in the next sections the `configEpoch` helps to resolve conflicts when different nodes claim divergent configurations (a condition that may happen because of network partitions and node failures).
-
-Slave nodes also advertise the `configEpoch` field in ping and pong packets, but in the case of slaves the field represents the `configEpoch` of its master as of the last time they exchanged packets. This allows other instances to detect when a slave has an old configuration that needs to be updated (master nodes will not grant votes to slaves with an old configuration).
-
-Every time the `configEpoch` changes for some known node, it is permanently stored in the nodes.conf file by all the nodes that receive this information. The same also happens for the `currentEpoch` value. These two variables are guaranteed to be saved and `fsync-ed` to disk when updated before a node continues its operations.
-
-The `configEpoch` values generated using a simple algorithm during failovers
-are guaranteed to be new, incremental, and unique.
-
-Slave election and promotion
----
-
-Slave election and promotion is handled by slave nodes, with the help of master nodes that vote for the slave to promote.
-A slave election happens when a master is in `FAIL` state from the point of view of at least one of its slaves that has the prerequisites in order to become a master.
-
-In order for a slave to promote itself to master, it needs to start an election and win it. All the slaves for a given master can start an election if the master is in `FAIL` state, however only one slave will win the election and promote itself to master.
-
-A slave starts an election when the following conditions are met:
-
-* The slave's master is in `FAIL` state.
-* The master was serving a non-zero number of slots.
-* The slave replication link was disconnected from the master for no longer than a given amount of time, in order to ensure the promoted slave's data is reasonably fresh. This time is user configurable.
-
-In order to be elected, the first step for a slave is to increment its `currentEpoch` counter, and request votes from master instances.
-
-Votes are requested by the slave by broadcasting a `FAILOVER_AUTH_REQUEST` packet to every master node of the cluster. Then it waits for a maximum time of two times the `NODE_TIMEOUT` for replies to arrive (but always for at least 2 seconds).
-
-Once a master has voted for a given slave, replying positively with a `FAILOVER_AUTH_ACK`, it can no longer vote for another slave of the same master for a period of `NODE_TIMEOUT * 2`. In this period it will not be able to reply to other authorization requests for the same master. This is not needed to guarantee safety, but useful for preventing multiple slaves from getting elected (even if with a different `configEpoch`) at around the same time, which is usually not wanted.
-
-A slave discards any `AUTH_ACK` replies with an epoch that is less than the `currentEpoch` at the time the vote request was sent. This ensures it doesn't count votes intended for a previous election.
-
-Once the slave receives ACKs from the majority of masters, it wins the election.
-Otherwise if the majority is not reached within the period of two times `NODE_TIMEOUT` (but always at least 2 seconds), the election is aborted and a new one will be tried again after `NODE_TIMEOUT * 4` (and always at least 4 seconds).
-
-Slave rank
----
-
-As soon as a master is in `FAIL` state, a slave waits a short period of time before trying to get elected. That delay is computed as follows:
 
     DELAY = 500 milliseconds + random delay between 0 and 500 milliseconds +
             SLAVE_RANK * 1000 milliseconds.
 
-The fixed delay ensures that we wait for the `FAIL` state to propagate across the cluster, otherwise the slave may try to get elected while the masters are still unaware of the `FAIL` state, refusing to grant their vote.
+固定延时（fixed delay）确保我们会等到 FAIL 状态在集群内广播后，否则若从节点尝试发起选举，主节点们仍然不知道那个主节点已经 FAIL，就会拒绝投票。
 
-The random delay is used to desynchronize slaves so they're unlikely to start an election at the same time.
+data_age / 10 参数是用来让从节点有时间去获得新鲜数据（在与主节点断线的这一小段时间内）。 随机延时（random delay）是用来添加一些不确定因素以减少多个从节点在同一时间发起选举的可能性，因为若同时多个从节点发起选举或许会导致没有任何节点赢得选举，要再次发起另一个选举的话会使集群在当时变得不可用。
 
-The `SLAVE_RANK` is the rank of this slave regarding the amount of replication data it has processed from the master.
-Slaves exchange messages when the master is failing in order to establish a (best effort) rank:
-the slave with the most updated replication offset is at rank 0, the second most updated at rank 1, and so forth.
-In this way the most updated slaves try to get elected before others.
+一旦有从节点赢得选举，它就会开始用 ping 和 pong 数据包向其他节点宣布自己已经是主节点，并提供它负责的哈希槽，设置 configEpoch 为 currentEpoch（选举开始时生成的）。
 
-Rank order is not strictly enforced; if a slave of higher rank fails to be
-elected, the others will try shortly.
+为了加速其他节点的重新配置，该节点会广播一个 pong 包 给集群里的所有节点（那些现在访问不到的节点最终也会收到一个 ping 包或 pong 包，并且进行重新配置）。
 
-Once a slave wins the election, it obtains a new unique and incremental `configEpoch` which is higher than that of any other existing master. It starts advertising itself as master in ping and pong packets, providing the set of served slots with a `configEpoch` that will win over the past ones.
+其他节点会检测到有一个新的主节点（带着更大的configEpoch）在负责处理之前一个旧的主节点负责的哈希槽，然后就升级自己的配置信息。 旧主节点的从节点，或者是经过故障转移后重新加入集群的该旧主节点，不仅会升级配置信息，还会配置新主节点的备份。
 
-In order to speedup the reconfiguration of other nodes, a pong packet is broadcast to all the nodes of the cluster. Currently unreachable nodes will eventually be reconfigured when they receive a ping or pong packet from another node or will receive an `UPDATE` packet from another node if the information it publishes via heartbeat packets are detected to be out of date.
-
-The other nodes will detect that there is a new master serving the same slots served by the old master but with a greater `configEpoch`, and will upgrade their configuration. Slaves of the old master (or the failed over master if it rejoins the cluster) will not just upgrade the configuration but will also reconfigure to replicate from the new master. How nodes rejoining the cluster are configured is explained in the next sections.
-
-Masters reply to slave vote request
+主节点回复从节点的投票请求
 ---
 
-In the previous section it was discussed how slaves try to get elected. This section explains what happens from the point of view of a master that is requested to vote for a given slave.
+在上一节中我们讨论了从节点是如何被选举上的，这一节我们将从主节点的角度解释在为给定从节点投票的时候发生了什么。
 
-Masters receive requests for votes in form of `FAILOVER_AUTH_REQUEST` requests from slaves.
+主节点接收到来自于从节点、要求以 FAILOVER_AUTH_REQUEST 请求的形式投票的请求。
+要授予一个投票，必须要满足以下条件：
 
-For a vote to be granted the following conditions need to be met:
+- 1) 在一个给定的时段（epoch）里，一个主节点只能投一次票，并且拒绝给以前时段投票：每个主节点都有一个 lastVoteEpoch 域，一旦认证请求数据包（auth request packet）里的 currentEpoch 小于 lastVoteEpoch，那么主节点就会拒绝再次投票。当一个主节点积极响应一个投票请求，那么 lastVoteEpoch 会相应地进行更新。
+- 2) 一个主节点投票给某个从节点当且仅当该从节点的主节点被标记为 FAIL。
+- 3) 如果认证请求里的 currentEpoch 小于主节点里的 currentEpoch 的话，那么该请求会被忽视掉。因此，主节点的回应总是带着和认证请求一致的 currentEpoch。如果同一个从节点在增加 currentEpoch 后再次请求投票，那么保证一个来自于主节点的、旧的延迟回复不会被新一轮选举接受。
 
-1. A master only votes a single time for a given epoch, and refuses to vote for older epochs: every master has a lastVoteEpoch field and will refuse to vote again as long as the `currentEpoch` in the auth request packet is not greater than the lastVoteEpoch. When a master replies positively to a vote request, the lastVoteEpoch is updated accordingly, and safely stored on disk.
-2. A master votes for a slave only if the slave's master is flagged as `FAIL`.
-3. Auth requests with a `currentEpoch` that is less than the master `currentEpoch` are ignored. Because of this the master reply will always have the same `currentEpoch` as the auth request. If the same slave asks again to be voted, incrementing the `currentEpoch`, it is guaranteed that an old delayed reply from the master can not be accepted for the new vote.
+下面的例子是没有依据这个规则引发的事件：
 
-Example of the issue caused by not using rule number 3:
+主节点的 currentEpoch 是 5， lastVoteEpoch 是 1（在几次失败的选举后这也许会发生的）
 
-Master `currentEpoch` is 5, lastVoteEpoch is 1 (this may happen after a few failed elections)
+- 从节点的 currentEpoch 是 3。
+- 从节点尝试用 epoch 值为 4（3+1）来赢得选票，主节点回复 ok，里面的 currentEpoch 是 5，可是这个回复延迟了。
+- 从节点尝试用 epoch 值为 5（4+1）来再次赢得选票，收到的是带着 currentEpoch 值为 5 的延迟回复，这个回复会被当作有效的来接收。
+- 4) 主节点若已经为某个失效主节点的一个从节点投票后，在经过 NODE_TIMEOUT * 2 时间之前不会为同个失效主节点的另一个从节点投票。这并不是严格要求的，因为两个从节点用同个 epoch 来赢得选举的可能性很低，不过在实际中，系统确保正常情况当一个从节点被选举上，那么它有足够的时间来通知其他从节点，以避免另一个从节点发起另一个新的选举。
+- 5) 主节点不会用任何方式来尝试选出最好的从节点，只要从节点的主节点处于 FAIL 状态并且投票主节点在这一轮中还没投票，主节点就能进行积极投票。
+- 6) 若一个主节点拒绝为给定从节点投票，它不会给任何负面的回应，只是单纯忽略掉这个投票请求。
+- 7) 主节点不会授予投票给那些 configEpoch 值比主节点哈希槽表里的 configEpoch 更小的从节点。记住，从节点发送了它的主节点的 configEpoch 值，还有它的主节点负责的哈希槽对应的位图。本质上来说，这意味着，请求投票的从节点必须拥有它想要进行故障转移的哈希槽的配置信息，而且信息应该比它请求投票的主节点的配置信息更新或者一致。
 
-* Slave `currentEpoch` is 3.
-* Slave tries to be elected with epoch 4 (3+1), master replies with an ok with `currentEpoch` 5, however the reply is delayed.
-* Slave will try to be elected again, at a later time, with epoch 5 (4+1), the delayed reply reaches the slave with `currentEpoch` 5, and is accepted as valid.
-
-4. Masters don't vote for a slave of the same master before `NODE_TIMEOUT * 2` has elapsed if a slave of that master was already voted for. This is not strictly required as it is not possible for two slaves to win the election in the same epoch. However, in practical terms it ensures that when a slave is elected it has plenty of time to inform the other slaves and avoid the possibility that another slave will win a new election, performing an unnecessary second failover.
-5. Masters make no effort to select the best slave in any way. If the slave's master is in `FAIL` state and the master did not vote in the current term, a positive vote is granted. The best slave is the most likely to start an election and win it before the other slaves, since it will usually be able to start the voting process earlier because of its *higher rank* as explained in the previous section.
-6. When a master refuses to vote for a given slave there is no negative response, the request is simply ignored.
-7. Masters don't vote for slaves sending a `configEpoch` that is less than any `configEpoch` in the master table for the slots claimed by the slave. Remember that the slave sends the `configEpoch` of its master, and the bitmap of the slots served by its master. This means that the slave requesting the vote must have a configuration for the slots it wants to failover that is newer or equal the one of the master granting the vote.
-
-Practical example of configuration epoch usefulness during partitions
+从节点选举的竞争情况
 ---
 
-This section illustrates how the epoch concept is used to make the slave promotion process more resistant to partitions.
+这一节解释如何使用 epoch 概念来使得从节点提升过程对分区操作更有抵抗力。
 
-* A master is no longer reachable indefinitely. The master has three slaves A, B, C.
-* Slave A wins the election and is promoted to master.
-* A network partition makes A not available for the majority of the cluster.
-* Slave B wins the election and is promoted as master.
-* A partition makes B not available for the majority of the cluster.
-* The previous partition is fixed, and A is available again.
+- 主节点不是无限期地可达。它拥有三个从节点 A，B，C。
+- 从节点 A 赢得了选举并且被推选为主节点。
+- 一个分区操作使得集群中的大多数节点无法访问节点 A。
+- 节点 B 赢得了选举并且被推选为主节点。
+- 一个分区操作使得集群中大多数节点无法访问节点 B。
+- 之前分区操作的问题被修复了，节点 A 又恢复可访问状态。
 
-At this point B is down and A is available again with a role of master (actually `UPDATE` messages would reconfigure it promptly, but here we assume all `UPDATE` messages were lost). At the same time, slave C will try to get elected in order to fail over B. This is what happens:
+此刻，节点 B 仍然失效，节点 A 恢复可访问，会与节点 C 竞选去获得选票对节点 B 进行故障转移。
 
-1. B will try to get elected and will succeed, since for the majority of masters its master is actually down. It will obtain a new incremental `configEpoch`.
-2. A will not be able to claim to be the master for its hash slots, because the other nodes already have the same hash slots associated with a higher configuration epoch (the one of B) compared to the one published by A.
-3. So, all the nodes will upgrade their table to assign the hash slots to C, and the cluster will continue its operations.
+这两个有同样的哈希槽的从节点最终都会请求被提升，然而由于它们发布的 configEpoch 是不一样的，而且节点 C 的 epoch 比较大，所以所有的节点都会把它们的配置更新为节点 C 的。
 
-As you'll see in the next sections, a stale node rejoining a cluster
-will usually get notified as soon as possible about the configuration change
-because as soon as it pings any other node, the receiver will detect it
-has stale information and will send an `UPDATE` message.
+节点 A 会从来源于节点 C（负责同样哈希槽的节点）的 ping 包中检测出节点 C 的 epoch 是更大的，所以它会重新设置自己为节点 C 的一个从节点。
 
-Hash slots configuration propagation
+服务器哈希槽信息的传播规则
 ---
 
-An important part of Redis Cluster is the mechanism used to propagate the information about which cluster node is serving a given set of hash slots. This is vital to both the startup of a fresh cluster and the ability to upgrade the configuration after a slave was promoted to serve the slots of its failing master.
+Redis 集群很重要的一个部分是用来传播关于集群节点负责哪些哈希槽的信息的机制。这对于新集群的启动和提升从节点来负责处理哈希槽（它那失效的主节点本该处理的槽）的能力来说是必不可少的。
 
-The same mechanism allows nodes partitioned away for an indefinite amount of
-time to rejoin the cluster in a sensible way.
+个体持续交流使用的 ping 包和 pong 包都包含着一个头部，这个头部是给发送者使用的，为了向别的节点宣传它负责的哈希槽。这是主要用来传播变更的机制，不过集群管理员手动进行重新配置是例外（比如为了在主节点间移动哈希槽，通过 redis-trib 来进行手动碎片整理）。
 
-There are two ways hash slot configurations are propagated:
+当一个新的 Redis 集群节点创建的时候，它的本地哈希槽表（表示给定哈希槽和给定节点 ID 的映射关系表）被初始化，每个哈希槽被置为 nil，也就是，每个哈希槽都是没赋值的。
 
-1. Heartbeat messages. The sender of a ping or pong packet always adds information about the set of hash slots it (or its master, if it is a slave) serves.
-2. `UPDATE` messages. Since in every heartbeat packet there is information about the sender `configEpoch` and set of hash slots served, if a receiver of a heartbeat packet finds the sender information is stale, it will send a packet with new information, forcing the stale node to update its info.
+一个节点要更新它的哈希槽表所要遵守的第一个规则如下：
 
-The receiver of a heartbeat or `UPDATE` message uses certain simple rules in
-order to update its table mapping hash slots to nodes. When a new Redis Cluster node is created, its local hash slot table is simply initialized to `NULL` entries so that each hash slot is not bound or linked to any node. This looks similar to the following:
+**规则 1：如果一个哈希槽是没有赋值的，然后有个已知节点认领它，那么我就会修改我的哈希槽表，把这个哈希槽和这个节点关联起来。**
 
-```
-0 -> NULL
-1 -> NULL
-2 -> NULL
-...
-16383 -> NULL
-```
+由于这个规则，当一个新集群被创建的时候，只需要手动给哈希槽赋值上（通常是通过 redis-trib 命令行工具使用 CLUSTER 命令来实现）负责它的主节点，然后这些信息就会迅速在集群中传播开来。
 
-The first rule followed by a node in order to update its hash slot table is the following:
+然而，当一个配置更新的发生是因为一个从节点在其主节点失效后被提升为主节点的时候，这个规则显然还不足够。新的主节点会宣传之前它做从节点的时候负责的哈希槽，但从其他节点看来这些哈希槽并没有被重新赋值，所以如果它们只遵守第一个规则的话就不会升级配置信息。
 
-**Rule 1**: If a hash slot is unassigned (set to `NULL`), and a known node claims it, I'll modify my hash slot table and associate the claimed hash slots to it.
+由于这个原因就有第二个规则，是用来把一个已赋值给以前节点的哈希槽重新绑定到一个新的认领它的节点上。规则如下：
 
-So if we receive a heartbeat from node A claiming to serve hash slots 1 and 2 with a configuration epoch value of 3, the table will be modified to:
+**规则 2：如果一个哈希槽已经被赋值了，有个节点它的 configEpoch 比哈希槽当前拥有者的值更大，并且该节点宣称正在负责该哈希槽，那么我们会把这个哈希槽重新绑定到这个新节点上。**
 
-```
-0 -> NULL
-1 -> A [3]
-2 -> A [3]
-...
-16383 -> NULL
-```
+因为有这第二个规则，所以集群中的所有节点最终都会同意哈希槽的拥有者是所有声称拥有它的节点中 configEpoch 值最大的那个。
 
-When a new cluster is created, a system administrator needs to manually assign (using the `CLUSTER ADDSLOTS` command, via the redis-trib command line tool, or by any other means) the slots served by each master node only to the node itself, and the information will rapidly propagate across the cluster.
-
-However this rule is not enough. We know that hash slot mapping can change
-during two events:
-
-1. A slave replaces its master during a failover.
-2. A slot is resharded from a node to a different one.
-
-For now let's focus on failovers. When a slave fails over its master, it obtains
-a configuration epoch which is guaranteed to be greater than the one of its
-master (and more generally greater than any other configuration epoch
-generated previously). For example node B, which is a slave of A, may failover
-B with configuration epoch of 4. It will start to send heartbeat packets
-(the first time mass-broadcasting cluster-wide) and because of the following
-second rule, receivers will update their hash slot tables:
-
-**Rule 2**: If a hash slot is already assigned, and a known node is advertising it using a `configEpoch` that is greater than the `configEpoch` of the master currently associated with the slot, I'll rebind the hash slot to the new node.
-
-So after receiving messages from B that claim to serve hash slots 1 and 2 with configuration epoch of 4, the receivers will update their table in the following way:
-
-```
-0 -> NULL
-1 -> B [4]
-2 -> B [4]
-...
-16383 -> NULL
-```
-
-Liveness property: because of the second rule, eventually all nodes in the cluster will agree that the owner of a slot is the one with the greatest `configEpoch` among the nodes advertising it.
-
-This mechanism in Redis Cluster is called **last failover wins**.
-
-The same happens during reshardings. When a node importing a hash slot
-completes the import operation, its configuration epoch is incremented to make
-sure the change will be propagated throughout the cluster.
-
-UPDATE messages, a closer look
+UPDATE 消息
 ---
 
-With the previous section in mind, it is easier to see how update messages
-work. Node A may rejoin the cluster after some time. It will send heartbeat
-packets where it claims it serves hash slots 1 and 2 with configuration epoch
-of 3. All the receivers with updated information will instead see that
-the same hash slots are associated with node B having an higher configuration
-epoch. Because of this they'll send an `UPDATE` message to A with the new
-configuration for the slots. A will update its configuration because of the
-**rule 2** above.
+上面描述的传播哈希槽配置信息的系统只使用节点间交换信息的普通 ping 包和 pong 包。
+这要求存在一个节点（可以是负责给定哈希槽的主节点或从节点）拥有更新后的配置信息，因为节点是在 ping 包和 pong 包头部中发送它们自己的配置信息。
 
-How nodes rejoin the cluster
+然而也存在例外。当有一个节点，它是唯一一个负责处理给定哈希槽的节点，有可能在分区操作后它恢复正常，但拥有的配置信息是过时的。
+
+例子：一个给定的哈希槽是由节点 A 和 B 负责的。节点 A 是一个主节点，然后它在某个时刻失效了，所以节点 B 被提升为主节点。过了一段时间节点 B 也失效了，集群没有其他备份节点可以来处理这个哈希槽，所以只能开始修复操作。
+
+在一段时间过后节点 A 恢复正常了，并且作为一个可写入的主节点重新加入集群，但它的配置信息是过时的。此时没有任何备份节点能更新它的配置信息。这就是 UPDATE 消息存在的目的：当一个节点检测到其他节点在宣传它的哈希槽的时候是用一份过时的配置信息，那么它就会向这个节点发送一个 UPDATE 消息，这个消息包含新节点的 ID 和它负责的哈希槽（以 bitmap 形式发送）。
+
+注意：目前更新配置信息可以用 ping 包/ pong 包，也可以用 UPDATE 消息，这两种方法是共享同一个代码路径（code path）。这两者在更新一个带有老旧信息的节点的配置信息时会有功能上的重复。然而这两种机制都是非常有用的，因为 ping / pong 包在一段时间后能填充（populate）新节点的哈希槽路由表，而 UPDATE 消息只是在一个过时配置信息被检测出来时才被发送出去，并且只覆盖那些需要修复的错误配置信息。
+
+备份迁移
 ---
 
-The same basic mechanism is used when a node rejoins a cluster.
-Continuing with the example above, node A will be notified
-that hash slots 1 and 2 are now served by B. Assuming that these two were
-the only hash slots served by A, the count of hash slots served by A will
-drop to 0! So A will **reconfigure to be a slave of the new master**.
+Redis 集群实现了一个叫做备份迁移（replica migration）的概念，以提高系统的可用性。在集群中有主节点-从节点的设定，如果主从节点间的映射关系是固定的，那么久而久之，当发生多个单一节点独立故障的时候，系统可用性会变得很有限。
 
-The actual rule followed is a bit more complex than this. In general it may
-happen that A rejoins after a lot of time, in the meantime it may happen that
-hash slots originally served by A are served by multiple nodes, for example
-hash slot 1 may be served by B, and hash slot 2 by C.
+例如有一个每个主节点都只有一个从节点的集群，当主节点或者从节点故障失效的时候集群能让操作继续执行下去，但如果主从节点都失效的话就没法让操作继续执行下去。然而这样长期会积累很多由硬件或软件问题引起的单一节点独立故障。例如：
 
-So the actual *Redis Cluster node role switch rule* is: **A master node will change its configuration to replicate (be a slave of) the node that stole its last hash slot**.
+- 主节点 A 有且只有一个从节点 A1。
+- 主节点 A 失效了。A1 被提升为新的主节点。
+- 三个小时后，A1 因为一个独立事件（跟节点 A 的失效无关）失效了。由于没有其他从节点可以提升为主节点（因为节点 A 仍未恢复正常），集群没法继续进行正常操作。
 
-During reconfiguration, eventually the number of served hash slots will drop to zero, and the node will reconfigure accordingly. Note that in the base case this just means that the old master will be a slave of the slave that replaced it after a failover. However in the general form the rule covers all possible cases.
+如果主从节点间的映射关系是固定的，那要让集群更有抵抗力地面对上面的情况的唯一方法就是为每个主节点添加从节点。然而这要付出的代价也更昂贵，因为要求 Redis 执行更多的实例、更多的内存等等。
 
-Slaves do exactly the same: they reconfigure to replicate the node that
-stole the last hash slot of its former master.
+一个候选方案就是在集群中创建不对称性，然后让集群布局时不时地自动变化。例如，假设集群有三个主节点 A，B，C。节点 A 和 B 都各有一个从节点，A1 和 B1。节点 C 有两个从节点：C1 和 C2。
 
-Replica migration
+备份迁移是从节点自动重构的过程，为了迁移到一个没有可工作从节点的主节点上。在上面提到的例子中，备份迁移过程如下：
+
+- 主节点 A 失效。A1 被提升为主节点。
+- 节点 C2 迁移成为节点 A1 的从节点，要不然 A1 就没有任何从节点。
+- 三个小时后节点 A1 也失效了。
+- 节点 C2 被提升为取代 A1 的新主节点。
+- 集群仍然能继续正常工作。
+
+备份迁移算法
 ---
 
-Redis Cluster implements a concept called *replica migration* in order to
-improve the availability of the system. The idea is that in a cluster with
-a master-slave setup, if the map between slaves and masters is fixed
-availability is limited over time if multiple independent failures of single
-nodes happen.
+迁移算法不用任何形式的协议，因为 Redis 集群中的从节点布局不是集群配置信息（配置信息要求前后一致并且/或者用 config epochs 来标记版本号）的一部分。 它使用的是一个避免在主节点没有备份时从节点大批迁移的算法。这个算法保证，一旦集群配置信息稳定下来，最终每个主节点都至少会有一个从节点作为备份。
 
-For example in a cluster where every master has a single slave, the cluster
-can continue operations as long as either the master or the slave fail, but not
-if both fail the same time. However there is a class of failures that are
-the independent failures of single nodes caused by hardware or software issues
-that can accumulate over time. For example:
+接下来讲这个算法是如何工作的。在开始之前我们需要定义清楚在这个上下文中什么才算是一个好的从节点：一个好的从节点是指从给定节点的角度看，该从节点不处于 FAIL 状态。
 
-* Master A has a single slave A1.
-* Master A fails. A1 is promoted as new master.
-* Three hours later A1 fails in an independent manner (unrelated to the failure of A). No other slave is available for promotion since node A is still down. The cluster cannot continue normal operations.
+每个从节点若检测出存在至少一个没有好的从节点的单一主节点，那么就会触发这个算法的执行。然而在所有检测出这种情况的从节点中，只有一部分从节点会采取行动。 通常这“一部分从节点”都只有一个，除非有不同的从节点在给定时间间隔里对其他节点的失效状态有稍微不同的视角。
 
-If the map between masters and slaves is fixed, the only way to make the cluster
-more resistant to the above scenario is to add slaves to every master, however
-this is costly as it requires more instances of Redis to be executed, more
-memory, and so forth.
+采取行动的从节点是属于那些拥有最多从节点的主节点，并且不处于 FAIL 状态及拥有最小的节点 ID。
 
-An alternative is to create an asymmetry in the cluster, and let the cluster
-layout automatically change over time. For example the cluster may have three
-masters A, B, C. A and B have a single slave each, A1 and B1. However the master
-C is different and has two slaves: C1 and C2.
+例如，如果有 10 个主节点，它们各有 1 个从节点，另外还有 2 个主节点，它们各有 5 个从节点。会尝试迁移的从节点是在那 2 个拥有 5 个从节点的主节点中的所有从节点里，节点 ID 最小的那个。已知不需要用到任何协议，在集群配置信息不稳定的情况下，有可能发生一种竞争情况：多个从节点都认为自己是不处于 FAIL 状态并且拥有较小节点 ID（实际上这是一种比较难出现的状况）。如果这种情况发生的话，结果是多个从节点都会迁移到同个主节点下，不过这种结局是无害的。这种竞争发生的话，有时候会使得割让出从节点的主节点变成没有任何备份节点，当集群再次达到稳定状态的时候，本算法会再次执行，然后把从节点迁移回它原来的主节点。
 
-Replica migration is the process of automatic reconfiguration of a slave
-in order to *migrate* to a master that has no longer coverage (no working
-slaves). With replica migration the scenario mentioned above turns into the
-following:
+最终每个主节点都会至少有一个从节点作为备份节点。通常表现出来的行为是，一个从节点从一个拥有多个从节点的主节点迁移到一个孤立的主节点。
 
-* Master A fails. A1 is promoted.
-* C2 migrates as slave of A1, that is otherwise not backed by any slave.
-* Three hours later A1 fails as well.
-* C2 is promoted as new master to replace A1.
-* The cluster can continue the operations.
+这个算法能通过一个用户可配置的参数 cluster-migration-barrier 进行控制。这个参数表示的是，一个主节点在拥有多少个好的从节点的时候就要割让一个从节点出来。例如这个参数若被设为 2，那么只有当一个主节点拥有 2 个可工作的从节点时，它的一个从节点会尝试迁移。
 
-Replica migration algorithm
----
 
-The migration algorithm does not use any form of agreement since the slave
-layout in a Redis Cluster is not part of the cluster configuration that needs
-to be consistent and/or versioned with config epochs. Instead it uses an
-algorithm to avoid mass-migration of slaves when a master is not backed.
-The algorithm guarantees that eventually (once the cluster configuration is
-stable) every master will be backed by at least one slave.
-
-This is how the algorithm works. To start we need to define what is a
-*good slave* in this context: a good slave is a slave not in `FAIL` state
-from the point of view of a given node.
-
-The execution of the algorithm is triggered in every slave that detects that
-there is at least a single master without good slaves. However among all the
-slaves detecting this condition, only a subset should act. This subset is
-actually often a single slave unless different slaves have in a given moment
-a slightly different view of the failure state of other nodes.
-
-The *acting slave* is the slave among the masters with the maximum number
-of attached slaves, that is not in FAIL state and has the smallest node ID.
-
-So for example if there are 10 masters with 1 slave each, and 2 masters with
-5 slaves each, the slave that will try to migrate is - among the 2 masters
-having 5 slaves - the one with the lowest node ID. Given that no agreement
-is used, it is possible that when the cluster configuration is not stable,
-a race condition occurs where multiple slaves believe themselves to be
-the non-failing slave with the lower node ID (it is unlikely for this to happen
-in practice). If this happens, the result is multiple slaves migrating to the
-same master, which is harmless. If the race happens in a way that will leave
-the ceding master without slaves, as soon as the cluster is stable again
-the algorithm will be re-executed again and will migrate a slave back to
-the original master.
-
-Eventually every master will be backed by at least one slave. However,
-the normal behavior is that a single slave migrates from a master with
-multiple slaves to an orphaned master.
-
-The algorithm is controlled by a user-configurable parameter called
-`cluster-migration-barrier`: the number of good slaves a master
-must be left with before a slave can migrate away. For example, if this
-parameter is set to 2, a slave can try to migrate only if its master remains
-with two working slaves.
-
-configEpoch conflicts resolution algorithm
----
-
-When new `configEpoch` values are created via slave promotion during
-failovers, they are guaranteed to be unique.
-
-However there are two distinct events where new configEpoch values are
-created in an unsafe way, just incrementing the local `currentEpoch` of
-the local node and hoping there are no conflicts at the same time.
-Both the events are system-administrator triggered:
-
-1. `CLUSTER FAILOVER` command with `TAKEOVER` option is able to manually promote a slave node into a master *without the majority of masters being available*. This is useful, for example, in multi data center setups.
-2. Migration of slots for cluster rebalancing also generates new configuration epochs inside the local node without agreement for performance reasons.
-
-Specifically, during manual reshardings, when a hash slot is migrated from
-a node A to a node B, the resharding program will force B to upgrade
-its configuration to an epoch which is the greatest found in the cluster,
-plus 1 (unless the node is already the one with the greatest configuration
-epoch), without requiring agreement from other nodes.
-Usually a real world resharding involves moving several hundred hash slots
-(especially in small clusters). Requiring an agreement to generate new
-configuration epochs during reshardings, for each hash slot moved, is
-inefficient. Moreover it requires an fsync in each of the cluster nodes
-every time in order to store the new configuration. Because of the way it is
-performed instead, we only need a new config epoch when the first hash slot is moved,
-making it much more efficient in production environments.
-
-However because of the two cases above, it is possible (though unlikely) to end
-with multiple nodes having the same configuration epoch. A resharding operation
-performed by the system administrator, and a failover happening at the same
-time (plus a lot of bad luck) could cause `currentEpoch` collisions if
-they are not propagated fast enough.
-
-Moreover, software bugs and filesystem corruptions can also contribute
-to multiple nodes having the same configuration epoch.
-
-When masters serving different hash slots have the same `configEpoch`, there
-are no issues. It is more important that slaves failing over a master have
-unique configuration epochs.
-
-That said, manual interventions or reshardings may change the cluster
-configuration in different ways. The Redis Cluster main liveness property
-requires that slot configurations always converge, so under every circumstance
-we really want all the master nodes to have a different `configEpoch`.
-
-In order to enforce this, **a conflict resolution algorithm** is used in the
-event that two nodes end up with the same `configEpoch`.
-
-* IF a master node detects another master node is advertising itself with
-the same `configEpoch`.
-* AND IF the node has a lexicographically smaller Node ID compared to the other node claiming the same `configEpoch`.
-* THEN it increments its `currentEpoch` by 1, and uses it as the new `configEpoch`.
-
-If there are any set of nodes with the same `configEpoch`, all the nodes but the one with the greatest Node ID will move forward, guaranteeing that, eventually, every node will pick a unique configEpoch regardless of what happened.
-
-This mechanism also guarantees that after a fresh cluster is created, all
-nodes start with a different `configEpoch` (even if this is not actually
-used) since `redis-trib` makes sure to use `CONFIG SET-CONFIG-EPOCH` at startup.
-However if for some reason a node is left misconfigured, it will update
-its configuration to a different configuration epoch automatically.
-
-Node resets
----
-
-Nodes can be software reset (without restarting them) in order to be reused
-in a different role or in a different cluster. This is useful in normal
-operations, in testing, and in cloud environments where a given node can
-be reprovisioned to join a different set of nodes to enlarge or create a new
-cluster.
-
-In Redis Cluster nodes are reset using the `CLUSTER RESET` command. The
-command is provided in two variants:
-
-* `CLUSTER RESET SOFT`
-* `CLUSTER RESET HARD`
-
-The command must be sent directly to the node to reset. If no reset type is
-provided, a soft reset is performed.
-
-The following is a list of operations performed by a reset:
-
-1. Soft and hard reset: If the node is a slave, it is turned into a master, and its dataset is discarded. If the node is a master and contains keys the reset operation is aborted.
-2. Soft and hard reset: All the slots are released, and the manual failover state is reset.
-3. Soft and hard reset: All the other nodes in the nodes table are removed, so the node no longer knows any other node.
-4. Hard reset only: `currentEpoch`, `configEpoch`, and `lastVoteEpoch` are set to 0.
-5. Hard reset only: the Node ID is changed to a new random ID.
-
-Master nodes with non-empty data sets can't be reset (since normally you want to reshard data to the other nodes). However, under special conditions when this is appropriate (e.g. when a cluster is totally destroyed with the intent of creating a new one), `FLUSHALL` must be executed before proceeding with the reset.
-
-Removing nodes from a cluster
----
-
-It is possible to practically remove a node from an existing cluster by
-resharding all its data to other nodes (if it is a master node) and
-shutting it down. However, the other nodes will still remember its node
-ID and address, and will attempt to connect with it.
-
-For this reason, when a node is removed we want to also remove its entry
-from all the other nodes tables. This is accomplished by using the
-`CLUSTER FORGET <node-id>` command.
-
-The command does two things:
-
-1. It removes the node with the specified node ID from the nodes table.
-2. It sets a 60 second ban which prevents a node with the same node ID from being re-added.
-
-The second operation is needed because Redis Cluster uses gossip in order to auto-discover nodes, so removing the node X from node A, could result in node B gossiping about node X to A again. Because of the 60 second ban, the Redis Cluster administration tools have 60 seconds in order to remove the node from all the nodes, preventing the re-addition of the node due to auto discovery.
-
-Further information is available in the `CLUSTER FORGET` documentation.
-
-Publish/Subscribe
+发布/订阅（Publish/Subscribe）
 ===
 
-In a Redis Cluster clients can subscribe to every node, and can also
-publish to every other node. The cluster will make sure that published
-messages are forwarded as needed.
+在一个 Redis 集群中，客户端能订阅任何一个节点，也能发布消息给任何一个节点。集群会确保发布的消息都会按需进行转发。
+目前的实现方式是单纯地向所有节点广播所有的发布消息，在将来的实现中会用 bloom filters 或其他算法来优化。
 
-The current implementation will simply broadcast each published message
-to all other nodes, but at some point this will be optimized either
-using Bloom filters or other algorithms.
-
-Appendix
+附录
 ===
 
-Appendix A: CRC16 reference implementation in ANSI C
+附录 A：CRC16算法的 ANSI C 版本的参考实现
 ---
 
     /*

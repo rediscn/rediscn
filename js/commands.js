@@ -3084,7 +3084,12 @@ function getCommandArgs(command)
 			var argItem = command.arguments[i];
 			
 			if(argItem.type == 'key'){
-				returnArgs += argItem.name;
+				if(returnArgs==""){
+					returnArgs += argItem.name;
+				}else{
+					returnArgs += " " + argItem.name;
+				}
+				
 			}else if(argItem.enum){
 				var enumStr = "";
 				for(var j=0;j<argItem.enum.length;j++){

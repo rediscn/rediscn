@@ -9,12 +9,12 @@ disqusUrl: http://redis.cn/topics/internals-eventlib.html
 Event Library
 ===
 
-Why is an Event Library needed at all?
+为什么需要Event Library?
 ---
 
-Let us figure it out through a series of Q&As.
+让我们通过一系列Q&A来寻找答案
 
-Q: What do you expect a network server to be doing all the time? <br/>
+Q: 你期望一个网络服务器一直在做什么？ <br/>
 A: Watch for inbound connections on the port its listening and accept them.
 
 Q: Calling [accept](http://man.cx/accept%282%29 accept) yields a descriptor. What do I do with it?<br/>

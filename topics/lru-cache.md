@@ -6,134 +6,97 @@ disqusIdentifier: topics_lru-cache
 disqusUrl: http://redis.cn/topics/lru-cache.html
 ---
 
-Using Redis as an LRU cache
+将redis当做使用LRU算法的缓存来使用
 ===
 
-When Redis is used as a cache, sometimes it is handy to let it automatically
-evict old data as you add new one. This behavior is very well known in the
-community of developers, since it is the default behavior of the popular
-*memcached* system.
+当Redis被当做缓存来使用，当你新增数据时，让它自动地回收旧数据是件很方便的事情。这个行为在开发者社区非常有名，因为它是流行的memcached系统的默认行为。
 
-LRU is actually only one of the supported eviction methods. This page covers
-the more general topic of the Redis `maxmemory` directive that is used in
-order to limit the memory usage to a fixed amount, and it also covers in
-depth the LRU algorithm used by Redis, that is actually an approximation of
-the exact LRU.
+LRU是Redis唯一支持的回收方法。本页面包括一些常规话题，Redis的`maxmemory`指令用于将可用内存限制成一个固定大小，还包括了Redis使用的LRU算法，这个实际上只是近似的LRU。
 
-Maxmemory configuration directive
----
+## Maxmemory配置指令 ##
 
-The `maxmemory` configuration directive is used in order to configure Redis
-to use a specified amount of memory for the data set. It is possible to
-set the configuration directive using the `redis.conf` file, or later using
-the `CONFIG SET` command at runtime.
 
-For example in order to configure a memory limit of 100 megabytes, the
-following directive can be used inside the `redis.conf` file.
+`maxmemory`配置指令用于配置Redis存储数据时指定限制的内存大小。通过redis.conf可以设置该指令，或者之后使用CONFIG SET命令来进行运行时配置。
+
+例如为了配置内存限制为100mb，以下的指令可以放在`redis.conf`文件中。
 
     maxmemory 100mb
 
-Setting `maxmemory` to zero results into no memory limits. This is the
-default behavior for 64 bit systems, while 32 bit systems use an implicit
-memory limit of 3GB.
+设置`maxmemory`为0代表没有内存限制。对于64位的系统这是个默认值，对于32位的系统默认内存限制为3GB。
 
-When the specified amount of memory is reached, it is possible to select
-among different behaviors, called **policies**.
-Redis can just return errors for commands that could result in more memory
-being used, or it can evict some old data in order to return back to the
-specified limit every time new data is added.
+当指定的内存限制大小达到时，需要选择不同的行为，也就是**策略**。 Redis可以仅仅对命令返回错误，这将使得内存被使用得更多，或者回收一些旧的数据来使得添加数据时可以避免内存限制。
 
-Eviction policies
----
+## 回收策略 ##
 
-The exact behavior Redis follows when the `maxmemory` limit is reached is
-configured using the `maxmemory-policy` configuration directive.
+当maxmemory限制达到的时候Redis会使用的行为由 Redis的maxmemory-policy配置指令来进行配置。
 
-The following policies are available:
+以下的策略是可用的:
 
-* **noeviction**: return errors when the memory limit was reached and the client is trying to execute commands that could result in more memory to be used (most write commands, but `DEL` and a few more exceptions).
-* **allkeys-lru**: evict keys trying to remove the less recently used (LRU) keys first, in order to make space for the new data added.
-* **volatile-lru**: evict keys trying to remove the less recently used (LRU) keys first, but only among keys that have an **expire set**, in order to make space for the new data added.
-* **allkeys-random**: evict random keys in order to make space for the new data added.
-* **volatile-random**: evict random keys in order to make space for the new data added, but only evict keys with an **expire set**.
-* **volatile-ttl**: In order to make space for the new data, evict only keys with an **expire set**, and try to evict keys with a shorter time to live (TTL) first.
+* **noeviction**:返回错误当内存限制达到并且客户端尝试执行会让更多内存被使用的命令（大部分的写入指令，但DEL和几个例外）
+* **allkeys-lru**: 尝试回收最少使用的键（LRU），使得新添加的数据有空间存放。
+* **volatile-lru**: 尝试回收最少使用的键（LRU），但仅限于在过期集合的键,使得新添加的数据有空间存放。
+* **allkeys-random**: 回收随机的键使得新添加的数据有空间存放。
+* **volatile-random**: 回收随机的键使得新添加的数据有空间存放，但仅限于在过期集合的键。
+* **volatile-ttl**: 回收在过期集合的键，并且优先回收存活时间（TTL）较短的键,使得新添加的数据有空间存放。
 
-The policies **volatile-lru**, **volatile-random** and **volatile-ttl** behave like **noeviction** if there are no keys to evict matching the prerequisites.
+如果没有键满足回收的前提条件的话，策略**volatile-lru**, **volatile-random**以及**volatile-ttl**就和noeviction 差不多了。
 
-To pick the right eviction policy is important depending on the access pattern 
-of your application, however you can reconfigure the policy at runtime while 
-the application is running, and monitor the number of cache misses and hits 
-using the Redis `INFO` output in order to tune your setup.
+选择正确的回收策略是非常重要的，这取决于你的应用的访问模式，不过你可以在运行时进行相关的策略调整，并且监控缓存命中率和没命中的次数，通过RedisINFO命令输出以便调优。
 
-In general as a rule of thumb:
+一般的经验规则:
 
-* Use the **allkeys-lru** policy when you expect a power-law distribution in the popularity of your requests, that is, you expect that a subset of elements will be accessed far more often than the rest. **This is a good pick if you are unsure**.
-* Use the **allkeys-random** if you have a cyclic access where all the keys are scanned continuously, or when you expect the distribution to be uniform (all elements likely accessed with the same probability).
-* Use the **volatile-ttl** if you want to be able to provide hints to Redis about what are good candidate for expiration by using different TTL values when you create your cache objects.
+* 使用**allkeys-lru**策略：当你希望你的请求符合一个幂定律分布，也就是说，你希望部分的子集元素将比其它其它元素被访问的更多。如果你不确定选择什么，这是个很好的选择。.
+* 使用**allkeys-random**：如果你是循环访问，所有的键被连续的扫描，或者你希望请求分布正常（所有元素被访问的概率都差不多）。
+* 使用**volatile-ttl**：如果你想要通过创建缓存对象时设置TTL值，来决定哪些对象应该被过期。
 
-The **allkeys-lru** and **volatile-random** policies are mainly useful when you want to use a single instance for both caching and to have a set of persistent keys. However it is usually a better idea to run two Redis instances to solve such a problem.
+**allkeys-lru** 和 **volatile-random**策略对于当你想要单一的实例实现缓存及持久化一些键时很有用。不过一般运行两个实例是解决这个问题的更好方法。
 
-It is also worth to note that setting an expire to a key costs memory, so using a policy like **allkeys-lru** is more memory efficient since there is no need to set an expire for the key to be evicted under memory pressure.
+为了键设置过期时间也是需要消耗内存的，所以使用**allkeys-lru**这种策略更加高效，因为没有必要为键取设置过期时间当内存有压力时。
 
-How the eviction process works
----
 
-It is important to understand that the eviction process works like this:
+## **回收进程如何工作** ##
 
-* A client runs a new command, resulting in more data added.
-* Redis checks the memory usage, and if it is greater than the `maxmemory` limit , it evicts keys according to the policy.
-* A new command is executed, and so forth.
+理解回收进程如何工作是非常重要的:
 
-So we continuously cross the boundaries of the memory limit, by going over it, and then by evicting keys to return back under the limits.
+* 一个客户端运行了新的命令，添加了新的数据。
+* Redi检查内存使用情况，如果大于maxmemory的限制, 则根据设定好的策略进行回收。
+* 一个新的命令被执行，等等。
+* 
+所以我们不断地穿越内存限制的边界，通过不断达到边界然后不断地回收回到边界以下。
 
-If a command results in a lot of memory being used (like a big set intersection stored into a new key) for some time the memory limit can be surpassed by a noticeable amount.
+如果一个命令的结果导致大量内存被使用（例如很大的集合的交集保存到一个新的键），不用多久内存限制就会被这个内存使用量超越。
 
-Approximated LRU algorithm
----
+## **近似LRU算法** ##
 
-Redis LRU algorithm is not an exact implementation. This means that Redis is
-not able to pick the *best candidate* for eviction, that is, the access that
-was accessed the most in the past. Instead it will try to run an approximation
-of the LRU algorithm, by sampling a small number of keys, and evicting the
-one that is the best (with the oldest access time) among the sampled keys.
+Redis的LRU算法并非完整的实现。这意味着Redis并没办法选择最佳候选来进行回收，也就是最久未被访问的键。相反它会尝试运行一个近似LRU的算法，通过对少量keys进行取样，然后回收其中一个最好的key（被访问时间较早的）。
 
-However since Redis 3.0 the algorithm was improved to also take a pool of good
-candidates for eviction. This improved the performance of the algorithm, making
-it able to approximate more closely the behavior of a real LRU algorithm.
+不过从Redis 3.0算法已经改进为回收键的候选池子。这改善了算法的性能，使得更加近似真是的LRU算法的行为。
 
-What is important about the Redis LRU algorithm is that you **are able to tune** the precision of the algorithm by changing the number of samples to check for every eviction. This parameter is controlled by the following configuration directive:
+Redis LRU有个很重要的点，你通过调整每次回收时检查的采样数量，以实现**调整**算法的精度。这个参数可以通过以下的配置指令调整:
 
     maxmemory-samples 5
 
-The reason why Redis does not use a true LRU implementation is because it
-costs more memory. However the approximation is virtually equivalent for the
-application using Redis. The following is a graphical comparison of how
-the LRU approximation used by Redis compares with true LRU.
+Redis为什么不使用真实的LRU实现是因为这需要太多的内存。不过近似的LRU算法对于应用而言应该是等价的。使用真实的LRU算法与近似的算法可以通过下面的图像对比。
 
 ![LRU comparison](http://redis.io/images/redisdoc/lru_comparison.png)
 
-The test to generate the above graphs filled a Redis server with a given number of keys. The keys were accessed from the first to the last, so that the first keys are the best candidates for eviction using an LRU algorithm. Later more 50% of keys are added, in order to force half of the old keys to be evicted.
+用于生成图像的Redis服务被填充了指定数量的键。这些键将被从头到尾访问，所以当使用LRU算法时第一个键是最佳的回收候选键。接着添加超过50%的键，用于强制旧键被回收。
 
-You can see three kind of dots in the graphs, forming three distinct bands.
+你可以看到三种点在图片中, 形成了三种带.
 
-* The light gray band are objects that were evicted.
-* The gray band are objects that were not evicted.
-* The green band are objects that were added.
+* 浅灰色带是已经被回收的对象。
+* 灰色带是没有被回收的对象。
+* 绿色带是被添加的对象。
+* 
+在LRU实现的理论中，我们希望的是，在旧键中的第一半将会过期。Redis的LRU算法则是概率的过期旧的键。
 
-In a theoretical LRU implementation we expect that, among the old keys, the first half will be expired. The Redis LRU algorithm will instead only *probabilistically* expire the older keys.
+你可以看到，在都是五个采样的时候Redis 3.0比Redis 2.8要好，Redis2.8中在最后一次访问之间的大多数的对象依然保留着。使用10个采样大小的Redis 3.0的近似值已经非常接近理论的性能。
 
-As you can see Redis 3.0 does a better job with 5 samples compared to Redis 2.8, however most objects that are among the latest accessed are still retained by Redis 2.8. Using a sample size of 10 in Redis 3.0 the approximation is very close to the theoretical performance of Redis 3.0.
+注意LRU只是个预测键将如何被访问的模型。另外，如果你的数据访问模式非常接近幂定律，大部分的访问将集中在一个键的集合中，LRU的近似算法将处理得很好。
 
-Note that LRU is just a model to predict how likely a given key will be accessed in the future. Moreover, if your data access pattern closely
-resembles the power law, most of the accesses will be in the set of keys that
-the LRU approximated algorithm will be able to handle well.
+在模拟实验的过程中，我们发现如果使用幂定律的访问模式，则真实的LRU算法和近似的Redis算法几乎没有差别。
 
-In simulations we found that using a power law access pattern, the difference between true LRU and Redis approximation were minimal or non-existent.
+当然你可以提升采样大小到10，消耗更多的CPU时间以实现更真实的LRU算法，同时查看下是否让你的缓存命中率有差别。
 
-However you can raise the sample size to 10 at the cost of some additional CPU
-usage in order to closely approximate true LRU, and check if this makes a
-difference in your cache misses rate.
-
-To experiment in production with different values for the sample size by using
-the `CONFIG SET maxmemory-samples <count>` command, is very simple.
+通过CONFIG SET maxmemory-samples <count>命令在生产环境上设置不同的采样大小是非常简单的。
 
