@@ -7,14 +7,14 @@ disqusUrl: http://redis.cn/commands/echo.html
 commandsType: connection
 ---
 
-Returns `message`.
+返回消息
 
-@return
+## 返回值
 
-@bulk-string-reply
+[Bulk reply](/topics/protocol.html#bulk-reply)
 
-@examples
+## 例子
 
-```cli
-ECHO "Hello World!"
-```
+	redis> ECHO HelloWorld!
+	HelloWorld!
+	redis> 

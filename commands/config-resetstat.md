@@ -7,19 +7,16 @@ disqusUrl: http://redis.cn/commands/config-resetstat.html
 commandsType: keys
 ---
 
-Resets the statistics reported by Redis using the `INFO` command.
+重置INFO命令统计里面的一些计算器。
 
-These are the counters that are reset:
+被重置的数据如下:
 
-* Keyspace hits
-* Keyspace misses
-* Number of commands processed
-* Number of connections received
-* Number of expired keys
-* Number of rejected connections
-* Latest fork(2) time
-* The `aof_delayed_fsync` counter
+	Keyspace hits
+	Keyspace misses
+	Number of commands processed
+	Number of connections received
+	Number of expired keys
 
-@return
+## 返回值
 
-@simple-string-reply: always `OK`.
+[Status code reply](/topics/protocol.html#status-reply): 总是返回 OK.

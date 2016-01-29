@@ -7,17 +7,18 @@ disqusUrl: http://redis.cn/commands/del.html
 commandsType: keys
 ---
 
-Removes the specified keys.
-A key is ignored if it does not exist.
+如果删除的key不存在，则直接忽略。
 
-@return
+## 返回值
 
-@integer-reply: The number of keys that were removed.
+整数：被删除的keys的数量
 
-@examples
+## 例子
 
-```cli
-SET key1 "Hello"
-SET key2 "World"
-DEL key1 key2 key3
-```
+	redis> SET key1 "Hello"
+	OK
+	redis> SET key2 "World"
+	OK
+	redis> DEL key1 key2 key3
+	(integer) 2
+	redis> 

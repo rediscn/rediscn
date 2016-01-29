@@ -7,178 +7,127 @@ disqusUrl: http://redis.cn/commands/eval.html
 commandsType: scripting
 ---
 
-## Introduction to EVAL
+EVAL简介
+===
 
-`EVAL` and `EVALSHA` are used to evaluate scripts using the Lua interpreter
-built into Redis starting from version 2.6.0.
+EVAL 和 EVALSHA 命令是从 Redis 2.6.0 版本开始的，使用内置的 Lua 解释器，可以对 Lua 脚本进行求值。
 
-The first argument of `EVAL` is a Lua 5.1 script.
-The script does not need to define a Lua function (and should not).
-It is just a Lua program that will run in the context of the Redis server.
+EVAL的第一个参数是一段 Lua 5.1 脚本程序。 这段Lua脚本不需要（也不应该）定义函数。它运行在 Redis 服务器中。
 
-The second argument of `EVAL` is the number of arguments that follows the script
-(starting from the third argument) that represent Redis key names.
-This arguments can be accessed by Lua using the `!KEYS` global variable in the
-form of a one-based array (so `KEYS[1]`, `KEYS[2]`, ...).
+EVAL的第二个参数是参数的个数，后面的参数（从第三个参数），表示在脚本中所用到的那些 Redis 键(key)，这些键名参数可以在 Lua 中通过全局变量 KEYS 数组，用 1 为基址的形式访问( KEYS[1] ， KEYS[2] ，以此类推)。
 
-All the additional arguments should not represent key names and can be accessed
-by Lua using the `ARGV` global variable, very similarly to what happens with
-keys (so `ARGV[1]`, `ARGV[2]`, ...).
+在命令的最后，那些不是键名参数的附加参数 arg [arg ...] ，可以在 Lua 中通过全局变量 ARGV 数组访问，访问的形式和 KEYS 变量类似( ARGV[1] 、 ARGV[2] ，诸如此类)。
 
-The following example should clarify what stated above:
+举例说明：
 
-```
-> eval "return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]}" 2 key1 key2 first second
-1) "key1"
-2) "key2"
-3) "first"
-4) "second"
-```
+	> eval "return {KEYS[1],KEYS[2],ARGV[1],ARGV[2]}" 2 key1 key2 first second
+	1) "key1"
+	2) "key2"
+	3) "first"
+	4) "second"
 
-Note: as you can see Lua arrays are returned as Redis multi bulk replies, that
-is a Redis return type that your client library will likely convert into an
-Array type in your programming language.
+注：返回结果是Redis multi bulk replies的Lua数组，这是一个Redis的返回类型，您的客户端库可能会将他们转换成数组类型。
 
-It is possible to call Redis commands from a Lua script using two different Lua
-functions:
+这是从一个Lua脚本中使用两个不同的Lua函数来调用Redis的命令的例子：
 
-* `redis.call()`
-* `redis.pcall()`
+	redis.call()
+	redis.pcall()
 
-`redis.call()` is similar to `redis.pcall()`, the only difference is that if a
-Redis command call will result in an error, `redis.call()` will raise a Lua
-error that in turn will force `EVAL` to return an error to the command caller,
-while `redis.pcall` will trap the error and return a Lua table representing the
-error.
+redis.call() 与 redis.pcall()很类似, 他们唯一的区别是当redis命令执行结果返回错误时， redis.call()将返回给调用者一个错误，而redis.pcall()会将捕获的错误以Lua表的形式返回
 
-The arguments of the `redis.call()` and `redis.pcall()` functions are all
-the arguments of a well formed Redis command:
+redis.call() 和 redis.pcall() 两个函数的参数可以是任意的 Redis 命令：
 
-```
-> eval "return redis.call('set','foo','bar')" 0
-OK
-```
+	> eval "return redis.call('set','foo','bar')" 0
+	OK
 
-The above script sets the key `foo` to the string `bar`.
-However it violates the `EVAL` command semantics as all the keys that the script
-uses should be passed using the `!KEYS` array:
+需要注意的是，上面这段脚本的确实现了将键 foo 的值设为 bar 的目的，但是，它违反了 EVAL 命令的语义，因为脚本里使用的所有键都应该由 KEYS 数组来传递，就像这样：
 
-```
-> eval "return redis.call('set',KEYS[1],'bar')" 1 foo
-OK
-```
+	> eval "return redis.call('set',KEYS[1],'bar')" 1 foo
+	OK
 
-All Redis commands must be analyzed before execution to determine which
-keys the command will operate on.  In order for this to be true for `EVAL`, keys must be passed explicitly.
-This is useful in many ways, but especially to make sure Redis Cluster
-can forward your request to the appropriate cluster node.
+要求使用正确的形式来传递键(key)是有原因的，因为不仅仅是 EVAL 这个命令，所有的 Redis 命令，在执行之前都会被分析，籍此来确定命令会对哪些键进行操作。
 
-Note this rule is not enforced in order to provide the user with
-opportunities to abuse the Redis single instance configuration, at the cost of
-writing scripts not compatible with Redis Cluster.
+因此，对于 EVAL 命令来说，必须使用正确的形式来传递键，才能确保分析工作正确地执行。 除此之外，使用正确的形式来传递键还有很多其他好处，它的一个特别重要的用途就是确保 Redis 集群可以将你的请求发送到正确的集群节点。 (对 Redis 集群的工作还在进行当中，但是脚本功能被设计成可以与集群功能保持兼容。)不过，这条规矩并不是强制性的， 从而使得用户有机会滥用(abuse) Redis 单实例配置(single instance configuration)，代价是这样写出的脚本不能被 Redis 集群所兼容。
 
-Lua scripts can return a value that is converted from the Lua type to the Redis
-protocol using a set of conversion rules.
+Lua 脚本能返回一个值，这个值能按照一组转换规则从Lua转换成redis的返回类型。
 
-## Conversion between Lua and Redis data types
+## Lua 数据类型和 Redis 数据类型之间转换 ##
 
-Redis return values are converted into Lua data types when Lua calls a Redis
-command using call() or pcall().
-Similarly Lua data types are converted into the Redis protocol when a Lua script
-returns a value, so that scripts can control what `EVAL` will return to the
-client.
+当 Lua 通过 call() 或 pcall() 函数执行 Redis 命令的时候，命令的返回值会被转换成 Lua 数据结构。 同样地，当 Lua 脚本在 Redis 内置的解释器里运行时，Lua 脚本的返回值也会被转换成 Redis 协议(protocol)，然后由 EVAL 将值返回给客户端。
 
-This conversion between data types is designed in a way that if a Redis type is
-converted into a Lua type, and then the result is converted back into a Redis
-type, the result is the same as the initial value.
+数据类型之间的转换遵循这样一个设计原则：如果将一个 Redis 值转换成 Lua 值，之后再将转换所得的 Lua 值转换回 Redis 值，那么这个转换所得的 Redis 值应该和最初时的 Redis 值一样。
 
-In other words there is a one-to-one conversion between Lua and Redis types.
-The following table shows you all the conversions rules:
+换句话说， Lua 类型和 Redis 类型之间存在着一一对应的转换关系。
 
-**Redis to Lua** conversion table.
+Redis 到 Lua 的转换表。
 
-* Redis integer reply -> Lua number
-* Redis bulk reply -> Lua string
-* Redis multi bulk reply -> Lua table (may have other Redis data types nested)
-* Redis status reply -> Lua table with a single `ok` field containing the status
-* Redis error reply -> Lua table with a single `err` field containing the error
-* Redis Nil bulk reply and Nil multi bulk reply -> Lua false boolean type
+- Redis integer reply -> Lua number
+- Redis bulk reply -> Lua string
+- Redis multi bulk reply -> Lua table (may have other Redis data types nested)
+- Redis status reply -> Lua table with a single ok field containing the status
+- Redis error reply -> Lua table with a single err field containing the error
+- Redis Nil bulk reply and Nil multi bulk reply -> Lua false boolean type
 
-**Lua to Redis** conversion table.
+Lua 到 Redis 的转换表。
 
-* Lua number -> Redis integer reply (the number is converted into an integer)
-* Lua string -> Redis bulk reply
-* Lua table (array) -> Redis multi bulk reply (truncated to the first nil inside the Lua array if any)
-* Lua table with a single `ok` field -> Redis status reply
-* Lua table with a single `err` field -> Redis error reply
-* Lua boolean false -> Redis Nil bulk reply.
+- Lua number -> Redis integer reply (the number is converted into an integer)
+- Lua string -> Redis bulk reply
+- Lua table (array) -> Redis multi bulk reply (truncated to the first nil inside the Lua array if any)
+- Lua table with a single ok field -> Redis status reply
+- Lua table with a single err field -> Redis error reply
+- Lua boolean false -> Redis Nil bulk reply.
 
-There is an additional Lua-to-Redis conversion rule that has no corresponding
-Redis to Lua conversion rule:
+从 Lua 转换到 Redis 有一条额外的规则，这条规则没有和它对应的从 Redis 转换到 Lua 的规则：
 
-* Lua boolean true -> Redis integer reply with value of 1.
+- Lua boolean true -> Redis integer reply with value of 1.
 
-Also there are two important rules to note:
+还有下面两点需要重点注意：
 
-* Lua has a single numerical type, Lua numbers. There is no distinction between integers and floats. So we always convert Lua numbers into integer replies, removing the decimal part of the number if any. **If you want to return a float from Lua you should return it as a string**, exactly like Redis itself does (see for instance the `ZSCORE` command).
-* There is [no simple way to have nils inside Lua arrays](http://www.lua.org/pil/19.1.html), this is a result of Lua table semantics, so when Redis converts a Lua array into Redis protocol the conversion is stopped if a nil is encountered.
+- lua中整数和浮点数之间没有什么区别。因此，我们始终Lua的数字转换成整数的回复，这样将舍去小数部分。如果你想从Lua返回一个浮点数，你应该将它作为一个字符串（见比如ZSCORE命令）。
+- There is no simple way to have nils inside Lua arrays, this is a result of Lua table semantics, so when Redis converts a Lua array into Redis protocol the conversion is stopped if a nil is encountered.
 
-Here are a few conversion examples:
+以下是几个类型转换的例子：
 
-```
-> eval "return 10" 0
-(integer) 10
+	> eval "return 10" 0
+	(integer) 10
+	
+	> eval "return {1,2,{3,'Hello World!'}}" 0
+	1) (integer) 1
+	2) (integer) 2
+	3) 1) (integer) 3
+	   2) "Hello World!"
+	
+	> eval "return redis.call('get','foo')" 0
+	"bar"
 
-> eval "return {1,2,{3,'Hello World!'}}" 0
-1) (integer) 1
-2) (integer) 2
-3) 1) (integer) 3
-   2) "Hello World!"
+最后一个例子展示如果是Lua直接命令调用它是如何可以从redis.call()或redis.pcall()接收到准确的返回值。
 
-> eval "return redis.call('get','foo')" 0
-"bar"
-```
-The last example shows how it is possible to receive the exact return value of
-`redis.call()` or `redis.pcall()` from Lua that would be returned if the command
-was called directly.
+下面的例子我们可以看到浮点数和nil将怎么样处理：
 
-In the following example we can see how floats and arrays with nils are handled:
+	> eval "return {1,2,3.3333,'foo',nil,'bar'}" 0
+	1) (integer) 1
+	2) (integer) 2
+	3) (integer) 3
+	4) "foo"
 
-```
-> eval "return {1,2,3.3333,'foo',nil,'bar'}" 0
-1) (integer) 1
-2) (integer) 2
-3) (integer) 3
-4) "foo"
-```
+正如你看到的 3.333 被转换成了3，并且 nil后面的字符串bar没有被返回回来。
 
-As you can see 3.333 is converted into 3, and the *bar* string is never returned as there is a nil before.
+- 返回redis类型的辅助函数
 
-## Helper functions to return Redis types
+有两个辅助函数从Lua返回Redis的类型。
 
-There are two helper functions to return Redis types from Lua.
-
-* `redis.error_reply(error_string)` returns an error reply. This function simply returns the single field table with the `err` field set to the specified string for you.
-* `redis.status_reply(status_string)` returns a status reply. This function simply returns the single field table with the `ok` field set to the specified string for you.
+- redis.error_reply(error_string) returns an error reply. This function simply returns the single field table with the err field set to the specified string for you.
+- redis.status_reply(status_string) returns a status reply. This function simply returns the single field table with the ok field set to the specified string for you.
 
 There is no difference between using the helper functions or directly returning the table with the specified format, so the following two forms are equivalent:
 
-    return {err="My Error"}
-    return redis.error_reply("My Error")
+	return {err="My Error"}
+	return redis.error_reply("My Error")
 
-## Atomicity of scripts
+## 脚本的原子性 ##
 
-Redis uses the same Lua interpreter to run all the commands.
-Also Redis guarantees that a script is executed in an atomic way: no other
-script or Redis command will be executed while a script is being executed.
-This semantic is similar to the one of `MULTI` / `EXEC`.
-From the point of view of all the other clients the effects of a script are
-either still not visible or already completed.
-
-However this also means that executing slow scripts is not a good idea.
-It is not hard to create fast scripts, as the script overhead is very low, but
-if you are going to use slow scripts you should be aware that while the script
-is running no other client can execute commands.
+Redis 使用单个 Lua 解释器去运行所有脚本，并且， Redis 也保证脚本会以原子性(atomic)的方式执行： 当某个脚本正在运行的时候，不会有其他脚本或 Redis 命令被执行。 这和使用 MULTI / EXEC 包围的事务很类似。 在其他别的客户端看来，脚本的效果(effect)要么是不可见的(not visible)，要么就是已完成的(already completed)。
+另一方面，这也意味着，执行一个运行缓慢的脚本并不是一个好主意。写一个跑得很快很顺溜的脚本并不难， 因为脚本的运行开销(overhead)非常少，但是当你不得不使用一些跑得比较慢的脚本时，请小心， 因为当这些蜗牛脚本在慢吞吞地运行的时候，其他客户端会因为服务器正忙而无法执行命令。
 
 ## Error handling
 

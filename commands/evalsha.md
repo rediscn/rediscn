@@ -7,6 +7,4 @@ disqusUrl: http://redis.cn/commands/evalsha.html
 commandsType: scripting
 ---
 
-Evaluates a script cached on the server side by its SHA1 digest.
-Scripts are cached on the server side using the `SCRIPT LOAD` command.
-The command is otherwise identical to `EVAL`.
+根据给定的 SHA1 校验码，对缓存在服务器中的脚本进行求值。 将脚本缓存到服务器的操作可以通过 SCRIPT LOAD 命令进行。 这个命令的其他地方，比如参数的传入方式，都和 [EVAL](/commands/eval.html)命令一样。

@@ -7,7 +7,7 @@ disqusUrl: http://redis.cn/commands/command.html
 commandsType: server
 ---
 
-Returns @array-reply of details about all Redis commands.
+返回Redis所有命令数组。
 
 Cluster clients must be aware of key positions in commands so commands can go to matching instances,
 but Redis commands vary between accepting one key,

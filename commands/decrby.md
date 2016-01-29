@@ -7,21 +7,18 @@ disqusUrl: http://redis.cn/commands/decrby.html
 commandsType: strings
 ---
 
-Decrements the number stored at `key` by `decrement`.
-If the key does not exist, it is set to `0` before performing the operation.
-An error is returned if the key contains a value of the wrong type or contains a
-string that can not be represented as integer.
-This operation is limited to 64 bit signed integers.
+将key对应的数字减decrement。如果key不存在，操作之前，key就会被置为0。如果key的value类型错误或者是个不能表示成数字的字符串，就返回错误。这个操作最多支持64位有符号的正型数字。
 
-See `INCR` for extra information on increment/decrement operations.
+查看命令[INCR](/commands/incr.html)了解关于增减操作的额外信息。似。
 
-@return
+## 返回值
 
-@integer-reply: the value of `key` after the decrement
+返回一个数字：减少之后的value值。
 
-@examples
+## 例子
 
-```cli
-SET mykey "10"
-DECRBY mykey 3
-```
+	redis> SET mykey "10"
+	OK
+	redis> DECRBY mykey 5
+	(integer) 5
+	redis> 

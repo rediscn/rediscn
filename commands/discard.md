@@ -7,13 +7,10 @@ disqusUrl: http://redis.cn/commands/discard.html
 commandsType: transactions
 ---
 
-Flushes all previously queued commands in a [transaction][tt] and restores the
-connection state to normal.
+刷新一个事务中所有在排队等待的指令，并且将连接状态恢复到正常。
 
-[tt]: /topics/transactions
+如果已使用[WATCH](/commands/watch.html)，[DISCARD](/commands/discard.html)将释放所有被[WATCH](/commands/watch.html)的key。
 
-If `WATCH` was used, `DISCARD` unwatches all keys watched by the connection.
+## 返回值
 
-@return
-
-@simple-string-reply: always `OK`.
+[status-reply](/topics/protocol.html#status-reply)：所有返回都是 OK

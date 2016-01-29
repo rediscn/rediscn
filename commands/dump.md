@@ -7,36 +7,25 @@ disqusUrl: http://redis.cn/commands/dump.html
 commandsType: keys
 ---
 
-Serialize the value stored at key in a Redis-specific format and return it to
-the user.
-The returned value can be synthesized back into a Redis key using the `RESTORE`
-command.
+序列化给定 key ，并返回被序列化的值，使用 [RESTORE](/commands/restore) 命令可以将这个值反序列化为 Redis 键。
 
-The serialization format is opaque and non-standard, however it has a few
-semantic characteristics:
+序列化生成的值有以下几个特点：
 
-* It contains a 64-bit checksum that is used to make sure errors will be
-  detected.
-  The `RESTORE` command makes sure to check the checksum before synthesizing a
-  key using the serialized value.
-* Values are encoded in the same format used by RDB.
-* An RDB version is encoded inside the serialized value, so that different Redis
-  versions with incompatible RDB formats will refuse to process the serialized
-  value.
+- 它带有 64 位的校验和，用于检测错误，[RESTORE](/commands/restore) 在进行反序列化之前会先检查校验和。
+- 值的编码格式和 RDB 文件保持一致。
+- RDB 版本会被编码在序列化值当中，如果因为 Redis 的版本不同造成 RDB 格式不兼容，那么 Redis 会拒绝对这个值进行反序列化操作。
 
-The serialized value does NOT contain expire information.
-In order to capture the time to live of the current value the `PTTL` command
-should be used.
+序列化的值不包括任何生存时间信息。
 
-If `key` does not exist a nil bulk reply is returned.
+## 返回值
 
-@return
+如果 key 不存在，那么返回 nil。</br>
+否则，返回序列化之后的值。
 
-@bulk-string-reply: the serialized value.
+## 例子
 
-@examples
-
-```cli
-SET mykey 10
-DUMP mykey
-```
+	redis> SET mykey 10
+	OK
+	redis> DUMP mykey
+	"\u0000\xC0\n\u0006\u0000\xF8r?\xC5\xFB\xFB_("
+	redis> 

@@ -7,7 +7,6 @@ disqusUrl: http://redis.cn/commands/debug-segfault.html
 commandsType: keys
 ---
 
-`DEBUG SEGFAULT` performs an invalid memory access that crashes Redis.
-It is used to simulate bugs during the development.
+`DEBUG SEGFAULT`执行在崩溃的Redis一个无效的内存访问，它是用来模拟在开发过程中的错误。
 
-@simple-string-reply
+[Status code reply](/topics/protocol.html#status-reply)

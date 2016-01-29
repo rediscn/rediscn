@@ -7,7 +7,7 @@ disqusUrl: http://redis.cn/commands/debug-object.html
 commandsType: keys
 ---
 
-`DEBUG OBJECT` is a debugging command that should not be used by clients.
-Check the `OBJECT` command instead.
+`DEBUG OBJECT` 是一个不应该被客户端使用的调试命令。
+请参考 [OBJECT](/command/object.html) 命令
 
-@simple-string-reply
+[simple-string-reply](/topics/protocol.html#status-reply)

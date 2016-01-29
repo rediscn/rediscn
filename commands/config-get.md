@@ -7,56 +7,32 @@ disqusUrl: http://redis.cn/commands/config-get.html
 commandsType: keys
 ---
 
-The `CONFIG GET` command is used to read the configuration parameters of a
-running Redis server.
-Not all the configuration parameters are supported in Redis 2.4, while Redis 2.6
-can read the whole configuration of a server using this command.
+CONFIG GET命令用来读取redis服务器的配置文件参数，但并不是所有参数都支持。 与之对应的命令是CONFIG SET用来设置服务器的配置参数。
 
-The symmetric command used to alter the configuration at run time is `CONFIG
-SET`.
+CONFIG GET 命令只接受一个参数，所有配置参数都采用key-value的形式。 例如:
 
-`CONFIG GET` takes a single argument, which is a glob-style pattern.
-All the configuration parameters matching this parameter are reported as a list
-of key-value pairs.
-Example:
+	redis> config get *max-*-entries*
+	1) "hash-max-zipmap-entries"
+	2) "512"
+	3) "list-max-ziplist-entries"
+	4) "512"
+	5) "set-max-intset-entries"
+	6) "512"
 
-```
-redis> config get *max-*-entries*
-1) "hash-max-zipmap-entries"
-2) "512"
-3) "list-max-ziplist-entries"
-4) "512"
-5) "set-max-intset-entries"
-6) "512"
-```
+通过 CONFIG GET * 可以查看所有支持的参数。
 
-You can obtain a list of all the supported configuration parameters by typing
-`CONFIG GET *` in an open `redis-cli` prompt.
+所有支持的参数都与[redis.conf](http://github.com/antirez/redis/raw/2.2/redis.conf) 里面的一样，除了如下的重要差异：
 
-All the supported parameters have the same meaning of the equivalent
-configuration parameter used in the [redis.conf][hgcarr22rc] file, with the
-following important differences:
+- Where bytes or other quantities are specified, it is not possible to use the redis.conf abbreviated form (10k 2gb ... and so forth), everything should be specified as a well formed 64 bit integer, in the base unit of the configuration directive.
+- The save parameter is a single string of space separated integers. Every pair of integers represent a seconds/modifications threshold.
 
-[hgcarr22rc]: http://github.com/antirez/redis/raw/2.8/redis.conf
+举例说明，像redis.conf里面的如下配置:
 
-* Where bytes or other quantities are specified, it is not possible to use
-  the `redis.conf` abbreviated form (`10k`, `2gb` ... and so forth), everything
-  should be specified as a well-formed 64-bit integer, in the base unit of the
-  configuration directive.
-* The save parameter is a single string of space-separated integers.
-  Every pair of integers represent a seconds/modifications threshold.
+	save 900 1
+	save 300 10
 
-For instance what in `redis.conf` looks like:
+它的意思是：如果900秒内有一个数据发生变化，或者300秒内有10个数据发生变化，那么使用 CONFIG GET 查看时将会看到 "900 1 300 10"。
 
-```
-save 900 1
-save 300 10
-```
+## 返回值
 
-that means, save after 900 seconds if there is at least 1 change to the dataset,
-and after 300 seconds if there are at least 10 changes to the dataset, will be
-reported by `CONFIG GET` as "900 1 300 10".
-
-@return
-
-The return type of the command is a @array-reply.
+该命令返回的类型是Bulk reply.

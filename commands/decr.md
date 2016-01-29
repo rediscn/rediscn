@@ -7,23 +7,22 @@ disqusUrl: http://redis.cn/commands/decr.html
 commandsType: strings
 ---
 
-Decrements the number stored at `key` by one.
-If the key does not exist, it is set to `0` before performing the operation.
-An error is returned if the key contains a value of the wrong type or contains a
-string that can not be represented as integer.
-This operation is limited to **64 bit signed integers**.
+对key对应的数字做减1操作。如果key不存在，那么在操作之前，这个key对应的值会被置为0。如果key有一个错误类型的value或者是一个不能表示成数字的字符串，就返回错误。这个操作最大支持在64位有符号的整型数字。
 
-See `INCR` for extra information on increment/decrement operations.
+查看命令[INCR](/commands/incr.html)了解关于增减操作的额外信息。
 
-@return
+## 返回值
 
-@integer-reply: the value of `key` after the decrement
+数字：减小之后的value
 
-@examples
+## 例子
 
-```cli
-SET mykey "10"
-DECR mykey
-SET mykey "234293482390480948029348230948"
-DECR mykey
-```
+	redis> SET mykey "10"
+	OK
+	redis> DECR mykey
+	(integer) 9
+	redis> SET mykey "234293482390480948029348230948"
+	OK
+	redis> DECR mykey
+	ERR value is not an integer or out of range
+	redis> 

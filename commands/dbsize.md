@@ -7,8 +7,8 @@ disqusUrl: http://redis.cn/commands/dbsize.html
 commandsType: server
 ---
 
-Return the number of keys in the currently-selected database.
+返回当前数据里面keys的数量。
 
-@return
+##返回值
 
-@integer-reply
+[Integer reply](/topics/protocol.html#integer-reply)

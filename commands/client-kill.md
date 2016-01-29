@@ -7,23 +7,21 @@ disqusUrl: http://redis.cn/commands/client-kill.html
 commandsType: keys
 ---
 
-The `CLIENT KILL` command closes a given client connection. Up to Redis 2.8.11 it was possible to close a connection only by client address, using the following form:
+`CLIENT KILL`关闭一个指定的连接。在Redis2.8.11时可以根据客户端地址关闭指定连接，关闭方式如下：
 
     CLIENT KILL addr:port
 
-The `ip:port` should match a line returned by the `CLIENT LIST` command (`addr` field).
+`ip:port`应该是`CLIENT LIST` 命令里面列出的客户端连接之一。
 
-However starting with Redis 2.8.12 or greater, the command accepts the following
-form:
+然而，从Redis 2.8.12开始，这个命令改为如下格式：
 
     CLIENT KILL <filter> <value> ... ... <filter> <value>
 
-With the new form it is possible to kill clients by different attributes
-instead of killing just by address. The following filters are available:
+新的格式可以根据不同属性杀死客户端而不是只按地址杀死。他们有以下一些格式：
 
-* `CLIENT KILL ADDR ip:port`. This is exactly the same as the old three-arguments behavior.
-* `CLIENT KILL ID client-id`. Allows to kill a client by its unique `ID` field, which was introduced in the `CLIENT LIST` command starting from Redis 2.8.12.
-* `CLIENT KILL TYPE type`, where *type* is one of `normal`, `slave`, `pubsub`. This closes the connections of **all the clients** in the specified class. Note that clients blocked into the `MONITOR` command are considered to belong to the `normal` class.
+* `CLIENT KILL ADDR ip:port`. 和旧版的三个参数时的行为完全一样。
+* `CLIENT KILL ID client-id`. 可以通过唯一`ID`字段杀死一个客户端，唯一`ID`可以通过Redis2.8.12的`CLIENT LIST`命令查询。
+* `CLIENT KILL TYPE type`, 这里的 *type* 可以是 `normal`, `slave`, `pubsub`。 这将关闭所有特殊类的客户端. 请注意被认为是属于正常类的客户端将会被`MONITOR`命令监视到。
 * `CLIENT KILL SKIPME yes/no`. By default this option is set to `yes`, that is, the client calling the command will not get killed, however setting this option to `no` will have the effect of also killing the client calling the command.
 
 It is possible to provide multiple filters at the same time. The command will handle multiple filters via logical AND. For example:
