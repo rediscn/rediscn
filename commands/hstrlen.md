@@ -7,17 +7,22 @@ disqusUrl: http://redis.cn/commands/hstrlen.html
 commandsType: hashes
 ---
 
-Returns the string length of the value associated with `field` in the hash stored at `key`. If the `key` or the `field` do not exist, 0 is returned.
+返回hash指定field的value的字符串长度，如果hash或者field不存在，返回0.
 
-@return
 
-@integer-reply: the string length of the value associated with `field`, or zero when `field` is not present in the hash or `key` does not exist at all.
+## 返回值
 
-@examples
+[integer-reply](/topics/protocol.html#integer-reply):返回hash指定field的value的字符串长度，如果hash或者field不存在，返回0.
 
-```cli
-HMSET myhash f1 HelloWorld f2 99 f3 -256
-HSTRLEN myhash f1
-HSTRLEN myhash f2
-HSTRLEN myhash f3
-```
+## 例子
+
+	
+	redis> HMSET myhash f1 HelloWorld f2 99 f3 -256
+	OK
+	redis> HSTRLEN myhash f1
+	(integer) 10
+	redis> HSTRLEN myhash f2
+	(integer) 2
+	redis> HSTRLEN myhash f3
+	(integer) 4
+	redis> 

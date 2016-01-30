@@ -7,17 +7,19 @@ disqusUrl: http://redis.cn/commands/hkeys.html
 commandsType: hashes
 ---
 
-Returns all field names in the hash stored at `key`.
+返回 key 指定的哈希集中所有字段的名字。
 
-@return
+##返回值
 
-@array-reply: list of fields in the hash, or an empty list when `key` does
-not exist.
+[array-reply](/topics/protocol.html#array-reply)：哈希集中的字段列表，当 key 指定的哈希集不存在时返回空列表。
 
-@examples
+##例子
 
-```cli
-HSET myhash field1 "Hello"
-HSET myhash field2 "World"
-HKEYS myhash
-```
+	redis> HSET myhash field1 "Hello"
+	(integer) 1
+	redis> HSET myhash field2 "World"
+	(integer) 1
+	redis> HKEYS myhash
+	1) "field1"
+	2) "field2"
+	redis> 

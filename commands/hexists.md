@@ -7,19 +7,21 @@ disqusUrl: http://redis.cn/commands/hexists.html
 commandsType: hashes
 ---
 
-Returns if `field` is an existing field in the hash stored at `key`.
+返回hash里面key是否存在的标志
 
-@return
+## 返回值
 
-@integer-reply, specifically:
+[integer-reply](/topics/protocol.html#integer-reply), 含义如下：
 
-* `1` if the hash contains `field`.
-* `0` if the hash does not contain `field`, or `key` does not exist.
+- 1 哈希集中含有该字段。
+- 0 哈希集中不含有该存在字段，或者key不存在。
 
-@examples
+## 例子
 
-```cli
-HSET myhash field1 "foo"
-HEXISTS myhash field1
-HEXISTS myhash field2
-```
+	redis> HSET myhash field1 "foo"
+	(integer) 1
+	redis> HEXISTS myhash field1
+	(integer) 1
+	redis> HEXISTS myhash field2
+	(integer) 0
+	redis> 

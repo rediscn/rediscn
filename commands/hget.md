@@ -7,17 +7,18 @@ disqusUrl: http://redis.cn/commands/hget.html
 commandsType: hashes
 ---
 
-Returns the value associated with `field` in the hash stored at `key`.
+返回 key 指定的哈希集中该字段所关联的值
 
-@return
+## 返回值
 
-@bulk-string-reply: the value associated with `field`, or `nil` when `field` is not
-present in the hash or `key` does not exist.
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply)：该字段所关联的值。当字段不存在或者 key 不存在时返回nil。
 
-@examples
+## 例子
 
-```cli
-HSET myhash field1 "foo"
-HGET myhash field1
-HGET myhash field2
-```
+	redis> HSET myhash field1 "foo"
+	(integer) 1
+	redis> HGET myhash field1
+	"foo"
+	redis> HGET myhash field2
+	(nil)
+	redis> 

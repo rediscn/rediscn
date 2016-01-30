@@ -7,28 +7,26 @@ disqusUrl: http://redis.cn/commands/hdel.html
 commandsType: hashes
 ---
 
-Removes the specified fields from the hash stored at `key`.
-Specified fields that do not exist within this hash are ignored.
-If `key` does not exist, it is treated as an empty hash and this command returns
-`0`.
+从 key 指定的哈希集中移除指定的域。在哈希集中不存在的域将被忽略。
 
-@return
+如果 key 指定的哈希集不存在，它将被认为是一个空的哈希集，该命令将返回0。
 
-@integer-reply: the number of fields that were removed from the hash, not
-including specified but non existing fields.
+返回值
 
-@history
+[integer-reply](/topics/protocol.html#integer-reply)：
+返回从哈希集中成功移除的域的数量，不包括指出但不存在的那些域
 
-*   `>= 2.4`: Accepts multiple `field` arguments.
-    Redis versions older than 2.4 can only remove a field per call.
+历史
 
-    To remove multiple fields from a hash in an atomic fashion in earlier
-    versions, use a `MULTI` / `EXEC` block.
+*   在 2.4及以上版本中 ：可接受多个域作为参数。小于 2.4版本 的 Redis 每次调用只能移除一个域
+要在早期版本中以原子方式从哈希集中移除多个域，可用 [MULTI](/commands/multi.html)/[EXEC](/commands/exec.html)块。
 
-@examples
+例子
 
-```cli
-HSET myhash field1 "foo"
-HDEL myhash field1
-HDEL myhash field2
-```
+	redis> HSET myhash field1 "foo"
+	(integer) 1
+	redis> HDEL myhash field1
+	(integer) 1
+	redis> HDEL myhash field2
+	(integer) 0
+	redis> 

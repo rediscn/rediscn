@@ -7,17 +7,19 @@ disqusUrl: http://redis.cn/commands/hvals.html
 commandsType: hashes
 ---
 
-Returns all values in the hash stored at `key`.
+返回 key 指定的哈希集中所有字段的值。
 
-@return
+返回值
 
-@array-reply: list of values in the hash, or an empty list when `key` does
-not exist.
+[array-reply](/topics/protocol#array-reply)：哈希集中的值的列表，当 key 指定的哈希集不存在时返回空列表。
 
-@examples
+例子
 
-```cli
-HSET myhash field1 "Hello"
-HSET myhash field2 "World"
-HVALS myhash
-```
+	redis> HSET myhash field1 "Hello"
+	(integer) 1
+	redis> HSET myhash field2 "World"
+	(integer) 1
+	redis> HVALS myhash
+	1) "Hello"
+	2) "World"
+	redis> 

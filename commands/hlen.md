@@ -7,16 +7,19 @@ disqusUrl: http://redis.cn/commands/hlen.html
 commandsType: hashes
 ---
 
-Returns the number of fields contained in the hash stored at `key`.
+返回 `key` 指定的哈希集包含的字段的数量。
 
-@return
+## 返回值
 
-@integer-reply: number of fields in the hash, or `0` when `key` does not exist.
+[integer-reply](/topics/protocol.html#integer-reply)：
+哈希集中字段的数量，当 `key` 指定的哈希集不存在时返回 0
 
-@examples
+## 例子
 
-```cli
-HSET myhash field1 "Hello"
-HSET myhash field2 "World"
-HLEN myhash
-```
+	redis> HSET myhash field1 "Hello"
+	(integer) 1
+	redis> HSET myhash field2 "World"
+	(integer) 1
+	redis> HLEN myhash
+	(integer) 2
+	redis> 

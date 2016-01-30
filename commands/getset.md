@@ -7,31 +7,28 @@ disqusUrl: http://redis.cn/commands/getset.html
 commandsType: strings
 ---
 
-Atomically sets `key` to `value` and returns the old value stored at `key`.
-Returns an error when `key` exists but does not hold a string value.
+自动将key对应到value并且返回原来key对应的value。如果key存在但是对应的value不是字符串，就返回错误。
 
-## Design pattern
+设计模式
 
-`GETSET` can be used together with `INCR` for counting with atomic reset.
-For example: a process may call `INCR` against the key `mycounter` every time
-some event occurs, but from time to time we need to get the value of the counter
-and reset it to zero atomically.
-This can be done using `GETSET mycounter "0"`:
+[GETSET](/commands/getset.html)可以和[INCR](/commands/incr.html)一起使用实现支持重置的计数功能。举个例子：每当有事件发生的时候，一段程序都会调用[INCR](/commands/incr.html)给key mycounter加1，但是有时我们需要获取计数器的值，并且自动将其重置为0。这可以通过GETSET mycounter "0"来实现：
 
-```cli
-INCR mycounter
-GETSET mycounter "0"
-GET mycounter
-```
+	INCR mycounter
+	GETSET mycounter "0"
+	GET mycounter
 
-@return
 
-@bulk-string-reply: the old value stored at `key`, or `nil` when `key` did not exist.
+## 返回值
 
-@examples
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply): 
+返回之前的旧值，如果之前`Key`不存在将返回`nil`。
 
-```cli
-SET mykey "Hello"
-GETSET mykey "World"
-GET mykey
-```
+## 例子
+
+	redis> INCR mycounter
+	(integer) 1
+	redis> GETSET mycounter "0"
+	"1"
+	redis> GET mycounter
+	"0"
+	redis> 

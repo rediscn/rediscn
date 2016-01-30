@@ -7,23 +7,20 @@ disqusUrl: http://redis.cn/commands/getbit.html
 commandsType: strings
 ---
 
-Returns the bit value at _offset_ in the string value stored at _key_.
+返回key对应的string在offset处的bit值 当offset超出了字符串长度的时候，这个字符串就被假定为由0比特填充的连续空间。当key不存在的时候，它就认为是一个空字符串，所以offset总是超出范围，然后value也被认为是由0比特填充的连续空间。到内存分配。
 
-When _offset_ is beyond the string length, the string is assumed to be a
-contiguous space with 0 bits.
-When _key_ does not exist it is assumed to be an empty string, so _offset_ is
-always out of range and the value is also assumed to be a contiguous space with
-0 bits.
+## 返回值
 
-@return
+[integer-reply](/topics/protocol.html#integer-reply)：在offset处的bit值
 
-@integer-reply: the bit value stored at _offset_.
+## 例子
 
-@examples
-
-```cli
-SETBIT mykey 7 1
-GETBIT mykey 0
-GETBIT mykey 7
-GETBIT mykey 100
-```
+	redis> SETBIT mykey 7 1
+	(integer) 0
+	redis> GETBIT mykey 0
+	(integer) 0
+	redis> GETBIT mykey 7
+	(integer) 1
+	redis> GETBIT mykey 100
+	(integer) 0
+	redis> 

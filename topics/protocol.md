@@ -61,21 +61,27 @@ Redis用不同的回复类型回复命令。它可能从服务器发送的第一
 * 批量回复，回复的第一个字节将是“$”
 * 多个批量回复，回复的第一个字节将是“*”
 
-## 状态回复 ##
+<a name="simple-string-reply"></a>
+
+## Simple Strings ##
 
 状态回复（或者单行回复）以“+”开始以“\r\n”结尾的单行字符串形式。例如：
 
-	+OK
+	"+OK\r\n"
 
 客户端库将在“+”后面返回所有数据，正如上例中字符串“OK”一样。
 
-## 错误回复 ##
+<a name="error-reply"></a>
+
+## Errors ##
 
 错误回复发送类似于状态回复。唯一的不同是第一个字节用“-”代替“+”。
 
 错误回复仅仅在一些意料之外的事情发生时发送，例如：如果你试图执行一个操作来应付错误的数据类型，或者如果命令不存在等等。所以当收到一个错误回复时，客户端将会出现一个异常。
 
-## 整型回复 ##
+<a name="integer-reply"></a>
+
+## Integers ##
 
 这种回复类型只是用CRLF结尾字符串来表示整型，用一个字节的“：”作为前缀。例如：“：0\r\n”，或者“:1000\r\n”是整型回复。
 
@@ -87,7 +93,10 @@ Redis用不同的回复类型回复命令。它可能从服务器发送的第一
 
 接下来的命令将回复一个整型回复：SETNX、DEL、EXISTS、INCR、INCRBY、DECR、DECRBY、DBSIZE、LASTSAVE、RENAMENX、MOVE、LLEN、SADD、SREM、SISMEMBER、SCARD。
 
-## 批量回复（Bulk replies） ##
+<a name="nil-reply"></a>
+<a name="bulk-string-reply"></a>
+
+## Bulk Strings ##
 
 批量回复被服务器用于返回一个单二进制安全字符串。
 
@@ -105,7 +114,10 @@ Redis用不同的回复类型回复命令。它可能从服务器发送的第一
 
 当请求的对象不存在时，客户端库API不会返回空字符串，而会返回空对象。例如：Ruby库返回‘nil’，而C库返回NULL（或者在回复的对象里设置指定的标志）等等。
 
-## 多批量回复（Multi-bulk replies） ##
+<a name="array-reply"></a>
+<a name="multi-bulk-reply"></a>
+
+## Arrays ##
 
 像命令LRNGE需要返回多个值（列表的每个元素是一个值，而LRANGE需要返回多于一个单元素）。使用多批量写是有技巧的，用一个初始行作为前缀来指示多少个批量写紧随其后。批量回复的第一个字节总是*，例如：
 

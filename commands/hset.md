@@ -7,20 +7,23 @@ disqusUrl: http://redis.cn/commands/hset.html
 commandsType: hashes
 ---
 
-Sets `field` in the hash stored at `key` to `value`.
-If `key` does not exist, a new key holding a hash is created.
-If `field` already exists in the hash, it is overwritten.
+设置 key 指定的哈希集中指定字段的值。
 
-@return
+如果 key 指定的哈希集不存在，会创建一个新的哈希集并与 key 关联。
 
-@integer-reply, specifically:
+如果字段在哈希集中存在，它将被重写。
 
-* `1` if `field` is a new field in the hash and `value` was set.
-* `0` if `field` already exists in the hash and the value was updated.
+##返回值
 
-@examples
+[integer-reply](/topics/protocol.html#integer-reply)：含义如下
 
-```cli
-HSET myhash field1 "Hello"
-HGET myhash field1
-```
+- 1如果field是一个新的字段
+- 0如果field原来在map里面已经存在
+
+##例子
+
+	redis> HSET myhash field1 "Hello"
+	(integer) 1
+	redis> HGET myhash field1
+	"Hello"
+	redis> 

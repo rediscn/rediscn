@@ -7,19 +7,18 @@ disqusUrl: http://redis.cn/commands/hmset.html
 commandsType: hashes
 ---
 
-Sets the specified fields to their respective values in the hash stored at
-`key`.
-This command overwrites any existing fields in the hash.
-If `key` does not exist, a new key holding a hash is created.
+设置 `key` 指定的哈希集中指定字段的值。该命令将重写所有在哈希集中存在的字段。如果 `key` 指定的哈希集不存在，会创建一个新的哈希集并与 `key` 关联
 
-@return
+##返回值
 
-@simple-string-reply
+[simple-string-reply](/topics/protocol#simple-string-reply)
 
-@examples
+##例子
 
-```cli
-HMSET myhash field1 "Hello" field2 "World"
-HGET myhash field1
-HGET myhash field2
-```
+	redis> HMSET myhash field1 "Hello" field2 "World"
+	OK
+	redis> HGET myhash field1
+	"Hello"
+	redis> HGET myhash field2
+	"World"
+	redis> 

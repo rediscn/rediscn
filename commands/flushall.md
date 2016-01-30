@@ -7,13 +7,13 @@ disqusUrl: http://redis.cn/commands/flushall.html
 commandsType: server
 ---
 
-Delete all the keys of all the existing databases, not just the currently
-selected one.
-This command never fails.
+删除所有数据库里面的所有数据，注意不是当前数据库，而是所有数据库。
 
-The time-complexity for this operation is O(N), N being the number of
-keys in all existing databases.
+这个命令永远不会出现失败。
 
-@return
+这个操作的时间复杂度是`O(N)`,N是数据库的数量。
 
-@simple-string-reply
+
+## 返回
+
+[simple-string-reply](/topics/protocol.html#simple-string-reply)

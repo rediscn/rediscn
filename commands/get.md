@@ -7,19 +7,18 @@ disqusUrl: http://redis.cn/commands/get.html
 commandsType: strings
 ---
 
-Get the value of `key`.
-If the key does not exist the special value `nil` is returned.
-An error is returned if the value stored at `key` is not a string, because `GET`
-only handles string values.
+返回`key`的`value`。如果key不存在，返回特殊值`nil`。如果`key`的`value`不是string，就返回错误，因为`GET`只处理string类型的`values`。
 
-@return
+## 返回值
 
-@bulk-string-reply: the value of `key`, or `nil` when `key` does not exist.
+[simple-string-reply](/topics/protocol.html#simple-string-reply):key对应的value，或者nil（key不存在时）
 
-@examples
+## 例子
 
-```cli
-GET nonexisting
-SET mykey "Hello"
-GET mykey
-```
+	redis> GET nonexisting
+	(nil)
+	redis> SET mykey "Hello"
+	OK
+	redis> GET mykey
+	"Hello"
+	redis> 

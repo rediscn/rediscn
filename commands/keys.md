@@ -7,43 +7,43 @@ disqusUrl: http://redis.cn/commands/keys.html
 commandsType: keys
 ---
 
-Returns all keys matching `pattern`.
+查找所有符合给定模式pattern（正则表达式）的 key 。
 
-While the time complexity for this operation is O(N), the constant times are
-fairly low.
-For example, Redis running on an entry level laptop can scan a 1 million key
-database in 40 milliseconds.
+时间复杂度为O(N)，N为数据库里面key的数量。
 
-**Warning**: consider `KEYS` as a command that should only be used in production
-environments with extreme care.
-It may ruin performance when it is executed against large databases.
-This command is intended for debugging and special operations, such as changing
-your keyspace layout.
-Don't use `KEYS` in your regular application code.
-If you're looking for a way to find keys in a subset of your keyspace, consider
-using `SCAN` or [sets][tdts].
+例如，Redis在一个有1亿个key的数据库里面执行一次查询需要的时间是40毫秒
+。
 
-[tdts]: /topics/data-types#sets
+**警告**: `KEYS` 的速度非常快，但在一个大的数据库中使用它仍然可能造成性能问题，如果你需要从一个数据集中查找特定的 `KEYS`， 你最好还是用 Redis 的集合结构 [SETS](/commands/sets.html) 来代替。
 
-Supported glob-style patterns:
 
-* `h?llo` matches `hello`, `hallo` and `hxllo`
-* `h*llo` matches `hllo` and `heeeello`
-* `h[ae]llo` matches `hello` and `hallo,` but not `hillo`
-* `h[^e]llo` matches `hallo`, `hbllo`, ... but not `hello`
-* `h[a-b]llo` matches `hallo` and `hbllo`
+支持的正则表达模式：
 
-Use `\` to escape special characters if you want to match them verbatim.
+* `h?llo` 匹配 `hello`, `hallo` 和 `hxllo`
+* `h*llo` 匹配 `hllo` 和 `heeeello`
+* `h[ae]llo` 匹配 `hello` 和 `hallo,` 但是不匹配 `hillo`
+* `h[^e]llo` 匹配 `hallo`, `hbllo`, ... 但是不匹配 `hello`
+* `h[a-b]llo` 匹配 `hallo` 和 `hbllo`
 
-@return
+如果你想取消字符的特殊匹配（正则表达式，可以在它的前面加`\`。
 
-@array-reply: list of keys matching `pattern`.
+## 返回值
 
-@examples
+[array-reply](/topics/protocol#array-reply): 所有符合条件的key
 
-```cli
-MSET one 1 two 2 three 3 four 4
-KEYS *o*
-KEYS t??
-KEYS *
-```
+## 例子
+
+	redis> MSET one 1 two 2 three 3 four 4
+	OK
+	redis> KEYS *o*
+	1) "four"
+	2) "one"
+	3) "two"
+	redis> KEYS t??
+	1) "two"
+	redis> KEYS *
+	1) "four"
+	2) "three"
+	3) "one"
+	4) "two"
+	redis>

@@ -7,12 +7,13 @@ disqusUrl: http://redis.cn/commands/flushdb.html
 commandsType: server
 ---
 
-Delete all the keys of the currently selected DB.
-This command never fails.
+删除当前数据库里面的所有数据。
 
-The time-complexity for this operation is O(N), N being the number of
-keys in the database.
+这个命令永远不会出现失败。
 
-@return
+这个操作的时间复杂度是`O(N)`,N是当前数据库的keys数量。
 
-@simple-string-reply
+## 返回
+
+[simple-string-reply](/topics/protocol.html#simple-string-reply)
+

@@ -20,18 +20,22 @@ The exact behavior of this command is identical to the one of the `INCRBYFLOAT`
 command, please refer to the documentation of `INCRBYFLOAT` for further
 information.
 
-@return
+## 返回值
 
-@bulk-string-reply: the value of `field` after the increment.
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply)：
+the value of `field` after the increment.
 
-@examples
+## 例子
 
-```cli
-HSET mykey field 10.50
-HINCRBYFLOAT mykey field 0.1
-HSET mykey field 5.0e3
-HINCRBYFLOAT mykey field 2.0e2
-```
+	redis> HSET mykey field 10.50
+	(integer) 1
+	redis> HINCRBYFLOAT mykey field 0.1
+	"10.6"
+	redis> HSET mykey field 5.0e3
+	(integer) 0
+	redis> HINCRBYFLOAT mykey field 2.0e2
+	"5200"
+	redis> 
 
 ## Implementation details
 

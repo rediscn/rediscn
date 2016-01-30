@@ -7,26 +7,22 @@ disqusUrl: http://redis.cn/commands/hincrby.html
 commandsType: hashes
 ---
 
-Increments the number stored at `field` in the hash stored at `key` by
-`increment`.
-If `key` does not exist, a new key holding a hash is created.
-If `field` does not exist the value is set to `0` before the operation is
-performed.
+增加 `key` 指定的哈希集中指定字段的数值。如果 `key` 不存在，会创建一个新的哈希集并与 `key` 关联。如果字段不存在，则字段的值在该操作执行前被设置为 0
 
-The range of values supported by `HINCRBY` is limited to 64 bit signed integers.
+`HINCRBY` 支持的值的范围限定在 64位 有符号整数
 
-@return
+## 返回值
 
-@integer-reply: the value at `field` after the increment operation.
+[integer-reply](/topics/protocol.html#integer-reply)：增值操作执行后的该字段的值。
 
-@examples
-
-Since the `increment` argument is signed, both increment and decrement
-operations can be performed:
-
-```cli
-HSET myhash field 5
-HINCRBY myhash field 1
-HINCRBY myhash field -1
-HINCRBY myhash field -10
-```
+## 例子
+	
+	redis> HSET myhash field 5
+	(integer) 1
+	redis> HINCRBY myhash field 1
+	(integer) 6
+	redis> HINCRBY myhash field -1
+	(integer) 5
+	redis> HINCRBY myhash field -10
+	(integer) -5
+	redis> 

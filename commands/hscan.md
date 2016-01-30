@@ -7,4 +7,4 @@ disqusUrl: http://redis.cn/commands/hscan.html
 commandsType: hashes
 ---
 
-See `SCAN` for `HSCAN` documentation.
+请参考 [SCAN](/commands/scan.html)命令， `HSCAN`与之类似 。
