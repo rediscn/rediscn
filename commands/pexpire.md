@@ -7,19 +7,24 @@ disqusUrl: http://redis.cn/commands/pexpire.html
 commandsType: keys
 ---
 
-This command works exactly like `EXPIRE` but the time to live of the key is
-specified in milliseconds instead of seconds.
+这个命令和[EXPIRE](/commands/expire.html)命令的作用类似，但是它以毫秒为单位设置 key 的生存时间，而不像[EXPIRE](/commands/expire.html)命令那样，以秒为单位。
 
-@integer-reply, specifically:
 
-* `1` if the timeout was set.
-* `0` if `key` does not exist or the timeout could not be set.
+##返回值
 
-@examples
+[integer-reply](/topics/protocol.html#integer-reply), 只有以下两种值:
 
-```cli
-SET mykey "Hello"
-PEXPIRE mykey 1500
-TTL mykey
-PTTL mykey
-```
+- 设置成功，返回 1
+- key 不存在或设置失败，返回 0
+
+##例子
+
+	redis> SET mykey "Hello"
+	OK
+	redis> PEXPIRE mykey 1500
+	(integer) 1
+	redis> TTL mykey
+	(integer) 1
+	redis> PTTL mykey
+	(integer) 1499
+	redis> 

@@ -7,18 +7,21 @@ disqusUrl: http://redis.cn/commands/smembers.html
 commandsType: sets
 ---
 
-Returns all the members of the set value stored at `key`.
+返回key集合所有的元素.
 
-This has the same effect as running `SINTER` with one argument `key`.
+该命令的作用与使用一个参数的[SINTER](/commands/sinter.html) 命令作用相同.
 
-@return
+##返回值
 
-@array-reply: all elements of the set.
+[array-reply](/topics/protocol.html#array-reply):集合中的所有元素.
 
-@examples
+##举例
 
-```cli
-SADD myset "Hello"
-SADD myset "World"
-SMEMBERS myset
-```
+	redis> SADD myset "Hello"
+	(integer) 1
+	redis> SADD myset "World"
+	(integer) 1
+	redis> SMEMBERS myset
+	1) "World"
+	2) "Hello"
+	redis> 

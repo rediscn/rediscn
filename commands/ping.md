@@ -7,24 +7,20 @@ disqusUrl: http://redis.cn/commands/ping.html
 commandsType: connection
 ---
 
-Returns `PONG` if no argument is provided, otherwise return a copy of the
-argument as a bulk.
-This command is often used to test if a connection is still alive, or to measure
-latency.
+如果后面没有参数时返回`PONG`，否则会返回后面带的参数。
 
-If the client is subscribed to a channel or a pattern, it will instead return a
-multi-bulk with a "pong" in the first position and an empty bulk in the second
-position, unless an argument is provided in which case it returns a copy
-of the argument.
+这个命令经常用来测试一个连接是否还是可用的，或者用来测试一个连接的延时。
 
-@return
+如果客户端处于频道订阅模式下，它将是一个multi-bulk返回，第一次时返回"pong"，之后返回空（empty bulk），除非命令后面更随了参数。
 
-@simple-string-reply
+##返回值
 
-@examples
+[simple-string-reply](/topics/protocol.html#simple-string-reply)
 
-```cli
-PING
+##例子
 
-PING "hello world"
-```
+	redis> PING
+	PONG
+	redis> PING "hello world"
+	"hello world"
+	redis>

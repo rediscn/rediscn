@@ -7,24 +7,26 @@ disqusUrl: http://redis.cn/commands/linsert.html
 commandsType: lists
 ---
 
-Inserts `value` in the list stored at `key` either before or after the reference
-value `pivot`.
+把 value 插入存于 key 的列表中在基准值 pivot 的前面或后面。
 
-When `key` does not exist, it is considered an empty list and no operation is
-performed.
+当 key 不存在时，这个list会被看作是空list，任何操作都不会发生。
 
-An error is returned when `key` exists but does not hold a list value.
+当 key 存在，但保存的不是一个list的时候，会返回error。
 
-@return
+## 返回值
 
-@integer-reply: the length of the list after the insert operation, or `-1` when
-the value `pivot` was not found.
+[integer-reply](/topics/protocol.html#integer-reply): 经过插入操作后的list长度，或者当 pivot 值找不到的时候返回 -1。
 
-@examples
+## 例子
 
-```cli
-RPUSH mylist "Hello"
-RPUSH mylist "World"
-LINSERT mylist BEFORE "World" "There"
-LRANGE mylist 0 -1
-```
+	redis> RPUSH mylist "Hello"
+	(integer) 1
+	redis> RPUSH mylist "World"
+	(integer) 2
+	redis> LINSERT mylist BEFORE "World" "There"
+	(integer) 3
+	redis> LRANGE mylist 0 -1
+	1) "Hello"
+	2) "There"
+	3) "World"
+	redis> 

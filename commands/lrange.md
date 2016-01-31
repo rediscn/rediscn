@@ -7,43 +7,41 @@ disqusUrl: http://redis.cn/commands/lrange.html
 commandsType: lists
 ---
 
-Returns the specified elements of the list stored at `key`.
-The offsets `start` and `stop` are zero-based indexes, with `0` being the first
-element of the list (the head of the list), `1` being the next element and so
-on.
+返回存储在 key 的列表里指定范围内的元素。 start 和 end 偏移量都是基于0的下标，即list的第一个元素下标是0（list的表头），第二个元素下标是1，以此类推。
 
-These offsets can also be negative numbers indicating offsets starting at the
-end of the list.
-For example, `-1` is the last element of the list, `-2` the penultimate, and so
-on.
+偏移量也可以是负数，表示偏移量是从list尾部开始计数。 例如， -1 表示列表的最后一个元素，-2 是倒数第二个，以此类推。
 
-## Consistency with range functions in various programming languages
+##在不同编程语言里，关于求范围函数的一致性
 
-Note that if you have a list of numbers from 0 to 100, `LRANGE list 0 10` will
-return 11 elements, that is, the rightmost item is included.
-This **may or may not** be consistent with behavior of range-related functions
-in your programming language of choice (think Ruby's `Range.new`, `Array#slice`
-or Python's `range()` function).
+需要注意的是，如果你有一个list，里面的元素是从0到100，那么 `LRANGE list 0 10` 这个命令会返回11个元素，即最右边的那个元素也会被包含在内。 在你所使用的编程语言里，这一点**可能是也可能不是**跟那些求范围有关的函数都是一致的。（像Ruby的 Range.new，Array#slice 或者Python的 range() 函数。）
 
-## Out-of-range indexes
+##超过范围的下标
 
-Out of range indexes will not produce an error.
-If `start` is larger than the end of the list, an empty list is returned.
-If `stop` is larger than the actual end of the list, Redis will treat it like
-the last element of the list.
+当下标超过list范围的时候不会产生error。 如果start比list的尾部下标大的时候，会返回一个空列表。 如果stop比list的实际尾部大的时候，Redis会当它是最后一个元素的下标。
 
-@return
+##返回值
 
-@array-reply: list of elements in the specified range.
+[array-reply](/topics/protocol.html#array-reply): 指定范围里的列表元素。
 
-@examples
+##例子
 
-```cli
-RPUSH mylist "one"
-RPUSH mylist "two"
-RPUSH mylist "three"
-LRANGE mylist 0 0
-LRANGE mylist -3 2
-LRANGE mylist -100 100
-LRANGE mylist 5 10
-```
+	redis> RPUSH mylist "one"
+	(integer) 1
+	redis> RPUSH mylist "two"
+	(integer) 2
+	redis> RPUSH mylist "three"
+	(integer) 3
+	redis> LRANGE mylist 0 0
+	1) "one"
+	redis> LRANGE mylist -3 2
+	1) "one"
+	2) "two"
+	3) "three"
+	redis> LRANGE mylist -100 100
+	1) "one"
+	2) "two"
+	3) "three"
+	redis> LRANGE mylist 5 10
+	(empty list or set)
+	redis> 
+

@@ -7,29 +7,27 @@ disqusUrl: http://redis.cn/commands/zincrby.html
 commandsType: sortedsets
 ---
 
-Increments the score of `member` in the sorted set stored at `key` by
-`increment`.
-If `member` does not exist in the sorted set, it is added with `increment` as
-its score (as if its previous score was `0.0`).
-If `key` does not exist, a new sorted set with the specified `member` as its
-sole member is created.
+为有序集key的成员member的score值加上增量increment。如果key中不存在member，就在key中添加一个member，score是increment（就好像它之前的score是0.0）。如果key不存在，就创建一个只含有指定member成员的有序集合。
 
-An error is returned when `key` exists but does not hold a sorted set.
+当key不是有序集类型时，返回一个错误。
 
-The `score` value should be the string representation of a numeric value, and
-accepts double precision floating point numbers.
-It is possible to provide a negative value to decrement the score.
+score值必须是字符串表示的整数值或双精度浮点数，并且能接受double精度的浮点数。也有可能给一个负数来减少score的值。
 
-@return
+##返回值
 
-@bulk-string-reply: the new score of `member` (a double precision floating point
-number), represented as string.
+[Bulk string reply](/topics/protocol#Bulk string reply): member成员的新score值，以字符串形式表示。
 
-@examples
+##例子
 
-```cli
-ZADD myzset 1 "one"
-ZADD myzset 2 "two"
-ZINCRBY myzset 2 "one"
-ZRANGE myzset 0 -1 WITHSCORES
-```
+	redis> ZADD myzset 1 "one"
+	(integer) 1
+	redis> ZADD myzset 2 "two"
+	(integer) 1
+	redis> ZINCRBY myzset 2 "one"
+	"3"
+	redis> ZRANGE myzset 0 -1 WITHSCORES
+	1) "two"
+	2) "2"
+	3) "one"
+	4) "3"
+	redis> 

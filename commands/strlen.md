@@ -7,18 +7,18 @@ disqusUrl: http://redis.cn/commands/strlen.html
 commandsType: strings
 ---
 
-Returns the length of the string value stored at `key`.
-An error is returned when `key` holds a non-string value.
+返回key的string类型value的长度。如果key对应的非string类型，就返回错误。
 
-@return
+##返回值
 
-@integer-reply: the length of the string at `key`, or `0` when `key` does not
-exist.
+[integer-reply](/topics/protocol#integer-reply)：key对应的字符串value的长度，或者0（key不存在）
 
-@examples
+##例子
 
-```cli
-SET mykey "Hello world"
-STRLEN mykey
-STRLEN nonexisting
-```
+	redis> SET mykey "Hello world"
+	OK
+	redis> STRLEN mykey
+	(integer) 11
+	redis> STRLEN nonexisting
+	(integer) 0
+	redis> 

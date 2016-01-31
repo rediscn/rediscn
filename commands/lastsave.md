@@ -7,11 +7,8 @@ disqusUrl: http://redis.cn/commands/lastsave.html
 commandsType: server
 ---
 
-Return the UNIX TIME of the last DB save executed with success.
-A client may check if a `BGSAVE` command succeeded reading the `LASTSAVE` value,
-then issuing a `BGSAVE` command and checking at regular intervals every N
-seconds if `LASTSAVE` changed.
+执行成功时返回UNIX时间戳。客户端执行 [BGSAVE](/commands/bgsave.html) 命令时，可以通过每N秒发送一个 `LASTSAVE` 命令来查看[BGSAVE](/commands/bgsave.html) 命令执行的结果，由 `LASTSAVE` 返回结果的变化可以判断执行结果。
 
-@return
+## 返回值
 
-@integer-reply: an UNIX time stamp.
+[integer-reply](/topics/protocol.html#integer-reply): UNIX 的时间戳.

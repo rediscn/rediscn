@@ -7,76 +7,49 @@ disqusUrl: http://redis.cn/commands/rpoplpush.html
 commandsType: lists
 ---
 
-Atomically returns and removes the last element (tail) of the list stored at
-`source`, and pushes the element at the first element (head) of the list stored
-at `destination`.
+原子性地返回并移除存储在 source 的列表的最后一个元素（列表尾部元素）， 并把该元素放入存储在 destination 的列表的第一个元素位置（列表头部）。
 
-For example: consider `source` holding the list `a,b,c`, and `destination`
-holding the list `x,y,z`.
-Executing `RPOPLPUSH` results in `source` holding `a,b` and `destination`
-holding `c,x,y,z`.
+例如：假设 source 存储着列表 a,b,c， destination存储着列表 x,y,z。 执行 RPOPLPUSH 得到的结果是 source 保存着列表 a,b ，而 destination 保存着列表 c,x,y,z。
 
-If `source` does not exist, the value `nil` is returned and no operation is
-performed.
-If `source` and `destination` are the same, the operation is equivalent to
-removing the last element from the list and pushing it as first element of the
-list, so it can be considered as a list rotation command.
+如果 source 不存在，那么会返回 nil 值，并且不会执行任何操作。 如果 source 和 destination 是同样的，那么这个操作等同于移除列表最后一个元素并且把该元素放在列表头部， 所以这个命令也可以当作是一个旋转列表的命令。
 
-@return
+##返回值
 
-@bulk-string-reply: the element being popped and pushed.
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply): 被移除和放入的元素
 
-@examples
+##例子
+	
+	redis> RPUSH mylist "one"
+	(integer) 1
+	redis> RPUSH mylist "two"
+	(integer) 2
+	redis> RPUSH mylist "three"
+	(integer) 3
+	redis> RPOPLPUSH mylist myotherlist
+	"three"
+	redis> LRANGE mylist 0 -1
+	1) "one"
+	2) "two"
+	redis> LRANGE myotherlist 0 -1
+	1) "three"
+	redis> 
 
-```cli
-RPUSH mylist "one"
-RPUSH mylist "two"
-RPUSH mylist "three"
-RPOPLPUSH mylist myotherlist
-LRANGE mylist 0 -1
-LRANGE myotherlist 0 -1
-```
+模式：安全的队列
 
-## Pattern: Reliable queue
+Redis通常都被用做一个处理各种后台工作或消息任务的消息服务器。 一个简单的队列模式就是：生产者把消息放入一个列表中，等待消息的消费者用 [RPOP](/commands/rpop.html) 命令（用轮询方式）， 或者用 BRPOP 命令（如果客户端使用阻塞操作会更好）来得到这个消息。
 
-Redis is often used as a messaging server to implement processing of background
-jobs or other kinds of messaging tasks.
-A simple form of queue is often obtained pushing values into a list in the
-producer side, and waiting for this values in the consumer side using `RPOP`
-(using polling), or `BRPOP` if the client is better served by a blocking
-operation.
+然而，因为消息有可能会丢失，所以这种队列并是不安全的。例如，当接收到消息后，出现了网络问题或者消费者端崩溃了， 那么这个消息就丢失了。
 
-However in this context the obtained queue is not _reliable_ as messages can
-be lost, for example in the case there is a network problem or if the consumer
-crashes just after the message is received but it is still to process.
+RPOPLPUSH (或者其阻塞版本的 [BRPOPLPUSH](/commands/brpoplpush.html)） 提供了一种方法来避免这个问题：消费者端取到消息的同时把该消息放入一个正在处理中的列表。 当消息被处理了之后，该命令会使用 LREM 命令来移除正在处理中列表中的对应消息。
 
-`RPOPLPUSH` (or `BRPOPLPUSH` for the blocking variant) offers a way to avoid
-this problem: the consumer fetches the message and at the same time pushes it
-into a _processing_ list.
-It will use the `LREM` command in order to remove the message from the
-_processing_ list once the message has been processed.
+另外，可以添加一个客户端来监控这个正在处理中列表，如果有某些消息已经在这个列表中存在很长时间了（即超过一定的处理时限）， 那么这个客户端会把这些超时消息重新加入到队列中。
 
-An additional client may monitor the _processing_ list for items that remain
-there for too much time, and will push those timed out items into the queue
-again if needed.
+## 模式：循环列表 ##
 
-## Pattern: Circular list
+RPOPLPUSH 命令的 source 和 destination 是相同的话， 那么客户端在访问一个拥有n个元素的列表时，可以在 O(N) 时间里一个接一个获取列表元素， 而不用像 [LRANGE](/commands/lrange.html) 那样需要把整个列表从服务器端传送到客户端。
 
-Using `RPOPLPUSH` with the same source and destination key, a client can visit
-all the elements of an N-elements list, one after the other, in O(N) without
-transferring the full list from the server to the client using a single `LRANGE`
-operation.
+上面这种模式即使在以下两种情况下照样能很好地工作： * 有多个客户端同时对同一个列表进行旋转（rotating）：它们会取得不同的元素，直到列表里所有元素都被访问过，又从头开始这个操作。 * 有其他客户端在往列表末端加入新的元素。
 
-The above pattern works even if the following two conditions: * There are
-multiple clients rotating the list: they'll fetch different elements, until all
-the elements of the list are visited, and the process restarts.
-* Even if other clients are actively pushing new items at the end of the list.
+这个模式让我们可以很容易地实现这样一个系统：有 N 个客户端，需要连续不断地对一批元素进行处理，而且处理的过程必须尽可能地快。 一个典型的例子就是服务器上的监控程序：它们需要在尽可能短的时间内，并行地检查一批网站，确保它们的可访问性。
 
-The above makes it very simple to implement a system where a set of items must
-be processed by N workers continuously as fast as possible.
-An example is a monitoring system that must check that a set of web sites are
-reachable, with the smallest delay possible, using a number of parallel workers.
-
-Note that this implementation of workers is trivially scalable and reliable,
-because even if a message is lost the item is still in the queue and will be
-processed at the next iteration.
+值得注意的是，使用这个模式的客户端是易于扩展（scalable）且安全的（reliable），因为即使客户端把接收到的消息丢失了， 这个消息依然存在于队列中，等下次迭代到它的时候，由其他客户端进行处理。

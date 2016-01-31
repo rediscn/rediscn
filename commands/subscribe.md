@@ -7,8 +7,6 @@ disqusUrl: http://redis.cn/commands/subscribe.html
 commandsType: pubsub
 ---
 
-Subscribes the client to the specified channels.
+订阅给指定频道的信息。
 
-Once the client enters the subscribed state it is not supposed to issue any
-other commands, except for additional `SUBSCRIBE`, `PSUBSCRIBE`, `UNSUBSCRIBE`
-and `PUNSUBSCRIBE` commands.
+一旦客户端进入订阅状态，客户端就只可接受订阅相关的命令[SUBSCRIBE](/commands/subscribe.html)、[PSUBSCRIBE](/commands/psubscribe.html)、[UNSUBSCRIBE](/commands/unsubscribe.html)和[PUNSUBSCRIBE](/commands/punsubscribe.html)除了这些命令，其他命令一律失效。

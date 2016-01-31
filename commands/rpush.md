@@ -7,32 +7,25 @@ disqusUrl: http://redis.cn/commands/rpush.html
 commandsType: lists
 ---
 
-Insert all the specified values at the tail of the list stored at `key`.
-If `key` does not exist, it is created as empty list before performing the push
-operation.
-When `key` holds a value that is not a list, an error is returned.
+向存于 key 的列表的尾部插入所有指定的值。如果 key 不存在，那么会创建一个空的列表然后再进行 push 操作。 当 key 保存的不是一个列表，那么会返回一个错误。
 
-It is possible to push multiple elements using a single command call just
-specifying multiple arguments at the end of the command.
-Elements are inserted one after the other to the tail of the list, from the
-leftmost element to the rightmost element.
-So for instance the command `RPUSH mylist a b c` will result into a list
-containing `a` as first element, `b` as second element and `c` as third element.
+可以使用一个命令把多个元素打入队列，只需要在命令后面指定多个参数。元素是从左到右一个接一个从列表尾部插入。 比如命令 RPUSH mylist a b c 会返回一个列表，其第一个元素是 a ，第二个元素是 b ，第三个元素是 c。
 
-@return
+##返回值
 
-@integer-reply: the length of the list after the push operation.
+[integer-reply](/topics/protocol.html#integer-reply): 在 push 操作后的列表长度。
 
-@history
+##历史
 
-* `>= 2.4`: Accepts multiple `value` arguments.
-  In Redis versions older than 2.4 it was possible to push a single value per
-  command.
+>= 2.4: 接受多个 value 参数。 在老于 2.4 的 Redis 版本中，一条命令只能 push 单一个值。
 
-@examples
-
-```cli
-RPUSH mylist "hello"
-RPUSH mylist "world"
-LRANGE mylist 0 -1
-```
+##例子
+	
+	redis> RPUSH mylist "hello"
+	(integer) 1
+	redis> RPUSH mylist "world"
+	(integer) 2
+	redis> LRANGE mylist 0 -1
+	1) "hello"
+	2) "world"
+	redis> 

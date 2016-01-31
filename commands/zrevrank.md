@@ -7,26 +7,25 @@ disqusUrl: http://redis.cn/commands/zrevrank.html
 commandsType: sortedsets
 ---
 
-Returns the rank of `member` in the sorted set stored at `key`, with the scores
-ordered from high to low.
-The rank (or index) is 0-based, which means that the member with the highest
-score has rank `0`.
+返回有序集key中成员member的排名，其中有序集成员按score值从大到小排列。排名以0为底，也就是说，score值最大的成员排名为0。
 
-Use `ZRANK` to get the rank of an element with the scores ordered from low to
-high.
+使用[ZRANK](/commands/zrank.html)命令可以获得成员按score值递增(从小到大)排列的排名。
 
-@return
+##返回值
 
-* If `member` exists in the sorted set, @integer-reply: the rank of `member`.
-* If `member` does not exist in the sorted set or `key` does not exist,
-  @bulk-string-reply: `nil`.
+- 如果member是有序集key的成员，返回[integer-reply](/topics/protocol#integer-reply):member的排名。
+- 如果member不是有序集key的成员，返回[bulk-string-reply](/topics/protocol#bulk-string-reply): `nil`。
 
-@examples
+##例子
 
-```cli
-ZADD myzset 1 "one"
-ZADD myzset 2 "two"
-ZADD myzset 3 "three"
-ZREVRANK myzset "one"
-ZREVRANK myzset "four"
-```
+	redis> ZADD myzset 1 "one"
+	(integer) 1
+	redis> ZADD myzset 2 "two"
+	(integer) 1
+	redis> ZADD myzset 3 "three"
+	(integer) 1
+	redis> ZREVRANK myzset "one"
+	(integer) 2
+	redis> ZREVRANK myzset "four"
+	(nil)
+	redis> 

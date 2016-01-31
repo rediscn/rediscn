@@ -7,10 +7,8 @@ disqusUrl: http://redis.cn/commands/quit.html
 commandsType: connection
 ---
 
-Ask the server to close the connection.
-The connection is closed as soon as all pending replies have been written to the
-client.
+请求服务器关闭连接。连接将会尽可能快的将未完成的客户端请求完成处理。
 
-@return
+##返回值
 
-@simple-string-reply: always OK.
+[simple-string-reply](/topics/protocol.html#simple-string-reply): 始终返回 OK.

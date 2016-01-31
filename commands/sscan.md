@@ -7,4 +7,4 @@ disqusUrl: http://redis.cn/commands/sscan.html
 commandsType: sets
 ---
 
-See `SCAN` for `SSCAN` documentation.
+请参考[SCAN](/commands/scan.html)

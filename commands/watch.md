@@ -7,11 +7,8 @@ disqusUrl: http://redis.cn/commands/watch.html
 commandsType: transactions
 ---
 
-Marks the given keys to be watched for conditional execution of a
-[transaction][tt].
+标记所有指定的key 被监视起来，在事务中有条件的执行（乐观锁）。
 
-[tt]: /topics/transactions
+##返回值
 
-@return
-
-@simple-string-reply: always `OK`.
+[simple-string-reply](/topics/protocol#simple-string-reply): 总是 OK。

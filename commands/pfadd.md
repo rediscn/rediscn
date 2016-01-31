@@ -7,25 +7,26 @@ disqusUrl: http://redis.cn/commands/pfadd.html
 commandsType: hyperloglog
 ---
 
-Adds all the element arguments to the HyperLogLog data structure stored at the variable name specified as first argument.
+将除了第一个参数以外的参数存储到以第一个参数为变量名的HyperLogLog结构中.
 
-As a side effect of this command the HyperLogLog internals may be updated to reflect a different estimation of the number of unique items added so far (the cardinality of the set).
+这个命令的一个副作用是它可能会更改这个HyperLogLog的内部来反映在每添加一个唯一的对象时估计的基数(集合的基数).
 
-If the approximated cardinality estimated by the HyperLogLog changed after executing the command, `PFADD` returns 1, otherwise 0 is returned. The command automatically creates an empty HyperLogLog structure (that is, a Redis String of a specified length and with a given encoding) if the specified key does not exist.
+如果一个HyperLogLog的估计的近似基数在执行命令过程中发了变化， [PFADD](/commands/pfadd.html) 返回1，否则返回0，如果指定的key不存在，这个命令会自动创建一个空的HyperLogLog结构（指定长度和编码的字符串）.
 
-To call the command without elements but just the variable name is valid, this will result into no operation performed if the variable already exists, or just the creation of the data structure if the key does not exist (in the latter case 1 is returned).
+如果在调用该命令时仅提供变量名而不指定元素也是可以的，如果这个变量名存在，则不会有任何操作，如果不存在，则会创建一个数据结构（返回1）.
 
-For an introduction to HyperLogLog data structure check the `PFCOUNT` command page.
+了解更多HyperLogLog数据结构，请查阅[PFCOUNT](/commands/pfcount.html)命令页面.
 
-@return
+##返回值
 
-@integer-reply, specifically:
+[integer-reply](/topics/protocol.html#integer-reply)
 
-* 1 if at least 1 HyperLogLog internal register was altered. 0 otherwise.
+- 如果 HyperLogLog 的内部被修改了,那么返回 1,否则返回 0 .
 
-@examples
+##例子
 
-```cli
-PFADD hll a b c d e f g
-PFCOUNT hll
-```
+	redis> PFADD hll a b c d e f g
+	(integer) 1
+	redis> PFCOUNT hll
+	(integer) 7
+	redis> 

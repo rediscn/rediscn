@@ -7,25 +7,25 @@ disqusUrl: http://redis.cn/commands/pttl.html
 commandsType: keys
 ---
 
-Like `TTL` this command returns the remaining time to live of a key that has an
-expire set, with the sole difference that `TTL` returns the amount of remaining
-time in seconds while `PTTL` returns it in milliseconds.
+这个命令类似于[TTL](/commands/ttl.html)命令，但它以毫秒为单位返回 key 的剩余生存时间，而不是像[TTL](/commands/ttl.html)命令那样，以秒为单位。
 
-In Redis 2.6 or older the command returns `-1` if the key does not exist or if the key exist but has no associated expire.
+在Redis 2.6和之前版本，如果key不存在或者key存在但是已经过期将返回`-1`。
 
-Starting with Redis 2.8 the return value in case of error changed:
+从 Redis 2.8开始，错误返回值发送了如下变化：
 
-* The command returns `-2` if the key does not exist.
-* The command returns `-1` if the key exists but has no associated expire.
+* 如果key不存在返回`-2`
+* 如果key存在但是已经过期返回`-1`
 
-@return
+##返回值
 
-@integer-reply: TTL in milliseconds, or a negative value in order to signal an error (see the description above).
+[integer-reply](/topics/protocol.html#integer-reply): [TTL](/commands/ttl.html)以毫秒为单位,或者返回一个错误值 (参考上面的描述).
 
-@examples
+##例子
 
-```cli
-SET mykey "Hello"
-EXPIRE mykey 1
-PTTL mykey
-```
+	redis> SET mykey "Hello"
+	OK
+	redis> EXPIRE mykey 1
+	(integer) 1
+	redis> PTTL mykey
+	(integer) 999
+	redis> 

@@ -7,4 +7,4 @@ disqusUrl: http://redis.cn/commands/zscan.html
 commandsType: sortedsets
 ---
 
-See `SCAN` for `ZSCAN` documentation.
+请参考[SCAN](/commands/scan.html)

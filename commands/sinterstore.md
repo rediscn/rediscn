@@ -7,24 +7,30 @@ disqusUrl: http://redis.cn/commands/sinterstore.html
 commandsType: sets
 ---
 
-This command is equal to `SINTER`, but instead of returning the resulting set,
-it is stored in `destination`.
+这个命令与[SINTER](/commands/sinter.html)命令类似, 但是它并不是直接返回结果集,而是将结果保存在 destination集合中.
 
-If `destination` already exists, it is overwritten.
+如果destination 集合存在, 则会被重写.
 
-@return
+##返回值
 
-@integer-reply: the number of elements in the resulting set.
+[integer-reply](/topics/protocol.html#integer-reply): 结果集中成员的个数.
 
-@examples
+##例子
 
-```cli
-SADD key1 "a"
-SADD key1 "b"
-SADD key1 "c"
-SADD key2 "c"
-SADD key2 "d"
-SADD key2 "e"
-SINTERSTORE key key1 key2
-SMEMBERS key
-```
+	redis> SADD key1 "a"
+	(integer) 1
+	redis> SADD key1 "b"
+	(integer) 1
+	redis> SADD key1 "c"
+	(integer) 1
+	redis> SADD key2 "c"
+	(integer) 1
+	redis> SADD key2 "d"
+	(integer) 1
+	redis> SADD key2 "e"
+	(integer) 1
+	redis> SINTERSTORE key key1 key2
+	(integer) 1
+	redis> SMEMBERS key
+	1) "c"
+	redis> 

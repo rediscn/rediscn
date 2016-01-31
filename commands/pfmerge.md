@@ -7,22 +7,24 @@ disqusUrl: http://redis.cn/commands/pfmerge.html
 commandsType: hyperloglog
 ---
 
-Merge multiple HyperLogLog values into an unique value that will approximate
-the cardinality of the union of the observed Sets of the source HyperLogLog
-structures.
+将多个 HyperLogLog 合并（merge）为一个 HyperLogLog ， 合并后的 HyperLogLog 的基数接近于所有输入 HyperLogLog 的可见集合（observed set）的并集.
 
-The computed merged HyperLogLog is set to the destination variable, which is
-created if does not exist (defaulting to an empty HyperLogLog).
+合并得出的 HyperLogLog 会被储存在目标变量（第一个参数）里面， 如果该键并不存在， 那么命令在执行之前， 会先为该键创建一个空的.
 
-@return
+##返回值
 
-@simple-string-reply: The command just returns `OK`.
+[simple-string-reply](/topics/protocol.html#simple-string-reply): 这个命令只会返回 OK.
 
-@examples
+##例子
 
-```cli
-PFADD hll1 foo bar zap a
-PFADD hll2 a b c foo
-PFMERGE hll3 hll1 hll2
-PFCOUNT hll3
-```
+	redis> PFADD hll1 foo bar zap a
+	(integer) 1
+	redis> PFADD hll2 a b c foo
+	(integer) 1
+	redis> PFMERGE hll3 hll1 hll2
+	OK
+	redis> PFCOUNT hll3
+	(integer) 6
+	redis> 
+
+

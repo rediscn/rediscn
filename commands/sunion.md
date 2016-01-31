@@ -7,31 +7,39 @@ disqusUrl: http://redis.cn/commands/sunion.html
 commandsType: sets
 ---
 
-Returns the members of the set resulting from the union of all the given sets.
+返回给定的多个集合的并集中的所有成员.
 
-For example:
+例如:
 
-```
-key1 = {a,b,c,d}
-key2 = {c}
-key3 = {a,c,e}
-SUNION key1 key2 key3 = {a,b,c,d,e}
-```
+	key1 = {a,b,c,d}
+	key2 = {c}
+	key3 = {a,c,e}
+	SUNION key1 key2 key3 = {a,b,c,d,e}
 
-Keys that do not exist are considered to be empty sets.
+不存在的key可以认为是空的集合.
 
-@return
+##返回值
 
-@array-reply: list with members of the resulting set.
+[array-reply](/topics/protocol#array-reply):并集的成员列表
 
-@examples
+##举例
 
-```cli
-SADD key1 "a"
-SADD key1 "b"
-SADD key1 "c"
-SADD key2 "c"
-SADD key2 "d"
-SADD key2 "e"
-SUNION key1 key2
-```
+	redis> SADD key1 "a"
+	(integer) 1
+	redis> SADD key1 "b"
+	(integer) 1
+	redis> SADD key1 "c"
+	(integer) 1
+	redis> SADD key2 "c"
+	(integer) 1
+	redis> SADD key2 "d"
+	(integer) 1
+	redis> SADD key2 "e"
+	(integer) 1
+	redis> SUNION key1 key2
+	1) "a"
+	2) "b"
+	3) "c"
+	4) "d"
+	5) "e"
+	redis> 

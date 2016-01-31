@@ -7,12 +7,13 @@ disqusUrl: http://redis.cn/commands/psubscribe.html
 commandsType: pubsub
 ---
 
-Subscribes the client to the given patterns.
+订阅给定的模式(patterns)。
 
-Supported glob-style patterns:
+支持的模式(patterns)有:
 
 * `h?llo` subscribes to `hello`, `hallo` and `hxllo`
 * `h*llo` subscribes to `hllo` and `heeeello`
 * `h[ae]llo` subscribes to `hello` and `hallo,` but not `hillo`
 
-Use `\` to escape special characters if you want to match them verbatim.
+如果想输入普通的字符，可以在前面添加`\`
+

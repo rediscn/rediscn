@@ -7,8 +7,8 @@ disqusUrl: http://redis.cn/commands/randomkey.html
 commandsType: keys
 ---
 
-Return a random key from the currently selected database.
+从当前数据库返回一个随机的key。
 
-@return
+##返回值
 
-@bulk-string-reply: the random key, or `nil` when the database is empty.
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply):如果数据库没有任何key，返回nil，否则返回一个随机的key。

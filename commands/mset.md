@@ -7,22 +7,20 @@ disqusUrl: http://redis.cn/commands/mset.html
 commandsType: strings
 ---
 
-Sets the given keys to their respective values.
-`MSET` replaces existing values with new values, just as regular `SET`.
-See `MSETNX` if you don't want to overwrite existing values.
+对应给定的keys到他们相应的values上。`MSET`会用新的value替换已经存在的value，就像普通的[SET](/commands/set.html)命令一样。如果你不想覆盖已经存在的values，请参看命令[MSETNX](/commands/msetnx.html)。
 
-`MSET` is atomic, so all given keys are set at once.
-It is not possible for clients to see that some of the keys were updated while
-others are unchanged.
+`MSET`是原子的，所以所有给定的keys是一次性set的。客户端不可能看到这种一部分keys被更新而另外的没有改变的情况。
 
-@return
+##返回值
 
-@simple-string-reply: always `OK` since `MSET` can't fail.
+[simple-string-reply](/topics/protocol.html#simple-string-reply)：总是OK，因为MSET不会失败。
 
-@examples
+##例子
 
-```cli
-MSET key1 "Hello" key2 "World"
-GET key1
-GET key2
-```
+	redis> MSET key1 "Hello" key2 "World"
+	OK
+	redis> GET key1
+	"Hello"
+	redis> GET key2
+	"World"
+	redis> 

@@ -7,35 +7,22 @@ disqusUrl: http://redis.cn/commands/setbit.html
 commandsType: strings
 ---
 
-Sets or clears the bit at _offset_ in the string value stored at _key_.
+设置或者清空key的value(字符串)在offset处的bit值。
 
-The bit is either set or cleared depending on _value_, which can be either 0 or
-1.
-When _key_ does not exist, a new string value is created.
-The string is grown to make sure it can hold a bit at _offset_.
-The _offset_ argument is required to be greater than or equal to 0, and smaller
-than 2^32 (this limits bitmaps to 512MB).
-When the string at _key_ is grown, added bits are set to 0.
+那个位置的bit要么被设置，要么被清空，这个由value（只能是0或者1）来决定。当key不存在的时候，就创建一个新的字符串value。要确保这个字符串大到在offset处有bit值。参数offset需要大于等于0，并且小于232(限制bitmap大小为512)。当key对应的字符串增大的时候，新增的部分bit值都是设置为0。
 
-**Warning**: When setting the last possible bit (_offset_ equal to 2^32 -1) and
-the string value stored at _key_ does not yet hold a string value, or holds a
-small string value, Redis needs to allocate all intermediate memory which can
-block the server for some time.
-On a 2010 MacBook Pro, setting bit number 2^32 -1 (512MB allocation) takes
-~300ms, setting bit number 2^30 -1 (128MB allocation) takes ~80ms, setting bit
-number 2^28 -1 (32MB allocation) takes ~30ms and setting bit number 2^26 -1 (8MB
-allocation) takes ~8ms.
-Note that once this first allocation is done, subsequent calls to `SETBIT` for
-the same _key_ will not have the allocation overhead.
+警告：当set最后一个bit(offset等于2<sup>32</sup>-1)并且key还没有一个字符串value或者其value是个比较小的字符串时，Redis需要立即分配所有内存，这有可能会导致服务阻塞一会。在一台2010MacBook Pro上，offset为2<sup>32</sup>-1（分配512MB）需要～300ms，offset为2<sup>30</sup>-1(分配128MB)需要～80ms，offset为2<sup>28</sup>-1（分配32MB）需要～30ms，offset为2<sup>26</sup>-1（分配8MB）需要8ms。注意，一旦第一次内存分配完，后面对同一个key调用[SETBIT](/commands/setbit.html)就不会预先得到内存分配。
 
-@return
+##返回值
 
-@integer-reply: the original bit value stored at _offset_.
+[integer-reply](/topics/protocol.html#integer-reply)：在offset处原来的bit值
 
-@examples
+##例子
 
-```cli
-SETBIT mykey 7 1
-SETBIT mykey 7 0
-GET mykey
-```
+	redis> SETBIT mykey 7 1
+	(integer) 0
+	redis> SETBIT mykey 7 0
+	(integer) 1
+	redis> GET mykey
+	"\x00"
+	redis> 

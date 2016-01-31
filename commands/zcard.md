@@ -7,18 +7,18 @@ disqusUrl: http://redis.cn/commands/zcard.html
 commandsType: sortedsets
 ---
 
-Returns the sorted set cardinality (number of elements) of the sorted set stored
-at `key`.
+返回key的有序集元素个数。
 
-@return
+##返回值
 
-@integer-reply: the cardinality (number of elements) of the sorted set, or `0`
-if `key` does not exist.
+[integer-reply](/topics/protocol#integer-reply): key存在的时候，返回有序集的元素个数，否则返回0。
 
-@examples
+##例子
 
-```cli
-ZADD myzset 1 "one"
-ZADD myzset 2 "two"
-ZCARD myzset
-```
+	redis> ZADD myzset 1 "one"
+	(integer) 1
+	redis> ZADD myzset 2 "two"
+	(integer) 1
+	redis> ZCARD myzset
+	(integer) 2
+	redis> 

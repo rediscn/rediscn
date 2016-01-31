@@ -7,17 +7,18 @@ disqusUrl: http://redis.cn/commands/scard.html
 commandsType: sets
 ---
 
-Returns the set cardinality (number of elements) of the set stored at `key`.
+返回集合存储的key的基数 (集合元素的数量).
 
-@return
+##返回值
 
-@integer-reply: the cardinality (number of elements) of the set, or `0` if `key`
-does not exist.
+[integer-reply](/topics/protocol.html#integer-reply): 集合的基数(元素的数量),如果key不存在,则返回 0.
 
-@examples
+##举例
 
-```cli
-SADD myset "Hello"
-SADD myset "World"
-SCARD myset
-```
+	redis> SADD myset "Hello"
+	(integer) 1
+	redis> SADD myset "World"
+	(integer) 1
+	redis> SCARD myset
+	(integer) 2
+	redis> 

@@ -7,19 +7,21 @@ disqusUrl: http://redis.cn/commands/sismember.html
 commandsType: sets
 ---
 
-Returns if `member` is a member of the set stored at `key`.
+返回成员 member 是否是存储的集合 key的成员.
 
-@return
+##返回值
 
-@integer-reply, specifically:
+[integer-reply](/topics/protocol.html#integer-reply),详细说明:
 
-* `1` if the element is a member of the set.
-* `0` if the element is not a member of the set, or if `key` does not exist.
+- 如果member元素是集合key的成员，则返回1
+- 如果member元素不是key的成员，或者集合key不存在，则返回0
 
-@examples
-
-```cli
-SADD myset "one"
-SISMEMBER myset "one"
-SISMEMBER myset "two"
-```
+##举例
+	
+	redis> SADD myset "one"
+	(integer) 1
+	redis> SISMEMBER myset "one"
+	(integer) 1
+	redis> SISMEMBER myset "two"
+	(integer) 0
+	redis> 

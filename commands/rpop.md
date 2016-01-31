@@ -7,18 +7,24 @@ disqusUrl: http://redis.cn/commands/rpop.html
 commandsType: lists
 ---
 
-Removes and returns the last element of the list stored at `key`.
+移除并返回存于 key 的 list 的最后一个元素。
 
-@return
+##返回值
 
-@bulk-string-reply: the value of the last element, or `nil` when `key` does not exist.
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply): 
+最后一个元素的值，或者当 key 不存在的时候返回 nil。
 
-@examples
-
-```cli
-RPUSH mylist "one"
-RPUSH mylist "two"
-RPUSH mylist "three"
-RPOP mylist
-LRANGE mylist 0 -1
-```
+##例子
+	
+	redis> RPUSH mylist "one"
+	(integer) 1
+	redis> RPUSH mylist "two"
+	(integer) 2
+	redis> RPUSH mylist "three"
+	(integer) 3
+	redis> RPOP mylist
+	"three"
+	redis> LRANGE mylist 0 -1
+	1) "one"
+	2) "two"
+	redis> 

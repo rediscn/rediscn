@@ -7,25 +7,34 @@ disqusUrl: http://redis.cn/commands/srandmember.html
 commandsType: sets
 ---
 
-When called with just the `key` argument, return a random element from the set value stored at `key`.
+仅提供key参数,那么随机返回key集合中的一个元素.
 
-Starting from Redis version 2.6, when called with the additional `count` argument, return an array of `count` **distinct elements** if `count` is positive. If called with a negative `count` the behavior changes and the command is allowed to return the **same element multiple times**. In this case the number of returned elements is the absolute value of the specified `count`.
+Redis 2.6开始, 可以接受 count 参数,如果count是整数且小于元素的个数，返回含有 count 个不同的元素的数组,如果count是个整数且大于集合中元素的个数时,仅返回整个集合的所有元素,当count是负数,则会返回一个包含count的绝对值的个数元素的数组，如果count的绝对值大于元素的个数,则返回的结果集里会出现一个元素出现多次的情况.
 
-When called with just the key argument, the operation is similar to `SPOP`, however while `SPOP` also removes the randomly selected element from the set, `SRANDMEMBER` will just return a random element without altering the original set in any way.
+仅提供key参数时,该命令作用类似于SPOP命令, 不同的是SPOP命令会将被选择的随机元素从集合中移除, 而SRANDMEMBER仅仅是返回该随记元素,而不做任何操作.
 
-@return
+## 返回值
 
-@bulk-string-reply: without the additional `count` argument the command returns a Bulk Reply with the randomly selected element, or `nil` when `key` does not exist.
-@array-reply: when the additional `count` argument is passed the command returns an array of elements, or an empty array when `key` does not exist.
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply): 不使用count 参数的情况下该命令返回随机的元素,如果key不存在则返回nil.
 
-@examples
+[array-reply](/topics/protocol.html#array-reply): 使用count参数,则返回一个随机的元素数组,如果key不存在则返回一个空的数组.
 
-```cli
-SADD myset one two three
-SRANDMEMBER myset
-SRANDMEMBER myset 2
-SRANDMEMBER myset -5
-```
+## 举例
+
+	redis> SADD myset one two three
+	(integer) 3
+	redis> SRANDMEMBER myset
+	"one"
+	redis> SRANDMEMBER myset 2
+	1) "three"
+	2) "one"
+	redis> SRANDMEMBER myset -5
+	1) "one"
+	2) "one"
+	3) "one"
+	4) "one"
+	5) "one"
+	redis> 
 
 ## Specification of the behavior when count is passed
 

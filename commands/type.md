@@ -7,21 +7,25 @@ disqusUrl: http://redis.cn/commands/type.html
 commandsType: keys
 ---
 
-Returns the string representation of the type of the value stored at `key`.
-The different types that can be returned are: `string`, `list`, `set`, `zset`
-and `hash`.
+返回`key`所存储的`value`的数据结构类型，它可以返回`string`, `list`, `set`, `zset` 和 `hash`等不同的类型。
 
-@return
+返回值
 
-@simple-string-reply: type of `key`, or `none` when `key` does not exist.
+[simple-string-reply](/topics/protocol#simple-string-reply): 
+返回当前`key`的数据类型，如果`key`不存在时返回`none`。
 
-@examples
+例子
 
-```cli
-SET key1 "value"
-LPUSH key2 "value"
-SADD key3 "value"
-TYPE key1
-TYPE key2
-TYPE key3
-```
+	redis> SET key1 "value"
+	OK
+	redis> LPUSH key2 "value"
+	(integer) 1
+	redis> SADD key3 "value"
+	(integer) 1
+	redis> TYPE key1
+	string
+	redis> TYPE key2
+	list
+	redis> TYPE key3
+	set
+	redis> 

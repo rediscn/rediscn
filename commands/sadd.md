@@ -7,28 +7,27 @@ disqusUrl: http://redis.cn/commands/sadd.html
 commandsType: sets
 ---
 
-Add the specified members to the set stored at `key`.
-Specified members that are already a member of this set are ignored.
-If `key` does not exist, a new set is created before adding the specified
-members.
+添加一个或多个指定的member元素到集合的 key中.指定的一个或者多个元素member 如果已经在集合key中存在则忽略.如果集合key 不存在，则新建集合key,并添加member元素到集合key中.
 
-An error is returned when the value stored at `key` is not a set.
+如果key 的类型不是集合则返回错误.
 
-@return
+##返回值
 
-@integer-reply: the number of elements that were added to the set, not including
-all the elements already present into the set.
+[integer-reply](/topics/protocol.html#integer-reply):返回新成功添加到集合里元素的数量，不包括已经存在于集合中的元素.
 
-@history
+##历史
 
-* `>= 2.4`: Accepts multiple `member` arguments.
-  Redis versions before 2.4 are only able to add a single member per call.
+>= 2.4: 接受多个member 参数. Redis 2.4 以前的版本每次只能添加一个member元素.
 
-@examples
+##例子
 
-```cli
-SADD myset "Hello"
-SADD myset "World"
-SADD myset "World"
-SMEMBERS myset
-```
+	redis> SADD myset "Hello"
+	(integer) 1
+	redis> SADD myset "World"
+	(integer) 1
+	redis> SADD myset "World"
+	(integer) 0
+	redis> SMEMBERS myset
+	1) "World"
+	2) "Hello"
+	redis> 

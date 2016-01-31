@@ -7,11 +7,8 @@ disqusUrl: http://redis.cn/commands/multi.html
 commandsType: transactions
 ---
 
-Marks the start of a [transaction][tt] block.
-Subsequent commands will be queued for atomic execution using `EXEC`.
+标记一个事务块的开始。 随后的指令将在执行[EXEC](/commands/exec.html)时作为一个原子执行。
 
-[tt]: /topics/transactions
+##返回值
 
-@return
-
-@simple-string-reply: always `OK`.
+[simple-string-reply](/topics/protocol.html#simple-string-reply): 始终为`OK`

@@ -7,9 +7,8 @@ disqusUrl: http://redis.cn/commands/select.html
 commandsType: connection
 ---
 
-Select the DB with having the specified zero-based numeric index.
-New connections always use DB 0.
+选择一个数据库，下标值从0开始，一个新连接默认连接的数据库是DB0。
 
-@return
+##返回值
 
-@simple-string-reply
+[simple-string-reply](/topics/protocol.html#simple-string-reply)

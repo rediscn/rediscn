@@ -7,32 +7,34 @@ disqusUrl: http://redis.cn/commands/sdiff.html
 commandsType: sets
 ---
 
-Returns the members of the set resulting from the difference between the first
-set and all the successive sets.
+返回一个集合与给定集合的差集的元素.
 
-For example:
+举例:
 
-```
-key1 = {a,b,c,d}
-key2 = {c}
-key3 = {a,c,e}
-SDIFF key1 key2 key3 = {b,d}
-```
+	key1 = {a,b,c,d}
+	key2 = {c}
+	key3 = {a,c,e}
+	SDIFF key1 key2 key3 = {b,d}
 
-Keys that do not exist are considered to be empty sets.
+不存在的key认为是空集.
 
-@return
+##返回值
 
-@array-reply: list with members of the resulting set.
+[array-reply](/topics/protocol.html#array-reply):结果集的元素.
 
-@examples
-
-```cli
-SADD key1 "a"
-SADD key1 "b"
-SADD key1 "c"
-SADD key2 "c"
-SADD key2 "d"
-SADD key2 "e"
-SDIFF key1 key2
-```
+	redis> SADD key1 "a"
+	(integer) 1
+	redis> SADD key1 "b"
+	(integer) 1
+	redis> SADD key1 "c"
+	(integer) 1
+	redis> SADD key2 "c"
+	(integer) 1
+	redis> SADD key2 "d"
+	(integer) 1
+	redis> SADD key2 "e"
+	(integer) 1
+	redis> SDIFF key1 key2
+	1) "a"
+	2) "b"
+	redis> 

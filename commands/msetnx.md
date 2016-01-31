@@ -7,29 +7,25 @@ disqusUrl: http://redis.cn/commands/msetnx.html
 commandsType: strings
 ---
 
-Sets the given keys to their respective values.
-`MSETNX` will not perform any operation at all even if just a single key already
-exists.
+对应给定的keys到他们相应的values上。只要有一个key已经存在，`MSETNX`一个操作都不会执行。 由于这种特性，`MSETNX`可以实现要么所有的操作都成功，要么一个都不执行，这样可以用来设置不同的key，来表示一个唯一的对象的不同字段。
 
-Because of this semantic `MSETNX` can be used in order to set different keys
-representing different fields of an unique logic object in a way that ensures
-that either all the fields or none at all are set.
+`MSETNX`是原子的，所以所有给定的keys是一次性set的。客户端不可能看到这种一部分keys被更新而另外的没有改变的情况。
 
-`MSETNX` is atomic, so all given keys are set at once.
-It is not possible for clients to see that some of the keys were updated while
-others are unchanged.
+##返回值
 
-@return
+[integer-reply](/topics/protocol.html#integer-reply)，只有以下两种值：
 
-@integer-reply, specifically:
+- 1 如果所有的key被set
+- 0 如果没有key被set(至少其中有一个key是存在的)
 
-* `1` if the all the keys were set.
-* `0` if no key was set (at least one key already existed).
+##例子
 
-@examples
-
-```cli
-MSETNX key1 "Hello" key2 "there"
-MSETNX key2 "there" key3 "world"
-MGET key1 key2 key3
-```
+	redis> MSETNX key1 "Hello" key2 "there"
+	(integer) 1
+	redis> MSETNX key2 "there" key3 "world"
+	(integer) 0
+	redis> MGET key1 key2 key3
+	1) "Hello"
+	2) "there"
+	3) (nil)
+	redis> 

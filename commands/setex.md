@@ -7,30 +7,23 @@ disqusUrl: http://redis.cn/commands/setex.html
 commandsType: strings
 ---
 
-Set `key` to hold the string `value` and set `key` to timeout after a given
-number of seconds.
-This command is equivalent to executing the following commands:
+设置key对应字符串value，并且设置key在给定的seconds时间之后超时过期。这个命令等效于执行下面的命令：
 
-```
-SET mykey value
-EXPIRE mykey seconds
-```
+	SET mykey value
+	EXPIRE mykey seconds
 
-`SETEX` is atomic, and can be reproduced by using the previous two commands
-inside an `MULTI` / `EXEC` block.
-It is provided as a faster alternative to the given sequence of operations,
-because this operation is very common when Redis is used as a cache.
+SETEX是原子的，也可以通过把上面两个命令放到[MULTI](/commands/multi.html)/[EXEC](/commands/exec.html)块中执行的方式重现。相比连续执行上面两个命令，它更快，因为当Redis当做缓存使用时，这个操作更加常用。
 
-An error is returned when `seconds` is invalid.
+## 返回值 ##
 
-@return
+[simple-string-reply](/topics/protocol.html#simple-string-reply)
 
-@simple-string-reply
+## 例子 ##
 
-@examples
-
-```cli
-SETEX mykey 10 "Hello"
-TTL mykey
-GET mykey
-```
+redis> SETEX mykey 10 "Hello"
+OK
+redis> TTL mykey
+(integer) 10
+redis> GET mykey
+"Hello"
+redis> 

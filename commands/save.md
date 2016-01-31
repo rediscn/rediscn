@@ -7,21 +7,9 @@ disqusUrl: http://redis.cn/commands/save.html
 commandsType: server
 ---
 
-The `SAVE` commands performs a **synchronous** save of the dataset producing a
-_point in time_ snapshot of all the data inside the Redis instance, in the form
-of an RDB file.
+SAVE 命令执行一个同步操作，以RDB文件的方式保存所有数据的快照
+很少在生产环境直接使用SAVE 命令，因为它会阻塞所有的客户端的请求，可以使用[BGSAVE](/commands/bgsave.html) 命令代替. 如果在[BGSAVE](/commands/bgsave.html)命令的保存数据的子进程发生错误的时,用 SAVE命令保存最新的数据是最后的手段,详细的说明请参考持久化文档
 
-You almost never want to call `SAVE` in production environments where it will
-block all the other clients.
-Instead usually `BGSAVE` is used.
-However in case of issues preventing Redis to create the background saving child
-(for instance errors in the fork(2) system call), the `SAVE` command can be a
-good last resort to perform the dump of the latest dataset.
+##返回值
 
-Please refer to the [persistence documentation][tp] for detailed information.
-
-[tp]: /topics/persistence
-
-@return
-
-@simple-string-reply: The commands returns OK on success.
+[simple-string-reply](/topics/protocol.html#simple-string-reply): 命令成功返回OK.

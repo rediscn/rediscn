@@ -7,13 +7,14 @@ disqusUrl: http://redis.cn/commands/psetex.html
 commandsType: strings
 ---
 
-`PSETEX` works exactly like `SETEX` with the sole difference that the expire
-time is specified in milliseconds instead of seconds.
+[PSETEX](/commands/psetex.html)和[SETEX](/commands/setex.html)一样，唯一的区别是到期时间以毫秒为单位,而不是秒。
 
-@examples
+## 例子
 
-```cli
-PSETEX mykey 1000 "Hello"
-PTTL mykey
-GET mykey
-```
+	redis> PSETEX mykey 1000 "Hello"
+	OK
+	redis> PTTL mykey
+	(integer) 999
+	redis> GET mykey
+	"Hello"
+	redis> 

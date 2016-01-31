@@ -7,22 +7,26 @@ disqusUrl: http://redis.cn/commands/zremrangebyscore.html
 commandsType: sortedsets
 ---
 
-Removes all elements in the sorted set stored at `key` with a score between
-`min` and `max` (inclusive).
+移除有序集key中，所有score值介于min和max之间(包括等于min或max)的成员。
+自版本2.1.6开始，score值等于min或max的成员也可以不包括在内，语法请参见[ZRANGEBYSCORE](/commands/zrangebyscore.html)命令。
 
-Since version 2.1.6, `min` and `max` can be exclusive, following the syntax of
-`ZRANGEBYSCORE`.
+##返回值
 
-@return
+[integer-reply](/topics/protocol#integer-reply): 删除的元素的个数。
 
-@integer-reply: the number of elements removed.
+##例子
 
-@examples
-
-```cli
-ZADD myzset 1 "one"
-ZADD myzset 2 "two"
-ZADD myzset 3 "three"
-ZREMRANGEBYSCORE myzset -inf (2
-ZRANGE myzset 0 -1 WITHSCORES
-```
+	redis> ZADD myzset 1 "one"
+	(integer) 1
+	redis> ZADD myzset 2 "two"
+	(integer) 1
+	redis> ZADD myzset 3 "three"
+	(integer) 1
+	redis> ZREMRANGEBYSCORE myzset -inf (2
+	(integer) 1
+	redis> ZRANGE myzset 0 -1 WITHSCORES
+	1) "two"
+	2) "2"
+	3) "three"
+	4) "3"
+	redis> 

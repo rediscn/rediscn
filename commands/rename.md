@@ -7,19 +7,18 @@ disqusUrl: http://redis.cn/commands/rename.html
 commandsType: keys
 ---
 
-Renames `key` to `newkey`.
-It returns an error when the source and destination names are the same, or when
-`key` does not exist.
-If `newkey` already exists it is overwritten, when this happens `RENAME` executes an implicit `DEL` operation, so if the deleted key contains a very big value it may cause high latency even if `RENAME` itself is usually a constant-time operation.
+将key重命名为newkey，如果key与newkey相同，将返回一个错误。如果newkey已经存在，则值将被覆盖。
 
-@return
+##返回值
 
-@simple-string-reply
+[simple-string-reply](/topics/protocol.html#simple-string-reply)
 
-@examples
+##例子
 
-```cli
-SET mykey "Hello"
-RENAME mykey myotherkey
-GET myotherkey
-```
+	redis> SET mykey "Hello"
+	OK
+	redis> RENAME mykey myotherkey
+	OK
+	redis> GET myotherkey
+	"Hello"
+	redis> 

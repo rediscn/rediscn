@@ -7,60 +7,53 @@ disqusUrl: http://redis.cn/commands/zrangebyscore.html
 commandsType: sortedsets
 ---
 
-Returns all the elements in the sorted set at `key` with a score between `min`
-and `max` (including elements with score equal to `min` or `max`).
-The elements are considered to be ordered from low to high scores.
+如果M是常量（比如，用limit总是请求前10个元素），你可以认为是O(log(N))。 
 
-The elements having the same score are returned in lexicographical order (this
-follows from a property of the sorted set implementation in Redis and does not
-involve further computation).
+返回key的有序集合中的分数在min和max之间的所有元素（包括分数等于max或者min的元素）。元素被认为是从低分到高分排序的。 
 
-The optional `LIMIT` argument can be used to only get a range of the matching
-elements (similar to _SELECT LIMIT offset, count_ in SQL).
-Keep in mind that if `offset` is large, the sorted set needs to be traversed for
-`offset` elements before getting to the elements to return, which can add up to
-O(N) time complexity.
+具有相同分数的元素按字典序排列（这个根据redis对有序集合实现的情况而定，并不需要进一步计算）。
 
-The optional `WITHSCORES` argument makes the command return both the element and
-its score, instead of the element alone.
-This option is available since Redis 2.0.
+ 可选的LIMIT参数指定返回结果的数量及区间（类似SQL中SELECT LIMIT offset, count）。注意，如果offset太大，定位offset就可能遍历整个有序集合，这会增加O(N)的复杂度。
 
-## Exclusive intervals and infinity
+ 可选参数WITHSCORES会返回元素和其分数，而不只是元素。这个选项在redis2.0之后的版本都可用。
 
-`min` and `max` can be `-inf` and `+inf`, so that you are not required to know
-the highest or lowest score in the sorted set to get all elements from or up to
-a certain score.
+##区间及无限
 
-By default, the interval specified by `min` and `max` is closed (inclusive).
-It is possible to specify an open interval (exclusive) by prefixing the score
-with the character `(`.
-For example:
+min和max可以是-inf和+inf，这样一来，你就可以在不知道有序集的最低和最高score值的情况下，使用ZRANGEBYSCORE这类命令。
 
-```
-ZRANGEBYSCORE zset (1 5
-```
+默认情况下，区间的取值使用闭区间(小于等于或大于等于)，你也可以通过给参数前增加(符号来使用可选的开区间(小于或大于)。 
 
-Will return all elements with `1 < score <= 5` while:
+举个例子：
 
-```
-ZRANGEBYSCORE zset (5 (10
-```
+	ZRANGEBYSCORE zset (1 5
 
-Will return all the elements with `5 < score < 10` (5 and 10 excluded).
+返回所有符合条件1 < score <= 5的成员；
 
-@return
+	ZRANGEBYSCORE zset (5 (10
 
-@array-reply: list of elements in the specified score range (optionally
-with their scores).
+返回所有符合条件5 < score < 10 的成员。
 
-@examples
+##返回值
 
-```cli
-ZADD myzset 1 "one"
-ZADD myzset 2 "two"
-ZADD myzset 3 "three"
-ZRANGEBYSCORE myzset -inf +inf
-ZRANGEBYSCORE myzset 1 2
-ZRANGEBYSCORE myzset (1 2
-ZRANGEBYSCORE myzset (1 (2
-```
+[array-reply](/topics/protocol#array-reply): 指定分数范围的元素列表(也可以返回他们的分数)。
+
+##例子
+
+	redis> ZADD myzset 1 "one"
+	(integer) 1
+	redis> ZADD myzset 2 "two"
+	(integer) 1
+	redis> ZADD myzset 3 "three"
+	(integer) 1
+	redis> ZRANGEBYSCORE myzset -inf +inf
+	1) "one"
+	2) "two"
+	3) "three"
+	redis> ZRANGEBYSCORE myzset 1 2
+	1) "one"
+	2) "two"
+	redis> ZRANGEBYSCORE myzset (1 2
+	1) "two"
+	redis> ZRANGEBYSCORE myzset (1 (2
+	(empty list or set)
+	redis> 

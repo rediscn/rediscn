@@ -7,22 +7,28 @@ disqusUrl: http://redis.cn/commands/lset.html
 commandsType: lists
 ---
 
-Sets the list element at `index` to `value`.
-For more information on the `index` argument, see `LINDEX`.
+设置 index 位置的list元素的值为 value。 更多关于 index 参数的信息，详见 [LINDEX](/commands/lindex.html)。
 
-An error is returned for out of range indexes.
+当index超出范围时会返回一个error。
 
-@return
+##返回值
 
-@simple-string-reply
+[simple-string-reply](/topics/protocol.html#simple-string-reply)
 
-@examples
+##例子
 
-```cli
-RPUSH mylist "one"
-RPUSH mylist "two"
-RPUSH mylist "three"
-LSET mylist 0 "four"
-LSET mylist -2 "five"
-LRANGE mylist 0 -1
-```
+	redis> RPUSH mylist "one"
+	(integer) 1
+	redis> RPUSH mylist "two"
+	(integer) 2
+	redis> RPUSH mylist "three"
+	(integer) 3
+	redis> LSET mylist 0 "four"
+	OK
+	redis> LSET mylist -2 "five"
+	OK
+	redis> LRANGE mylist 0 -1
+	1) "four"
+	2) "five"
+	3) "three"
+	redis> 

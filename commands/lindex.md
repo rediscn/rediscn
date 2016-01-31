@@ -7,25 +7,24 @@ disqusUrl: http://redis.cn/commands/lindex.html
 commandsType: lists
 ---
 
-Returns the element at index `index` in the list stored at `key`.
-The index is zero-based, so `0` means the first element, `1` the second element
-and so on.
-Negative indices can be used to designate elements starting at the tail of the
-list.
-Here, `-1` means the last element, `-2` means the penultimate and so forth.
+返回列表里的元素的索引 index 存储在 key 里面。 下标是从0开始索引的，所以 0 是表示第一个元素， 1 表示第二个元素，并以此类推。 负数索引用于指定从列表尾部开始索引的元素。在这种方法下，-1 表示最后一个元素，-2 表示倒数第二个元素，并以此往前推。
 
-When the value at `key` is not a list, an error is returned.
+当 key 位置的值不是一个列表的时候，会返回一个error。
 
-@return
+## 返回值
 
-@bulk-string-reply: the requested element, or `nil` when `index` is out of range.
+[bulk-reply](/topics/protocol.html#bulk-reply)：请求的对应元素，或者当 index 超过范围的时候返回 nil。
 
-@examples
+## 例子
 
-```cli
-LPUSH mylist "World"
-LPUSH mylist "Hello"
-LINDEX mylist 0
-LINDEX mylist -1
-LINDEX mylist 3
-```
+	redis> LPUSH mylist "World"
+	(integer) 1
+	redis> LPUSH mylist "Hello"
+	(integer) 2
+	redis> LINDEX mylist 0
+	"Hello"
+	redis> LINDEX mylist -1
+	"World"
+	redis> LINDEX mylist 3
+	(nil)
+	redis> 

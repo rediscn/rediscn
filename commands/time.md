@@ -7,23 +7,23 @@ disqusUrl: http://redis.cn/commands/time.html
 commandsType: server
 ---
 
-The `TIME` command returns the current server time as a two items lists: a Unix
-timestamp and the amount of microseconds already elapsed in the current second.
-Basically the interface is very similar to the one of the `gettimeofday` system
-call.
+TIME 命令返回当前Unix时间戳和当天已经过去的微秒的数。 基本上，该接口非常相似gettimeofday.
 
-@return
+## 返回值
 
-@array-reply, specifically:
+[array-reply](/topics/protocol#array-reply):
+返回内容包含两个元素
 
-A multi bulk reply containing two elements:
+- UNIX时间戳（单位：秒）
+- 微秒
 
-* unix time in seconds.
-* microseconds.
+## 例子：
 
-@examples
+	redis> TIME
+	1) "1349834472"
+	2) "465608"
+	redis> TIME
+	1) "1349834472"
+	2) "466541"
+	redis> 
 
-```cli
-TIME
-TIME
-```

@@ -7,190 +7,185 @@ disqusUrl: http://redis.cn/commands/scan.html
 commandsType: keys
 ---
 
-The `SCAN` command and the closely related commands `SSCAN`, `HSCAN` and `ZSCAN` are used in order to incrementally iterate over a collection of elements.
+[SCAN](/commands/scan.html) 命令及其相关的 [SSCAN](/commands/sscan.html), [HSCAN](/commands/hscan.html) 和 [ZSCAN](/commands/zscan.html) 命令都用于增量迭代一个集合元素。
 
-* `SCAN` iterates the set of keys in the currently selected Redis database.
-* `SSCAN` iterates elements of Sets types.
-* `HSCAN` iterates fields of Hash types and their associated values.
-* `ZSCAN` iterates elements of Sorted Set types and their associated scores.
+- [SCAN](/commands/scan.html) 命令用于迭代当前数据库中的key集合。
+- [SSCAN](/commands/sscan.html) 命令用于迭代SET集合中的元素。
+- [HSCAN](/commands/hscan.html) 命令用于迭代Hash类型中的键值对。
+- [ZSCAN](/commands/zscan.html) 命令用于迭代SortSet集合中的元素和元素对应的分值
 
-Since these commands allow for incremental iteration, returning only a small number of elements per call, they can be used in production without the downside of commands like `KEYS` or `SMEMBERS` that may block the server for a long time (even several seconds) when called against big collections of keys or elements.
+以上列出的四个命令都支持增量式迭代，它们每次执行都只会返回少量元素，所以这些命令可以用于生产环境，而不会出现像 [KEYS](/commands/keys.html) 或者 [SMEMBERS](/commands/smembers.html) 命令带来的可能会阻塞服务器的问题。
 
-However while blocking commands like `SMEMBERS` are able to provide all the elements that are part of a Set in a given moment, The SCAN family of commands only offer limited guarantees about the returned elements since the collection that we incrementally iterate can change during the iteration process.
+不过，[SMEMBERS](/commands/smembers.html) 命令可以返回集合键当前包含的所有元素， 但是对于SCAN这类增量式迭代命令来说，有可能在增量迭代过程中，集合元素被修改，对返回值无法提供完全准确的保证。
 
-Note that `SCAN`, `SSCAN`, `HSCAN` and `ZSCAN` all work very similarly, so this documentation covers all the four commands. However an obvious difference is that in the case of `SSCAN`, `HSCAN` and `ZSCAN` the first argument is the name of the key holding the Set, Hash or Sorted Set value. The `SCAN` command does not need any key name argument as it iterates keys in the current database, so the iterated object is the database itself.
+因为 [SCAN](/commands/scan.html), [SSCAN](/commands/sscan.html), [HSCAN](/commands/hscan.html) 和 [ZSCAN](/commands/zscan.html) 四个命令的工作方式都非常相似， 所以这个文档会一并介绍这四个命令，需要注意的是[SSCAN](/commands/sscan.html), [HSCAN](/commands/hscan.html) ,[ZSCAN](/commands/zscan.html)命令的第一个参数总是一个key； [SCAN](/commands/scan.html) 命令则不需要在第一个参数提供任何key，因为它迭代的是当前数据库中的所有key。
 
-## SCAN basic usage
+## SCAN命令的基本用法 ##
 
-SCAN is a cursor based iterator. This means that at every call of the command, the server returns an updated cursor that the user needs to use as the cursor argument in the next call.
+[SCAN](/commands/scan.html)命令是一个基于游标的迭代器。这意味着命令每次被调用都需要使用上一次这个调用返回的游标作为该次调用的游标参数，以此来延续之前的迭代过程
 
-An iteration starts when the cursor is set to 0, and terminates when the cursor returned by the server is 0. The following is an example of SCAN iteration:
+当[SCAN](/commands/scan.html)命令的游标参数被设置为 0 时， 服务器将开始一次新的迭代， 而当服务器向用户返回值为 0 的游标时， 表示迭代已结束。
 
-```
-redis 127.0.0.1:6379> scan 0
-1) "17"
-2)  1) "key:12"
-    2) "key:8"
-    3) "key:4"
-    4) "key:14"
-    5) "key:16"
-    6) "key:17"
-    7) "key:15"
-    8) "key:10"
-    9) "key:3"
-   10) "key:7"
-   11) "key:1"
-redis 127.0.0.1:6379> scan 17
-1) "0"
-2) 1) "key:5"
-   2) "key:18"
-   3) "key:0"
-   4) "key:2"
-   5) "key:19"
-   6) "key:13"
-   7) "key:6"
-   8) "key:9"
-   9) "key:11"
-```
+以下是一个 SCAN 命令的迭代过程示例 :
 
-In the example above, the first call uses zero as a cursor, to start the iteration. The second call uses the cursor returned by the previous call as the first element of the reply, that is, 17.
+	redis 127.0.0.1:6379> scan 0
+	1) "17"
+	2)  1) "key:12"
+	    2) "key:8"
+	    3) "key:4"
+	    4) "key:14"
+	    5) "key:16"
+	    6) "key:17"
+	    7) "key:15"
+	    8) "key:10"
+	    9) "key:3"
+	   10) "key:7"
+	   11) "key:1"
+	redis 127.0.0.1:6379> scan 17
+	1) "0"
+	2) 1) "key:5"
+	   2) "key:18"
+	   3) "key:0"
+	   4) "key:2"
+	   5) "key:19"
+	   6) "key:13"
+	   7) "key:6"
+	   8) "key:9"
+	   9) "key:11"
 
-As you can see the **SCAN return value** is an array of two values: the first value is the new cursor to use in the next call, the second value is an array of elements.
+在上面这个例子中， 第一次迭代使用 0 作为游标， 表示开始一次新的迭代。第二次迭代使用的是第一次迭代时返回的游标 17 ，作为新的迭代参数 。
 
-Since in the second call the returned cursor is 0, the server signaled to the caller that the iteration finished, and the collection was completely explored. Starting an iteration with a cursor value of 0, and calling `SCAN` until the returned cursor is 0 again is called a **full iteration**.
+显而易见，**SCAN命令的返回值** 是一个包含两个元素的数组， 第一个数组元素是用于进行下一次迭代的新游标， 而第二个数组元素则是一个数组， 这个数组中包含了所有被迭代的元素。
 
-## Scan guarantees
+在第二次调用 SCAN 命令时， 命令返回了游标 0 ， 这表示迭代已经结束， 整个数据集已经被完整遍历过了。
 
-The `SCAN` command, and the other commands in the `SCAN` family, are able to provide to the user a set of guarantees associated to full iterations.
+**full iteration** ：以 0 作为游标开始一次新的迭代， 一直调用 SCAN 命令， 直到命令返回游标 0 ， 我们称这个过程为一次完整遍历。
 
-* A full iteration always retrieves all the elements that were present in the collection from the start to the end of a full iteration. This means that if a given element is inside the collection when an iteration is started, and is still there when an iteration terminates, then at some point `SCAN` returned it to the user.
-* A full iteration never returns any element that was NOT present in the collection from the start to the end of a full iteration. So if an element was removed before the start of an iteration, and is never added back to the collection for all the time an iteration lasts, `SCAN` ensures that this element will never be returned.
+## Scan命令的保证 ##
 
-However because `SCAN` has very little state associated (just the cursor) it has the following drawbacks:
+SCAN命令以及其他增量式迭代命令， 在进行完整遍历的情况下可以为用户带来以下保证 ：
 
-* A given element may be returned multiple times. It is up to the application to handle the case of duplicated elements, for example only using the returned elements in order to perform operations that are safe when re-applied multiple times.
-* Elements that were not constantly present in the collection during a full iteration, may be returned or not: it is undefined.
+- 从完整遍历开始直到完整遍历结束期间， 一直存在于数据集内的所有元素都会被完整遍历返回； 这意味着， 如果有一个元素， 它从遍历开始直到遍历结束期间都存在于被遍历的数据集当中， 那么 SCAN 命令总会在某次迭代中将这个元素返回给用户。
+- 同样，如果一个元素在开始遍历之前被移出集合，并且在遍历开始直到遍历结束期间都没有再加入，那么在遍历返回的元素集中就不会出现该元素。
 
-## Number of elements returned at every SCAN call
+然而因为增量式命令仅仅使用游标来记录迭代状态， 所以这些命令带有以下缺点：
 
-`SCAN` family functions do not guarantee that the number of elements returned per call are in a given range. The commands are also allowed to return zero elements, and the client should not consider the iteration complete as long as the returned cursor is not zero.
+- 同一个元素可能会被返回多次。 处理重复元素的工作交由应用程序负责， 比如说， 可以考虑将迭代返回的元素仅仅用于可以安全地重复执行多次的操作上。
+- 如果一个元素是在迭代过程中被添加到数据集的， 又或者是在迭代过程中从数据集中被删除的， 那么这个元素可能会被返回， 也可能不会。
 
-However the number of returned elements is reasonable, that is, in practical terms SCAN may return a maximum number of elements in the order of a few tens of elements when iterating a large collection, or may return all the elements of the collection in a single call when the iterated collection is small enough to be internally represented as an encoded data structure (this happens for small sets, hashes and sorted sets).
+## SCAN命令每次执行返回的元素数量 ##
 
-However there is a way for the user to tune the order of magnitude of the number of returned elements per call using the **COUNT** option.
+SCAN增量式迭代命令并不保证每次执行都返回某个给定数量的元素,甚至可能会返回零个元素， 但只要命令返回的游标不是 0 ， 应用程序就不应该将迭代视作结束。
 
-## The COUNT option
+不过命令返回的元素数量总是符合一定规则的， 对于一个大数据集来说， 增量式迭代命令每次最多可能会返回数十个元素；而对于一个足够小的数据集来说， 如果这个数据集的底层表示为编码数据结构（小的sets, hashes and sorted sets）， 那么增量迭代命令将在一次调用中返回数据集中的所有元素。
 
-While `SCAN` does not provide guarantees about the number of elements returned at every iteration, it is possible to empirically adjust the behavior of `SCAN` using the **COUNT** option. Basically with COUNT the user specified the *amount of work that should be done at every call in order to retrieve elements from the collection*. This is **just an hint** for the implementation, however generally speaking this is what you could expect most of the times from the implementation.
+如果需要的话，用户可以通过增量式迭代命令提供的**COUNT**选项来指定每次迭代返回元素的最大值。
 
-* The default COUNT value is 10.
-* When iterating the key space, or a Set, Hash or Sorted Set that is big enough to be represented by an hash table, assuming no **MATCH** option is used, the server will usually return *count* or a bit more than *count* elements per call.
-* When iterating Sets encoded as intsets (small sets composed of just integers), or Hashes and Sorted Sets encoded as ziplists (small hashes and sets composed of small individual values), usually all the elements are returned in the first `SCAN` call regardless of the COUNT value.
+## COUNT选项 ##
 
-Important: **there is no need to use the same COUNT value** for every iteration. The caller is free to change the count from one iteration to the other as required, as long as the cursor passed in the next call is the one obtained in the previous call to the command.
+对于增量式迭代命令不保证每次迭代所返回的元素数量，我们可以使用**COUNT**选项， 对命令的行为进行一定程度上的调整。COUNT 选项的作用就是让用户告知迭代命令， 在每次迭代中应该从数据集里返回多少元素。使用COUNT 选项对于对增量式迭代命令相当于一种提示， 大多数情况下这种提示都比较有效的控制了返回值的数量。
 
-## The MATCH option
+- COUNT 参数的默认值为 10 。
+- 数据集比较大时，如果没有使用MATCH 选项, 那么命令返回的元素数量通常和 COUNT 选项指定的一样， 或者比 COUNT 选项指定的数量稍多一些。
+- 在迭代一个编码为整数集合（intset，一个只由整数值构成的小集合）、 或者编码为压缩列表（ziplist，由不同值构成的一个小哈希或者一个小有序集合）时， 增量式迭代命令通常会无视 COUNT 选项指定的值， 在第一次迭代就将数据集包含的所有元素都返回给用户。
 
-It is possible to only iterate elements matching a given glob-style pattern, similarly to the behavior of the `KEYS` command that takes a pattern as only argument.
+注意: **并非每次迭代都要使用相同的 COUNT 值 **，用户可以在每次迭代中按自己的需要随意改变 COUNT 值， 只要记得将上次迭代返回的游标用到下次迭代里面就可以了。
 
-To do so, just append the `MATCH <pattern>` arguments at the end of the `SCAN` command (it works with all the SCAN family commands).
+## MATCH 选项 ##
 
-This is an example of iteration using **MATCH**:
+类似于KEYS 命令，增量式迭代命令通过给定 MATCH 参数的方式实现了通过提供一个 glob 风格的模式参数， 让命令只返回和给定模式相匹配的元素。
 
-```
-redis 127.0.0.1:6379> sadd myset 1 2 3 foo foobar feelsgood
-(integer) 6
-redis 127.0.0.1:6379> sscan myset 0 match f*
-1) "0"
-2) 1) "foo"
-   2) "feelsgood"
-   3) "foobar"
-redis 127.0.0.1:6379>
-```
+以下是一个使用 [MATCH](/commands/match.html) 选项进行迭代的示例:
 
-It is important to note that the **MATCH** filter is applied after elements are retrieved from the collection, just before returning data to the client. This means that if the pattern matches very little elements inside the collection, `SCAN` will likely return no elements in most iterations. An example is shown below:
+	redis 127.0.0.1:6379> sadd myset 1 2 3 foo foobar feelsgood
+	(integer) 6
+	redis 127.0.0.1:6379> sscan myset 0 match f*
+	1) "0"
+	2) 1) "foo"
+	   2) "feelsgood"
+	   3) "foobar"
+	redis 127.0.0.1:6379>
 
-```
-redis 127.0.0.1:6379> scan 0 MATCH *11*
-1) "288"
-2) 1) "key:911"
-redis 127.0.0.1:6379> scan 288 MATCH *11*
-1) "224"
-2) (empty list or set)
-redis 127.0.0.1:6379> scan 224 MATCH *11*
-1) "80"
-2) (empty list or set)
-redis 127.0.0.1:6379> scan 80 MATCH *11*
-1) "176"
-2) (empty list or set)
-redis 127.0.0.1:6379> scan 176 MATCH *11* COUNT 1000
-1) "0"
-2)  1) "key:611"
-    2) "key:711"
-    3) "key:118"
-    4) "key:117"
-    5) "key:311"
-    6) "key:112"
-    7) "key:111"
-    8) "key:110"
-    9) "key:113"
-   10) "key:211"
-   11) "key:411"
-   12) "key:115"
-   13) "key:116"
-   14) "key:114"
-   15) "key:119"
-   16) "key:811"
-   17) "key:511"
-   18) "key:11"
-redis 127.0.0.1:6379>
-```
+[MATCH](/commands/match.html)功能对元素的模式匹配工作是在命令从数据集中取出元素后和向客户端返回元素前的这段时间内进行的， 所以如果被迭代的数据集中只有少量元素和模式相匹配， 那么迭代命令或许会在多次执行中都不返回任何元素。
 
-As you can see most of the calls returned zero elements, but the last call where a COUNT of 1000 was used in order to force the command to do more scanning for that iteration.
+以下是这种情况的一个例子:
 
-## Multiple parallel iterations
+	redis 127.0.0.1:6379> scan 0 MATCH *11*
+	1) "288"
+	2) 1) "key:911"
+	redis 127.0.0.1:6379> scan 288 MATCH *11*
+	1) "224"
+	2) (empty list or set)
+	redis 127.0.0.1:6379> scan 224 MATCH *11*
+	1) "80"
+	2) (empty list or set)
+	redis 127.0.0.1:6379> scan 80 MATCH *11*
+	1) "176"
+	2) (empty list or set)
+	redis 127.0.0.1:6379> scan 176 MATCH *11* COUNT 1000
+	1) "0"
+	2)  1) "key:611"
+	    2) "key:711"
+	    3) "key:118"
+	    4) "key:117"
+	    5) "key:311"
+	    6) "key:112"
+	    7) "key:111"
+	    8) "key:110"
+	    9) "key:113"
+	   10) "key:211"
+	   11) "key:411"
+	   12) "key:115"
+	   13) "key:116"
+	   14) "key:114"
+	   15) "key:119"
+	   16) "key:811"
+	   17) "key:511"
+	   18) "key:11"
+	redis 127.0.0.1:6379>
 
-It is possible for an infinite number of clients to iterate the same collection at the same time, as the full state of the iterator is in the cursor, that is obtained and returned to the client at every call. Server side no state is taken at all.
+可以看出，以上的大部分迭代都不返回任何元素。在最后一次迭代， 我们通过将 COUNT 选项的参数设置为 1000 ， 强制命令为本次迭代扫描更多元素， 从而使得命令返回的元素也变多了。
 
-## Terminating iterations in the middle
+## 并发执行多个迭代 ##
 
-Since there is no state server side, but the full state is captured by the cursor, the caller is free to terminate an iteration half-way without signaling this to the server in any way. An infinite number of iterations can be started and never terminated without any issue.
+在同一时间， 可以有任意多个客户端对同一数据集进行迭代， 客户端每次执行迭代都需要传入一个游标， 并在迭代执行之后获得一个新的游标， 而这个游标就包含了迭代的所有状态， 因此， 服务器无须为迭代记录任何状态。
 
-## Calling SCAN with a corrupted cursor
+## 中止迭代 ##
 
-Calling `SCAN` with a broken, negative, out of range, or otherwise invalid cursor, will result into undefined behavior but never into a crash. What will be undefined is that the guarantees about the returned elements can no longer be ensured by the `SCAN` implementation.
+因为迭代的所有状态都保存在游标里面， 而服务器无须为迭代保存任何状态， 所以客户端可以在中途停止一个迭代， 而无须对服务器进行任何通知。即使有任意数量的迭代在中途停止， 也不会产生任何问题。
 
-The only valid cursors to use are:
+## 使用错误的游标 ##
 
-* The cursor value of 0 when starting an iteration.
-* The cursor returned by the previous call to SCAN in order to continue the iteration.
+使用SCAN 命令传入间断的（broken）、负数、超出范围或者其他非正常的游标来执行增量式迭代并不会造成服务器崩溃， 但可能会让命令产生未定义的行为。未定义行为指的是， 增量式命令对返回值所做的保证可能会不再为真。
+只有两种游标是合法的:
 
-## Guarantee of termination
+- 在开始一个新的迭代时， 游标必须为 0 。
+- 增量式迭代命令在执行之后返回的， 用于延续迭代过程的游标。
 
-The `SCAN` algorithm is guaranteed to terminate only if the size of the iterated collection remains bounded to a given maximum size, otherwise iterating a collection that always grows may result into `SCAN` to never terminate a full iteration.
+## 迭代能终止的前提 ##
 
-This is easy to see intuitively: if the collection grows there is more and more work to do in order to visit all the possible elements, and the ability to terminate the iteration depends on the number of calls to `SCAN` and its COUNT option value compared with the rate at which the collection grows.
+增量式迭代命令所使用的算法只保证在数据集的大小有界的情况下， 迭代才会停止， 换句话说， 如果被迭代数据集的大小不断地增长的话， 增量式迭代命令可能永远也无法完成一次完整迭代。
 
-## Return value
+从直觉上可以看出， 当一个数据集不断地变大时， 想要访问这个数据集中的所有元素就需要做越来越多的工作， 能否结束一个迭代取决于用户执行迭代的速度是否比数据集增长的速度更快。
 
-`SCAN`, `SSCAN`, `HSCAN` and `ZSCAN` return a two elements multi-bulk reply, where the first element is a string representing an unsigned 64 bit number (the cursor), and the second element is a multi-bulk with an array of elements.
+## 返回值 ##
 
-* `SCAN` array of elements is a list of keys.
-* `SSCAN` array of elements is a list of Set members.
-* `HSCAN` array of elements contain two elements, a field and a value, for every returned element of the Hash.
-* `ZSCAN` array of elements contain two elements, a member and its associated score, for every returned element of the sorted set.
+[SCAN](/commands/scan.html), [SSCAN](/commands/sscan.html), [HSCAN](/commands/hscan.html) 和 [ZSCAN](/commands/zscan.html) 命令都返回一个包含两个元素的 multi-bulk 回复： 回复的第一个元素是字符串表示的无符号 64 位整数（游标）， 回复的第二个元素是另一个 multi-bulk 回复， 包含了本次被迭代的元素。
 
-## Additional examples
+- [SCAN](/commands/scan.html) 命令返回的每个元素都是一个key。
+- [SSCAN](/commands/sscan.html) 命令返回的每个元素都是一个集合成员。
+- [HSCAN](/commands/hscan.html) 命令返回的每个元素都是一个键值对，一个键值对由一个键和一个值组成。
+- [ZSCAN](/commands/zscan.html)命令返回的每个元素都是一个有序集合元素，一个有序集合元素由一个成员（member）和一个分值（score）组成。
 
-Iteration of an Hash value.
+## 另外的例子 ##
 
-```
-redis 127.0.0.1:6379> hmset hash name Jack age 33
-OK
-redis 127.0.0.1:6379> hscan hash 0
-1) "0"
-2) 1) "name"
-   2) "Jack"
-   3) "age"
-   4) "33"
-```
+迭代hash中的键值对：
+
+	redis 127.0.0.1:6379> hmset hash name Jack age 33
+	OK
+	redis 127.0.0.1:6379> hscan hash 0
+	1) "0"
+	2) 1) "name"
+	   2) "Jack"
+	   3) "age"
+	   4) "33"

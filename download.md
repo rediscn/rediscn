@@ -1,7 +1,7 @@
 ---
 layout: index
-title: REDIS 3.0.6 下载 -- Redis中文资料站
-excerpt: redis下载中心，下载各种版本的redis，包括最新redis 3.0.6稳定版redid,3.0.6-Beta版本以及win32/64版本
+title: REDIS 3.0.7 下载 -- Redis中文资料站
+excerpt: redis下载中心，下载各种版本的redis，包括最新redis 3.0.7稳定版redid,3.0.7-Beta版本以及win32/64版本
 permalink: download.html
 disqusIdentifier: download
 disqusUrl: http://redis.cn/download.html
@@ -26,9 +26,9 @@ disqusUrl: http://redis.cn/download.html
                   <i class="fa fa-file-text-o"></i>
                   发布日志
                 </a>
-                <a class="download-link" href="http://download.redis.io/releases/redis-3.0.6.tar.gz">
+                <a class="download-link" href="http://download.redis.io/releases/redis-3.0.7.tar.gz">
                   <i class="fa fa-arrow-circle-o-down"></i>
-                  下载 3.0.6
+                  下载 3.0.7
                 </a>
               </div>
             </li>
@@ -100,9 +100,9 @@ disqusUrl: http://redis.cn/download.html
           </p>
           <span id="installation" class="anchor"></span><h2><a href="http://redis.cn/download.html#installation" class="anchor-link">*</a>安装</h2>
           <p>下载，解压，编译:</p>
-          <pre><code>$ wget http://download.redis.io/releases/redis-3.0.6.tar.gz
-$ tar xzf redis-3.0.6.tar.gz
-$ cd redis-3.0.6
+          <pre><code>$ wget http://download.redis.io/releases/redis-3.0.7.tar.gz
+$ tar xzf redis-3.0.7.tar.gz
+$ cd redis-3.0.7
 $ make</code></pre>
           <p>
             二进制文件是编译完成后在<code>src</code>目录下. 运行如下:

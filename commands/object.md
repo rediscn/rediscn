@@ -7,82 +7,53 @@ disqusUrl: http://redis.cn/commands/object.html
 commandsType: keys
 ---
 
-The `OBJECT` command allows to inspect the internals of Redis Objects associated
-with keys.
-It is useful for debugging or to understand if your keys are using the specially
-encoded data types to save space.
-Your application may also use the information reported by the `OBJECT` command
-to implement application level key eviction policies when using Redis as a
-Cache.
+`OBJECT` 命令可以在内部调试(debugging)给出keys的内部对象，它用于检查或者了解你的keys是否用到了特殊编码 的数据类型来存储空间z。 当redis作为缓存使用的时候，你的应用也可能用到这些由`OBJECT`命令提供的信息来决定应用层的key的驱逐策略(eviction policies)
 
-The `OBJECT` command supports multiple sub commands:
+`OBJECT` 支持多个子命令:
 
-* `OBJECT REFCOUNT <key>` returns the number of references of the value
-  associated with the specified key.
-  This command is mainly useful for debugging.
-* `OBJECT ENCODING <key>` returns the kind of internal representation used in
-  order to store the value associated with a key.
-* `OBJECT IDLETIME <key>` returns the number of seconds since the object stored
-  at the specified key is idle (not requested by read or write operations).
-  While the value is returned in seconds the actual resolution of this timer is
-  10 seconds, but may vary in future implementations.
+- OBJECT REFCOUNT <key>该命令主要用于调试(debugging)，它能够返回指定key所对应value被引用的次数.
+- OBJECT ENCODING <key> 该命令返回指定key对应value所使用的内部表示(representation)(译者注：也可以理解为数据的压缩方式).
+- OBJECT IDLETIME <key> 该命令返回指定key对应的value自被存储之后空闲的时间，以秒为单位(没有读写操作的请求) ，这个值返回以10秒为单位的秒级别时间，这一点可能在以后的实现中改善
 
-Objects can be encoded in different ways:
+###对象可以用多种方式编码:
 
-* Strings can be encoded as `raw` (normal string encoding) or `int` (strings
-  representing integers in a 64 bit signed interval are encoded in this way in
-  order to save space).
-* Lists can be encoded as `ziplist` or `linkedlist`.
-  The `ziplist` is the special representation that is used to save space for
-  small lists.
-* Sets can be encoded as `intset` or `hashtable`.
-  The `intset` is a special encoding used for small sets composed solely of
-  integers.
-* Hashes can be encoded as `zipmap` or `hashtable`.
-  The `zipmap` is a special encoding used for small hashes.
-* Sorted Sets can be encoded as `ziplist` or `skiplist` format.
-  As for the List type small sorted sets can be specially encoded using
-  `ziplist`, while the `skiplist` encoding is the one that works with sorted
-  sets of any size.
+- 字符串可以被编码为 raw (常规字符串) 或者int (用字符串表示64位无符号整数这种编码方式是为了节省空间).
+- 列表类型可以被编码为ziplist 或者 linkedlist. ziplist 是为了节省较小的列表空间而设计一种特殊编码方式.
+- 集合被编码为 intset 或者 hashtable. intset 是为了存储数字的较小集合而设计的一种特殊编码方式.
+- 哈希表可以被编码为 zipmap 或者hashtable. zipmap 是专为了较小的哈希表而设计的一种特殊编码方式
+- 有序集合被编码为ziplist 或者 skiplist 格式. ziplist可以表示较小的有序集合, skiplist 表示任意大小多的有序集合.
 
-All the specially encoded types are automatically converted to the general type
-once you perform an operation that makes it impossible for Redis to retain the
-space saving encoding.
+一旦你做了一个操作让redis无法再使用那些节省空间的编码方式，它将自动将那些特殊的编码类型转换为普通的编码类型.
 
-@return
+##返回值
 
-Different return values are used for different subcommands.
+不同的子命令会对应不同的返回值.
 
-* Subcommands `refcount` and `idletime` return integers.
-* Subcommand `encoding` returns a bulk reply.
+- refcount 和 idletime 返回整数.
+- encoding 返回编码类型.
 
-If the object you try to inspect is missing, a null bulk reply is returned.
+如果你尝试检查的参数缺失，将会返回为空
 
-@examples
+#例子
 
-```
-redis> lpush mylist "Hello World"
-(integer) 4
-redis> object refcount mylist
-(integer) 1
-redis> object encoding mylist
-"ziplist"
-redis> object idletime mylist
-(integer) 10
-```
+	redis> lpush mylist "Hello World"
+	(integer) 4
+	redis> object refcount mylist
+	(integer) 1
+	redis> object encoding mylist
+	"ziplist"
+	redis> object idletime mylist
+	(integer) 10
 
-In the following example you can see how the encoding changes once Redis is no
-longer able to use the space saving encoding.
+接下来的例子你可以看到redis一旦不能够实用节省空间的编码类型时编码方式的改变.
 
-```
-redis> set foo 1000
-OK
-redis> object encoding foo
-"int"
-redis> append foo bar
-(integer) 7
-redis> get foo
-"1000bar"
-redis> object encoding foo
-"raw"
-```
+	redis> set foo 1000
+	OK
+	redis> object encoding foo
+	"int"
+	redis> append foo bar
+	(integer) 7
+	redis> get foo
+	"1000bar"
+	redis> object encoding foo
+	"raw"

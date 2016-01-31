@@ -46,7 +46,7 @@ disqusUrl: http://redis.cn/commands.html
                     value
                   </span>
                 </span>
-                <span class='summary'>Append a value to a key</span>
+                <span class='summary'>追加一个值到key上</span>
               </a>
             </li>
             <li data-group='connection' data-name='auth'>
@@ -57,7 +57,7 @@ disqusUrl: http://redis.cn/commands.html
                     password
                   </span>
                 </span>
-                <span class='summary'>Authenticate to the server</span>
+                <span class='summary'>验证服务器</span>
               </a>
             </li>
             <li data-group='server' data-name='bgrewriteaof'>
@@ -67,7 +67,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Asynchronously rewrite the append-only file</span>
+                <span class='summary'>异步重写追加文件</span>
               </a>
             </li>
             <li data-group='server' data-name='bgsave'>
@@ -77,7 +77,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Asynchronously save the dataset to disk</span>
+                <span class='summary'>异步保存数据集到磁盘上</span>
               </a>
             </li>
             <li data-group='string' data-name='bitcount'>
@@ -89,7 +89,7 @@ disqusUrl: http://redis.cn/commands.html
                     [start end]
                   </span>
                 </span>
-                <span class='summary'>Count set bits in a string</span>
+                <span class='summary'>统计字符串指定起始位置的字节数</span>
               </a>
             </li>
             <li data-group='string' data-name='bitop'>
@@ -128,7 +128,7 @@ disqusUrl: http://redis.cn/commands.html
                     timeout
                   </span>
                 </span>
-                <span class='summary'>Remove and get the first element in a list, or block until one is available</span>
+                <span class='summary'>删除，并获得该列表中的第一元素，或阻塞，直到有一个可用</span>
               </a>
             </li>
             <li data-group='list' data-name='brpop'>
@@ -140,7 +140,7 @@ disqusUrl: http://redis.cn/commands.html
                     timeout
                   </span>
                 </span>
-                <span class='summary'>Remove and get the last element in a list, or block until one is available</span>
+                <span class='summary'>删除，并获得该列表中的最后一个元素，或阻塞，直到有一个可用</span>
               </a>
             </li>
             <li data-group='list' data-name='brpoplpush'>
@@ -153,7 +153,7 @@ disqusUrl: http://redis.cn/commands.html
                     timeout
                   </span>
                 </span>
-                <span class='summary'>Pop a value from a list, push it to another list and return it; or block until one is available</span>
+                <span class='summary'>弹出一个列表的值，将它推到另一个列表，并返回它;或阻塞，直到有一个可用</span>
               </a>
             </li>
             <li data-group='server' data-name='client kill'>
@@ -168,7 +168,7 @@ disqusUrl: http://redis.cn/commands.html
                     [SKIPME yes/no]
                   </span>
                 </span>
-                <span class='summary'>Kill the connection of a client</span>
+                <span class='summary'>关闭客户端连接</span>
               </a>
             </li>
             <li data-group='server' data-name='client list'>
@@ -178,7 +178,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Get the list of client connections</span>
+                <span class='summary'>获得客户端连接列表</span>
               </a>
             </li>
             <li data-group='server' data-name='client getname'>
@@ -188,7 +188,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Get the current connection name</span>
+                <span class='summary'>获得当前连接名称</span>
               </a>
             </li>
             <li data-group='server' data-name='client pause'>
@@ -199,7 +199,7 @@ disqusUrl: http://redis.cn/commands.html
                     timeout
                   </span>
                 </span>
-                <span class='summary'>Stop processing commands from clients for some time</span>
+                <span class='summary'>暂停处理客户端命令</span>
               </a>
             </li>
             <li data-group='server' data-name='client setname'>
@@ -210,7 +210,7 @@ disqusUrl: http://redis.cn/commands.html
                     connection-name
                   </span>
                 </span>
-                <span class='summary'>Set the current connection name</span>
+                <span class='summary'>设置当前连接的名字</span>
               </a>
             </li>
             <li data-group='cluster' data-name='cluster addslots'>
@@ -460,7 +460,7 @@ disqusUrl: http://redis.cn/commands.html
                     parameter
                   </span>
                 </span>
-                <span class='summary'>Get the value of a configuration parameter</span>
+                <span class='summary'>获取配置参数的值</span>
               </a>
             </li>
             <li data-group='server' data-name='config rewrite'>
@@ -470,7 +470,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Rewrite the configuration file with the in memory configuration</span>
+                <span class='summary'>从写内存中的配置文件</span>
               </a>
             </li>
             <li data-group='server' data-name='config set'>
@@ -482,7 +482,7 @@ disqusUrl: http://redis.cn/commands.html
                     value
                   </span>
                 </span>
-                <span class='summary'>Set a configuration parameter to the given value</span>
+                <span class='summary'>设置配置文件</span>
               </a>
             </li>
             <li data-group='server' data-name='config resetstat'>
@@ -492,7 +492,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Reset the stats returned by INFO</span>
+                <span class='summary'>复位再分配使用info命令报告的统计</span>
               </a>
             </li>
             <li data-group='server' data-name='dbsize'>
@@ -502,7 +502,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Return the number of keys in the selected database</span>
+                <span class='summary'>返回当前数据库里面的keys数量</span>
               </a>
             </li>
             <li data-group='server' data-name='debug object'>
@@ -513,7 +513,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Get debugging information about a key</span>
+                <span class='summary'>获取一个key的debug信息</span>
               </a>
             </li>
             <li data-group='server' data-name='debug segfault'>
@@ -523,7 +523,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Make the server crash</span>
+                <span class='summary'>使服务器崩溃</span>
               </a>
             </li>
             <li data-group='string' data-name='decr'>
@@ -534,7 +534,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Decrement the integer value of a key by one</span>
+                <span class='summary'>整数原子减1</span>
               </a>
             </li>
             <li data-group='string' data-name='decrby'>
@@ -546,7 +546,7 @@ disqusUrl: http://redis.cn/commands.html
                     decrement
                   </span>
                 </span>
-                <span class='summary'>Decrement the integer value of a key by the given number</span>
+                <span class='summary'>原子减指定的整数</span>
               </a>
             </li>
             <li data-group='generic' data-name='del'>
@@ -557,7 +557,7 @@ disqusUrl: http://redis.cn/commands.html
                     key [key ...]
                   </span>
                 </span>
-                <span class='summary'>Delete a key</span>
+                <span class='summary'>删除一个key</span>
               </a>
             </li>
             <li data-group='transactions' data-name='discard'>
@@ -567,7 +567,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Discard all commands issued after MULTI</span>
+                <span class='summary'>丢弃所有 MULTI 之后发的命令</span>
               </a>
             </li>
             <li data-group='generic' data-name='dump'>
@@ -578,7 +578,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Return a serialized version of the value stored at the specified key.</span>
+                <span class='summary'>导出key的值</span>
               </a>
             </li>
             <li data-group='connection' data-name='echo'>
@@ -589,7 +589,7 @@ disqusUrl: http://redis.cn/commands.html
                     message
                   </span>
                 </span>
-                <span class='summary'>Echo the given string</span>
+                <span class='summary'>回显输入的字符串</span>
               </a>
             </li>
             <li data-group='scripting' data-name='eval'>
@@ -603,7 +603,7 @@ disqusUrl: http://redis.cn/commands.html
                     arg [arg ...]
                   </span>
                 </span>
-                <span class='summary'>Execute a Lua script server side</span>
+                <span class='summary'>在服务器端执行 LUA 脚本</span>
               </a>
             </li>
             <li data-group='scripting' data-name='evalsha'>
@@ -617,7 +617,7 @@ disqusUrl: http://redis.cn/commands.html
                     arg [arg ...]
                   </span>
                 </span>
-                <span class='summary'>Execute a Lua script server side</span>
+                <span class='summary'>在服务器端执行 LUA 脚本</span>
               </a>
             </li>
             <li data-group='transactions' data-name='exec'>
@@ -627,7 +627,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Execute all commands issued after MULTI</span>
+                <span class='summary'>执行所有 MULTI 之后发的命令</span>
               </a>
             </li>
             <li data-group='generic' data-name='exists'>
@@ -638,7 +638,7 @@ disqusUrl: http://redis.cn/commands.html
                     key [key ...]
                   </span>
                 </span>
-                <span class='summary'>Determine if a key exists</span>
+                <span class='summary'>查询一个key是否存在</span>
               </a>
             </li>
             <li data-group='generic' data-name='expire'>
@@ -650,7 +650,7 @@ disqusUrl: http://redis.cn/commands.html
                     seconds
                   </span>
                 </span>
-                <span class='summary'>Set a key's time to live in seconds</span>
+                <span class='summary'>设置一个key的过期的秒数</span>
               </a>
             </li>
             <li data-group='generic' data-name='expireat'>
@@ -662,7 +662,7 @@ disqusUrl: http://redis.cn/commands.html
                     timestamp
                   </span>
                 </span>
-                <span class='summary'>Set the expiration for a key as a UNIX timestamp</span>
+                <span class='summary'>设置一个UNIX时间戳的过期时间</span>
               </a>
             </li>
             <li data-group='server' data-name='flushall'>
@@ -672,7 +672,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Remove all keys from all databases</span>
+                <span class='summary'>清空所有数据库</span>
               </a>
             </li>
             <li data-group='server' data-name='flushdb'>
@@ -682,7 +682,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Remove all keys from the current database</span>
+                <span class='summary'>清空当前的数据库</span>
               </a>
             </li>
             <li data-group='geo' data-name='geoadd'>
@@ -792,7 +792,7 @@ disqusUrl: http://redis.cn/commands.html
                     offset
                   </span>
                 </span>
-                <span class='summary'>Returns the bit value at offset in the string value stored at key</span>
+                <span class='summary'>返回位的值存储在关键的字符串值的偏移量。</span>
               </a>
             </li>
             <li data-group='string' data-name='getrange'>
@@ -805,7 +805,7 @@ disqusUrl: http://redis.cn/commands.html
                     end
                   </span>
                 </span>
-                <span class='summary'>Get a substring of the string stored at a key</span>
+                <span class='summary'>获取存储在key上的值的一个子字符串</span>
               </a>
             </li>
             <li data-group='string' data-name='getset'>
@@ -817,7 +817,7 @@ disqusUrl: http://redis.cn/commands.html
                     value
                   </span>
                 </span>
-                <span class='summary'>Set the string value of a key and return its old value</span>
+                <span class='summary'>设置一个key的value，并获取设置前的值</span>
               </a>
             </li>
             <li data-group='hash' data-name='hdel'>
@@ -829,7 +829,7 @@ disqusUrl: http://redis.cn/commands.html
                     field [field ...]
                   </span>
                 </span>
-                <span class='summary'>Delete one or more hash fields</span>
+                <span class='summary'>删除一个或多个Hash的field</span>
               </a>
             </li>
             <li data-group='hash' data-name='hexists'>
@@ -841,7 +841,7 @@ disqusUrl: http://redis.cn/commands.html
                     field
                   </span>
                 </span>
-                <span class='summary'>Determine if a hash field exists</span>
+                <span class='summary'>判断field是否存在于hash中</span>
               </a>
             </li>
             <li data-group='hash' data-name='hget'>
@@ -853,7 +853,7 @@ disqusUrl: http://redis.cn/commands.html
                     field
                   </span>
                 </span>
-                <span class='summary'>Get the value of a hash field</span>
+                <span class='summary'>获取hash中field的值</span>
               </a>
             </li>
             <li data-group='hash' data-name='hgetall'>
@@ -864,7 +864,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Get all the fields and values in a hash</span>
+                <span class='summary'>从hash中读取全部的域和值</span>
               </a>
             </li>
             <li data-group='hash' data-name='hincrby'>
@@ -877,7 +877,7 @@ disqusUrl: http://redis.cn/commands.html
                     increment
                   </span>
                 </span>
-                <span class='summary'>Increment the integer value of a hash field by the given number</span>
+                <span class='summary'>将hash中指定域的值增加给定的数字</span>
               </a>
             </li>
             <li data-group='hash' data-name='hincrbyfloat'>
@@ -890,7 +890,7 @@ disqusUrl: http://redis.cn/commands.html
                     increment
                   </span>
                 </span>
-                <span class='summary'>Increment the float value of a hash field by the given amount</span>
+                <span class='summary'>将hash中指定域的值增加给定的浮点数</span>
               </a>
             </li>
             <li data-group='hash' data-name='hkeys'>
@@ -901,7 +901,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Get all the fields in a hash</span>
+                <span class='summary'>获取hash的所有字段</span>
               </a>
             </li>
             <li data-group='hash' data-name='hlen'>
@@ -912,7 +912,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Get the number of fields in a hash</span>
+                <span class='summary'>获取hash里所有字段的数量</span>
               </a>
             </li>
             <li data-group='hash' data-name='hmget'>
@@ -924,7 +924,7 @@ disqusUrl: http://redis.cn/commands.html
                     field [field ...]
                   </span>
                 </span>
-                <span class='summary'>Get the values of all the given hash fields</span>
+                <span class='summary'>获取hash里面指定字段的值</span>
               </a>
             </li>
             <li data-group='hash' data-name='hmset'>
@@ -936,7 +936,7 @@ disqusUrl: http://redis.cn/commands.html
                     field value [field value ...]
                   </span>
                 </span>
-                <span class='summary'>Set multiple hash fields to multiple values</span>
+                <span class='summary'>设置hash字段值</span>
               </a>
             </li>
             <li data-group='hash' data-name='hset'>
@@ -949,7 +949,7 @@ disqusUrl: http://redis.cn/commands.html
                     value
                   </span>
                 </span>
-                <span class='summary'>Set the string value of a hash field</span>
+                <span class='summary'>设置hash里面一个字段的值</span>
               </a>
             </li>
             <li data-group='hash' data-name='hsetnx'>
@@ -962,7 +962,7 @@ disqusUrl: http://redis.cn/commands.html
                     value
                   </span>
                 </span>
-                <span class='summary'>Set the value of a hash field, only if the field does not exist</span>
+                <span class='summary'>设置hash的一个字段，只有当这个字段不存在时有效</span>
               </a>
             </li>
             <li data-group='hash' data-name='hstrlen'>
@@ -985,7 +985,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Get all the values in a hash</span>
+                <span class='summary'>获得hash的所有值</span>
               </a>
             </li>
             <li data-group='string' data-name='incr'>
@@ -996,7 +996,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Increment the integer value of a key by one</span>
+                <span class='summary'>执行原子加1操作</span>
               </a>
             </li>
             <li data-group='string' data-name='incrby'>
@@ -1008,7 +1008,7 @@ disqusUrl: http://redis.cn/commands.html
                     increment
                   </span>
                 </span>
-                <span class='summary'>Increment the integer value of a key by the given amount</span>
+                <span class='summary'>执行原子增加一个整数</span>
               </a>
             </li>
             <li data-group='string' data-name='incrbyfloat'>
@@ -1020,7 +1020,7 @@ disqusUrl: http://redis.cn/commands.html
                     increment
                   </span>
                 </span>
-                <span class='summary'>Increment the float value of a key by the given amount</span>
+                <span class='summary'>执行原子增加一个浮点数</span>
               </a>
             </li>
             <li data-group='server' data-name='info'>
@@ -1031,7 +1031,7 @@ disqusUrl: http://redis.cn/commands.html
                     [section]
                   </span>
                 </span>
-                <span class='summary'>Get information and statistics about the server</span>
+                <span class='summary'>获得服务器的详细信息</span>
               </a>
             </li>
             <li data-group='generic' data-name='keys'>
@@ -1042,7 +1042,7 @@ disqusUrl: http://redis.cn/commands.html
                     pattern
                   </span>
                 </span>
-                <span class='summary'>Find all keys matching the given pattern</span>
+                <span class='summary'>查找所有匹配给定的模式的键</span>
               </a>
             </li>
             <li data-group='server' data-name='lastsave'>
@@ -1052,7 +1052,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Get the UNIX time stamp of the last successful save to disk</span>
+                <span class='summary'>获得最后一次同步磁盘的时间</span>
               </a>
             </li>
             <li data-group='list' data-name='lindex'>
@@ -1064,7 +1064,7 @@ disqusUrl: http://redis.cn/commands.html
                     index
                   </span>
                 </span>
-                <span class='summary'>Get an element from a list by its index</span>
+                <span class='summary'>获取一个元素，通过其索引列表</span>
               </a>
             </li>
             <li data-group='list' data-name='linsert'>
@@ -1078,7 +1078,7 @@ disqusUrl: http://redis.cn/commands.html
                     value
                   </span>
                 </span>
-                <span class='summary'>Insert an element before or after another element in a list</span>
+                <span class='summary'>在列表中的另一个元素之前或之后插入一个元素</span>
               </a>
             </li>
             <li data-group='list' data-name='llen'>
@@ -1089,7 +1089,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Get the length of a list</span>
+                <span class='summary'>获得队列(List)的长度</span>
               </a>
             </li>
             <li data-group='list' data-name='lpop'>
@@ -1100,7 +1100,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Remove and get the first element in a list</span>
+                <span class='summary'>从队列的左边出队一个元素</span>
               </a>
             </li>
             <li data-group='list' data-name='lpush'>
@@ -1112,7 +1112,7 @@ disqusUrl: http://redis.cn/commands.html
                     value [value ...]
                   </span>
                 </span>
-                <span class='summary'>Prepend one or multiple values to a list</span>
+                <span class='summary'>从队列的左边入队一个或多个元素</span>
               </a>
             </li>
             <li data-group='list' data-name='lpushx'>
@@ -1124,7 +1124,7 @@ disqusUrl: http://redis.cn/commands.html
                     value
                   </span>
                 </span>
-                <span class='summary'>Prepend a value to a list, only if the list exists</span>
+                <span class='summary'>当队列存在时，从队到左边入队一个元素</span>
               </a>
             </li>
             <li data-group='list' data-name='lrange'>
@@ -1137,7 +1137,7 @@ disqusUrl: http://redis.cn/commands.html
                     stop
                   </span>
                 </span>
-                <span class='summary'>Get a range of elements from a list</span>
+                <span class='summary'>从列表中获取指定返回的元素</span>
               </a>
             </li>
             <li data-group='list' data-name='lrem'>
@@ -1150,7 +1150,7 @@ disqusUrl: http://redis.cn/commands.html
                     value
                   </span>
                 </span>
-                <span class='summary'>Remove elements from a list</span>
+                <span class='summary'>从列表中删除元素</span>
               </a>
             </li>
             <li data-group='list' data-name='lset'>
@@ -1163,7 +1163,7 @@ disqusUrl: http://redis.cn/commands.html
                     value
                   </span>
                 </span>
-                <span class='summary'>Set the value of an element in a list by its index</span>
+                <span class='summary'>设置队列里面一个元素的值</span>
               </a>
             </li>
             <li data-group='list' data-name='ltrim'>
@@ -1176,7 +1176,7 @@ disqusUrl: http://redis.cn/commands.html
                     stop
                   </span>
                 </span>
-                <span class='summary'>Trim a list to the specified range</span>
+                <span class='summary'>修剪到指定范围内的清单</span>
               </a>
             </li>
             <li data-group='string' data-name='mget'>
@@ -1187,7 +1187,7 @@ disqusUrl: http://redis.cn/commands.html
                     key [key ...]
                   </span>
                 </span>
-                <span class='summary'>Get the values of all the given keys</span>
+                <span class='summary'>获得所有key的值</span>
               </a>
             </li>
             <li data-group='generic' data-name='migrate'>
@@ -1204,7 +1204,7 @@ disqusUrl: http://redis.cn/commands.html
                     [REPLACE]
                   </span>
                 </span>
-                <span class='summary'>Atomically transfer a key from a Redis instance to another one.</span>
+                <span class='summary'>原子性的将key从redis的一个实例移到另一个实例</span>
               </a>
             </li>
             <li data-group='server' data-name='monitor'>
@@ -1214,7 +1214,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Listen for all requests received by the server in real time</span>
+                <span class='summary'>实时监控服务器</span>
               </a>
             </li>
             <li data-group='generic' data-name='move'>
@@ -1226,7 +1226,7 @@ disqusUrl: http://redis.cn/commands.html
                     db
                   </span>
                 </span>
-                <span class='summary'>Move a key to another database</span>
+                <span class='summary'>移动一个key到另一个数据库</span>
               </a>
             </li>
             <li data-group='string' data-name='mset'>
@@ -1237,7 +1237,7 @@ disqusUrl: http://redis.cn/commands.html
                     key value [key value ...]
                   </span>
                 </span>
-                <span class='summary'>Set multiple keys to multiple values</span>
+                <span class='summary'>设置多个key value</span>
               </a>
             </li>
             <li data-group='string' data-name='msetnx'>
@@ -1248,7 +1248,7 @@ disqusUrl: http://redis.cn/commands.html
                     key value [key value ...]
                   </span>
                 </span>
-                <span class='summary'>Set multiple keys to multiple values, only if none of the keys exist</span>
+                <span class='summary'>设置多个key value,仅当key存在时</span>
               </a>
             </li>
             <li data-group='transactions' data-name='multi'>
@@ -1258,7 +1258,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Mark the start of a transaction block</span>
+                <span class='summary'>标记一个事务块开始</span>
               </a>
             </li>
             <li data-group='generic' data-name='object'>
@@ -1270,7 +1270,7 @@ disqusUrl: http://redis.cn/commands.html
                     [arguments [arguments ...]]
                   </span>
                 </span>
-                <span class='summary'>Inspect the internals of Redis objects</span>
+                <span class='summary'>检查内部的再分配对象</span>
               </a>
             </li>
             <li data-group='generic' data-name='persist'>
@@ -1281,7 +1281,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Remove the expiration from a key</span>
+                <span class='summary'>移除key的过期时间</span>
               </a>
             </li>
             <li data-group='generic' data-name='pexpire'>
@@ -1350,7 +1350,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Ping the server</span>
+                <span class='summary'>Ping 服务器</span>
               </a>
             </li>
             <li data-group='string' data-name='psetex'>
@@ -1397,7 +1397,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Get the time to live for a key in milliseconds</span>
+                <span class='summary'>获取key的有效毫秒数</span>
               </a>
             </li>
             <li data-group='pubsub' data-name='publish'>
@@ -1409,7 +1409,7 @@ disqusUrl: http://redis.cn/commands.html
                     message
                   </span>
                 </span>
-                <span class='summary'>Post a message to a channel</span>
+                <span class='summary'>发布一条消息到频道</span>
               </a>
             </li>
             <li data-group='pubsub' data-name='punsubscribe'>
@@ -1420,7 +1420,7 @@ disqusUrl: http://redis.cn/commands.html
                     [pattern [pattern ...]]
                   </span>
                 </span>
-                <span class='summary'>Stop listening for messages posted to channels matching the given patterns</span>
+                <span class='summary'>停止发布到匹配给定模式的渠道的消息听</span>
               </a>
             </li>
             <li data-group='connection' data-name='quit'>
@@ -1430,7 +1430,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Close the connection</span>
+                <span class='summary'>关闭连接，退出</span>
               </a>
             </li>
             <li data-group='generic' data-name='randomkey'>
@@ -1440,7 +1440,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Return a random key from the keyspace</span>
+                <span class='summary'>返回一个随机的key</span>
               </a>
             </li>
             <li data-group='cluster' data-name='readonly'>
@@ -1472,7 +1472,7 @@ disqusUrl: http://redis.cn/commands.html
                     newkey
                   </span>
                 </span>
-                <span class='summary'>Rename a key</span>
+                <span class='summary'>将一个key重命名</span>
               </a>
             </li>
             <li data-group='generic' data-name='renamenx'>
@@ -1484,7 +1484,7 @@ disqusUrl: http://redis.cn/commands.html
                     newkey
                   </span>
                 </span>
-                <span class='summary'>Rename a key, only if the new key does not exist</span>
+                <span class='summary'>重命名一个key,新的key必须是不存在的key</span>
               </a>
             </li>
             <li data-group='generic' data-name='restore'>
@@ -1519,7 +1519,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Remove and get the last element in a list</span>
+                <span class='summary'>从队列的右边出队一个元</span>
               </a>
             </li>
             <li data-group='list' data-name='rpoplpush'>
@@ -1531,7 +1531,7 @@ disqusUrl: http://redis.cn/commands.html
                     destination
                   </span>
                 </span>
-                <span class='summary'>Remove the last element in a list, prepend it to another list and return it</span>
+                <span class='summary'>删除列表中的最后一个元素，将其追加到另一个列表</span>
               </a>
             </li>
             <li data-group='list' data-name='rpush'>
@@ -1543,7 +1543,7 @@ disqusUrl: http://redis.cn/commands.html
                     value [value ...]
                   </span>
                 </span>
-                <span class='summary'>Append one or multiple values to a list</span>
+                <span class='summary'>从队列的右边入队一个元素</span>
               </a>
             </li>
             <li data-group='list' data-name='rpushx'>
@@ -1555,7 +1555,7 @@ disqusUrl: http://redis.cn/commands.html
                     value
                   </span>
                 </span>
-                <span class='summary'>Append a value to a list, only if the list exists</span>
+                <span class='summary'>从队列的右边入队一个元素，仅队列存在时有效</span>
               </a>
             </li>
             <li data-group='set' data-name='sadd'>
@@ -1567,7 +1567,7 @@ disqusUrl: http://redis.cn/commands.html
                     member [member ...]
                   </span>
                 </span>
-                <span class='summary'>Add one or more members to a set</span>
+                <span class='summary'>添加一个或者多个元素到集合(set)里</span>
               </a>
             </li>
             <li data-group='server' data-name='save'>
@@ -1577,7 +1577,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Synchronously save the dataset to disk</span>
+                <span class='summary'>同步数据到磁盘上</span>
               </a>
             </li>
             <li data-group='set' data-name='scard'>
@@ -1588,7 +1588,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Get the number of members in a set</span>
+                <span class='summary'>获取集合里面的元素数量</span>
               </a>
             </li>
             <li data-group='scripting' data-name='script exists'>
@@ -1609,7 +1609,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Remove all the scripts from the script cache.</span>
+                <span class='summary'>删除服务器缓存中所有Lua脚本。</span>
               </a>
             </li>
             <li data-group='scripting' data-name='script kill'>
@@ -1619,7 +1619,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Kill the script currently in execution.</span>
+                <span class='summary'>杀死当前正在运行的 Lua 脚本。</span>
               </a>
             </li>
             <li data-group='scripting' data-name='script load'>
@@ -1630,7 +1630,7 @@ disqusUrl: http://redis.cn/commands.html
                     script
                   </span>
                 </span>
-                <span class='summary'>Load the specified Lua script into the script cache.</span>
+                <span class='summary'>从服务器缓存中装载一个Lua脚本。</span>
               </a>
             </li>
             <li data-group='set' data-name='sdiff'>
@@ -1641,7 +1641,7 @@ disqusUrl: http://redis.cn/commands.html
                     key [key ...]
                   </span>
                 </span>
-                <span class='summary'>Subtract multiple sets</span>
+                <span class='summary'>获得队列不存在的元素</span>
               </a>
             </li>
             <li data-group='set' data-name='sdiffstore'>
@@ -1653,7 +1653,7 @@ disqusUrl: http://redis.cn/commands.html
                     key [key ...]
                   </span>
                 </span>
-                <span class='summary'>Subtract multiple sets and store the resulting set in a key</span>
+                <span class='summary'>获得队列不存在的元素，并存储在一个关键的结果集</span>
               </a>
             </li>
             <li data-group='connection' data-name='select'>
@@ -1664,7 +1664,7 @@ disqusUrl: http://redis.cn/commands.html
                     index
                   </span>
                 </span>
-                <span class='summary'>Change the selected database for the current connection</span>
+                <span class='summary'>选择新数据库</span>
               </a>
             </li>
             <li data-group='string' data-name='set'>
@@ -1679,7 +1679,7 @@ disqusUrl: http://redis.cn/commands.html
                     [NX|XX]
                   </span>
                 </span>
-                <span class='summary'>Set the string value of a key</span>
+                <span class='summary'>设置一个key的value值</span>
               </a>
             </li>
             <li data-group='string' data-name='setbit'>
@@ -1705,7 +1705,7 @@ disqusUrl: http://redis.cn/commands.html
                     value
                   </span>
                 </span>
-                <span class='summary'>Set the value and expiration of a key</span>
+                <span class='summary'>设置key-value并设置过期时间（单位：秒）</span>
               </a>
             </li>
             <li data-group='string' data-name='setnx'>
@@ -1717,7 +1717,7 @@ disqusUrl: http://redis.cn/commands.html
                     value
                   </span>
                 </span>
-                <span class='summary'>Set the value of a key, only if the key does not exist</span>
+                <span class='summary'>设置的一个关键的价值，只有当该键不存在</span>
               </a>
             </li>
             <li data-group='string' data-name='setrange'>
@@ -1742,7 +1742,7 @@ disqusUrl: http://redis.cn/commands.html
                     [SAVE]
                   </span>
                 </span>
-                <span class='summary'>Synchronously save the dataset to disk and then shut down the server</span>
+                <span class='summary'>关闭服务</span>
               </a>
             </li>
             <li data-group='set' data-name='sinter'>
@@ -1753,7 +1753,7 @@ disqusUrl: http://redis.cn/commands.html
                     key [key ...]
                   </span>
                 </span>
-                <span class='summary'>Intersect multiple sets</span>
+                <span class='summary'>获得两个集合的交集</span>
               </a>
             </li>
             <li data-group='set' data-name='sinterstore'>
@@ -1765,7 +1765,7 @@ disqusUrl: http://redis.cn/commands.html
                     key [key ...]
                   </span>
                 </span>
-                <span class='summary'>Intersect multiple sets and store the resulting set in a key</span>
+                <span class='summary'>获得两个集合的交集，并存储在一个关键的结果集</span>
               </a>
             </li>
             <li data-group='set' data-name='sismember'>
@@ -1777,7 +1777,7 @@ disqusUrl: http://redis.cn/commands.html
                     member
                   </span>
                 </span>
-                <span class='summary'>Determine if a given value is a member of a set</span>
+                <span class='summary'>确定一个给定的值是一个集合的成员</span>
               </a>
             </li>
             <li data-group='server' data-name='slaveof'>
@@ -1789,7 +1789,7 @@ disqusUrl: http://redis.cn/commands.html
                     port
                   </span>
                 </span>
-                <span class='summary'>Make the server a slave of another instance, or promote it as master</span>
+                <span class='summary'>指定当前服务器的主服务器</span>
               </a>
             </li>
             <li data-group='server' data-name='slowlog'>
@@ -1801,7 +1801,7 @@ disqusUrl: http://redis.cn/commands.html
                     [argument]
                   </span>
                 </span>
-                <span class='summary'>Manages the Redis slow queries log</span>
+                <span class='summary'>管理再分配的慢查询日志</span>
               </a>
             </li>
             <li data-group='set' data-name='smembers'>
@@ -1812,7 +1812,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Get all the members in a set</span>
+                <span class='summary'>获取集合里面的所有key</span>
               </a>
             </li>
             <li data-group='set' data-name='smove'>
@@ -1825,7 +1825,7 @@ disqusUrl: http://redis.cn/commands.html
                     member
                   </span>
                 </span>
-                <span class='summary'>Move a member from one set to another</span>
+                <span class='summary'>移动集合里面的一个key到另一个集合</span>
               </a>
             </li>
             <li data-group='generic' data-name='sort'>
@@ -1842,7 +1842,7 @@ disqusUrl: http://redis.cn/commands.html
                     [STORE destination]
                   </span>
                 </span>
-                <span class='summary'>Sort the elements in a list, set or sorted set</span>
+                <span class='summary'>对队列、集合、有序集合排序</span>
               </a>
             </li>
             <li data-group='set' data-name='spop'>
@@ -1854,7 +1854,7 @@ disqusUrl: http://redis.cn/commands.html
                     [count]
                   </span>
                 </span>
-                <span class='summary'>Remove and return one or multiple random members from a set</span>
+                <span class='summary'>删除并获取一个集合里面的元素</span>
               </a>
             </li>
             <li data-group='set' data-name='srandmember'>
@@ -1866,7 +1866,7 @@ disqusUrl: http://redis.cn/commands.html
                     [count]
                   </span>
                 </span>
-                <span class='summary'>Get one or multiple random members from a set</span>
+                <span class='summary'>从集合里面随机获取一个key</span>
               </a>
             </li>
             <li data-group='set' data-name='srem'>
@@ -1878,7 +1878,7 @@ disqusUrl: http://redis.cn/commands.html
                     member [member ...]
                   </span>
                 </span>
-                <span class='summary'>Remove one or more members from a set</span>
+                <span class='summary'>从集合里删除一个或多个key</span>
               </a>
             </li>
             <li data-group='string' data-name='strlen'>
@@ -1889,7 +1889,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Get the length of the value stored in a key</span>
+                <span class='summary'>获取指定key值的长度</span>
               </a>
             </li>
             <li data-group='pubsub' data-name='subscribe'>
@@ -1900,7 +1900,7 @@ disqusUrl: http://redis.cn/commands.html
                     channel [channel ...]
                   </span>
                 </span>
-                <span class='summary'>Listen for messages published to the given channels</span>
+                <span class='summary'>监听频道发布的消息</span>
               </a>
             </li>
             <li data-group='set' data-name='sunion'>
@@ -1911,7 +1911,7 @@ disqusUrl: http://redis.cn/commands.html
                     key [key ...]
                   </span>
                 </span>
-                <span class='summary'>Add multiple sets</span>
+                <span class='summary'>添加多个set元素</span>
               </a>
             </li>
             <li data-group='set' data-name='sunionstore'>
@@ -1923,7 +1923,7 @@ disqusUrl: http://redis.cn/commands.html
                     key [key ...]
                   </span>
                 </span>
-                <span class='summary'>Add multiple sets and store the resulting set in a key</span>
+                <span class='summary'>合并set元素，并将结果存入新的set里面</span>
               </a>
             </li>
             <li data-group='server' data-name='sync'>
@@ -1933,7 +1933,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Internal command used for replication</span>
+                <span class='summary'>用于复制的内部命令</span>
               </a>
             </li>
             <li data-group='server' data-name='time'>
@@ -1943,7 +1943,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Return the current server time</span>
+                <span class='summary'>返回当前服务器时间</span>
               </a>
             </li>
             <li data-group='generic' data-name='ttl'>
@@ -1954,7 +1954,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Get the time to live for a key</span>
+                <span class='summary'>获取key的有效时间（单位：秒）</span>
               </a>
             </li>
             <li data-group='generic' data-name='type'>
@@ -1965,7 +1965,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Determine the type stored at key</span>
+                <span class='summary'>获取key的存储类型</span>
               </a>
             </li>
             <li data-group='pubsub' data-name='unsubscribe'>
@@ -1976,7 +1976,7 @@ disqusUrl: http://redis.cn/commands.html
                     [channel [channel ...]]
                   </span>
                 </span>
-                <span class='summary'>Stop listening for messages posted to the given channels</span>
+                <span class='summary'>停止频道监听</span>
               </a>
             </li>
             <li data-group='transactions' data-name='unwatch'>
@@ -1986,7 +1986,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>Forget about all watched keys</span>
+                <span class='summary'>取消事务</span>
               </a>
             </li>
             <li data-group='generic' data-name='wait'>
@@ -2009,7 +2009,7 @@ disqusUrl: http://redis.cn/commands.html
                     key [key ...]
                   </span>
                 </span>
-                <span class='summary'>Watch the given keys to determine execution of the MULTI/EXEC block</span>
+                <span class='summary'>锁定key直到执行了 MULTI/EXEC 命令</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zadd'>
@@ -2024,7 +2024,7 @@ disqusUrl: http://redis.cn/commands.html
                     score member [score member ...]
                   </span>
                 </span>
-                <span class='summary'>Add one or more members to a sorted set, or update its score if it already exists</span>
+                <span class='summary'>添加到有序set的一个或多个成员，或更新的分数，如果它已经存在</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zcard'>
@@ -2035,7 +2035,7 @@ disqusUrl: http://redis.cn/commands.html
                     key
                   </span>
                 </span>
-                <span class='summary'>Get the number of members in a sorted set</span>
+                <span class='summary'>获取一个排序的集合中的成员数量</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zcount'>
@@ -2048,7 +2048,7 @@ disqusUrl: http://redis.cn/commands.html
                     max
                   </span>
                 </span>
-                <span class='summary'>Count the members in a sorted set with scores within the given values</span>
+                <span class='summary'>给定值范围内的成员数与分数排序</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zincrby'>
@@ -2061,7 +2061,7 @@ disqusUrl: http://redis.cn/commands.html
                     member
                   </span>
                 </span>
-                <span class='summary'>Increment the score of a member in a sorted set</span>
+                <span class='summary'>增量的一名成员在排序设置的评分</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zinterstore'>
@@ -2076,7 +2076,7 @@ disqusUrl: http://redis.cn/commands.html
                     [AGGREGATE SUM|MIN|MAX]
                   </span>
                 </span>
-                <span class='summary'>Intersect multiple sorted sets and store the resulting sorted set in a new key</span>
+                <span class='summary'>相交多个排序集，导致排序的设置存储在一个新的关键</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zlexcount'>
@@ -2103,7 +2103,7 @@ disqusUrl: http://redis.cn/commands.html
                     [WITHSCORES]
                   </span>
                 </span>
-                <span class='summary'>Return a range of members in a sorted set, by index</span>
+                <span class='summary'>根据指定的index返回，返回sorted set的成员列表</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrangebylex'>
@@ -2146,7 +2146,7 @@ disqusUrl: http://redis.cn/commands.html
                     [LIMIT offset count]
                   </span>
                 </span>
-                <span class='summary'>Return a range of members in a sorted set, by score</span>
+                <span class='summary'>根据指定的score返回，返回sorted set的成员列表</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrank'>
@@ -2158,7 +2158,7 @@ disqusUrl: http://redis.cn/commands.html
                     member
                   </span>
                 </span>
-                <span class='summary'>Determine the index of a member in a sorted set</span>
+                <span class='summary'>确定在排序集合成员的索引</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrem'>
@@ -2170,7 +2170,7 @@ disqusUrl: http://redis.cn/commands.html
                     member [member ...]
                   </span>
                 </span>
-                <span class='summary'>Remove one or more members from a sorted set</span>
+                <span class='summary'>从排序的集合中删除一个或多个成员</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zremrangebylex'>
@@ -2196,7 +2196,7 @@ disqusUrl: http://redis.cn/commands.html
                     stop
                   </span>
                 </span>
-                <span class='summary'>Remove all members in a sorted set within the given indexes</span>
+                <span class='summary'>在排序设置的所有成员在给定的索引中删除</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zremrangebyscore'>
@@ -2209,7 +2209,7 @@ disqusUrl: http://redis.cn/commands.html
                     max
                   </span>
                 </span>
-                <span class='summary'>Remove all members in a sorted set within the given scores</span>
+                <span class='summary'>删除一个排序的设置在给定的分数所有成员</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrevrange'>
@@ -2223,7 +2223,7 @@ disqusUrl: http://redis.cn/commands.html
                     [WITHSCORES]
                   </span>
                 </span>
-                <span class='summary'>Return a range of members in a sorted set, by index, with scores ordered from high to low</span>
+                <span class='summary'>在排序的设置返回的成员范围，通过索引，下令从分数高到低</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrevrangebyscore'>
@@ -2238,7 +2238,7 @@ disqusUrl: http://redis.cn/commands.html
                     [LIMIT offset count]
                   </span>
                 </span>
-                <span class='summary'>Return a range of members in a sorted set, by score, with scores ordered from high to low</span>
+                <span class='summary'>返回的成员在排序设置的范围，由得分，下令从分数高到低</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrevrank'>
@@ -2250,7 +2250,7 @@ disqusUrl: http://redis.cn/commands.html
                     member
                   </span>
                 </span>
-                <span class='summary'>Determine the index of a member in a sorted set, with scores ordered from high to low</span>
+                <span class='summary'>确定指数在排序集的成员，下令从分数高到低</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zscore'>
@@ -2262,7 +2262,7 @@ disqusUrl: http://redis.cn/commands.html
                     member
                   </span>
                 </span>
-                <span class='summary'>Get the score associated with the given member in a sorted set</span>
+                <span class='summary'>获取成员在排序设置相关的比分</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zunionstore'>
@@ -2277,7 +2277,7 @@ disqusUrl: http://redis.cn/commands.html
                     [AGGREGATE SUM|MIN|MAX]
                   </span>
                 </span>
-                <span class='summary'>Add multiple sorted sets and store the resulting sorted set in a new key</span>
+                <span class='summary'>添加多个排序集和导致排序的设置存储在一个新的关键</span>
               </a>
             </li>
             <li data-group='generic' data-name='scan'>
@@ -2290,7 +2290,7 @@ disqusUrl: http://redis.cn/commands.html
                     [COUNT count]
                   </span>
                 </span>
-                <span class='summary'>Incrementally iterate the keys space</span>
+                <span class='summary'>增量迭代key</span>
               </a>
             </li>
             <li data-group='set' data-name='sscan'>
@@ -2304,7 +2304,7 @@ disqusUrl: http://redis.cn/commands.html
                     [COUNT count]
                   </span>
                 </span>
-                <span class='summary'>Incrementally iterate Set elements</span>
+                <span class='summary'>迭代set里面的元素</span>
               </a>
             </li>
             <li data-group='hash' data-name='hscan'>
@@ -2318,7 +2318,7 @@ disqusUrl: http://redis.cn/commands.html
                     [COUNT count]
                   </span>
                 </span>
-                <span class='summary'>Incrementally iterate hash fields and associated values</span>
+                <span class='summary'>迭代hash里面的元素</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zscan'>
@@ -2332,7 +2332,7 @@ disqusUrl: http://redis.cn/commands.html
                     [COUNT count]
                   </span>
                 </span>
-                <span class='summary'>Incrementally iterate sorted sets elements and associated scores</span>
+                <span class='summary'>迭代sorted sets里面的元素</span>
               </a>
             </li>
           </ul>

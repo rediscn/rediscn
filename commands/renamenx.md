@@ -7,21 +7,25 @@ disqusUrl: http://redis.cn/commands/renamenx.html
 commandsType: keys
 ---
 
-Renames `key` to `newkey` if `newkey` does not yet exist.
-It returns an error under the same conditions as `RENAME`.
+当且仅当 newkey 不存在时，将 key 改名为 newkey 。
 
-@return
+当 key 不存在时，返回一个错误。
 
-@integer-reply, specifically:
+##返回值
 
-* `1` if `key` was renamed to `newkey`.
-* `0` if `newkey` already exists.
+[integer-reply](/topics/protocol.html#integer-reply)：
 
-@examples
+- 修改成功时，返回 1 。
+- 如果 newkey 已经存在，返回 0 。
 
-```cli
-SET mykey "Hello"
-SET myotherkey "World"
-RENAMENX mykey myotherkey
-GET myotherkey
-```
+##例子
+
+	redis> SET mykey "Hello"
+	OK
+	redis> SET myotherkey "World"
+	OK
+	redis> RENAMENX mykey myotherkey
+	(integer) 0
+	redis> GET myotherkey
+	"World"
+	redis> 

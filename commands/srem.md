@@ -7,30 +7,31 @@ disqusUrl: http://redis.cn/commands/srem.html
 commandsType: sets
 ---
 
-Remove the specified members from the set stored at `key`.
-Specified members that are not a member of this set are ignored.
-If `key` does not exist, it is treated as an empty set and this command returns
-`0`.
+在key集合中移除指定的元素. 如果指定的元素不是key集合中的元素则忽略 如果key集合不存在则被视为一个空的集合，该命令返回0.
 
-An error is returned when the value stored at `key` is not a set.
+如果key的类型不是一个集合,则返回错误.
 
-@return
+## 返回值
 
-@integer-reply: the number of members that were removed from the set, not
-including non existing members.
+[integer-reply](/topics/protocol#integer-reply):从集合中移除元素的个数，不包括不存在的成员.
 
-@history
+## 历史
 
-* `>= 2.4`: Accepts multiple `member` arguments.
-  Redis versions older than 2.4 can only remove a set member per call.
+- >= 2.4: 接受多个 member 元素参数. Redis 2.4 之前的版本每次只能移除一个元素.
 
-@examples
+## 举例
 
-```cli
-SADD myset "one"
-SADD myset "two"
-SADD myset "three"
-SREM myset "one"
-SREM myset "four"
-SMEMBERS myset
-```
+	redis> SADD myset "one"
+	(integer) 1
+	redis> SADD myset "two"
+	(integer) 1
+	redis> SADD myset "three"
+	(integer) 1
+	redis> SREM myset "one"
+	(integer) 1
+	redis> SREM myset "four"
+	(integer) 0
+	redis> SMEMBERS myset
+	1) "three"
+	2) "two"
+	redis> 

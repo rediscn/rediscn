@@ -7,6 +7,6 @@ disqusUrl: http://redis.cn/commands/sync.html
 commandsType: server
 ---
 
-@examples
+## 举例
 
-@return
+## 返回值

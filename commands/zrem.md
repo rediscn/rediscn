@@ -7,30 +7,33 @@ disqusUrl: http://redis.cn/commands/zrem.html
 commandsType: sortedsets
 ---
 
-Removes the specified members from the sorted set stored at `key`.
-Non existing members are ignored.
+当key存在，但是其不是有序集合类型，就返回一个错误。
 
-An error is returned when `key` exists and does not hold a sorted set.
+##返回值
 
-@return
+[integer-reply](/topics/protocol#integer-reply), 如下的整数:
 
-@integer-reply, specifically:
+返回的是从有序集合中删除的成员个数，不包括不存在的成员。
 
-* The number of members removed from the sorted set, not including non existing
-  members.
+##历史
 
-@history
 
-* `>= 2.4`: Accepts multiple elements.
-  In Redis versions older than 2.4 it was possible to remove a single member per
-  call.
 
-@examples
+- >= 2.4: 接受多个元素。在2.4之前的版本中，每次只能删除一个成员。
 
-```cli
-ZADD myzset 1 "one"
-ZADD myzset 2 "two"
-ZADD myzset 3 "three"
-ZREM myzset "two"
-ZRANGE myzset 0 -1 WITHSCORES
-```
+##例子
+
+	redis> ZADD myzset 1 "one"
+	(integer) 1
+	redis> ZADD myzset 2 "two"
+	(integer) 1
+	redis> ZADD myzset 3 "three"
+	(integer) 1
+	redis> ZREM myzset "two"
+	(integer) 1
+	redis> ZRANGE myzset 0 -1 WITHSCORES
+	1) "one"
+	2) "1"
+	3) "three"
+	4) "3"
+	redis> 

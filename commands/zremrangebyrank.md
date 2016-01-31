@@ -7,25 +7,23 @@ disqusUrl: http://redis.cn/commands/zremrangebyrank.html
 commandsType: sortedsets
 ---
 
-Removes all elements in the sorted set stored at `key` with rank between `start`
-and `stop`.
-Both `start` and `stop` are `0` -based indexes with `0` being the element with
-the lowest score.
-These indexes can be negative numbers, where they indicate offsets starting at
-the element with the highest score.
-For example: `-1` is the element with the highest score, `-2` the element with
-the second highest score and so forth.
+移除有序集key中，指定排名(rank)区间内的所有成员。下标参数start和stop都以0为底，0处是分数最小的那个元素。这些索引也可是负数，表示位移从最高分处开始数。例如，-1是分数最高的元素，-2是分数第二高的，依次类推。
 
-@return
+##返回值
 
-@integer-reply: the number of elements removed.
+[integer-reply](/topics/protocol#integer-reply): 被移除成员的数量。
 
-@examples
+##列子
 
-```cli
-ZADD myzset 1 "one"
-ZADD myzset 2 "two"
-ZADD myzset 3 "three"
-ZREMRANGEBYRANK myzset 0 1
-ZRANGE myzset 0 -1 WITHSCORES
-```
+	redis> ZADD myzset 1 "one"
+	(integer) 1
+	redis> ZADD myzset 2 "two"
+	(integer) 1
+	redis> ZADD myzset 3 "three"
+	(integer) 1
+	redis> ZREMRANGEBYRANK myzset 0 1
+	(integer) 2
+	redis> ZRANGE myzset 0 -1 WITHSCORES
+	1) "three"
+	2) "3"
+	redis> 

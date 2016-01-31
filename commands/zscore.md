@@ -7,19 +7,18 @@ disqusUrl: http://redis.cn/commands/zscore.html
 commandsType: sortedsets
 ---
 
-Returns the score of `member` in the sorted set at `key`.
+返回有序集key中，成员member的score值。
 
-If `member` does not exist in the sorted set, or `key` does not exist, `nil` is
-returned.
+如果member元素不是有序集key的成员，或key不存在，返回nil。
 
-@return
+##返回值
 
-@bulk-string-reply: the score of `member` (a double precision floating point number),
-represented as string.
+[bulk-string-reply](/topics/protocol#bulk-string-reply): member成员的score值（double型浮点数），以字符串形式表示。
 
-@examples
+##例子
 
-```cli
-ZADD myzset 1 "one"
-ZSCORE myzset "one"
-```
+	redis> ZADD myzset 1 "one"
+	(integer) 1
+	redis> ZSCORE myzset "one"
+	"1"
+	redis> 

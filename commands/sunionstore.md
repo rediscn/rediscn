@@ -7,24 +7,34 @@ disqusUrl: http://redis.cn/commands/sunionstore.html
 commandsType: sets
 ---
 
-This command is equal to `SUNION`, but instead of returning the resulting set,
-it is stored in `destination`.
+该命令作用类似于[SUNION](/commands/sunion.html)命令,不同的是它并不返回结果集,而是将结果存储在destination集合中.
 
-If `destination` already exists, it is overwritten.
+如果destination 已经存在,则将其覆盖.
 
-@return
+## 返回值
 
-@integer-reply: the number of elements in the resulting set.
+[integer-reply](/topics/protocol#integer-reply):结果集中元素的个数.
 
-@examples
+## 举例
 
-```cli
-SADD key1 "a"
-SADD key1 "b"
-SADD key1 "c"
-SADD key2 "c"
-SADD key2 "d"
-SADD key2 "e"
-SUNIONSTORE key key1 key2
-SMEMBERS key
-```
+	redis> SADD key1 "a"
+	(integer) 1
+	redis> SADD key1 "b"
+	(integer) 1
+	redis> SADD key1 "c"
+	(integer) 1
+	redis> SADD key2 "c"
+	(integer) 1
+	redis> SADD key2 "d"
+	(integer) 1
+	redis> SADD key2 "e"
+	(integer) 1
+	redis> SUNIONSTORE key key1 key2
+	(integer) 5
+	redis> SMEMBERS key
+	1) "c"
+	2) "e"
+	3) "b"
+	4) "a"
+	5) "d"
+	redis>

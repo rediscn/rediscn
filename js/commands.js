@@ -1,7 +1,7 @@
-﻿var rediscn_commands={
+var rediscn_commands={
   "APPEND": {
-    "summary": "Append a value to a key",
-    "complexity": "O(1). The amortized time complexity is O(1) assuming the appended value is small and the already present value is of any size, since the dynamic string library used by Redis will double the free space available on every reallocation.",
+    "summary": "追加一个值到key上",
+    "complexity": "O(1). The amortized time complexity is O(1) 因为redis用的动态字符串的库在每次分配空间的时候会增加一倍的可用空闲空间，所以在添加的value较小而且已经存在的 value是任意大小的情况下，均摊时间复杂度是O(1) 。",
     "arguments": [
       {
         "name": "key",
@@ -16,7 +16,7 @@
     "group": "string"
   },
   "AUTH": {
-    "summary": "Authenticate to the server",
+    "summary": "验证服务器",
     "arguments": [
       {
         "name": "password",
@@ -27,17 +27,17 @@
     "group": "connection"
   },
   "BGREWRITEAOF": {
-    "summary": "Asynchronously rewrite the append-only file",
+    "summary": "异步重写追加文件",
     "since": "1.0.0",
     "group": "server"
   },
   "BGSAVE": {
-    "summary": "Asynchronously save the dataset to disk",
+    "summary": "异步保存数据集到磁盘上",
     "since": "1.0.0",
     "group": "server"
   },
   "BITCOUNT": {
-    "summary": "Count set bits in a string",
+    "summary": "统计字符串指定起始位置的字节数",
     "complexity": "O(N)",
     "arguments": [
       {
@@ -101,7 +101,7 @@
     "group": "string"
   },
   "BLPOP": {
-    "summary": "Remove and get the first element in a list, or block until one is available",
+    "summary": "删除，并获得该列表中的第一元素，或阻塞，直到有一个可用",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -118,7 +118,7 @@
     "group": "list"
   },
   "BRPOP": {
-    "summary": "Remove and get the last element in a list, or block until one is available",
+    "summary": "删除，并获得该列表中的最后一个元素，或阻塞，直到有一个可用",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -135,7 +135,7 @@
     "group": "list"
   },
   "BRPOPLPUSH": {
-    "summary": "Pop a value from a list, push it to another list and return it; or block until one is available",
+    "summary": "弹出一个列表的值，将它推到另一个列表，并返回它;或阻塞，直到有一个可用",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -155,7 +155,7 @@
     "group": "list"
   },
   "CLIENT KILL": {
-    "summary": "Kill the connection of a client",
+    "summary": "关闭客户端连接",
     "complexity": "O(N) where N is the number of client connections",
     "arguments": [
       {
@@ -192,19 +192,19 @@
     "group": "server"
   },
   "CLIENT LIST": {
-    "summary": "Get the list of client connections",
+    "summary": "获得客户端连接列表",
     "complexity": "O(N) where N is the number of client connections",
     "since": "2.4.0",
     "group": "server"
   },
   "CLIENT GETNAME": {
-    "summary": "Get the current connection name",
+    "summary": "获得当前连接名称",
     "complexity": "O(1)",
     "since": "2.6.9",
     "group": "server"
   },
   "CLIENT PAUSE": {
-    "summary": "Stop processing commands from clients for some time",
+    "summary": "暂停处理客户端命令",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -216,7 +216,7 @@
     "group": "server"
   },
   "CLIENT SETNAME": {
-    "summary": "Set the current connection name",
+    "summary": "设置当前连接的名字",
     "complexity": "O(1)",
     "since": "2.6.9",
     "arguments": [
@@ -475,7 +475,7 @@
     "group": "server"
   },
   "CONFIG GET": {
-    "summary": "Get the value of a configuration parameter",
+    "summary": "获取配置参数的值",
     "arguments": [
       {
         "name": "parameter",
@@ -486,12 +486,12 @@
     "group": "server"
   },
   "CONFIG REWRITE": {
-    "summary": "Rewrite the configuration file with the in memory configuration",
+    "summary": "从写内存中的配置文件",
     "since": "2.8.0",
     "group": "server"
   },
   "CONFIG SET": {
-    "summary": "Set a configuration parameter to the given value",
+    "summary": "设置配置文件",
     "arguments": [
       {
         "name": "parameter",
@@ -506,18 +506,18 @@
     "group": "server"
   },
   "CONFIG RESETSTAT": {
-    "summary": "Reset the stats returned by INFO",
+    "summary": "复位再分配使用info命令报告的统计",
     "complexity": "O(1)",
     "since": "2.0.0",
     "group": "server"
   },
   "DBSIZE": {
-    "summary": "Return the number of keys in the selected database",
+    "summary": "返回当前数据库里面的keys数量",
     "since": "1.0.0",
     "group": "server"
   },
   "DEBUG OBJECT": {
-    "summary": "Get debugging information about a key",
+    "summary": "获取一个key的debug信息",
     "arguments": [
       {
         "name": "key",
@@ -528,12 +528,12 @@
     "group": "server"
   },
   "DEBUG SEGFAULT": {
-    "summary": "Make the server crash",
+    "summary": "使服务器崩溃",
     "since": "1.0.0",
     "group": "server"
   },
   "DECR": {
-    "summary": "Decrement the integer value of a key by one",
+    "summary": "整数原子减1",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -545,7 +545,7 @@
     "group": "string"
   },
   "DECRBY": {
-    "summary": "Decrement the integer value of a key by the given number",
+    "summary": "原子减指定的整数",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -561,7 +561,7 @@
     "group": "string"
   },
   "DEL": {
-    "summary": "Delete a key",
+    "summary": "删除一个key",
     "complexity": "O(N) where N is the number of keys that will be removed. When a key to remove holds a value other than a string, the individual complexity for this key is O(M) where M is the number of elements in the list, set, sorted set or hash. Removing a single key that holds a string value is O(1).",
     "arguments": [
       {
@@ -574,12 +574,12 @@
     "group": "generic"
   },
   "DISCARD": {
-    "summary": "Discard all commands issued after MULTI",
+    "summary": "丢弃所有 MULTI 之后发的命令",
     "since": "2.0.0",
     "group": "transactions"
   },
   "DUMP": {
-    "summary": "Return a serialized version of the value stored at the specified key.",
+    "summary": "导出key的值",
     "complexity": "O(1) to access the key and additional O(N*M) to serialized it, where N is the number of Redis objects composing the value and M their average size. For small string values the time complexity is thus O(1)+O(1*M) where M is small, so simply O(1).",
     "arguments": [
       {
@@ -591,7 +591,7 @@
     "group": "generic"
   },
   "ECHO": {
-    "summary": "Echo the given string",
+    "summary": "回显输入的字符串",
     "arguments": [
       {
         "name": "message",
@@ -602,7 +602,7 @@
     "group": "connection"
   },
   "EVAL": {
-    "summary": "Execute a Lua script server side",
+    "summary": "在服务器端执行 LUA 脚本",
     "complexity": "Depends on the script that is executed.",
     "arguments": [
       {
@@ -628,7 +628,7 @@
     "group": "scripting"
   },
   "EVALSHA": {
-    "summary": "Execute a Lua script server side",
+    "summary": "在服务器端执行 LUA 脚本",
     "complexity": "Depends on the script that is executed.",
     "arguments": [
       {
@@ -654,12 +654,12 @@
     "group": "scripting"
   },
   "EXEC": {
-    "summary": "Execute all commands issued after MULTI",
+    "summary": "执行所有 MULTI 之后发的命令",
     "since": "1.2.0",
     "group": "transactions"
   },
   "EXISTS": {
-    "summary": "Determine if a key exists",
+    "summary": "查询一个key是否存在",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -672,7 +672,7 @@
     "group": "generic"
   },
   "EXPIRE": {
-    "summary": "Set a key's time to live in seconds",
+    "summary": "设置一个key的过期的秒数",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -688,7 +688,7 @@
     "group": "generic"
   },
   "EXPIREAT": {
-    "summary": "Set the expiration for a key as a UNIX timestamp",
+    "summary": "设置一个UNIX时间戳的过期时间",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -704,12 +704,12 @@
     "group": "generic"
   },
   "FLUSHALL": {
-    "summary": "Remove all keys from all databases",
+    "summary": "清空所有数据库",
     "since": "1.0.0",
     "group": "server"
   },
   "FLUSHDB": {
-    "summary": "Remove all keys from the current database",
+    "summary": "清空当前的数据库",
     "since": "1.0.0",
     "group": "server"
   },
@@ -886,7 +886,7 @@
     "group": "geo"
   },
   "GET": {
-    "summary": "Get the value of a key",
+    "summary": "获取key的值",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -898,7 +898,7 @@
     "group": "string"
   },
   "GETBIT": {
-    "summary": "Returns the bit value at offset in the string value stored at key",
+    "summary": "返回位的值存储在关键的字符串值的偏移量。",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -914,7 +914,7 @@
     "group": "string"
   },
   "GETRANGE": {
-    "summary": "Get a substring of the string stored at a key",
+    "summary": "获取存储在key上的值的一个子字符串",
     "complexity": "O(N) where N is the length of the returned string. The complexity is ultimately determined by the returned length, but because creating a substring from an existing string is very cheap, it can be considered O(1) for small strings.",
     "arguments": [
       {
@@ -934,7 +934,7 @@
     "group": "string"
   },
   "GETSET": {
-    "summary": "Set the string value of a key and return its old value",
+    "summary": "设置一个key的value，并获取设置前的值",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -950,7 +950,7 @@
     "group": "string"
   },
   "HDEL": {
-    "summary": "Delete one or more hash fields",
+    "summary": "删除一个或多个Hash的field",
     "complexity": "O(N) where N is the number of fields to be removed.",
     "arguments": [
       {
@@ -967,7 +967,7 @@
     "group": "hash"
   },
   "HEXISTS": {
-    "summary": "Determine if a hash field exists",
+    "summary": "判断field是否存在于hash中",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -983,7 +983,7 @@
     "group": "hash"
   },
   "HGET": {
-    "summary": "Get the value of a hash field",
+    "summary": "获取hash中field的值",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -999,7 +999,7 @@
     "group": "hash"
   },
   "HGETALL": {
-    "summary": "Get all the fields and values in a hash",
+    "summary": "从hash中读取全部的域和值",
     "complexity": "O(N) where N is the size of the hash.",
     "arguments": [
       {
@@ -1011,7 +1011,7 @@
     "group": "hash"
   },
   "HINCRBY": {
-    "summary": "Increment the integer value of a hash field by the given number",
+    "summary": "将hash中指定域的值增加给定的数字",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1031,7 +1031,7 @@
     "group": "hash"
   },
   "HINCRBYFLOAT": {
-    "summary": "Increment the float value of a hash field by the given amount",
+    "summary": "将hash中指定域的值增加给定的浮点数",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1051,7 +1051,7 @@
     "group": "hash"
   },
   "HKEYS": {
-    "summary": "Get all the fields in a hash",
+    "summary": "获取hash的所有字段",
     "complexity": "O(N) where N is the size of the hash.",
     "arguments": [
       {
@@ -1063,7 +1063,7 @@
     "group": "hash"
   },
   "HLEN": {
-    "summary": "Get the number of fields in a hash",
+    "summary": "获取hash里所有字段的数量",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1075,7 +1075,7 @@
     "group": "hash"
   },
   "HMGET": {
-    "summary": "Get the values of all the given hash fields",
+    "summary": "获取hash里面指定字段的值",
     "complexity": "O(N) where N is the number of fields being requested.",
     "arguments": [
       {
@@ -1092,7 +1092,7 @@
     "group": "hash"
   },
   "HMSET": {
-    "summary": "Set multiple hash fields to multiple values",
+    "summary": "设置hash字段值",
     "complexity": "O(N) where N is the number of fields being set.",
     "arguments": [
       {
@@ -1109,7 +1109,7 @@
     "group": "hash"
   },
   "HSET": {
-    "summary": "Set the string value of a hash field",
+    "summary": "设置hash里面一个字段的值",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1129,7 +1129,7 @@
     "group": "hash"
   },
   "HSETNX": {
-    "summary": "Set the value of a hash field, only if the field does not exist",
+    "summary": "设置hash的一个字段，只有当这个字段不存在时有效",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1165,7 +1165,7 @@
     "group": "hash"
   },
   "HVALS": {
-    "summary": "Get all the values in a hash",
+    "summary": "获得hash的所有值",
     "complexity": "O(N) where N is the size of the hash.",
     "arguments": [
       {
@@ -1177,7 +1177,7 @@
     "group": "hash"
   },
   "INCR": {
-    "summary": "Increment the integer value of a key by one",
+    "summary": "执行原子加1操作",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1189,7 +1189,7 @@
     "group": "string"
   },
   "INCRBY": {
-    "summary": "Increment the integer value of a key by the given amount",
+    "summary": "执行原子增加一个整数",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1205,7 +1205,7 @@
     "group": "string"
   },
   "INCRBYFLOAT": {
-    "summary": "Increment the float value of a key by the given amount",
+    "summary": "执行原子增加一个浮点数",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1221,7 +1221,7 @@
     "group": "string"
   },
   "INFO": {
-    "summary": "Get information and statistics about the server",
+    "summary": "获得服务器的详细信息",
     "arguments": [
       {
         "name": "section",
@@ -1233,7 +1233,7 @@
     "group": "server"
   },
   "KEYS": {
-    "summary": "Find all keys matching the given pattern",
+    "summary": "查找所有匹配给定的模式的键",
     "complexity": "O(N) with N being the number of keys in the database, under the assumption that the key names in the database and the given pattern have limited length.",
     "arguments": [
       {
@@ -1245,12 +1245,12 @@
     "group": "generic"
   },
   "LASTSAVE": {
-    "summary": "Get the UNIX time stamp of the last successful save to disk",
+    "summary": "获得最后一次同步磁盘的时间",
     "since": "1.0.0",
     "group": "server"
   },
   "LINDEX": {
-    "summary": "Get an element from a list by its index",
+    "summary": "获取一个元素，通过其索引列表",
     "complexity": "O(N) where N is the number of elements to traverse to get to the element at index. This makes asking for the first or the last element of the list O(1).",
     "arguments": [
       {
@@ -1266,7 +1266,7 @@
     "group": "list"
   },
   "LINSERT": {
-    "summary": "Insert an element before or after another element in a list",
+    "summary": "在列表中的另一个元素之前或之后插入一个元素",
     "complexity": "O(N) where N is the number of elements to traverse before seeing the value pivot. This means that inserting somewhere on the left end on the list (head) can be considered O(1) and inserting somewhere on the right end (tail) is O(N).",
     "arguments": [
       {
@@ -1291,7 +1291,7 @@
     "group": "list"
   },
   "LLEN": {
-    "summary": "Get the length of a list",
+    "summary": "获得队列(List)的长度",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1303,7 +1303,7 @@
     "group": "list"
   },
   "LPOP": {
-    "summary": "Remove and get the first element in a list",
+    "summary": "从队列的左边出队一个元素",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1315,7 +1315,7 @@
     "group": "list"
   },
   "LPUSH": {
-    "summary": "Prepend one or multiple values to a list",
+    "summary": "从队列的左边入队一个或多个元素",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1332,7 +1332,7 @@
     "group": "list"
   },
   "LPUSHX": {
-    "summary": "Prepend a value to a list, only if the list exists",
+    "summary": "当队列存在时，从队到左边入队一个元素",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1348,7 +1348,7 @@
     "group": "list"
   },
   "LRANGE": {
-    "summary": "Get a range of elements from a list",
+    "summary": "从列表中获取指定返回的元素",
     "complexity": "O(S+N) where S is the distance of start offset from HEAD for small lists, from nearest end (HEAD or TAIL) for large lists; and N is the number of elements in the specified range.",
     "arguments": [
       {
@@ -1368,7 +1368,7 @@
     "group": "list"
   },
   "LREM": {
-    "summary": "Remove elements from a list",
+    "summary": "从列表中删除元素",
     "complexity": "O(N) where N is the length of the list.",
     "arguments": [
       {
@@ -1388,7 +1388,7 @@
     "group": "list"
   },
   "LSET": {
-    "summary": "Set the value of an element in a list by its index",
+    "summary": "设置队列里面一个元素的值",
     "complexity": "O(N) where N is the length of the list. Setting either the first or the last element of the list is O(1).",
     "arguments": [
       {
@@ -1408,7 +1408,7 @@
     "group": "list"
   },
   "LTRIM": {
-    "summary": "Trim a list to the specified range",
+    "summary": "修剪到指定范围内的清单",
     "complexity": "O(N) where N is the number of elements to be removed by the operation.",
     "arguments": [
       {
@@ -1428,7 +1428,7 @@
     "group": "list"
   },
   "MGET": {
-    "summary": "Get the values of all the given keys",
+    "summary": "获得所有key的值",
     "complexity": "O(N) where N is the number of keys to retrieve.",
     "arguments": [
       {
@@ -1441,7 +1441,7 @@
     "group": "string"
   },
   "MIGRATE": {
-    "summary": "Atomically transfer a key from a Redis instance to another one.",
+    "summary": "原子性的将key从redis的一个实例移到另一个实例",
     "complexity": "This command actually executes a DUMP+DEL in the source instance, and a RESTORE in the target instance. See the pages of these commands for time complexity. Also an O(N) data transfer between the two instances is performed.",
     "arguments": [
       {
@@ -1481,12 +1481,12 @@
     "group": "generic"
   },
   "MONITOR": {
-    "summary": "Listen for all requests received by the server in real time",
+    "summary": "实时监控服务器",
     "since": "1.0.0",
     "group": "server"
   },
   "MOVE": {
-    "summary": "Move a key to another database",
+    "summary": "移动一个key到另一个数据库",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1502,7 +1502,7 @@
     "group": "generic"
   },
   "MSET": {
-    "summary": "Set multiple keys to multiple values",
+    "summary": "设置多个key value",
     "complexity": "O(N) where N is the number of keys to set.",
     "arguments": [
       {
@@ -1515,7 +1515,7 @@
     "group": "string"
   },
   "MSETNX": {
-    "summary": "Set multiple keys to multiple values, only if none of the keys exist",
+    "summary": "设置多个key value,仅当key存在时",
     "complexity": "O(N) where N is the number of keys to set.",
     "arguments": [
       {
@@ -1528,12 +1528,12 @@
     "group": "string"
   },
   "MULTI": {
-    "summary": "Mark the start of a transaction block",
+    "summary": "标记一个事务块开始",
     "since": "1.2.0",
     "group": "transactions"
   },
   "OBJECT": {
-    "summary": "Inspect the internals of Redis objects",
+    "summary": "检查内部的再分配对象",
     "complexity": "O(1) for all the currently implemented subcommands.",
     "since": "2.2.3",
     "group": "generic",
@@ -1551,7 +1551,7 @@
     ]
   },
   "PERSIST": {
-    "summary": "Remove the expiration from a key",
+    "summary": "移除key的过期时间",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1642,7 +1642,7 @@
     "group": "hyperloglog"
   },
   "PING": {
-    "summary": "Ping the server",
+    "summary": "Ping 服务器",
     "since": "1.0.0",
     "group": "connection"
   },
@@ -1698,7 +1698,7 @@
     "group": "pubsub"
   },
   "PTTL": {
-    "summary": "Get the time to live for a key in milliseconds",
+    "summary": "获取key的有效毫秒数",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1710,7 +1710,7 @@
     "group": "generic"
   },
   "PUBLISH": {
-    "summary": "Post a message to a channel",
+    "summary": "发布一条消息到频道",
     "complexity": "O(N+M) where N is the number of clients subscribed to the receiving channel and M is the total number of subscribed patterns (by any client).",
     "arguments": [
       {
@@ -1726,7 +1726,7 @@
     "group": "pubsub"
   },
   "PUNSUBSCRIBE": {
-    "summary": "Stop listening for messages posted to channels matching the given patterns",
+    "summary": "停止发布到匹配给定模式的渠道的消息听",
     "complexity": "O(N+M) where N is the number of patterns the client is already subscribed and M is the number of total patterns subscribed in the system (by any client).",
     "arguments": [
       {
@@ -1740,12 +1740,12 @@
     "group": "pubsub"
   },
   "QUIT": {
-    "summary": "Close the connection",
+    "summary": "关闭连接，退出",
     "since": "1.0.0",
     "group": "connection"
   },
   "RANDOMKEY": {
-    "summary": "Return a random key from the keyspace",
+    "summary": "返回一个随机的key",
     "complexity": "O(1)",
     "since": "1.0.0",
     "group": "generic"
@@ -1763,7 +1763,7 @@
     "group": "cluster"
   },
   "RENAME": {
-    "summary": "Rename a key",
+    "summary": "将一个key重命名",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1779,7 +1779,7 @@
     "group": "generic"
   },
   "RENAMENX": {
-    "summary": "Rename a key, only if the new key does not exist",
+    "summary": "重命名一个key,新的key必须是不存在的key",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1827,7 +1827,7 @@
     "group": "server"
   },
   "RPOP": {
-    "summary": "Remove and get the last element in a list",
+    "summary": "从队列的右边出队一个元素",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1839,7 +1839,7 @@
     "group": "list"
   },
   "RPOPLPUSH": {
-    "summary": "Remove the last element in a list, prepend it to another list and return it",
+    "summary": "删除列表中的最后一个元素，将其追加到另一个列表",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1855,7 +1855,7 @@
     "group": "list"
   },
   "RPUSH": {
-    "summary": "Append one or multiple values to a list",
+    "summary": "从队列的右边入队一个元素",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1872,7 +1872,7 @@
     "group": "list"
   },
   "RPUSHX": {
-    "summary": "Append a value to a list, only if the list exists",
+    "summary": "从队列的右边入队一个元素，仅队列存在时有效",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1888,7 +1888,7 @@
     "group": "list"
   },
   "SADD": {
-    "summary": "Add one or more members to a set",
+    "summary": "添加一个或者多个元素到集合(set)里",
     "complexity": "O(N) where N is the number of members to be added.",
     "arguments": [
       {
@@ -1905,12 +1905,12 @@
     "group": "set"
   },
   "SAVE": {
-    "summary": "Synchronously save the dataset to disk",
+    "summary": "同步数据到磁盘上",
     "since": "1.0.0",
     "group": "server"
   },
   "SCARD": {
-    "summary": "Get the number of members in a set",
+    "summary": "获取集合里面的元素数量",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -1935,19 +1935,19 @@
     "group": "scripting"
   },
   "SCRIPT FLUSH": {
-    "summary": "Remove all the scripts from the script cache.",
+    "summary": "删除服务器缓存中所有Lua脚本。",
     "complexity": "O(N) with N being the number of scripts in cache",
     "since": "2.6.0",
     "group": "scripting"
   },
   "SCRIPT KILL": {
-    "summary": "Kill the script currently in execution.",
+    "summary": "杀死当前正在运行的 Lua 脚本。",
     "complexity": "O(1)",
     "since": "2.6.0",
     "group": "scripting"
   },
   "SCRIPT LOAD": {
-    "summary": "Load the specified Lua script into the script cache.",
+    "summary": "从服务器缓存中装载一个Lua脚本。",
     "complexity": "O(N) with N being the length in bytes of the script body.",
     "arguments": [
       {
@@ -1959,7 +1959,7 @@
     "group": "scripting"
   },
   "SDIFF": {
-    "summary": "Subtract multiple sets",
+    "summary": "获得队列不存在的元素",
     "complexity": "O(N) where N is the total number of elements in all given sets.",
     "arguments": [
       {
@@ -1972,7 +1972,7 @@
     "group": "set"
   },
   "SDIFFSTORE": {
-    "summary": "Subtract multiple sets and store the resulting set in a key",
+    "summary": "获得队列不存在的元素，并存储在一个关键的结果集",
     "complexity": "O(N) where N is the total number of elements in all given sets.",
     "arguments": [
       {
@@ -1989,7 +1989,7 @@
     "group": "set"
   },
   "SELECT": {
-    "summary": "Change the selected database for the current connection",
+    "summary": "选择新数据库",
     "arguments": [
       {
         "name": "index",
@@ -2000,7 +2000,7 @@
     "group": "connection"
   },
   "SET": {
-    "summary": "Set the string value of a key",
+    "summary": "设置一个key的value值",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -2054,7 +2054,7 @@
     "group": "string"
   },
   "SETEX": {
-    "summary": "Set the value and expiration of a key",
+    "summary": "设置key-value并设置过期时间（单位：秒）",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -2074,7 +2074,7 @@
     "group": "string"
   },
   "SETNX": {
-    "summary": "Set the value of a key, only if the key does not exist",
+    "summary": "设置的一个关键的价值，只有当该键不存在",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -2110,7 +2110,7 @@
     "group": "string"
   },
   "SHUTDOWN": {
-    "summary": "Synchronously save the dataset to disk and then shut down the server",
+    "summary": "关闭服务",
     "arguments": [
       {
         "name": "NOSAVE",
@@ -2129,7 +2129,7 @@
     "group": "server"
   },
   "SINTER": {
-    "summary": "Intersect multiple sets",
+    "summary": "获得两个集合的交集",
     "complexity": "O(N*M) worst case where N is the cardinality of the smallest set and M is the number of sets.",
     "arguments": [
       {
@@ -2142,7 +2142,7 @@
     "group": "set"
   },
   "SINTERSTORE": {
-    "summary": "Intersect multiple sets and store the resulting set in a key",
+    "summary": "获得两个集合的交集，并存储在一个关键的结果集",
     "complexity": "O(N*M) worst case where N is the cardinality of the smallest set and M is the number of sets.",
     "arguments": [
       {
@@ -2159,7 +2159,7 @@
     "group": "set"
   },
   "SISMEMBER": {
-    "summary": "Determine if a given value is a member of a set",
+    "summary": "确定一个给定的值是一个集合的成员",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -2175,7 +2175,7 @@
     "group": "set"
   },
   "SLAVEOF": {
-    "summary": "Make the server a slave of another instance, or promote it as master",
+    "summary": "指定当前服务器的主服务器",
     "arguments": [
       {
         "name": "host",
@@ -2190,7 +2190,7 @@
     "group": "server"
   },
   "SLOWLOG": {
-    "summary": "Manages the Redis slow queries log",
+    "summary": "管理再分配的慢查询日志",
     "arguments": [
       {
         "name": "subcommand",
@@ -2206,7 +2206,7 @@
     "group": "server"
   },
   "SMEMBERS": {
-    "summary": "Get all the members in a set",
+    "summary": "获取集合里面的所有key",
     "complexity": "O(N) where N is the set cardinality.",
     "arguments": [
       {
@@ -2218,7 +2218,7 @@
     "group": "set"
   },
   "SMOVE": {
-    "summary": "Move a member from one set to another",
+    "summary": "移动集合里面的一个key到另一个集合",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -2238,7 +2238,7 @@
     "group": "set"
   },
   "SORT": {
-    "summary": "Sort the elements in a list, set or sorted set",
+    "summary": "对队列、集合、有序集合排序",
     "complexity": "O(N+M*log(M)) where N is the number of elements in the list or set to sort, and M the number of returned elements. When the elements are not sorted, complexity is currently O(N) as there is a copy step that will be avoided in next releases.",
     "arguments": [
       {
@@ -2287,7 +2287,7 @@
     "group": "generic"
   },
   "SPOP": {
-    "summary": "Remove and return one or multiple random members from a set",
+    "summary": "删除并获取一个集合里面的元素",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -2304,7 +2304,7 @@
     "group": "set"
   },
   "SRANDMEMBER": {
-    "summary": "Get one or multiple random members from a set",
+    "summary": "从集合里面随机获取一个key",
     "complexity": "Without the count argument O(1), otherwise O(N) where N is the absolute value of the passed count.",
     "arguments": [
       {
@@ -2321,7 +2321,7 @@
     "group": "set"
   },
   "SREM": {
-    "summary": "Remove one or more members from a set",
+    "summary": "从集合里删除一个或多个key",
     "complexity": "O(N) where N is the number of members to be removed.",
     "arguments": [
       {
@@ -2338,7 +2338,7 @@
     "group": "set"
   },
   "STRLEN": {
-    "summary": "Get the length of the value stored in a key",
+    "summary": "获取指定key值的长度",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -2350,7 +2350,7 @@
     "group": "string"
   },
   "SUBSCRIBE": {
-    "summary": "Listen for messages published to the given channels",
+    "summary": "监听频道发布的消息",
     "complexity": "O(N) where N is the number of channels to subscribe to.",
     "arguments": [
       {
@@ -2363,7 +2363,7 @@
     "group": "pubsub"
   },
   "SUNION": {
-    "summary": "Add multiple sets",
+    "summary": "添加多个set元素",
     "complexity": "O(N) where N is the total number of elements in all given sets.",
     "arguments": [
       {
@@ -2376,7 +2376,7 @@
     "group": "set"
   },
   "SUNIONSTORE": {
-    "summary": "Add multiple sets and store the resulting set in a key",
+    "summary": "合并set元素，并将结果存入新的set里面",
     "complexity": "O(N) where N is the total number of elements in all given sets.",
     "arguments": [
       {
@@ -2393,18 +2393,18 @@
     "group": "set"
   },
   "SYNC": {
-    "summary": "Internal command used for replication",
+    "summary": "用于复制的内部命令",
     "since": "1.0.0",
     "group": "server"
   },
   "TIME": {
-    "summary": "Return the current server time",
+    "summary": "返回当前服务器时间",
     "complexity": "O(1)",
     "since": "2.6.0",
     "group": "server"
   },
   "TTL": {
-    "summary": "Get the time to live for a key",
+    "summary": "获取key的有效时间（单位：秒）",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -2416,7 +2416,7 @@
     "group": "generic"
   },
   "TYPE": {
-    "summary": "Determine the type stored at key",
+    "summary": "获取key的存储类型",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -2428,7 +2428,7 @@
     "group": "generic"
   },
   "UNSUBSCRIBE": {
-    "summary": "Stop listening for messages posted to the given channels",
+    "summary": "停止频道监听",
     "complexity": "O(N) where N is the number of clients already subscribed to a channel.",
     "arguments": [
       {
@@ -2442,7 +2442,7 @@
     "group": "pubsub"
   },
   "UNWATCH": {
-    "summary": "Forget about all watched keys",
+    "summary": "取消事务",
     "complexity": "O(1)",
     "since": "2.2.0",
     "group": "transactions"
@@ -2464,7 +2464,7 @@
     "group": "generic"
   },
   "WATCH": {
-    "summary": "Watch the given keys to determine execution of the MULTI/EXEC block",
+    "summary": "锁定key直到执行了 MULTI/EXEC 命令",
     "complexity": "O(1) for every key.",
     "arguments": [
       {
@@ -2477,7 +2477,7 @@
     "group": "transactions"
   },
   "ZADD": {
-    "summary": "Add one or more members to a sorted set, or update its score if it already exists",
+    "summary": "添加到有序set的一个或多个成员，或更新的分数，如果它已经存在",
     "complexity": "O(log(N)) for each item added, where N is the number of elements in the sorted set.",
     "arguments": [
       {
@@ -2512,7 +2512,7 @@
     "group": "sorted_set"
   },
   "ZCARD": {
-    "summary": "Get the number of members in a sorted set",
+    "summary": "获取一个排序的集合中的成员数量",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -2524,7 +2524,7 @@
     "group": "sorted_set"
   },
   "ZCOUNT": {
-    "summary": "Count the members in a sorted set with scores within the given values",
+    "summary": "给定值范围内的成员数与分数排序",
     "complexity": "O(log(N)) with N being the number of elements in the sorted set.",
     "arguments": [
       {
@@ -2544,7 +2544,7 @@
     "group": "sorted_set"
   },
   "ZINCRBY": {
-    "summary": "Increment the score of a member in a sorted set",
+    "summary": "增量的一名成员在排序设置的评分",
     "complexity": "O(log(N)) where N is the number of elements in the sorted set.",
     "arguments": [
       {
@@ -2564,7 +2564,7 @@
     "group": "sorted_set"
   },
   "ZINTERSTORE": {
-    "summary": "Intersect multiple sorted sets and store the resulting sorted set in a new key",
+    "summary": "相交多个排序集，导致排序的设置存储在一个新的关键",
     "complexity": "O(N*K)+O(M*log(M)) worst case with N being the smallest input sorted set, K being the number of input sorted sets and M being the number of elements in the resulting sorted set.",
     "arguments": [
       {
@@ -2619,7 +2619,7 @@
     "group": "sorted_set"
   },
   "ZRANGE": {
-    "summary": "Return a range of members in a sorted set, by index",
+    "summary": "根据指定的index返回，返回sorted set的成员列表",
     "complexity": "O(log(N)+M) with N being the number of elements in the sorted set and M the number of elements returned.",
     "arguments": [
       {
@@ -2697,7 +2697,7 @@
     "group": "sorted_set"
   },
   "ZRANGEBYSCORE": {
-    "summary": "Return a range of members in a sorted set, by score",
+    "summary": "根据指定的score返回，返回sorted set的成员列表",
     "complexity": "O(log(N)+M) with N being the number of elements in the sorted set and M the number of elements being returned. If M is constant (e.g. always asking for the first 10 elements with LIMIT), you can consider it O(log(N)).",
     "arguments": [
       {
@@ -2729,7 +2729,7 @@
     "group": "sorted_set"
   },
   "ZRANK": {
-    "summary": "Determine the index of a member in a sorted set",
+    "summary": "确定在排序集合成员的索引",
     "complexity": "O(log(N))",
     "arguments": [
       {
@@ -2745,7 +2745,7 @@
     "group": "sorted_set"
   },
   "ZREM": {
-    "summary": "Remove one or more members from a sorted set",
+    "summary": "从排序的集合中删除一个或多个成员",
     "complexity": "O(M*log(N)) with N being the number of elements in the sorted set and M the number of elements to be removed.",
     "arguments": [
       {
@@ -2782,7 +2782,7 @@
     "group": "sorted_set"
   },
   "ZREMRANGEBYRANK": {
-    "summary": "Remove all members in a sorted set within the given indexes",
+    "summary": "在排序设置的所有成员在给定的索引中删除",
     "complexity": "O(log(N)+M) with N being the number of elements in the sorted set and M the number of elements removed by the operation.",
     "arguments": [
       {
@@ -2802,7 +2802,7 @@
     "group": "sorted_set"
   },
   "ZREMRANGEBYSCORE": {
-    "summary": "Remove all members in a sorted set within the given scores",
+    "summary": "删除一个排序的设置在给定的分数所有成员",
     "complexity": "O(log(N)+M) with N being the number of elements in the sorted set and M the number of elements removed by the operation.",
     "arguments": [
       {
@@ -2822,7 +2822,7 @@
     "group": "sorted_set"
   },
   "ZREVRANGE": {
-    "summary": "Return a range of members in a sorted set, by index, with scores ordered from high to low",
+    "summary": "在排序的设置返回的成员范围，通过索引，下令从分数高到低",
     "complexity": "O(log(N)+M) with N being the number of elements in the sorted set and M the number of elements returned.",
     "arguments": [
       {
@@ -2848,7 +2848,7 @@
     "group": "sorted_set"
   },
   "ZREVRANGEBYSCORE": {
-    "summary": "Return a range of members in a sorted set, by score, with scores ordered from high to low",
+    "summary": "返回的成员在排序设置的范围，由得分，下令从分数高到低",
     "complexity": "O(log(N)+M) with N being the number of elements in the sorted set and M the number of elements being returned. If M is constant (e.g. always asking for the first 10 elements with LIMIT), you can consider it O(log(N)).",
     "arguments": [
       {
@@ -2880,7 +2880,7 @@
     "group": "sorted_set"
   },
   "ZREVRANK": {
-    "summary": "Determine the index of a member in a sorted set, with scores ordered from high to low",
+    "summary": "确定指数在排序集的成员，下令从分数高到低",
     "complexity": "O(log(N))",
     "arguments": [
       {
@@ -2896,7 +2896,7 @@
     "group": "sorted_set"
   },
   "ZSCORE": {
-    "summary": "Get the score associated with the given member in a sorted set",
+    "summary": "获取成员在排序设置相关的比分",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -2912,7 +2912,7 @@
     "group": "sorted_set"
   },
   "ZUNIONSTORE": {
-    "summary": "Add multiple sorted sets and store the resulting sorted set in a new key",
+    "summary": "添加多个排序集和导致排序的设置存储在一个新的关键",
     "complexity": "O(N)+O(M log(M)) with N being the sum of the sizes of the input sorted sets, and M being the number of elements in the resulting sorted set.",
     "arguments": [
       {
@@ -2947,7 +2947,7 @@
     "group": "sorted_set"
   },
   "SCAN": {
-    "summary": "Incrementally iterate the keys space",
+    "summary": "增量迭代key",
     "complexity": "O(1) for every call. O(N) for a complete iteration, including enough command calls for the cursor to return back to 0. N is the number of elements inside the collection.",
     "arguments": [
       {
@@ -2971,7 +2971,7 @@
     "group": "generic"
   },
   "SSCAN": {
-    "summary": "Incrementally iterate Set elements",
+    "summary": "迭代set里面的元素",
     "complexity": "O(1) for every call. O(N) for a complete iteration, including enough command calls for the cursor to return back to 0. N is the number of elements inside the collection..",
     "arguments": [
       {
@@ -2999,7 +2999,7 @@
     "group": "set"
   },
   "HSCAN": {
-    "summary": "Incrementally iterate hash fields and associated values",
+    "summary": "迭代hash里面的元素",
     "complexity": "O(1) for every call. O(N) for a complete iteration, including enough command calls for the cursor to return back to 0. N is the number of elements inside the collection..",
     "arguments": [
       {
@@ -3027,7 +3027,7 @@
     "group": "hash"
   },
   "ZSCAN": {
-    "summary": "Incrementally iterate sorted sets elements and associated scores",
+    "summary": "迭代sorted sets里面的元素",
     "complexity": "O(1) for every call. O(N) for a complete iteration, including enough command calls for the cursor to return back to 0. N is the number of elements inside the collection..",
     "arguments": [
       {

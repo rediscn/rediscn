@@ -7,21 +7,23 @@ disqusUrl: http://redis.cn/commands/pexpireat.html
 commandsType: keys
 ---
 
-`PEXPIREAT` has the same effect and semantic as `EXPIREAT`, but the Unix time at
-which the key will expire is specified in milliseconds instead of seconds.
+`PEXPIREAT` 这个命令和[EXPIREAT](/commands/expireat.html)命令类似，但它以毫秒为单位设置 key 的过期 `unix` 时间戳，而不是像[EXPIREAT](/commands/expireat.html)那样，以秒为单位。
 
-@return
+##返回值
 
-@integer-reply, specifically:
+[integer-reply](/topics/protocol.html#integer-reply), 只有以下两种值:
 
-* `1` if the timeout was set.
-* `0` if `key` does not exist or the timeout could not be set (see: `EXPIRE`).
+- 如果生存时间设置成功，返回 1 。
+- 当 key 不存在或没办法设置生存时间时，返回 0 。 (查看: [EXPIRE](/commands/expire.html)命令获取更多信息).
 
-@examples
+##例子
 
-```cli
-SET mykey "Hello"
-PEXPIREAT mykey 1555555555005
-TTL mykey
-PTTL mykey
-```
+	redis> SET mykey "Hello"
+	OK
+	redis> PEXPIREAT mykey 1555555555005
+	(integer) 1
+	redis> TTL mykey
+	(integer) 192569170
+	redis> PTTL mykey
+	(integer) 192569169649
+	redis> 

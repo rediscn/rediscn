@@ -7,18 +7,25 @@ disqusUrl: http://redis.cn/commands/lpop.html
 commandsType: lists
 ---
 
-Removes and returns the first element of the list stored at `key`.
+移除并且返回 key 对应的 list 的第一个元素。
 
-@return
+## 返回值
 
-@bulk-string-reply: the value of the first element, or `nil` when `key` does not exist.
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply): 返回第一个元素的值，或者当 key 不存在时返回 nil。
 
-@examples
+## 例子
 
-```cli
-RPUSH mylist "one"
-RPUSH mylist "two"
-RPUSH mylist "three"
-LPOP mylist
-LRANGE mylist 0 -1
-```
+	redis> RPUSH mylist "one"
+	(integer) 1
+	redis> RPUSH mylist "two"
+	(integer) 2
+	redis> RPUSH mylist "three"
+	(integer) 3
+	redis> LPOP mylist
+	"one"
+	redis> LRANGE mylist 0 -1
+	1) "two"
+	2) "three"
+	redis> 
+
+

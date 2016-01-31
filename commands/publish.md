@@ -7,8 +7,8 @@ disqusUrl: http://redis.cn/commands/publish.html
 commandsType: pubsub
 ---
 
-Posts a message to the given channel.
+将信息 message 发送到指定的频道 channel
 
-@return
+返回值
 
-@integer-reply: the number of clients that received the message.
+[integer-reply](/topics/protocol.html#integer-reply): 收到消息的客户端数量。
