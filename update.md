@@ -8,6 +8,7 @@ disqusUrl: http://redis.cn/update.html
 
 redis中文网更新日志
 ===
+
 ## 2016年1月31日
 
 1、更新redis.cn整站内容，使用markdown语法制作。
