@@ -28,14 +28,14 @@ redis中文网更新日志
 
 ## 2015年1月27日
 
-1、更新[PFADD](/commands/pfadd.html)相关命令
-2、更新[PFCOUNT](/commands/pfcount.html)页面
+1、更新[PFADD](/commands/pfadd.html)相关命令<br/>
+2、更新[PFCOUNT](/commands/pfcount.html)页面<br/>
 3、更新[PFMERGE](/commands/pfmerge.html)页面
 
 ## 2015年1月17日
 
-1、新增hyperLogLog相关命令
-2、更新下载页面
+1、新增hyperLogLog相关命令<br/>
+2、更新下载页面<br/>
 3、更新客户端页面
 
 ## 2014年12月16日
@@ -61,66 +61,66 @@ redis中文网更新日志
 
 ## 2014年3月7日
 
-1、更新首页和下载页里redis的最新版本2.8.7。
+1、更新首页和下载页里redis的最新版本2.8.7。<br/>
 2、更新SCAN命令。
 
 ## 2014年2月27日
 
-1、更新Redis 集群教程 
+1、更新Redis 集群教程 <br/>
 2、添加[PUBSUB](/commands/pubsub.html)、[CONFIG REWRITE](/commands/config-rewrite.html)、[CLIENT PAUSE](/commands/client-pause.html)命令
 
 ## 2014年2月21日
 
-1、更新首页和下载页里redis的最新版本2.8.6。
+1、更新首页和下载页里redis的最新版本2.8.6。<br/>
 2、添加cluster介绍
 
 ## 2014年2月10日
 
-1、更新首页和下载页里redis的最新版本2.8.5。
+1、更新首页和下载页里redis的最新版本2.8.5。<br/>
 2、下架新年祝福广告。
 
 ## 2014年1月20日
 
-1、更新首页和下载页里redis的最新版本2.8.4。
-2、更新RPUSH命令
+1、更新首页和下载页里redis的最新版本2.8.4。<br/>
+2、更新RPUSH命令<br/>
 3、修改分享插件放置页面底部。
 
 ## 2013年12月17日
 
-1、更新首页和下载页里redis的最新版本2.8.3。
-2、更新FAQ
+1、更新首页和下载页里redis的最新版本2.8.3。<br/>
+2、更新FAQ<br/>
 3、更新keys系列命令。
 
 ## 2013年12月4日
 
-1、更新首页和下载页里redis的最新版本2.8.2。
-2、更新set系列命令。
-3、更新数据类型介绍文档。
+1、更新首页和下载页里redis的最新版本2.8.2。<br/>
+2、更新set系列命令。<br/>
+3、更新数据类型介绍文档。<br/>
 4、更新信号处理文档。
 
 ## 2013年9月29日
 
-1、更新BRPOPLPUSH命令。
-2、更新LPOP命令。
-3、更新RPOP命令。
-4、更新SAVE命令。
-5、更新lpushx命令。
-6、更新MONITOR命令。
-7、更新EXPIREAT命令。
-8、更新DUMP命令。
+1、更新BRPOPLPUSH命令。<br/>
+2、更新LPOP命令。<br/>
+3、更新RPOP命令。<br/>
+4、更新SAVE命令。<br/>
+5、更新lpushx命令。<br/>
+6、更新MONITOR命令。<br/>
+7、更新EXPIREAT命令。<br/>
+8、更新DUMP命令。<br/>
 9、更新MIGRATE命令。
 
 ## 2013年9月17日
 
-1、更新OBJECT命令。
-2、更新SHUTDOWN命令。
+1、更新OBJECT命令。<br/>
+2、更新SHUTDOWN命令。<br/>
 3、更新SINTER命令。
 
 ## 2013年9月12日
 
-1、更新首页和下载页里redis的最新版本2.6.16。
-2、更新BLPOP命令。
-3、更新BRPOP命令。
+1、更新首页和下载页里redis的最新版本2.6.16。<br/>
+2、更新BLPOP命令。<br/>
+3、更新BRPOP命令。<br/>
 4、更新SISMEMBER命令。
 
 ## 2013年8月22日
@@ -129,11 +129,11 @@ redis中文网更新日志
 
 ## 2013年8月12日
 
-1、更新LINDEX命令。
-2、更新LINSERT命令。
-3、更新LREM命令。
-4、更新LSET命令。
-5、更新LRANGE命令。
+1、更新LINDEX命令。<br/>
+2、更新LINSERT命令。<br/>
+3、更新LREM命令。<br/>
+4、更新LSET命令。<br/>
+5、更新LRANGE命令。<br/>
 6、更新LLEN命令。
 
 ## 2013年7月31日
@@ -142,25 +142,25 @@ redis中文网更新日志
 
 ## 2013年7月22日
 
-1、更新首页和下载页里redis的最新版本2.6.14。
+1、更新首页和下载页里redis的最新版本2.6.14。<br/>
 2、更新RPUSHX命令。
 
 ## 2013年4月1日
 
-1、更新首页和下载页里redis的最新版本2.6.12。
-2、临时增加愚人节快乐图片4秒。
+1、更新首页和下载页里redis的最新版本2.6.12。<br/>
+2、临时增加愚人节快乐图片4秒。<br/>
 3、添加更新日志页面的底部评论。
 
 ## 2013年3月26日
 
-1、更新首页翻译，添加遵守BSD协议部分。
-2、更新APPEND命令。
+1、更新首页翻译，添加遵守BSD协议部分。<br/>
+2、更新APPEND命令。<br/>
 3、更新redis命令页面，修改论坛回复后邮件提示的导航地址错误。
 
 ## 2013年3月12日
 
-1、跟进redis.io新添加命令incrbyfloat、hincrbyfloat、client-kill、client-list等。
-2、更新redis文档页面，添加大量添加数据、partitioning等页面。
+1、跟进redis.io新添加命令incrbyfloat、hincrbyfloat、client-kill、client-list等。<br/>
+2、更新redis文档页面，添加大量添加数据、partitioning等页面。<br/>
 3、更新首页和下载页里redis的最新版本2.6.11。
 
 ## 2012年3月12日
