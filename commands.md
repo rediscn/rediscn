@@ -9,9 +9,9 @@ disqusUrl: http://redis.cn/commands.html
 <nav>
           <div class='container'>
             <label>
-              <span>Filter by group:</span>
+              <span>过滤命令组:</span>
               <select class='command-reference-filter'>
-                <option value=''>All</option>
+                <option value=''>全部</option>
                 <option value='cluster'>Cluster</option>
                 <option value='connection'>Connection</option>
                 <option value='geo'>Geo</option>
@@ -28,10 +28,10 @@ disqusUrl: http://redis.cn/commands.html
                 <option value='transactions'>Transactions</option>
               </select>
             </label>
-            or
+            或者
             <label>
-              <span>search for:</span>
-              <input autofocus='autofocus' class='js-command-reference-search' placeholder='e.g. PING' />
+              <span>直接搜索:</span>
+              <input autofocus='autofocus' class='js-command-reference-search' placeholder='例如 PING' />
             </label>
           </div>
         </nav>

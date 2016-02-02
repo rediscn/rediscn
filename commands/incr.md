@@ -27,8 +27,6 @@ commandsType: strings
 
 ## 返回值
 
-@integer-reply: the value of `key` after the increment
-
 [integer-reply](/topics/protocol.html#integer-reply):执行递增操作后`key`对应的值。
 
 ## 例子
