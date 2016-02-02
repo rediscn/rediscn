@@ -17,7 +17,7 @@ Any previous time to live associated with the key is discarded on successful `SE
 
 ## Options
 
-## 操作
+## 选项
 
 Starting with Redis 2.6.12 `SET` supports a set of options that modify its
 behavior:
