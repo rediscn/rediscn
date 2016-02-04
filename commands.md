@@ -1128,7 +1128,7 @@ disqusUrl: http://redis.cn/commands.html
               </a>
             </li>
             <li data-group='list' data-name='lrange'>
-              <a href='/commands/lrange.html.html'>
+              <a href='/commands/lrange.html'>
                 <span class='command'>
                   LRANGE
                   <span class='args'>
