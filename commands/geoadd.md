@@ -7,54 +7,43 @@ disqusUrl: http://redis.cn/commands/geoadd.html
 commandsType: geo
 ---
 
-Adds the specified geospatial items (latitude, longitude, name) to the specified
-key. Data is stored into the key as a sorted set, in a way that makes it possible to later retrieve items using a query by radius with the `GEORADIUS` or `GEORADIUSBYMEMBER` commands.
+将指定的地理空间位置（纬度、经度、名称）添加到指定的`key`中。这些数据将会存储到`sorted set`这样的目的是为了方便使用[GEORADIUS](/commands/georadius.html)或者[GEORADIUSBYMEMBER](/commands/georadiusbymember.html)命令对数据进行半径查询等操作。
 
-The command takes arguments in the standard format x,y so the longitude must
-be specified before the latitude. There are limits to the coordinates that
-can be indexed: areas very near to the poles are not indexable. The exact
-limits, as specified by EPSG:900913 / EPSG:3785 / OSGEO:41001 are the following:
+该命令以采用标准格式的参数x,y,所以经度必须在纬度之前。这些坐标的限制是可以被编入索引的，区域面积可以很接近极点但是不能索引。具体的限制，由EPSG:900913 / EPSG:3785 / OSGEO:41001 规定如下：
 
-* Valid longitudes are from -180 to 180 degrees.
-* Valid latitudes are from -85.05112878 to 85.05112878 degrees.
+* 有效的经度从-180度到180度。
+* 有效的纬度从-85.05112878度到85.05112878度。
 
-The command will report an error when the user attempts to index coordinates outside the specified ranges.
+当坐标位置超出上述指定范围时，该命令将会返回一个错误。
 
-How does it work?
+它是如何工作的？
 ---
 
-The way the sorted set is populated is using a technique called
-[Geohash](https://en.wikipedia.org/wiki/Geohash). Latitude and Longitude
-bits are interleaved in order to form an unique 52 bit integer. We know
-that a sorted set double score can represent a 52 bit integer without losing
-precision.
+sorted set使用一种称为[Geohash](https://en.wikipedia.org/wiki/Geohash)的技术进行填充。经度和纬度的位是交错的，以形成一个独特的52位整数. 我们知道，一个sorted set 的double score可以代表一个52位的整数，而不会失去精度。
 
-This format allows for radius querying by checking the 1+8 areas needed
-to cover the whole radius, and discarding elements outside the radius.
-The areas are checked by calculating the range of the box covered removing
-enough bits from the less significant part of the sorted set score, and
-computing the score range to query in the sorted set for each area.
+这种格式允许半径查询检查的1 + 8个领域需要覆盖整个半径，并丢弃元素以外的半径。通过计算该区域的范围，通过计算所涵盖的范围，从不太重要的部分的排序集的得分，并计算得分范围为每个区域的sorted set中的查询。
 
-What Earth model does it use?
+使用什么样的地球模型（Earth model）？
 ---
 
-It just assumes that the Earth is a sphere, since the used distance formula
-is the Haversine formula. This formula is only an approximation when applied to the Earth, which is not a perfect sphere. The introduced errors are not an issue when used in the context of social network sites that need to query by radius
-and most other applications. However in the worst case the error may be up to
-0.5%, so you may want to consider other systems for error-critical applications.
+这只是假设地球是一个球体，因为使用的距离公式是Haversine公式。这个公式仅适用于地球，而不是一个完美的球体。当在社交网站和其他大多数需要查询半径的应用中使用时，这些偏差都不算问题。但是，在最坏的情况下的偏差可能是0.5%，所以一些地理位置很关键的应用还是需要谨慎考虑。
 
-@return
+## 返回值 ##
 
-@integer-reply, specifically:
+[integer-reply](/topics/protocol.html#integer-reply), 具体的:
 
-* The number of elements added to the sorted set, not including elements
-  already existing for which the score was updated.
+* 添加到sorted set元素的数目，但不包括已更新score的元素。
 
-@examples
+## 例子
 
-```cli
-GEOADD Sicily 13.361389 38.115556 "Palermo" 15.087269 37.502669 "Catania"
-GEODIST Sicily Palermo Catania
-GEORADIUS Sicily 15 37 100 km
-GEORADIUS Sicily 15 37 200 km
-```
+
+	redis> GEOADD Sicily 13.361389 38.115556 "Palermo" 15.087269 37.502669 "Catania"
+	(integer) 2
+	redis> GEODIST Sicily Palermo Catania
+	"166274.15156960039"
+	redis> GEORADIUS Sicily 15 37 100 km
+	1) "Catania"
+	redis> GEORADIUS Sicily 15 37 200 km
+	1) "Palermo"
+	2) "Catania"
+	redis> 

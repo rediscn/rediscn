@@ -11,7 +11,8 @@ commandsType: keys
 
 ## 返回值
 
-整数：被删除的keys的数量
+[integer-reply](/topics/protocol.html#integer-reply)：
+被删除的keys的数量
 
 ## 例子
 
