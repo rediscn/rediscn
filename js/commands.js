@@ -3056,6 +3056,10 @@ var rediscn_commands={
   }
 };
 
+function isArray(obj) {      
+      return Object.prototype.toString.call(obj) === '[object Array]';       
+}
+
 var curCommand=''; 
 
 $(document).ready(function(){
@@ -3084,12 +3088,19 @@ function getCommandArgs(command)
 			var argItem = command.arguments[i];
 			
 			if(argItem.type == 'key'){
-				if(returnArgs==""){
-					returnArgs += argItem.name;
+				if(argItem.multiple){
+					if(returnArgs==""){
+						returnArgs += argItem.name + " ["+argItem.name+" ...]";
+					}else{
+						returnArgs += " " + argItem.name + " ["+argItem.name+" ...]";
+					}
 				}else{
-					returnArgs += " " + argItem.name;
+					if(returnArgs==""){
+						returnArgs += argItem.name;
+					}else{
+						returnArgs += " " + argItem.name;
+					}
 				}
-				
 			}else if(argItem.enum){
 				var enumStr = "";
 				for(var j=0;j<argItem.enum.length;j++){
@@ -3106,8 +3117,12 @@ function getCommandArgs(command)
 			}else if(argItem.command){ 
 				var enumStr = argItem.command;
 				if(argItem.name){
-					for(var j=0;j<argItem.name.length;j++){
-						enumStr += " " +argItem.name[j];
+					if(isArray(argItem.name)){ // 如果是数组
+						for(var j=0;j<argItem.name.length;j++){
+							enumStr += " " +argItem.name[j];
+						}
+					}else{
+						enumStr += " " +argItem.name;
 					}
 				}
 				
@@ -3119,12 +3134,20 @@ function getCommandArgs(command)
 			}else{
 				var enumStr = "";
 				if(argItem.name){
-					for(var j=0;j<argItem.name.length;j++){
-						if(j>0){
-							enumStr += " ";
+					if(isArray(argItem.name)){ // 如果是数组
+						for(var j=0;j<argItem.name.length;j++){
+							if(j>0){
+								enumStr += " ";
+							}
+							enumStr += argItem.name[j];
 						}
-						enumStr += argItem.name[j];
-					}
+				  }else{
+				  	enumStr += argItem.name;
+				  }
+				  
+				  if(argItem.multiple){ // 重复
+				  	enumStr = enumStr + " ["+enumStr+" ...]";
+				  }
 				}
 				if(argItem.optional === true){
 					returnArgs += " [" + enumStr + "]";
