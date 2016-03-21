@@ -7,34 +7,37 @@ disqusUrl: http://redis.cn/commands/geodist.html
 commandsType: geo
 ---
 
-Return the distance between two members in the geospatial index represented by the sorted set.
+返回两个给定位置之间的距离。
 
-Given a sorted set representing a geospatial index, populated using the `GEOADD` command, the command returns the distance between the two specified members in the specified unit.
+如果两个位置之间的其中一个不存在， 那么命令返回空值。
 
-If one or both the members are missing, the command returns NULL.
+指定单位的参数 unit 必须是以下单位的其中一个：
 
-The unit must be one of the following, and defaults to meters:
+* **m** 表示单位为米。
+* **km** 表示单位为千米。
+* **mi** 表示单位为英里。
+* **ft** 表示单位为英尺。
 
-* **m** for meters.
-* **km** for kilometers.
-* **mi** for miles.
-* **ft** for feet.
+如果用户没有显式地指定单位参数， 那么 `GEODIST` 默认使用米作为单位。
 
-The distance is computed assuming that the Earth is a perfect sphere, so errors up to 0.5% are possible in edge cases.
+`GEODIST` 命令在计算距离时会假设地球为完美的球形， 在极限情况下， 这一假设最大会造成 0.5% 的误差。
 
-@return
+## 返回值 ##
 
-@bulk-string-reply, specifically:
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply), 具体的:
 
-The command returns the distance as a double (represented as a string)
-in the specified unit, or NULL if one or both the elements are missing.
+计算出的距离会以双精度浮点数的形式被返回。 如果给定的位置元素不存在， 那么命令返回空值。
 
-@examples
+## 例子
 
-```cli
-GEOADD Sicily 13.361389 38.115556 "Palermo" 15.087269 37.502669 "Catania"
-GEODIST Sicily Palermo Catania
-GEODIST Sicily Palermo Catania km
-GEODIST Sicily Palermo Catania mi
-GEODIST Sicily Foo Bar
-```
+	redis> GEOADD Sicily 13.361389 38.115556 "Palermo" 15.087269 37.502669 "Catania"
+	(integer) 2
+	redis> GEODIST Sicily Palermo Catania
+	"166274.15156960039"
+	redis> GEODIST Sicily Palermo Catania km
+	"166.27415156960038"
+	redis> GEODIST Sicily Palermo Catania mi
+	"103.31822459492736"
+	redis> GEODIST Sicily Foo Bar
+	(nil)
+	redis> 

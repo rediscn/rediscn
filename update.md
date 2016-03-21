@@ -9,6 +9,11 @@ disqusUrl: http://redis.cn/update.html
 redis中文网更新日志
 ===
 
+## 2016年3月21日
+
+1、翻译[GEO](/commands.html#geo)相关命令。
+2、优化翻译[commands](/commands.html)页面。
+
 ## 2016年2月2日
 
 1、合并[cane1991](https://github.com/cane1991)提交的[INCR](/commands/incr.html)翻译request。<br/>

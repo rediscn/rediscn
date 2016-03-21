@@ -700,7 +700,7 @@ excerpt : redis命令列表，显示全部已知的redis命令，redis集群相�
                     longitude latitude member [longitude latitude member ...]
                   </span>
                 </span>
-                <span class='summary'>Add one or more geospatial items in the geospatial index represented using a sorted set</span>
+                <span class='summary'>添加一个或多个地理空间位置到sorted set</span>
               </a>
             </li>
             <li data-group='geo' data-name='geohash'>
@@ -712,7 +712,7 @@ excerpt : redis命令列表，显示全部已知的redis命令，redis集群相�
                     member [member ...]
                   </span>
                 </span>
-                <span class='summary'>Returns members of a geospatial index as standard geohash strings</span>
+                <span class='summary'>返回一个标准的地理空间的Geohash字符串</span>
               </a>
             </li>
             <li data-group='geo' data-name='geopos'>
@@ -724,7 +724,7 @@ excerpt : redis命令列表，显示全部已知的redis命令，redis集群相�
                     member [member ...]
                   </span>
                 </span>
-                <span class='summary'>Returns longitude and latitude of members of a geospatial index</span>
+                <span class='summary'>返回地理空间的经纬度</span>
               </a>
             </li>
             <li data-group='geo' data-name='geodist'>
@@ -738,7 +738,7 @@ excerpt : redis命令列表，显示全部已知的redis命令，redis集群相�
                     [unit]
                   </span>
                 </span>
-                <span class='summary'>Returns the distance between two members of a geospatial index</span>
+                <span class='summary'>返回两个地理空间之间的距离</span>
               </a>
             </li>
             <li data-group='geo' data-name='georadius'>
@@ -757,7 +757,7 @@ excerpt : redis命令列表，显示全部已知的redis命令，redis集群相�
                     [COUNT count]
                   </span>
                 </span>
-                <span class='summary'>Query a sorted set representing a geospatial index to fetch members matching a given maximum distance from a point</span>
+                <span class='summary'>查询指定半径内所有的地理空间元素的集合。</span>
               </a>
             </li>
             <li data-group='geo' data-name='georadiusbymember'>
@@ -775,7 +775,7 @@ excerpt : redis命令列表，显示全部已知的redis命令，redis集群相�
                     [COUNT count]
                   </span>
                 </span>
-                <span class='summary'>Query a sorted set representing a geospatial index to fetch members matching a given maximum distance from a member</span>
+                <span class='summary'>查询指定半径内匹配到的最大距离的一个地理空间元素。</span>
               </a>
             </li>
             <li data-group='string' data-name='get'>
@@ -786,7 +786,7 @@ excerpt : redis命令列表，显示全部已知的redis命令，redis集群相�
                     key
                   </span>
                 </span>
-                <span class='summary'>Get the value of a key</span>
+                <span class='summary'>返回key的value</span>
               </a>
             </li>
             <li data-group='string' data-name='getbit'>
@@ -980,7 +980,7 @@ excerpt : redis命令列表，显示全部已知的redis命令，redis集群相�
                     field
                   </span>
                 </span>
-                <span class='summary'>Get the length of the value of a hash field</span>
+                <span class='summary'>获取hash里面指定field的长度</span>
               </a>
             </li>
             <li data-group='hash' data-name='hvals'>
@@ -1299,7 +1299,7 @@ excerpt : redis命令列表，显示全部已知的redis命令，redis集群相�
                     milliseconds
                   </span>
                 </span>
-                <span class='summary'>Set a key's time to live in milliseconds</span>
+                <span class='summary'>设置key的有效时间以毫秒为单位</span>
               </a>
             </li>
             <li data-group='generic' data-name='pexpireat'>
@@ -1311,7 +1311,7 @@ excerpt : redis命令列表，显示全部已知的redis命令，redis集群相�
                     milliseconds-timestamp
                   </span>
                 </span>
-                <span class='summary'>Set the expiration for a key as a UNIX timestamp specified in milliseconds</span>
+                <span class='summary'>设置key的到期UNIX时间戳以毫秒为单位</span>
               </a>
             </li>
             <li data-group='hyperloglog' data-name='pfadd'>
@@ -1323,7 +1323,7 @@ excerpt : redis命令列表，显示全部已知的redis命令，redis集群相�
                     element [element ...]
                   </span>
                 </span>
-                <span class='summary'>Adds the specified elements to the specified HyperLogLog.</span>
+                <span class='summary'>将指定元素添加到HyperLogLog</span>
               </a>
             </li>
             <li data-group='hyperloglog' data-name='pfcount'>

@@ -7,52 +7,68 @@ disqusUrl: http://redis.cn/commands/georadius.html
 commandsType: geo
 ---
 
-Return the members of a sorted set populated with geospatial information using `GEOADD`, which are within the borders of the area specified with the center location and the maximum distance from the center (the radius).
+以给定的经纬度为中心， 返回键包含的位置元素当中， 与中心的距离不超过给定最大距离的所有位置元素。
 
-The common use case for this command is to retrieve geospatial items near a specified point and no far than a given amount of meters (or other units). This allows, for example, to suggest mobile users of an application nearby places.
+范围可以使用以下其中一个单位：
 
-The radius is specified in one of the following units:
+* **m** 表示单位为米。
+* **km** 表示单位为千米。
+* **mi** 表示单位为英里。
+* **ft** 表示单位为英尺。
 
-* **m** for meters.
-* **km** for kilometers.
-* **mi** for miles.
-* **ft** for feet.
+在给定以下可选项时， 命令会返回额外的信息：
 
-The command optionally returns additional information using the following options:
+* `WITHDIST`: 在返回位置元素的同时， 将位置元素与中心之间的距离也一并返回。 距离的单位和用户给定的范围单位保持一致。
+* `WITHCOORD`: 将位置元素的经度和维度也一并返回。
+* `WITHHASH`: 以 52 位有符号整数的形式， 返回位置元素经过原始 geohash 编码的有序集合分值。 这个选项主要用于底层应用或者调试， 实际中的作用并不大。
 
-* `WITHDIST`: Also return the distance of the returned items from the specified center. The distance is returned in the same unit as the unit specified as the radius argument of the command.
-* `WITHCOORD`: Also return the longitude,latitude coordinates of the matching items.
-* `WITHHASH`: Also return the raw geohash-encoded sorted set score of the item, in the form of a 52 bit unsigned integer. This is only useful for low level hacks or debugging and is otherwise of little interest for the general user.
+命令默认返回未排序的位置元素。 通过以下两个参数， 用户可以指定被返回位置元素的排序方式：
 
-The command default is to return unsorted items. Two different sorting methods can be invoked using the following two options:
+* `ASC`: 根据中心的位置， 按照从近到远的方式返回位置元素。
+* `DESC`: 根据中心的位置， 按照从远到近的方式返回位置元素。
 
-* `ASC`: Sort returned items from the nearest to the fairest, relative to the center.
-* `DESC`: Sort returned items from the fairest to the nearest, relative to the center.
+在默认情况下， GEORADIUS 命令会返回所有匹配的位置元素。 虽然用户可以使用 **COUNT `<count>`** 选项去获取前 N 个匹配元素， 但是因为命令在内部可能会需要对所有被匹配的元素进行处理， 所以在对一个非常大的区域进行搜索时， 即使只使用 `COUNT` 选项去获取少量元素， 命令的执行速度也可能会非常慢。 但是从另一方面来说， 使用 `COUNT` 选项去减少需要返回的元素数量， 对于减少带宽来说仍然是非常有用的。
 
-By default all the matching items are returned. It is possible to limit the results to the first N matching items by using the **COUNT `<count>`** option. However note that internally the command needs to perform an effort proportional to the number of items matching the specified area, so to query very large areas with a very small `COUNT` option may be slow even if just a few results are returned. On the other hand `COUNT` can be a very effective way to reduce bandwidth usage if normally just the first results are used.
+## 返回值 ##
 
-@return
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply), 具体的:
 
-@array-reply, specifically:
+* 在没有给定任何 `WITH` 选项的情况下， 命令只会返回一个像 ["New York","Milan","Paris"] 这样的线性（linear）列表。
+* 在指定了 `WITHCOORD` 、 `WITHDIST` 、 `WITHHASH` 等选项的情况下， 命令返回一个二层嵌套数组， 内层的每个子数组就表示一个元素。
 
-* Without any `WITH` option specified, the command just returns a linear array like ["New York","Milan","Paris"].
-* If `WITHCOORD`, `WITHDIST` or `WITHHASH` options are specified, the command returns an array of arrays, where each sub-array represents a single item.
+在返回嵌套数组时， 子数组的第一个元素总是位置元素的名字。 至于额外的信息， 则会作为子数组的后续元素， 按照以下顺序被返回：
 
-When additional information is returned as an array of arrays for each item, the first item in the sub-array is always the name of the returned item. The other information is returned in the following order as successive elements of the sub-array.
+1. 以浮点数格式返回的中心与位置元素之间的距离， 单位与用户指定范围时的单位一致。
+2. geohash 整数。
+3. 由两个元素组成的坐标，分别为经度和纬度。
 
-1. The distance from the center as a floating point number, in the same unit specified in the radius.
-2. The geohash integer.
-3. The coordinates as a two items x,y array (longitude,latitude).
-
-So for example the command `GEORADIUS Sicily 15 37 200 km WITHCOORD WITHDIST` will return each item in the following way:
+举个例子， `GEORADIUS Sicily 15 37 200 km WITHCOORD WITHDIST` 这样的命令返回的每个子数组都是类似以下格式的：
 
     ["Palermo","190.4424",["13.361389338970184","38.115556395496299"]]
 
-@examples
+## 例子
 
-```cli
-GEOADD Sicily 13.361389 38.115556 "Palermo" 15.087269 37.502669 "Catania"
-GEORADIUS Sicily 15 37 200 km WITHDIST
-GEORADIUS Sicily 15 37 200 km WITHCOORD
-GEORADIUS Sicily 15 37 200 km WITHDIST WITHCOORD
-```
+	redis> GEOADD Sicily 13.361389 38.115556 "Palermo" 15.087269 37.502669 "Catania"
+	(integer) 2
+	redis> GEORADIUS Sicily 15 37 200 km WITHDIST
+	1) 1) "Palermo"
+	   2) "190.4424"
+	2) 1) "Catania"
+	   2) "56.4413"
+	redis> GEORADIUS Sicily 15 37 200 km WITHCOORD
+	1) 1) "Palermo"
+	   2) 1) "13.361389338970184"
+	      2) "38.115556395496299"
+	2) 1) "Catania"
+	   2) 1) "15.087267458438873"
+	      2) "37.50266842333162"
+	redis> GEORADIUS Sicily 15 37 200 km WITHDIST WITHCOORD
+	1) 1) "Palermo"
+	   2) "190.4424"
+	   3) 1) "13.361389338970184"
+	      2) "38.115556395496299"
+	2) 1) "Catania"
+	   2) "56.4413"
+	   3) 1) "15.087267458438873"
+	      2) "37.50266842333162"
+	redis> 
