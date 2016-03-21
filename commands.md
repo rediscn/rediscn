@@ -4,14 +4,20 @@ title: Redis命令（commands）  -- redis中文资料
 permalink: commands.html
 disqusIdentifier: commands
 disqusUrl: http://redis.cn/commands.html
+excerpt : redis命令列表，显示全部已知的redis命令，redis集群相关命令，近期也会翻译过来。
 ---
 <section id='commands'>
+<div class='container'>
+	<div class='text' style='text-align:left;'>
+		 &nbsp; &nbsp;redis命令十分丰富，包括的命令组有Cluster、Connection、Geo、Hashes、HyperLogLog、Keys、Lists、Pub/Sub、Scripting、Sets、Sorted Sets、Strings、Transactions。您可以通过下面的检索功能快速查找命令。
+	</div>
+</div>
 <nav>
           <div class='container'>
             <label>
               <span>过滤命令组:</span>
               <select class='command-reference-filter'>
-                <option value=''>全部</option>
+                <option value=''>全部命令</option>
                 <option value='cluster'>Cluster</option>
                 <option value='connection'>Connection</option>
                 <option value='geo'>Geo</option>
@@ -57,7 +63,7 @@ disqusUrl: http://redis.cn/commands.html
                     password
                   </span>
                 </span>
-                <span class='summary'>验证服务器</span>
+                <span class='summary'>验证服务器命令</span>
               </a>
             </li>
             <li data-group='server' data-name='bgrewriteaof'>
@@ -67,7 +73,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>异步重写追加文件</span>
+                <span class='summary'>异步重写追加文件命令</span>
               </a>
             </li>
             <li data-group='server' data-name='bgsave'>
@@ -523,7 +529,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>使服务器崩溃</span>
+                <span class='summary'>使服务器崩溃命令</span>
               </a>
             </li>
             <li data-group='string' data-name='decr'>
@@ -672,7 +678,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>清空所有数据库</span>
+                <span class='summary'>清空所有数据库命令</span>
               </a>
             </li>
             <li data-group='server' data-name='flushdb'>
@@ -682,7 +688,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>清空当前的数据库</span>
+                <span class='summary'>清空当前的数据库命令</span>
               </a>
             </li>
             <li data-group='geo' data-name='geoadd'>
@@ -1986,7 +1992,7 @@ disqusUrl: http://redis.cn/commands.html
                   <span class='args'>
                   </span>
                 </span>
-                <span class='summary'>取消事务</span>
+                <span class='summary'>取消事务命令</span>
               </a>
             </li>
             <li data-group='generic' data-name='wait'>
