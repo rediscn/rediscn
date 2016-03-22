@@ -12,7 +12,7 @@ commandsType: strings
 
 ## 返回值
 
-[整数回复（Integer reply）](/topics/protocol.html#integer-reply)：返回append后字符串值（value）的长度。
+[Integer reply](/topics/protocol.html#integer-reply)：返回append后字符串值（value）的长度。
 
 ##例子
 
