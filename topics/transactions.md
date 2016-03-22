@@ -6,50 +6,38 @@ disqusIdentifier: transactions
 disqusUrl: http://redis.cn/topics/transactions.html
 ---
 
-Transactions
+事务
 ============
 
-`MULTI`, `EXEC`, `DISCARD` and `WATCH` are the foundation of
-transactions in Redis.  They allow the execution of a group of commands
-in a single step, with two important guarantees:
+[MULTI](/commands/multi.html) 、 [EXEC](/commands/exec.html) 、 [DISCARD](/commands/discard.html) 和 [WATCH](/commands/watch.html) 是 Redis 事务相关的命令。事务可以一次执行多个命令， 并且带有以下两个重要的保证：
 
-* All the commands in a transaction are serialized and executed
-sequentially. It can never happen that a request issued by another
-client is served **in the middle** of the execution of a Redis
-transaction. This guarantees that the commands are executed as a single
-isolated operation.
+* 事务是一个单独的隔离操作：事务中的所有命令都会序列化、按顺序地执行。事务在执行的过程中，不会被其他客户端发送来的命令请求所打断。
 
-* Either all of the commands or none are processed, so a Redis
-transaction is also atomic. The `EXEC` command
-triggers the execution of all the commands in the transaction, so
-if a client loses the connection to the server in the context of a
-transaction before calling the `MULTI` command none of the operations
-are performed, instead if the `EXEC` command is called, all the
-operations are performed. When using the
-[append-only file](/topics/persistence#append-only-file) Redis makes sure
-to use a single write(2) syscall to write the transaction on disk.
-However if the Redis server crashes or is killed by the system administrator
-in some hard way it is possible that only a partial number of operations
-are registered. Redis will detect this condition at restart, and will exit with an error. Using the `redis-check-aof` tool it is possible to fix the
-append only file that will remove the partial transaction so that the
-server can start again.
+* 事务是一个原子操作：事务中的命令要么全部被执行，要么全部都不执行。
 
-Starting with version 2.2, Redis allows for an extra guarantee to the
-above two, in the form of optimistic locking in a way very similar to a
-check-and-set (CAS) operation.
-This is documented [later](#cas) on this page.
+[EXEC](/commands/exec.html) 命令负责触发并执行事务中的所有命令：
 
-## Usage
+* 如果客户端在使用 [MULTI](/commands/multi.html) 开启了一个事务之后，却因为断线而没有成功执行 [EXEC](/commands/exec.html) ，那么事务中的所有命令都不会被执行。
+* 另一方面，如果客户端成功在开启事务之后执行 [EXEC](/commands/exec.html) ，那么事务中的所有命令都会被执行。
 
-A Redis transaction is entered using the `MULTI` command. The command
-always replies with `OK`. At this point the user can issue multiple
-commands. Instead of executing these commands, Redis will queue
-them. All the commands are executed once `EXEC` is called.
+当使用 AOF 方式做持久化的时候， Redis 会使用单个 write(2) 命令将事务写入到磁盘中。
 
-Calling `DISCARD` instead will flush the transaction queue and will exit
-the transaction.
+然而，如果 Redis 服务器因为某些原因被管理员杀死，或者遇上某种硬件故障，那么可能只有部分事务命令会被成功写入到磁盘中。
 
-The following example increments keys `foo` and `bar` atomically.
+如果 Redis 在重新启动时发现 AOF 文件出了这样的问题，那么它会退出，并汇报一个错误。
+
+使用`redis-check-aof`程序可以修复这一问题：它会移除 AOF 文件中不完整事务的信息，确保服务器可以顺利启动。
+
+从 2.2 版本开始，Redis 还可以通过乐观锁（optimistic lock）实现 CAS （check-and-set）操作，具体信息请参考文档的后半部分。
+
+## 用法
+
+[MULTI](/commands/multi.html) 命令用于开启一个事务，它总是返回 `OK` 。
+[MULTI](/commands/multi.html) 执行之后， 客户端可以继续向服务器发送任意多条命令， 这些命令不会立即被执行， 而是被放到一个队列中， 当 [EXEC](/commands/exec.html)命令被调用时， 所有队列中的命令才会被执行。
+
+另一方面， 通过调用 [DISCARD](/commands/discard.html) ， 客户端可以清空事务队列， 并放弃执行事务。
+
+以下是一个事务例子， 它原子地增加了 `foo` 和 `bar` 两个键的值：
 
     > MULTI
     OK
@@ -61,32 +49,26 @@ The following example increments keys `foo` and `bar` atomically.
     1) (integer) 1
     2) (integer) 1
 
-As it is possible to see from the session above, `EXEC` returns an
-array of replies, where every element is the reply of a single command
-in the transaction, in the same order the commands were issued.
+[EXEC](/commands/exec.html) 命令的回复是一个数组， 数组中的每个元素都是执行事务中的命令所产生的回复。 其中， 回复元素的先后顺序和命令发送的先后顺序一致。
 
-When a Redis connection is in the context of a `MULTI` request,
-all commands will reply with the string `QUEUED` (sent as a Status Reply
-from the point of view of the Redis protocol). A queued command is
-simply scheduled for execution when `EXEC` is called.
+当客户端处于事务状态时， 所有传入的命令都会返回一个内容为 `QUEUED` 的状态回复（status reply）， 这些被入队的命令将在 EXEC 命令被调用时执行。
 
-## Errors inside a transaction
+## 事务中的错误
 
-During a transaction it is possible to encounter two kind of command errors:
+使用事务时可能会遇上以下两种错误：
 
-* A command may fail to be queued, so there may be an error before `EXEC` is called. For instance the command may be syntactically wrong (wrong number of arguments, wrong command name, ...), or there may be some critical condition like an out of memory condition (if the server is configured to have a memory limit using the `maxmemory` directive).
-* A command may fail *after* `EXEC` is called, for instance since we performed an operation against a key with the wrong value (like calling a list operation against a string value).
+* 事务在执行 [EXEC](/commands/exec.html) 之前，入队的命令可能会出错。比如说，命令可能会产生语法错误（参数数量错误，参数名错误，等等），或者其他更严重的错误，比如内存不足（如果服务器使用 `maxmemory` 设置了最大内存限制的话）。
+* 命令可能在 [EXEC](/commands/exec.html) 调用之后失败。举个例子，事务中的命令可能处理了错误类型的键，比如将列表命令用在了字符串键上面，诸如此类。
 
-Clients used to sense the first kind of errors, happening before the `EXEC` call, by checking the return value of the queued command: if the command replies with QUEUED it was queued correctly, otherwise Redis returns an error. If there is an error while queueing a command, most clients will abort the transaction discarding it.
+对于发生在 [EXEC](/commands/exec.html) 执行之前的错误，客户端以前的做法是检查命令入队所得的返回值：如果命令入队时返回 `QUEUED` ，那么入队成功；否则，就是入队失败。如果有命令在入队时失败，那么大部分客户端都会停止并取消这个事务。
 
-However starting with Redis 2.6.5, the server will remember that there was an error during the accumulation of commands, and will refuse to execute the transaction returning also an error during `EXEC`, and discarding the transaction automatically.
+不过，从 Redis 2.6.5 开始，服务器会对命令入队失败的情况进行记录，并在客户端调用 [EXEC](/commands/exec.html) 命令时，拒绝执行并自动放弃这个事务。
 
-Before Redis 2.6.5 the behavior was to execute the transaction with just the subset of commands queued successfully in case the client called `EXEC` regardless of previous errors. The new behavior makes it much more simple to mix transactions with pipelining, so that the whole transaction can be sent at once, reading all the replies later at once.
+在 Redis 2.6.5 以前， Redis 只执行事务中那些入队成功的命令，而忽略那些入队失败的命令。 而新的处理方式则使得在流水线（pipeline）中包含事务变得简单，因为发送事务和读取事务的回复都只需要和服务器进行一次通讯。
 
-Errors happening *after* `EXEC` instead are not handled in a special way: all the other commands will be executed even if some command fails during the transaction.
+至于那些在 [EXEC](/commands/exec.html) 命令执行之后所产生的错误， 并没有对它们进行特别处理： 即使事务中有某个/某些命令在执行时产生了错误， 事务中的其他命令仍然会继续执行。
 
-This is more clear on the protocol level. In the following example one
-command will fail when executed even if the syntax is right:
+从协议的角度来看这个问题，会更容易理解一些。 以下例子中， [LPOP](/commands/lpop.html) 命令的执行将出错， 尽管调用它的语法是正确的：
 
     Trying 127.0.0.1...
     Connected to localhost.
@@ -103,43 +85,33 @@ command will fail when executed even if the syntax is right:
     +OK
     -ERR Operation against a key holding the wrong kind of value
 
-`EXEC` returned two-element @bulk-string-reply where one is an `OK` code and
-the other an `-ERR` reply. It's up to the client library to find a
-sensible way to provide the error to the user.
+[EXEC](/commands/exec.html) 返回两条[bulk-string-reply](/topics/protocol.html#bulk-string-reply)： 第一条是 `OK` ，而第二条是 `-ERR` 。 至于怎样用合适的方法来表示事务中的错误， 则是由客户端自己决定的。
 
-It's important to note that **even when a command fails, all the other
-commands in the queue are processed** – Redis will _not_ stop the
-processing of commands.
+最重要的是记住这样一条， 即使事务中有某条/某些命令执行失败了， 事务队列中的其他命令仍然会继续执行 —— Redis 不会停止执行事务中的命令。
 
-Another example, again using the wire protocol with `telnet`, shows how
-syntax errors are reported ASAP instead:
+以下例子展示的是另一种情况， 当命令在入队时产生错误， 错误会立即被返回给客户端：
 
     MULTI
     +OK
     INCR a b c
     -ERR wrong number of arguments for 'incr' command
 
-This time due to the syntax error the bad `INCR` command is not queued
-at all.
+因为调用 [INCR](/commands/incr.html) 命令的参数格式不正确， 所以这个 [INCR](/commands/incr.html) 命令入队失败。
 
-## Why Redis does not support roll backs?
+## 为什么 Redis 不支持回滚（roll back）
 
-If you have a relational databases background, the fact that Redis commands
-can fail during a transaction, but still Redis will execute the rest of the
-transaction instead of rolling back, may look odd to you.
+如果你有使用关系式数据库的经验， 那么 “Redis 在事务失败时不进行回滚，而是继续执行余下的命令”这种做法可能会让你觉得有点奇怪。
 
-However there are good opinions for this behavior:
+以下是这种做法的优点：
 
-* Redis commands can fail only if called with a wrong syntax (and the problem is not detectable during the command queueing), or against keys holding the wrong data type: this means that in practical terms a failing command is the result of a programming errors, and a kind of error that is very likely to be detected during development, and not in production.
-* Redis is internally simplified and faster because it does not need the ability to roll back.
+* Redis 命令只会因为错误的语法而失败（并且这些问题不能在入队时发现），或是命令用在了错误类型的键上面：这也就是说，从实用性的角度来说，失败的命令是由编程错误造成的，而这些错误应该在开发的过程中被发现，而不应该出现在生产环境中。
+* 因为不需要对回滚进行支持，所以 Redis 的内部可以保持简单且快速。
 
-An argument against Redis point of view is that bugs happen, however it should be noted that in general the roll back does not save you from programming errors. For instance if a query increments a key by 2 instead of 1, or increments the wrong key, there is no way for a rollback mechanism to help. Given that no one can save the programmer from his errors, and that the kind of errors required for a Redis command to fail are unlikely to enter in production, we selected the simpler and faster approach of not supporting roll backs on errors.
+有种观点认为 Redis 处理事务的做法会产生 bug ， 然而需要注意的是， 在通常情况下， 回滚并不能解决编程错误带来的问题。 举个例子， 如果你本来想通过 [INCR](/commands/incr.html) 命令将键的值加上 1 ， 却不小心加上了 2 ， 又或者对错误类型的键执行了 [INCR](/commands/incr.html) ， 回滚是没有办法处理这些情况的。
 
-## Discarding the command queue
+## 放弃事务
 
-`DISCARD` can be used in order to abort a transaction. In this case, no
-commands are executed and the state of the connection is restored to
-normal.
+当执行 [DISCARD](/commands/discard.html) 命令时， 事务会被放弃， 事务队列会被清空， 并且客户端会从事务状态中退出：
 
     > SET foo 1
     OK
@@ -152,35 +124,24 @@ normal.
     > GET foo
     "1"
 
-<a name="cas"></a>
 
-## Optimistic locking using check-and-set
+## 使用 check-and-set 操作实现乐观锁
 
-`WATCH` is used to provide a check-and-set (CAS) behavior to Redis
-transactions.
+[WATCH](/commands/watch.html) 命令可以为 Redis 事务提供 check-and-set （CAS）行为。
 
-`WATCH`ed keys are monitored in order to detect changes against them. If
-at least one watched key is modified before the `EXEC` command, the
-whole transaction aborts, and `EXEC` returns a @nil-reply to notify that
-the transaction failed.
+被 [WATCH](/commands/watch.html) 的键会被监视，并会发觉这些键是否被改动过了。 如果有至少一个被监视的键在 [EXEC](/commands/exec.html) 执行之前被修改了， 那么整个事务都会被取消， [EXEC](/commands/exec.html) 返回[nil-reply](/topics/protocol.html#nil-reply)来表示事务已经失败。
 
-For example, imagine we have the need to atomically increment the value
-of a key by 1 (let's suppose Redis doesn't have `INCR`).
+举个例子， 假设我们需要原子性地为某个值进行增 1 操作（假设 [INCR](/commands/incr.html) 不存在）。
 
-The first try may be the following:
+首先我们可能会这样做：
 
     val = GET mykey
     val = val + 1
     SET mykey $val
 
-This will work reliably only if we have a single client performing the
-operation in a given time. If multiple clients try to increment the key
-at about the same time there will be a race condition. For instance,
-client A and B will read the old value, for instance, 10. The value will
-be incremented to 11 by both the clients, and finally `SET` as the value
-of the key. So the final value will be 11 instead of 12.
+上面的这个实现在只有一个客户端的时候可以执行得很好。 但是， 当多个客户端同时对同一个键进行这样的操作时， 就会产生竞争条件。举个例子， 如果客户端 A 和 B 都读取了键原来的值， 比如 10 ， 那么两个客户端都会将键的值设为 11 ， 但正确的结果应该是 12 才对。
 
-Thanks to `WATCH` we are able to model the problem very well:
+有了 [WATCH](/commands/watch.html) ， 我们就可以轻松地解决这类问题了：
 
     WATCH mykey
     val = GET mykey
@@ -189,49 +150,31 @@ Thanks to `WATCH` we are able to model the problem very well:
     SET mykey $val
     EXEC
 
-Using the above code, if there are race conditions and another client
-modifies the result of `val` in the time between our call to `WATCH` and
-our call to `EXEC`, the transaction will fail.
+使用上面的代码， 如果在 [WATCH](/commands/watch.html) 执行之后， [EXEC](/commands/exec.html) 执行之前， 有其他客户端修改了 `mykey` 的值， 那么当前客户端的事务就会失败。 程序需要做的， 就是不断重试这个操作， 直到没有发生碰撞为止。
 
-We just have to repeat the operation hoping this time we'll not get a
-new race. This form of locking is called _optimistic locking_ and is
-a very powerful form of locking. In many use cases, multiple clients
-will be accessing different keys, so collisions are unlikely – usually
-there's no need to repeat the operation.
+这种形式的锁被称作乐观锁， 它是一种非常强大的锁机制。 并且因为大多数情况下， 不同的客户端会访问不同的键， 碰撞的情况一般都很少， 所以通常并不需要进行重试。
 
-## `WATCH` explained
+## 了解 `WATCH`
 
-So what is `WATCH` really about? It is a command that will
-make the `EXEC` conditional: we are asking Redis to perform
-the transaction only if no other client modified any of the
-`WATCH`ed keys. Otherwise the transaction is not entered at
-all. (Note that if you `WATCH` a volatile key and Redis expires
-the key after you `WATCH`ed it, `EXEC` will still work. [More on
-this](http://code.google.com/p/redis/issues/detail?id=270).)
+[WATCH](/commands/watch.html) 使得 [EXEC](/commands/exec.html) 命令需要有条件地执行： 事务只能在所有被监视键都没有被修改的前提下执行， 如果这个前提不能满足的话，事务就不会被执行。
+[了解更多->](http://code.google.com/p/redis/issues/detail?id=270)
 
-`WATCH` can be called multiple times. Simply all the `WATCH` calls will
-have the effects to watch for changes starting from the call, up to
-the moment `EXEC` is called. You can also send any number of keys to a
-single `WATCH` call.
+[WATCH](/commands/watch.html) 命令可以被调用多次。 对键的监视从 [WATCH](/commands/watch.html) 执行之后开始生效， 直到调用 [EXEC](/commands/exec.html) 为止。
 
-When `EXEC` is called, all keys are `UNWATCH`ed, regardless of whether
-the transaction was aborted or not.  Also when a client connection is
-closed, everything gets `UNWATCH`ed.
+用户还可以在单个 [WATCH](/commands/watch.html) 命令中监视任意多个键， 就像这样：
 
-It is also possible to use the `UNWATCH` command (without arguments)
-in order to flush all the watched keys. Sometimes this is useful as we
-optimistically lock a few keys, since possibly we need to perform a
-transaction to alter those keys, but after reading the current content
-of the keys we don't want to proceed.  When this happens we just call
-`UNWATCH` so that the connection can already be used freely for new
-transactions.
+	redis> WATCH key1 key2 key3
+	OK
 
-### Using `WATCH` to implement ZPOP
+当 [EXEC](/commands/exec.html) 被调用时， 不管事务是否成功执行， 对所有键的监视都会被取消。
 
-A good example to illustrate how `WATCH` can be used to create new
-atomic operations otherwise not supported by Redis is to implement ZPOP,
-that is a command that pops the element with the lower score from a
-sorted set in an atomic way. This is the simplest implementation:
+另外， 当客户端断开连接时， 该客户端对键的监视也会被取消。
+
+使用无参数的 [UNWATCH](/commands/unwatch.html) 命令可以手动取消对所有键的监视。 对于一些需要改动多个键的事务， 有时候程序需要同时对多个键进行加锁， 然后检查这些键的当前值是否符合程序的要求。 当值达不到要求时， 就可以使用 [UNWATCH](/commands/unwatch.html) 命令来取消目前对键的监视， 中途放弃这个事务， 并等待事务的下次尝试。
+
+### 使用 WATCH 实现 ZPOP
+
+[WATCH](/commands/watch.html) 可以用于创建 Redis 没有内置的原子操作。举个例子， 以下代码实现了原创的 [ZPOP](/commands/zpop.html) 命令， 它可以原子地弹出有序集合中分值（score）最小的元素：
 
     WATCH zset
     element = ZRANGE zset 0 0
@@ -239,21 +182,14 @@ sorted set in an atomic way. This is the simplest implementation:
     ZREM zset element
     EXEC
 
-If `EXEC` fails (i.e. returns a @nil-reply) we just repeat the operation.
+程序只要重复执行这段代码， 直到 [EXEC](/commands/exec.html) 的返回值不是[nil-reply](/topics/protocol.html#nil-reply)回复即可。
 
-## Redis scripting and transactions
+## Redis 脚本和事务
 
-A [Redis script](/commands/eval) is transactional by definition, so everything
-you can do with a Redis transaction, you can also do with a script, and
-usually the script will be both simpler and faster.
+从定义上来说， Redis 中的脚本本身就是一种事务， 所以任何在事务里可以完成的事， 在脚本里面也能完成。 并且一般来说， 使用脚本要来得更简单，并且速度更快。
 
-This duplication is due to the fact that scripting was introduced in Redis 2.6
-while transactions already existed long before. However we are unlikely to
-remove the support for transactions in the short time because it seems
-semantically opportune that even without resorting to Redis scripting it is
-still possible to avoid race conditions, especially since the implementation
-complexity of Redis transactions is minimal.
+因为脚本功能是 Redis 2.6 才引入的， 而事务功能则更早之前就存在了， 所以 Redis 才会同时存在两种处理事务的方法。
 
-However it is not impossible that in a non immediate future we'll see that the
-whole user base is just using scripts. If this happens we may deprecate and
-finally remove transactions.
+不过我们并不打算在短时间内就移除事务功能， 因为事务提供了一种即使不使用脚本， 也可以避免竞争条件的方法， 而且事务本身的实现并不复杂。
+
+不过在不远的将来， 可能所有用户都会只使用脚本来实现事务也说不定。 如果真的发生这种情况的话， 那么我们将废弃并最终移除事务功能。
