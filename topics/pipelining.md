@@ -6,7 +6,7 @@ disqusIdentifier: topics_pipelining
 disqusUrl: http://redis.cn/topics/pipelining.html
 ---
 
-Request/Response protocols and RTT
+请求/响应协议和RTT
 ===
 
 Redis是一种基于客户端-服务端模型以及请求/响应协议的TCP服务。
