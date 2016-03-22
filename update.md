@@ -9,6 +9,11 @@ disqusUrl: http://redis.cn/update.html
 redis中文网更新日志
 ===
 
+## 2016年3月22日
+
+1、翻译[HINCRBYFLOAT](/commands/hincrbyfloat.html)命令。<br/>
+2、翻译[EXPIRE](/commands/expire.html)命令。
+
 ## 2016年3月21日
 
 1、翻译[GEO](/commands.html#geo)相关命令。<br/>
