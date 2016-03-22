@@ -9,14 +9,14 @@ disqusUrl: http://redis.cn/topics/pipelining.html
 Request/Response protocols and RTT
 ===
 
-Redis is a TCP server using the client-server model and what is called a *Request/Response* protocol.
+Redis是一种基于客户端-服务端模型以及请求/响应协议的TCP服务。
 
-This means that usually a request is accomplished with the following steps:
+这意味着通常情况下一个请求会遵循以下步骤：
 
-* The client sends a query to the server, and reads from the socket, usually in a blocking way, for the server response.
-* The server processes the command and sends the response back to the client.
+* 客户端向服务端发送一个查询请求，并监听Socket返回，通常是以阻塞模式，等待服务端响应。
+* 服务端处理命令，并将结果返回给客户端。
 
-So for instance a four commands sequence is something like this:
+因此，例如下面是4个命令序列执行情况：
 
  * *Client:* INCR X
  * *Server:* 1
@@ -27,31 +27,31 @@ So for instance a four commands sequence is something like this:
  * *Client:* INCR X
  * *Server:* 4
 
-Clients and Servers are connected via a networking link. Such a link can be very fast (a loopback interface) or very slow (a connection established over the Internet with many hops between the two hosts). Whatever the network latency is, there is a time for the packets to travel from the client to the server, and back from the server to the client to carry the reply.
+客户端和服务器通过网络进行连接。这个连接可以很快（loopback接口）或很慢（建立了一个多次跳转的网络连接）。无论网络延如何延时，数据包总是能从客户端到达服务器，并从服务器返回数据回复客户端。
 
-This time is called RTT (Round Trip Time). It is very easy to see how this can affect the performances when a client needs to perform many requests in a row (for instance adding many elements to the same list, or populating a database with many keys). For instance if the RTT time is 250 milliseconds (in the case of a very slow link over the Internet), even if the server is able to process 100k requests per second, we'll be able to process at max four requests per second.
+这个时间被称之为 RTT (Round Trip Time - 往返时间). 当客户端需要在一个批处理中执行多次请求时很容易看到这是如何影响性能的（例如添加许多元素到同一个list，或者用很多Keys填充数据库）。例如，如果RTT时间是250毫秒（在一个很慢的连接下），即使服务器每秒能处理100k的请求数，我们每秒最多也只能处理4个请求。
 
-If the interface used is a loopback interface, the RTT is much shorter (for instance my host reports 0,044 milliseconds pinging 127.0.0.1), but it is still a lot if you need to perform many writes in a row.
+如果采用loopback接口，RTT就短得多（比如我的主机ping 127.0.0.1只需要44毫秒），但它任然是一笔很多的开销在一次批量写入操作中。
 
-Fortunately there is a way to improve this use case.
+幸运的是有一种方法可以改善这种情况。
 
-Redis Pipelining
+Redis 管道（Pipelining）
 ---
 
-A Request/Response server can be implemented so that it is able to process new requests even if the client didn't already read the old responses. This way it is possible to send *multiple commands* to the server without waiting for the replies at all, and finally read the replies in a single step.
+一次请求/响应服务器能实现处理新的请求即使旧的请求还未被响应。这样就可以将*多个命令*发送到服务器，而不用等待回复，最后在一个步骤中读取该答复。
 
-This is called pipelining, and is a technique widely in use since many decades. For instance many POP3 protocol implementations already supported this feature, dramatically speeding up the process of downloading new emails from the server.
+这就是管道（pipelining），是一种几十年来广泛使用的技术。例如许多POP3协议已经实现支持这个功能，大大加快了从服务器下载新邮件的过程。
 
-Redis supports pipelining since the very early days, so whatever version you are running, you can use pipelining with Redis. This is an example using the raw netcat utility:
+Redis很早就支持管道（pipelining）技术，因此无论你运行的是什么版本，你都可以使用管道（pipelining）操作Redis。下面是一个使用的例子：
 
     $ (printf "PING\r\nPING\r\nPING\r\n"; sleep 1) | nc localhost 6379
     +PONG
     +PONG
     +PONG
 
-This time we are not paying the cost of RTT for every call, but just one time for the three commands.
+这一次我们没有为每个命令都花费了RTT开销，而是智勇了一个命令的开销时间。
 
-To be very explicit, with pipelining the order of operations of our very first example will be the following:
+非常明确的，用管道顺序操作的第一个例子如下：
 
  * *Client:* INCR X
  * *Client:* INCR X
@@ -62,12 +62,12 @@ To be very explicit, with pipelining the order of operations of our very first e
  * *Server:* 3
  * *Server:* 4
 
-**IMPORTANT NOTE**: While the client sends commands using pipelining, the server will be forced to queue the replies, using memory. So if you need to send a lot of commands with pipelining, it is better to send them as batches having a reasonable number, for instance 10k commands, read the replies, and then send another 10k commands again, and so forth. The speed will be nearly the same, but the additional memory used will be at max the amount needed to queue the replies for this 10k commands.
+**重要说明**: 使用管道发送命令是，服务器将被迫回复一个队列答复，占用很多内存。所以，如果你需要发送大量的命令，最好是把他们按照合理数量分批次的处理，例如10K的命令，读回复，然后再发送另一个10k的命令，等等。这样速度几乎是相同的，但是在回复这10k命令队列需要非常大量的内存用来组织返回数据内容。
 
-Some benchmark
+一些测试
 ---
 
-In the following benchmark we'll use the Redis Ruby client, supporting pipelining, to test the speed improvement due to pipelining:
+下面我们会使用Redis Ruby客户端进行一些使用管道和不使用管道的情况，测试管道技术对速度的提升效果：
 
     require 'rubygems'
     require 'redis'
@@ -101,14 +101,14 @@ In the following benchmark we'll use the Redis Ruby client, supporting pipelinin
         with_pipelining
     }
 
-Running the above simple script will provide the following figures in my Mac OS X system, running over the loopback interface, where pipelining will provide the smallest improvement as the RTT is already pretty low:
+从处于局域网中的Mac OS X系统上执行上面这个简单脚本的数据表明，开启了管道操作后，往返时延已经被改善得相当低了：
 
     without pipelining 1.185238 seconds
     with pipelining 0.250783 seconds
 
-As you can see, using pipelining, we improved the transfer by a factor of five.
+如你所见，开启管道后，我们的速度效率提升了5倍。
 
-Pipelining VS Scripting
+管道（Pipelining） VS 脚本（Scripting）
 ---
 
 Using [Redis scripting](/commands/eval) (available in Redis version 2.6 or greater) a number of use cases for pipelining can be addressed more efficiently using scripts that perform a lot of the work needed at the server side. A big advantage of scripting is that it is able to both read and write data with minimal latency, making operations like *read, compute, write* very fast (pipelining can't help in this scenario since the client needs the reply of the read command before it can call the write command).
