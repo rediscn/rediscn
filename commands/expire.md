@@ -7,165 +7,103 @@ disqusUrl: http://redis.cn/commands/expire.html
 commandsType: keys
 ---
 
-Set a timeout on `key`.
-After the timeout has expired, the key will automatically be deleted.
-A key with an associated timeout is often said to be _volatile_ in Redis
-terminology.
+设置`key`的过期时间，超过时间后，将会自动删除该`key`。在Redis的术语中一个`key`的相关超时是不确定的。
 
-The timeout is cleared only when the key is removed using the `DEL` command or
-overwritten using the `SET` or `GETSET` commands.
-This means that all the operations that conceptually _alter_ the value stored at
-the key without replacing it with a new one will leave the timeout untouched.
-For instance, incrementing the value of a key with `INCR`, pushing a new value
-into a list with `LPUSH`, or altering the field value of a hash with `HSET` are
-all operations that will leave the timeout untouched.
+超时后只有对`key`执行[DEL](/commands/del.html)命令或者[SET](/commands/set.html)命令或者[GETSET](/commands/getset.html)时才会清除。
+这意味着，从概念上讲所有改变`key`的值的操作都会使他清除。
+例如，[INCR](/commands/incr.html)递增key的值，执行[LPUSH](/commands/lpush.html)操作，或者用[HSET](/commands/hset.html)改变hash的`field`所有这些操作都会触发超时。
 
-The timeout can also be cleared, turning the key back into a persistent key,
-using the `PERSIST` command.
+使用[PERSIST](/commands/persist.html)命令可以清除超时，使其变成一个永久的`key`。
 
-If a key is renamed with `RENAME`, the associated time to live is transferred to
-the new key name.
+如果`key`被[RENAME](/commands/rename.html)命令修改，相关的超时时间会转移到新`key`上面。
 
-If a key is overwritten by `RENAME`, like in the case of an existing key `Key_A`
-that is overwritten by a call like `RENAME Key_B Key_A`, it does not matter if
-the original `Key_A` had a timeout associated or not, the new key `Key_A` will
-inherit all the characteristics of `Key_B`.
+如果`key`被[RENAME](/commands/rename.html)命令修改，比如原来就存在`Key_A`,然后调用`RENAME Key_B Key_A`命令，这时不管原来`Key_A`是永久的还是设置为超时的，都会由`Key_B`的有效期状态覆盖。
 
-## Refreshing expires
+## 刷新过期时间
 
-It is possible to call `EXPIRE` using as argument a key that already has an
-existing expire set.
-In this case the time to live of a key is _updated_ to the new value.
-There are many useful applications for this, an example is documented in the
-_Navigation session_ pattern section below.
+对已经有过期时间的`key`执行`EXPIRE`操作，将会更新它的过期时间。有很多应用有这种业务场景，例如记录会话的session。
 
-## Differences in Redis prior 2.1.3
+## 返回值
 
-In Redis versions prior **2.1.3** altering a key with an expire set using a
-command altering its value had the effect of removing the key entirely.
-This semantics was needed because of limitations in the replication layer that
-are now fixed.
+[integer-reply](/topics/protocol.html#integer-reply), 具体的:
 
-@return
+* `1` 如果成功设置过期时间。
+* `0` 如果`key`不存在火灾不能设置过期时间。
 
-@integer-reply, specifically:
+## 例子
 
-* `1` if the timeout was set.
-* `0` if `key` does not exist or the timeout could not be set.
+	redis> SET mykey "Hello"
+	OK
+	redis> EXPIRE mykey 10
+	(integer) 1
+	redis> TTL mykey
+	(integer) 10
+	redis> SET mykey "Hello World"
+	OK
+	redis> TTL mykey
+	(integer) -1
+	redis> 
 
-@examples
+## 案例: Navigation session
 
-```cli
-SET mykey "Hello"
-EXPIRE mykey 10
-TTL mykey
-SET mykey "Hello World"
-TTL mykey
-```
+想象一下，你有一个网络服务器，你对用户最近访问的N个网页感兴趣，每一个相邻的页面设置超时时间为60秒。在概念上你为这些网页添加Navigation session，如果你的用户，可能包含有趣的信息，他或她正在寻找什么样的产品，你可以推荐相关产品。
 
-## Pattern: Navigation session
+你可以使用下面的策略模型，使用这种模式：每次用户浏览网页调用下面的命令：
 
-Imagine you have a web service and you are interested in the latest N pages
-_recently_ visited by your users, such that each adjacent page view was not
-performed more than 60 seconds after the previous.
-Conceptually you may think at this set of page views as a _Navigation session_
-if your user, that may contain interesting information about what kind of
-products he or she is looking for currently, so that you can recommend related
-products.
+	MULTI
+	RPUSH pagewviews.user:<userid> http://.....
+	EXPIRE pagewviews.user:<userid> 60
+	EXEC
 
-You can easily model this pattern in Redis using the following strategy: every
-time the user does a page view you call the following commands:
+如果用户60秒没有操作，这个key将会被删除，不到60秒的话，后续网页将会被继续记录。
 
-```
-MULTI
-RPUSH pagewviews.user:<userid> http://.....
-EXPIRE pagewviews.user:<userid> 60
-EXEC
-```
+这个案例很容易用[INCR](/commands/incr.html)代替[RPUSH](/commands/rpush.html)
 
-If the user will be idle more than 60 seconds, the key will be deleted and only
-subsequent page views that have less than 60 seconds of difference will be
-recorded.
+# 附录: Redis 过期时间
 
-This pattern is easily modified to use counters using `INCR` instead of lists
-using `RPUSH`.
+## Keys的过期时间
 
-# Appendix: Redis expires
+通常Redis keys创建时没有设置相关过期时间。他们会一直存在，除非使用显示的命令移除，例如，使用[DEL](/commands/del.html)命令。
 
-## Keys with an expire
+`EXPIRE`一类命令能关联到一个有额外内存开销的key。当key执行过期操作时，Redis会确保按照规定时间删除他们。
 
-Normally Redis keys are created without an associated time to live.
-The key will simply live forever, unless it is removed by the user in an
-explicit way, for instance using the `DEL` command.
+key的过期时间和永久有效性可以通过`EXPIRE`和[PERSIST](/commands/persist.html)命令（或者其他相关命令）来进行更新或者删除过期时间。
 
-The `EXPIRE` family of commands is able to associate an expire to a given key,
-at the cost of some additional memory used by the key.
-When a key has an expire set, Redis will make sure to remove the key when the
-specified amount of time elapsed.
+## 过期精度
 
-The key time to live can be updated or entirely removed using the `EXPIRE` and
-`PERSIST` command (or other strictly related commands).
+在 Redis 2.4 及以前版本，过期期时间可能不是十分准确，有0-1秒的误差。
 
-## Expire accuracy
+从 Redis 2.6 起，过期时间误差缩小到0-1毫秒。
 
-In Redis 2.4 the expire might not be pin-point accurate, and it could be between
-zero to one seconds out.
+## 过期和持久
 
-Since Redis 2.6 the expire error is from 0 to 1 milliseconds.
+Keys的过期时间使用Unix时间戳存储(从Redis 2.6开始以毫秒为单位)。这意味着即使Redis实例不可用，时间也是一直在流逝的。
 
-## Expires and persistence
+要想过期的工作处理好，计算机必须采用稳定的时间。
+如果你将RDB文件在两台时钟不同步的电脑间同步，有趣的事会发生（所有的 keys装载时就会过期）。
 
-Keys expiring information is stored as absolute Unix timestamps (in milliseconds
-in case of Redis version 2.6 or greater).
-This means that the time is flowing even when the Redis instance is not active.
+即使正在运行的实例也会检查计算机的时钟，例如如果你设置了一个key的有效期是1000秒，然后设置你的计算机时间为未来2000秒，这时key会立即失效，而不是等1000秒之后。
 
-For expires to work well, the computer time must be taken stable.
-If you move an RDB file from two computers with a big desync in their clocks,
-funny things may happen (like all the keys loaded to be expired at loading
-time).
+## Redis如何淘汰过期的keys
 
-Even running instances will always check the computer clock, so for instance if
-you set a key with a time to live of 1000 seconds, and then set your computer
-time 2000 seconds in the future, the key will be expired immediately, instead of
-lasting for 1000 seconds.
+Redis keys过期有两种方式：被动和主动方式。
 
-## How Redis expires keys
+当一些客户端尝试访问它时，key会被发现并主动的过期。
 
-Redis keys are expired in two ways: a passive way, and an active way.
+当然，这样是不够的，因为有些过期的keys，永远不会访问他们。
+无论如何，这些keys应该过期，所以定时随机测试设置keys的过期时间。所有这些过期的keys将会从密钥空间删除。
 
-A key is actively expired simply when some client tries to access it, and the
-key is found to be timed out.
+具体就是Redis每秒10次做的事情：
 
-Of course this is not enough as there are expired keys that will never be
-accessed again.
-These keys should be expired anyway, so periodically Redis tests a few keys at
-random among keys with an expire set.
-All the keys that are already expired are deleted from the keyspace.
+1. 测试随机的20个keys进行相关过期检测。
+2. 删除所有已经过期的keys。
+3. 如果有多于25%的keys过期，重复步奏1.
 
-Specifically this is what Redis does 10 times per second:
+这是一个平凡的概率算法，基本上的假设是，我们的样本是这个密钥控件，并且我们不断重复过期检测，直到过期的keys的百分百低于25%,这意味着，在任何给定的时刻，最多会清除1/4的过期keys。
 
-1. Test 20 random keys from the set of keys with an associated expire.
-2. Delete all the keys found expired.
-3. If more than 25% of keys were expired, start again from step 1.
+## 在复制AOF文件时如何处理过期
 
-This is a trivial probabilistic algorithm, basically the assumption is that our
-sample is representative of the whole key space, and we continue to expire until
-the percentage of keys that are likely to be expired is under 25%
+为了获得正确的行为而不牺牲一致性，当一个key过期，`DEL`将会随着AOF文字一起合成到所有附加的slaves。在master实例中，这种方法是集中的，并且不存在一致性错误的机会。
 
-This means that at any given moment the maximum amount of keys already expired
-that are using memory is at max equal to max amount of write operations per
-second divided by 4.
+然而，当slaves连接到master时，不会独立过期keys（会等到master执行DEL命令），他们任然会在数据集里面存在，所以当slave当选为master时淘汰keys会独立执行，然后成为master。
 
-## How expires are handled in the replication link and AOF file
-
-In order to obtain a correct behavior without sacrificing consistency, when a
-key expires, a `DEL` operation is synthesized in both the AOF file and gains all
-the attached slaves.
-This way the expiration process is centralized in the master instance, and there
-is no chance of consistency errors.
-
-However while the slaves connected to a master will not expire keys
-independently (but will wait for the `DEL` coming from the master), they'll
-still take the full state of the expires existing in the dataset, so when a
-slave is elected to a master it will be able to expire the keys independently,
-fully acting as a master.

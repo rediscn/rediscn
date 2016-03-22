@@ -11,7 +11,7 @@ redis中文网更新日志
 
 ## 2016年3月21日
 
-1、翻译[GEO](/commands.html#geo)相关命令。
+1、翻译[GEO](/commands.html#geo)相关命令。<br/>
 2、优化翻译[commands](/commands.html)页面。
 
 ## 2016年2月2日

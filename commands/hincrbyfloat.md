@@ -7,23 +7,17 @@ disqusUrl: http://redis.cn/commands/hincrbyfloat.html
 commandsType: hashes
 ---
 
-Increment the specified `field` of an hash stored at `key`, and representing a
-floating point number, by the specified `increment`.
-If the field does not exist, it is set to `0` before performing the operation.
-An error is returned if one of the following conditions occur:
+为指定`key`的hash的`field`字段值执行float类型的`increment`加。如果`field`不存在，则在执行该操作前设置为0.如果出现下列情况之一，则返回错误：
 
-* The field contains a value of the wrong type (not a string).
-* The current field content or the specified increment are not parsable as a
-  double precision floating point number.
+* `field`的值包含的类型错误(不是字符串)。
+* 当前`field`或者`increment`不能解析为一个float类型。
 
-The exact behavior of this command is identical to the one of the `INCRBYFLOAT`
-command, please refer to the documentation of `INCRBYFLOAT` for further
-information.
+此命令的确切行为与[INCRBYFLOAT](/commands/incrbyfloat.html)命令相同，请参阅[INCRBYFLOAT](/commands/incrbyfloat.html)命令获取更多信息。
 
 ## 返回值
 
 [bulk-string-reply](/topics/protocol.html#bulk-string-reply)：
-the value of `field` after the increment.
+`field`执行`increment`加后的值
 
 ## 例子
 
@@ -37,8 +31,6 @@ the value of `field` after the increment.
 	"5200"
 	redis> 
 
-## Implementation details
+## 实现细节
 
-The command is always propagated in the replication link and the Append Only
-File as a `HSET` operation, so that differences in the underlying floating point
-math implementation will not be sources of inconsistency.
+该命令始终是在复制和模仿[HSET](/commands/hset.html)，因此，在底层的浮点数运算不会出现数据不一致性问题。
