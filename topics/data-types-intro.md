@@ -9,19 +9,12 @@ disqusUrl: http://redis.cn/topics/data-types-intro.html
 An introduction to Redis data types and abstractions
 ===
 
-Redis is not a *plain* key-value store, actually it is a *data structures server*, supporting different kind of values. What this means is that, while in
-traditional key-value stores you associated string keys to string values, in
-Redis the value is not limited to a simple string, but can also hold more complex
-data structures. The following is the list of all the data structures supported
-by Redis, which will be covered separately in this tutorial:
+你也许已经知道Redis并不是简单的key-value存储，实际上他是一个数据结构服务器，支持不同类型的值。也就是说，你不必仅仅把字符串当作键所指向的值。下列这些数据类型都可作为值类型：
 
-* Binary-safe strings.
-* Lists: collections of string elements sorted according to the order of insertion. They are basically *linked lists*.
-* Sets: collections of unique, unsorted string elements.
-* Sorted sets, similar to Sets but where every string element is associated to a
-  floating number value, called *score*. The elements are always taken sorted
-  by their score, so unlike Sets it is possible to retrieve a range of elements
-  (for example you may ask: give me the top 10, or the bottom 10).
+* 二进制安全的字符串
+* Lists: 按插入顺序排序的字符串元素的集合。他们基本上就是*链表（linked lists）*。
+* Sets: 不重复且无序的字符串元素的集合。
+* Sorted sets,类似Sets,但是每个字符串元素都关联到一个叫*score*浮动数值（floating number value）。里面的元素总是通过score进行着排序，所以不同的是，它是可以检索的一系列元素。（例如你可能会问：给我前面10个或者后面10个元素）。 
 * Hashes, which are maps composed of fields associated with values. Both the
   field and the value are strings. This is very similar to Ruby or Python
   hashes.
@@ -43,67 +36,38 @@ handy command line utility to issue commands against the Redis server.
 Redis keys
 ---
 
-Redis keys are binary safe, this means that you can use any binary sequence as a
-key, from a string like "foo" to the content of a JPEG file.
-The empty string is also a valid key.
+Redis key值是二进制安全的，这意味着可以用任何二进制序列作为key值，从形如”foo”的简单字符串到一个JPEG文件的内容都可以。空字符串也是有效key值。
 
-A few other rules about keys:
+关于key的几条规则：
 
-* Very long keys are not a good idea, for instance a key of 1024 bytes is a bad
-  idea not only memory-wise, but also because the lookup of the key in the
-  dataset may require several costly key-comparisons. Even when the task at hand
-  is to match the existence of a large value, to resort to hashing it (for example
-  with SHA1) is a better idea, especially from the point of view of memory
-  and bandwidth.
-* Very short keys are often not a good idea. There is little point in writing
-  "u1000flw" as a key if you can instead write "user:1000:followers".  The latter
-  is more readable and the added space is minor compared to the space used by
-  the key object itself and the value object. While short keys will obviously
-  consume a bit less memory, your job is to find the right balance.
-* Try to stick with a schema. For instance "object-type:id" is a good
-  idea, as in "user:1000". Dots or dashes are often used for multi-word
-  fields, as in "comment:1234:reply.to" or "comment:1234:reply-to".
-* The maximum allowed key size is 512 MB.
+* 太长的键值不是个好主意，例如1024字节的键值就不是个好主意，不仅因为消耗内存，而且在数据中查找这类键值的计算成本很高。
+* 太短的键值通常也不是好主意，如果你要用”u:1000:pwd”来代替”user:1000:password”，这没有什么问题，但后者更易阅读，并且由此增加的空间消耗相对于key object和value object本身来说很小。当然，没人阻止您一定要用更短的键值节省一丁点儿空间。
+* 最好坚持一种模式。例如：”object-type:id:field”就是个不错的注意，像这样”user:1000:password”。我喜欢对多单词的字段名中加上一个点，就像这样：”comment:1234:reply.to”。
 
-<a name="strings"></a>
 Redis Strings
 ---
 
-The Redis String type is the simplest type of value you can associate with
-a Redis key. It is the only data type in Memcached, so it is also very natural
-for newcomers to use it in Redis.
+这是最简单Redis类型。如果你只用这种类型，Redis就像一个可以持久化的memcached服务器（注：memcache的数据仅保存在内存中，服务器重启后，数据将丢失）。
 
-Since Redis keys are strings, when we use the string type as a value too,
-we are mapping a string to another string. The string data type is useful
-for a number of use cases, like caching HTML fragments or pages.
-
-Let's play a bit with the string type, using `redis-cli` (all the examples
-will be performed via `redis-cli` in this tutorial).
+我们用redis-cli来玩一下字符串类型：
 
     > set mykey somevalue
     OK
     > get mykey
     "somevalue"
 
-As you can see using the `SET` and the `GET` commands are the way we set
-and retrieve a string value. Note that `SET` will replace any existing value
-already stored into the key, in the case that the key already exists, even if
-the key is associated with a non-string value. So `SET` performs an assignment.
+正如你所见到的，通常用SET command 和 GET command来设置和获取字符串值。
 
-Values can be strings (including binary data) of every kind, for instance you
-can store a jpeg image inside a key. A value can't be bigger than 512 MB.
+值可以是任何种类的字符串（包括二进制数据），例如你可以在一个键下保存一副jpeg图片。值的长度不能超过512 MB。
 
-The `SET` command has interesting options, that are provided as additional
-arguments. For example, I may ask `SET` to fail if the key already exists,
-or the opposite, that it only succeed if the key already exists:
+`SET` 命令有些有趣的操作，例如，当key存在时`SET`会失败，或相反的，当key存在时它只会成功。
 
     > set mykey newval nx
     (nil)
     > set mykey newval xx
     OK
 
-Even if strings are the basic values of Redis, there are interesting operations
-you can perform with them. For instance, one is atomic increment:
+虽然字符串是Redis的基本值类型，但你仍然能通过它完成一些有趣的操作。例如：原子递增：
 
     > set counter 100
     OK
@@ -114,32 +78,13 @@ you can perform with them. For instance, one is atomic increment:
     > incrby counter 50
     (integer) 152
 
-The [INCR](/commands/incr) command parses the string value as an integer,
-increments it by one, and finally sets the obtained value as the new value.
-There are other similar commands like [INCRBY](/commands/incrby),
-[DECR](/commands/decr) and [DECRBY](/commands/decrby). Internally it's
-always the same command, acting in a slightly different way.
+[INCR](/commands/incr.html) 命令将字符串值解析成整型，将其加一，最后将结果保存为新的字符串值，类似的命令有[INCRBY](/commands/incrby.html), [DECR](/commands/decr.html) 和 [DECRBY](/commands/decrby.html)。实际上他们在内部就是同一个命令，只是看上去有点儿不同。
 
-What does it mean that INCR is atomic?
-That even multiple clients issuing INCR against
-the same key will never enter into a race condition. For instance, it will never
-happen that client 1 reads "10", client 2 reads "10" at the same time, both
-increment to 11, and set the new value to 11. The final value will always be
-12 and the read-increment-set operation is performed while all the other
-clients are not executing a command at the same time.
+[INCR](/commands/incr.html)是原子操作意味着什么呢？就是说即使多个客户端对同一个key发出[INCR](/commands/incr.html)命令，也决不会导致竞争的情况。例如如下情况永远不可能发生：『客户端1和客户端2同时读出“10”，他们俩都对其加到11，然后将新值设置为11』。最终的值一定是12，read-increment-set操作完成时，其他客户端不会在同一时间执行任何命令。
 
-There are a number of commands for operating on strings. For example
-the `GETSET` command sets a key to a new value, returning the old value as the
-result. You can use this command, for example, if you have a
-system that increments a Redis key using `INCR`
-every time your web site receives a new visitor. You may want to collect this
-information once every hour, without losing a single increment.
-You can `GETSET` the key, assigning it the new value of "0" and reading the
-old value back.
+对字符串，另一个的令人感兴趣的操作是[GETSET](/commands/getset.html)命令，行如其名：他为key设置新值并且返回原值。这有什么用处呢？例如：你的系统每当有新用户访问时就用[INCR](/commands/incr.html)命令操作一个Redis key。你希望每小时对这个信息收集一次。你就可以[GETSET](/commands/getset.html)这个key并给其赋值0并读取原值。
 
-The ability to set or retrieve the value of multiple keys in a single
-command is also useful for reduced latency. For this reason there are
-the `MSET` and `MGET` commands:
+为减少等待时间，也可以一次存储或获取多个key对应的值，使用[MSET](/commands/mset.html)和[MGET](/commands/mget.html)命令:
 
     > mset a 10 b 20 c 30
     OK
@@ -148,18 +93,16 @@ the `MSET` and `MGET` commands:
     2) "20"
     3) "30"
 
-When `MGET` is used, Redis returns an array of values.
+MGET 命令返回由值组成的数组。
 
-Altering and querying the key space
+修改或查询值空间
 ---
 
 There are commands that are not defined on particular types, but are useful
 in order to interact with the space of keys, and thus, can be used with
 keys of any type.
 
-For example the `EXISTS` command returns 1 or 0 to signal if a given key
-exists or not in the database, while the `DEL` command deletes a key
-and associated value, whatever the value is.
+使用EXISTS命令返回1或0标识给定key的值是否存在，使用[DEL](/commands/del.html)命令可以删除key对应的值，DEL命令返回1或0标识值是被删除(值存在)或者没被删除(key对应的值不存在)。
 
     > set mykey hello
     OK
@@ -174,9 +117,7 @@ From the examples you can also see how `DEL` itself returns 1 or 0 depending on 
 the key was removed (it existed) or not (there was no such key with that
 name).
 
-There are many key space related commands, but the above two are the
-essential ones together with the `TYPE` command, which returns the kind
-of value stored at the specified key:
+[TYPE](/commands/type.html)命令可以返回key对应的值的存储类型：
 
     > set mykey x
     OK
@@ -187,23 +128,10 @@ of value stored at the specified key:
     > type mykey
     none
 
-Redis expires: keys with limited time to live
+Redis超时:数据在限定时间内存活
 ---
 
-Before continuing with more complex data structures, we need to discuss
-another feature which works regardless of the value type, and is
-called **Redis expires**. Basically you can set a timeout for a key, which
-is a limited time to live. When the time to live elapses, the key is
-automatically destroyed, exactly as if the user called the `DEL` command
-with the key.
-
-A few quick info about Redis expires:
-
-* They can be set both using seconds or milliseconds precision.
-* However the expire time resolution is always 1 millisecond.
-* Information about expires are replicated and persisted on disk, the time virtually passes when your Redis server remains stopped (this means that Redis saves the date at which a key will expire).
-
-Setting an expire is trivial:
+在介绍复杂类型前我们先介绍一个与值类型无关的Redis特性:超时。你可以对key设置一个超时时间，当这个时间到达后会被删除。精度可以使用毫秒或秒。
 
     > set key some-value
     OK
@@ -214,69 +142,35 @@ Setting an expire is trivial:
     > get key (after some time)
     (nil)
 
-The key vanished between the two `GET` calls, since the second call was
-delayed more than 5 seconds. In the example above we used `EXPIRE` in
-order to set the expire (it can also be used in order to set a different
-expire to a key already having one, like `PERSIST` can be used in order
-to remove the expire and make the key persistent forever). However we
-can also create keys with expires using other Redis commands. For example
-using `SET` options:
+上面的例子使用了EXPIRE来设置超时时间(也可以再次调用这个命令来改变超时时间，使用PERSIST命令去除超时时间 )。我们也可以在创建值的时候设置超时时间:
 
     > set key 100 ex 10
     OK
     > ttl key
     (integer) 9
 
-The example above sets a key with the string value `100`, having an expire
-of ten seconds. Later the `TTL` command is called in order to check the
-remaining time to live for the key.
+TTL命令用来查看key对应的值剩余存活时间。
 
-In order to set and check expires in milliseconds, check the `PEXPIRE` and
-the `PTTL` commands, and the full list of `SET` options.
 
-<a name="lists"></a>
 Redis Lists
 ---
 
-To explain the List data type it's better to start with a little bit of theory,
-as the term *List* is often used in an improper way by information technology
-folks. For instance "Python Lists" are not what the name may suggest (Linked
-Lists), but rather Arrays (the same data type is called Array in
-Ruby actually).
+要说清楚列表数据类型，最好先讲一点儿理论背景，在信息技术界List这个词常常被使用不当。例如”Python Lists”就名不副实（名为Linked Lists），但他们实际上是数组（同样的数据类型在Ruby中叫数组）
 
-From a very general point of view a List is just a sequence of ordered
-elements: 10,20,1,2,3 is a list. But the properties of a List implemented using
-an Array are very different from the properties of a List implemented using a
-*Linked List*.
+一般意义上讲，列表就是有序元素的序列：10,20,1,2,3就是一个列表。但用数组实现的List和用Linked List实现的List，在属性方面大不相同。
 
-Redis lists are implemented via Linked Lists. This means that even if you have
-millions of elements inside a list, the operation of adding a new element in
-the head or in the tail of the list is performed *in constant time*. The speed of adding a
-new element with the `LPUSH` command to the head of a list with ten
-elements is the same as adding an element to the head of list with 10
-million elements.
+Redis lists基于Linked Lists实现。这意味着即使在一个list中有数百万个元素，在头部或尾部添加一个元素的操作，其时间复杂度也是常数级别的。用LPUSH 命令在十个元素的list头部添加新元素，和在千万元素list头部添加新元素的速度相同。
 
-What's the downside? Accessing an element *by index* is very fast in lists
-implemented with an Array (constant time indexed access) and not so fast in
-lists implemented by linked lists (where the operation requires an amount of
-work proportional to the index of the accessed element).
+那么，坏消息是什么？在数组实现的list中利用索引访问元素的速度极快，而同样的操作在linked list实现的list上没有那么快。
 
-Redis Lists are implemented with linked lists because for a database system it
-is crucial to be able to add elements to a very long list in a very fast way.
-Another strong advantage, as you'll see in a moment, is that Redis Lists can be
-taken at constant length in constant time.
+Redis Lists用linked list实现的原因是：对于数据库系统来说，至关重要的特性是：能非常快的在很大的列表上添加元素。另一个重要因素是，正如你将要看到的：Redis lists能在常数时间取得常数长度。
 
-When fast access to the middle of a large collection of elements is important,
-there is a different data structure that can be used, called sorted sets.
-Sorted sets will be covered later in this tutorial.
+如果快速访问集合元素很重要，建议使用可排序集合(sorted sets)。可排序集合我们会随后介绍。
 
-First steps with Redis Lists
+Redis lists 入门
 ---
 
-The `LPUSH` command adds a new element into a list, on the
-left (at the head), while the `RPUSH` command adds a new
-element into a list ,on the right (at the tail). Finally the
-`LRANGE` command extracts ranges of elements from lists:
+[LPUSH](/commands/lpush.html) 命令可向list的左边（头部）添加一个新元素，而[RPUSH](/commands/rpush.html)命令可向list的右边（尾部）添加一个新元素。最后[LRANGE](/commands/lrange.html) 命令可从list中取出一定范围的元素:
 
     > rpush mylist A
     (integer) 1
@@ -289,16 +183,9 @@ element into a list ,on the right (at the tail). Finally the
     2) "A"
     3) "B"
 
-Note that [LRANGE](/commands/lrange) takes two indexes, the first and the last
-element of the range to return. Both the indexes can be negative, telling Redis
-to start counting from the end: so -1 is the last element, -2 is the
-penultimate element of the list, and so forth.
+注意:[LRANGE](/commands/lrange.html) 带有两个索引，一定范围的第一个和最后一个元素。这两个索引都可以为负来告知Redis从尾部开始计数，因此-1表示最后一个元素，-2表示list中的倒数第二个元素，以此类推。
 
-As you can see `RPUSH` appended the elements on the right of the list, while
-the final `LPUSH` appended the element on the left.
-
-Both commands are *variadic commands*, meaning that you are free to push
-multiple elements into a list in a single call:
+上面的所有命令的参数都可变，方便你一次向list存入多个值。
 
     > rpush mylist 1 2 3 4 5 "foo bar"
     (integer) 9
@@ -313,11 +200,7 @@ multiple elements into a list in a single call:
     8) "5"
     9) "foo bar"
 
-An important operation defined on Redis lists is the ability to *pop elements*.
-Popping elements is the operation of both retrieving the element from the list,
-and eliminating it from the list, at the same time. You can pop elements
-from left and right, similarly to how you can push elements in both sides
-of the list:
+还有一个重要的命令是pop,它从list中删除元素并同时返回删除的值。可以在左边或右边操作。
 
     > rpush mylist a b c
     (integer) 3
@@ -328,52 +211,27 @@ of the list:
     > rpop mylist
     "a"
 
-We added three elements and popped three elements, so at the end of this
-sequence of commands the list is empty and there are no more elements to
-pop. If we try to pop yet another element, this is the result we get:
+我们增加了三个元素，并弹出了三个元素，因此，在这最后
+列表中的命令序列是空的，没有更多的元素可以被弹出。如果我们尝试弹出另一个元素，这是我们得到的结果：
 
     > rpop mylist
     (nil)
 
-Redis returned a NULL value to signal that there are no elements into the
-list.
+当list没有元素时，Redis 返回了一个NULL。
 
-Common use cases for lists
+List的常用案例
 ---
 
-Lists are useful for a number of tasks, two very representative use cases
-are the following:
+正如你可以从上面的例子中猜到的，list可被用来实现聊天系统。还可以作为不同进程间传递消息的队列。关键是，你可以每次都以原先添加的顺序访问数据。这不需要任何SQL ORDER BY 操作，将会非常快，也会很容易扩展到百万级别元素的规模。
 
-* Remember the latest updates posted by users into a social network.
-* Communication between processes, using a consumer-producer pattern where the producer pushes items into a list, and a consumer (usually a *worker*) consumes those items and executed actions. Redis has special list commands to make this use case both more reliable and efficient.
+例如在评级系统中，比如社会化新闻网站 reddit.com，你可以把每个新提交的链接添加到一个list，用LRANGE可简单的对结果分页。
 
-For example both the popular Ruby libraries [resque](https://github.com/resque/resque) and
-[sidekiq](https://github.com/mperham/sidekiq) use Redis lists under the hood in order to
-implement background jobs.
-
-The popular Twitter social network [takes the latest tweets](http://www.infoq.com/presentations/Real-Time-Delivery-Twitter)
-posted by users into Redis lists.
-
-To describe a common use case step by step, imagine your home page shows the latest
-photos published in a photo sharing social network and you want to speedup access.
-
-* Every time a user posts a new photo, we add its ID into a list with `LPUSH`.
-* When users visit the home page, we use `LRANGE 0 9` in order to get the latest 10 posted items.
+在博客引擎实现中，你可为每篇日志设置一个list，在该list中推入进博客评论，等等。
 
 Capped lists
 ---
 
-In many use cases we just want to use lists to store the *latest items*,
-whatever they are: social network updates, logs, or anything else.
-
-Redis allows us to use lists as a capped collection, only remembering the latest
-N items and discarding all the oldest items using the `LTRIM` command.
-
-The `LTRIM` command is similar to `LRANGE`, but **instead of displaying the
-specified range of elements** it sets this range as the new list value. All
-the elements outside the given range are removed.
-
-An example will make it more clear:
+可以使用[LTRIM](/commands/ltrim.html)把list从左边截取指定长度。
 
     > rpush mylist 1 2 3 4 5
     (integer) 5
@@ -384,74 +242,15 @@ An example will make it more clear:
     2) "2"
     3) "3"
 
-The above `LTRIM` command tells Redis to take just list elements from index
-0 to 2, everything else will be discarded. This allows for a very simple but
-useful pattern: doing a List push operation + a List trim operation together
-in order to add a new element and discard elements exceeding a limit:
 
-    LPUSH mylist <some element>
-    LTRIM mylist 0 999
-
-The above combination adds a new element and takes only the 1000
-newest elements into the list. With `LRANGE` you can access the top items
-without any need to remember very old data.
-
-Note: while `LRANGE` is technically an O(N) command, accessing small ranges
-towards the head or the tail of the list is a constant time operation.
-
-Blocking operations on lists
+List上的阻塞操作
 ---
 
-Lists have a special feature that make them suitable to implement queues,
-and in general as a building block for inter process communication systems:
-blocking operations.
+可以使用Redis来实现生产者和消费者模型，如使用LPUSH和RPOP来实现该功能。但会遇到这种情景：list是空，这时候消费者就需要轮询来获取数据，这样就会增加redis的访问压力、增加消费端的cpu时间，而很多访问都是无用的。为此redis提供了阻塞式访问 [BRPOP](/commands/brpop.html) 和 [BLPOP](/commands/blpop.html) 命令。 消费者可以在获取数据时指定如果数据不存在阻塞的时间，如果在时限内获得数据则立即返回，如果超时还没有数据则返回null, 0表示一直阻塞。
 
-Imagine you want to push items into a list with one process, and use
-a different process in order to actually do some kind of work with those
-items. This is the usual producer / consumer setup, and can be implemented
-in the following simple way:
+同时redis还会为所有阻塞的消费者以先后顺序排队。
 
-* To push items into the list, producers call `LPUSH`.
-* To extract / process items from the list, consumers call `RPOP`.
-
-However it is possible that sometimes the list is empty and there is nothing
-to process, so `RPOP` just returns NULL. In this case a consumer is forced to wait
-some time and retry again with `RPOP`. This is called *polling*, and is not
-a good idea in this context because it has several drawbacks:
-
-1. Forces Redis and clients to process useless commands (all the requests when the list is empty will get no actual work done, they'll just return NULL).
-2. Adds a delay to the processing of items, since after a worker receives a NULL, it waits some time. To make the delay smaller, we could wait less between calls to `RPOP`, with the effect of amplifying problem number 1, i.e. more useless calls to Redis.
-
-So Redis implements commands called `BRPOP` and `BLPOP` which are versions
-of `RPOP` and `LPOP` able to block if the list is empty: they'll return to
-the caller only when a new element is added to the list, or when a user-specified
-timeout is reached.
-
-This is an example of a `BRPOP` call we could use in the worker:
-
-    > brpop tasks 5
-    1) "tasks"
-    2) "do_something"
-
-It means: "wait for elements in the list `tasks`, but return if after 5 seconds
-no element is available".
-
-Note that you can use 0 as timeout to wait for elements forever, and you can
-also specify multiple lists and not just one, in order to wait on multiple
-lists at the same time, and get notified when the first list receives an
-element.
-
-A few things to note about `BRPOP`:
-
-1. Clients are served in an ordered way: the first client that blocked waiting for a list, is served first when an element is pushed by some other client, and so forth.
-2. The return value is different compared to `RPOP`: it is a two-element array since it also includes the name of the key, because `BRPOP` and `BLPOP` are able to block waiting for elements from multiple lists.
-3. If the timeout is reached, NULL is returned.
-
-There are more things you should know about lists and blocking ops. We
-suggest that you read more on the following:
-
-* It is possible to build safer queues or rotating queues using `RPOPLPUSH`.
-* There is also a blocking variant of the command, called `BRPOPLPUSH`.
+如需了解详细信息请查看 [RPOPLPUSH](/commands/rpoplpush.html) 和 [BRPOPLPUSH](/commands/brpoplpush.html)。
 
 Automatic creation and removal of keys
 ---
