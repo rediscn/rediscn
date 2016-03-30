@@ -4,7 +4,7 @@ title: config-rewrite 命令 -- Redis中文资料站
 permalink: commands/config-rewrite.html
 disqusIdentifier: command_config-rewrite
 disqusUrl: http://redis.cn/commands/config-rewrite.html
-commandsType: keys
+commandsType: server
 ---
 
 The `CONFIG REWRITE` command rewrites the `redis.conf` file the server was started with, applying the minimal changes needed to make it reflecting the configuration currently used by the server, that may be different compared to the original one because of the use of the `CONFIG SET` command.

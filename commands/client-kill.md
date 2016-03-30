@@ -4,7 +4,7 @@ title: client-kill 命令 -- Redis中文资料站
 permalink: commands/client-kill.html
 disqusIdentifier: command_client-kill
 disqusUrl: http://redis.cn/commands/client-kill.html
-commandsType: keys
+commandsType: server
 ---
 
 `CLIENT KILL`关闭一个指定的连接。在Redis2.8.11时可以根据客户端地址关闭指定连接，关闭方式如下：

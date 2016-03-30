@@ -4,7 +4,7 @@ title: config-resetstat 命令 -- Redis中文资料站
 permalink: commands/config-resetstat.html
 disqusIdentifier: command_config-resetstat
 disqusUrl: http://redis.cn/commands/config-resetstat.html
-commandsType: keys
+commandsType: server
 ---
 
 重置INFO命令统计里面的一些计算器。

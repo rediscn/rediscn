@@ -4,7 +4,7 @@ title: command-info 命令 -- Redis中文资料站
 permalink: commands/command-info.html
 disqusIdentifier: command_command-info
 disqusUrl: http://redis.cn/commands/command-info.html
-commandsType: keys
+commandsType: server
 ---
 
 Returns @array-reply of details about multiple Redis commands.

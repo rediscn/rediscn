@@ -4,7 +4,7 @@ title: script-flush 命令 -- Redis中文资料站
 permalink: commands/script-flush.html
 disqusIdentifier: command_script-flush
 disqusUrl: http://redis.cn/commands/script-flush.html
-commandsType: keys
+commandsType: scripting
 ---
 
 Flush the Lua scripts cache.
