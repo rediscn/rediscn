@@ -7,106 +7,195 @@ disqusUrl: http://redis.cn/commands/info.html
 commandsType: server
 ---
 
-The `INFO` command returns information and statistics about the server in a
-format that is simple to parse by computers and easy to read by humans.
+`INFO`命令以一种易于理解和阅读的格式，返回关于Redis服务器的各种信息和统计数值。
 
-The optional parameter can be used to select a specific section of information:
+通过给定可选的参数 section ，可以让命令只返回某一部分的信息:
 
-*   `server`: General information about the Redis server
-*   `clients`: Client connections section
-*   `memory`: Memory consumption related information
-*   `persistence`: RDB and AOF related information
-*   `stats`: General statistics
-*   `replication`: Master/slave replication information
-*   `cpu`: CPU consumption statistics
-*   `commandstats`: Redis command statistics
-*   `cluster`: Redis Cluster section
-*   `keyspace`: Database related statistics
+*   `server`:  Redis服务器的一般信息
+*   `clients`: 客户端的连接部分
+*   `memory`: 内存消耗相关信息
+*   `persistence`: RDB和AOF相关信息
+*   `stats`: 一般统计
+*   `replication`: 主/从复制信息
+*   `cpu`: 统计CPU的消耗
+*   `commandstats`: Redis命令统计
+*   `cluster`: Redis集群信息
+*   `keyspace`: 数据库的相关统计
 
-It can also take the following values:
+它也可以采取以下值:
 
-*   `all`: Return all sections
-*   `default`: Return only the default set of sections
+*   `all`: 返回所有信息
+*   `default`: 值返回默认设置的信息
 
-When no parameter is provided, the `default` option is assumed.
+如果没有使用任何参数时，默认为`default`。
 
-@return
+##返回值
 
-@bulk-string-reply: as a collection of text lines.
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply): 文本行的合集
 
-Lines can contain a section name (starting with a # character) or a property.
-All the properties are in the form of `field:value` terminated by `\r\n`.
+每一行包含了包含一种信息或者属性（从#字符开始）。
+所有的属性都是以字段:值（`field:value`）的形式，已`\r\n`结尾。
 
-```cli
-INFO
-```
+##例子
 
-## Notes
+	redis> INFO
+	# Server
+	redis_version:999.999.999
+	redis_git_sha1:ceaf58df
+	redis_git_dirty:1
+	redis_build_id:a5eeeb464ee54856
+	redis_mode:standalone
+	os:Linux 4.1.5-x86_64-linode61 x86_64
+	arch_bits:32
+	multiplexing_api:epoll
+	gcc_version:4.4.1
+	process_id:21798
+	run_id:2569bb7433bfe013c2627edf62d9bf21eaf8a010
+	tcp_port:6379
+	uptime_in_seconds:3348607
+	uptime_in_days:38
+	hz:10
+	lru_clock:491100
+	config_file:/etc/redis/6379.conf
+	
+	# Clients
+	connected_clients:8
+	client_longest_output_list:0
+	client_biggest_input_buf:0
+	blocked_clients:0
+	
+	# Memory
+	used_memory:7556576
+	used_memory_human:7.21M
+	used_memory_rss:10555392
+	used_memory_rss_human:10.07M
+	used_memory_peak:8370272
+	used_memory_peak_human:7.98M
+	total_system_memory:4142215168
+	total_system_memory_human:3.86G
+	used_memory_lua:24576
+	used_memory_lua_human:24.00K
+	maxmemory:3221225472
+	maxmemory_human:3.00G
+	maxmemory_policy:unknown
+	mem_fragmentation_ratio:1.40
+	mem_allocator:jemalloc-3.6.0
+	lazyfree_pending_objects:0
+	
+	# Persistence
+	loading:0
+	rdb_changes_since_last_save:521
+	rdb_bgsave_in_progress:0
+	rdb_last_save_time:1460108780
+	rdb_last_bgsave_status:ok
+	rdb_last_bgsave_time_sec:0
+	rdb_current_bgsave_time_sec:-1
+	aof_enabled:0
+	aof_rewrite_in_progress:0
+	aof_rewrite_scheduled:0
+	aof_last_rewrite_time_sec:-1
+	aof_current_rewrite_time_sec:-1
+	aof_last_bgrewrite_status:ok
+	aof_last_write_status:ok
+	
+	# Stats
+	total_connections_received:1058
+	total_commands_processed:20227305
+	instantaneous_ops_per_sec:0
+	total_net_input_bytes:1528543656
+	total_net_output_bytes:2155353808
+	instantaneous_input_kbps:0.00
+	instantaneous_output_kbps:0.00
+	rejected_connections:0
+	sync_full:0
+	sync_partial_ok:0
+	sync_partial_err:0
+	expired_keys:22616
+	evicted_keys:0
+	keyspace_hits:5059386
+	keyspace_misses:1405484
+	pubsub_channels:0
+	pubsub_patterns:0
+	latest_fork_usec:645
+	migrate_cached_sockets:0
+	
+	# Replication
+	role:master
+	connected_slaves:0
+	master_repl_offset:0
+	repl_backlog_active:0
+	repl_backlog_size:1048576
+	repl_backlog_first_byte_offset:0
+	repl_backlog_histlen:0
+	
+	# CPU
+	used_cpu_sys:2776.27
+	used_cpu_user:2449.24
+	used_cpu_sys_children:59.10
+	used_cpu_user_children:1237.45
+	
+	# Cluster
+	cluster_enabled:0
+	
+	# Keyspace
+	db0:keys=3790,expires=2,avg_ttl=95446662632
+	redis> 
 
-Please note depending on the version of Redis some of the fields have been
-added or removed. A robust client application should therefore parse the
-result of this command by skipping unknown properties, and gracefully handle
-missing fields.
+## 注意
 
-Here is the description of fields for Redis >= 2.4.
+请注意不同Redis版本会添加或者删除一些字段。一个健壮的客户端应用解析该命令的结果时，应该跳过未知的字段，并且优雅的处理缺少的字段。
+
+已下描述要求 Redis >= 2.4
 
 
-Here is the meaning of all fields in the **server** section:
+下面是所有 **server** 相关的信息:
 
-*   `redis_version`: Version of the Redis server
+*   `redis_version`: Redis 服务器版本
 *   `redis_git_sha1`:  Git SHA1
 *   `redis_git_dirty`: Git dirty flag
-*   `os`: Operating system hosting the Redis server
-*   `arch_bits`: Architecture (32 or 64 bits)
-*   `multiplexing_api`: event loop mechanism used by Redis
-*   `gcc_version`: Version of the GCC compiler used to compile the Redis server
-*   `process_id`: PID of the server process
-*   `run_id`: Random value identifying the Redis server (to be used by Sentinel and Cluster)
-*   `tcp_port`: TCP/IP listen port
-*   `uptime_in_seconds`: Number of seconds since Redis server start
-*   `uptime_in_days`: Same value expressed in days
-*   `lru_clock`: Clock incrementing every minute, for LRU management
+*   `os`: Redis 服务器的宿主操作系统
+*   `arch_bits`: 架构（32 或 64 位）
+*   `multiplexing_api`:  Redis 所使用的事件处理机制
+*   `gcc_version`: 编译 Redis 时所使用的 GCC 版本
+*   `process_id`:  服务器进程的 PID
+*   `run_id`: Redis 服务器的随机标识符（用于 Sentinel 和集群）
+*   `tcp_port`: TCP/IP 监听端口
+*   `uptime_in_seconds`: 自 Redis 服务器启动以来，经过的秒数
+*   `uptime_in_days`: 自 Redis 服务器启动以来，经过的天数
+*   `lru_clock`: 以分钟为单位进行自增的时钟，用于 LRU 管理
 
-Here is the meaning of all fields in the **clients** section:
+下面是所有 **clients** 相关的信息:
 
-*   `connected_clients`: Number of client connections (excluding connections from slaves)
-*   `client_longest_output_list`: longest output list among current client connections
-*   `client_biggest_input_buf`: biggest input buffer among current client connections
-*   `blocked_clients`: Number of clients pending on a blocking call (BLPOP, BRPOP, BRPOPLPUSH)
+*   `connected_clients`: 已连接客户端的数量（不包括通过从属服务器连接的客户端）
+*   `client_longest_output_list`: 当前连接的客户端当中，最长的输出列表
+*   `client_biggest_input_buf`: 当前连接的客户端当中，最大输入缓存
+*   `blocked_clients`: 正在等待阻塞命令（BLPOP、BRPOP、BRPOPLPUSH）的客户端的数量
 
-Here is the meaning of all fields in the **memory** section:
+下面是所有 **memory** 相关的信息:
 
-*   `used_memory`:  total number of bytes allocated by Redis using its
-     allocator (either standard **libc**, **jemalloc**, or an alternative allocator such
-     as [**tcmalloc**][hcgcpgp]
-*   `used_memory_human`: Human readable representation of previous value
-*   `used_memory_rss`: Number of bytes that Redis allocated as seen by the
-     operating system (a.k.a resident set size). This is the number reported by tools
-     such as `top(1)` and `ps(1)`
-*   `used_memory_peak`: Peak memory consumed by Redis (in bytes)
-*   `used_memory_peak_human`: Human readable representation of previous value
-*   `used_memory_lua`: Number of bytes used by the Lua engine
-*   `mem_fragmentation_ratio`: Ratio between `used_memory_rss` and `used_memory`
-*   `mem_allocator`: Memory allocator, chosen at compile time
+*   `used_memory`:  由 Redis 分配器分配的内存总量，以字节（byte）为单位
+*   `used_memory_human`:  以人类可读的格式返回 Redis 分配的内存总量
+*   `used_memory_rss`: 从操作系统的角度，返回 Redis 已分配的内存总量（俗称常驻集大小）。这个值和 top 、 ps 等命令的输出一致。
+*   `used_memory_peak`: Redis 的内存消耗峰值（以字节为单位）
+*   `used_memory_peak_human`: 以人类可读的格式返回 Redis 的内存消耗峰值
+*   `used_memory_lua`: Lua 引擎所使用的内存大小（以字节为单位）
+*   `mem_fragmentation_ratio`: `used_memory_rss` 和 `used_memory` 之间的比率
+*   `mem_allocator`: 在编译时指定的， Redis 所使用的内存分配器。可以是 libc 、 jemalloc 或者 tcmalloc 。
+在理想情况下， used_memory_rss 的值应该只比 used_memory 稍微高一点儿。
 
-Ideally, the `used_memory_rss` value should be only slightly higher than `used_memory`.
-When rss >> used, a large difference means there is memory fragmentation
-(internal or external), which can be evaluated by checking `mem_fragmentation_ratio`.
-When used >> rss, it means part of Redis memory has been swapped off by the operating
-system: expect some significant latencies.
+当 rss > used ，且两者的值相差较大时，表示存在（内部或外部的）内存碎片。
 
-Because Redis does not have control over how its allocations are mapped to
-memory pages, high `used_memory_rss` is often the result of a spike in memory
-usage.
+内存碎片的比率可以通过 mem_fragmentation_ratio 的值看出。
 
-When Redis frees memory, the memory is given back to the allocator, and the
-allocator may or may not give the memory back to the system. There may be
-a discrepancy between the `used_memory` value and memory consumption as
-reported by the operating system. It may be due to the fact memory has been
-used and released by Redis, but not given back to the system. The `used_memory_peak`
-value is generally useful to check this point.
+当 used > rss 时，表示 Redis 的部分内存被操作系统换出到交换空间了，在这种情况下，操作可能会产生明显的延迟。
 
-Here is the meaning of all fields in the **persistence** section:
+当 Redis 释放内存时，分配器可能会，也可能不会，将内存返还给操作系统。
+
+如果 Redis 释放了内存，却没有将内存返还给操作系统，那么 used_memory 的值可能和操作系统显示的 Redis 内存占用并不一致。
+
+查看 used_memory_peak 的值可以验证这种情况是否发生。
+
+下面是所有 **persistence** 相关的信息:
 
 *   `loading`: Flag indicating if the load of a dump file is on-going
 *   `rdb_changes_since_last_save`: Number of changes since the last dump
@@ -146,7 +235,7 @@ If a load operation is on-going, these additional fields will be added:
 *   `loading_loaded_perc`: Same value expressed as a percentage
 *   `loading_eta_seconds`: ETA in seconds for the load to be complete
 
-Here is the meaning of all fields in the **stats** section:
+下面是所有 **stats** 相关的信息:
 
 *   `total_connections_received`: Total number of connections accepted by the server
 *   `total_commands_processed`: Total number of commands processed by the server
@@ -160,7 +249,7 @@ Here is the meaning of all fields in the **stats** section:
 *   `pubsub_patterns`: Global number of pub/sub pattern with client subscriptions
 *   `latest_fork_usec`: Duration of the latest fork operation in microseconds
 
-Here is the meaning of all fields in the **replication** section:
+下面是所有 **replication** 相关的信息:
 
 *   `role`: Value is "master" if the instance is slave of no one, or "slave" if the instance is enslaved to a master.
     Note that a slave can be master of another slave (daisy chaining).
@@ -190,7 +279,7 @@ For each slave, the following line is added:
 
 *   `slaveXXX`: id, IP address, port, state
 
-Here is the meaning of all fields in the **cpu** section:
+下面是所有 **cpu** 相关的信息:
 
 *   `used_cpu_sys`: System CPU consumed by the Redis server
 *   `used_cpu_user`:User CPU consumed by the Redis server

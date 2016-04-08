@@ -7,23 +7,14 @@ disqusUrl: http://redis.cn/commands/slaveof.html
 commandsType: server
 ---
 
-The `SLAVEOF` command can change the replication settings of a slave on the fly.
-If a Redis server is already acting as slave, the command `SLAVEOF` NO ONE will
-turn off the replication, turning the Redis server into a MASTER.
-In the proper form `SLAVEOF` hostname port will make the server a slave of
-another server listening at the specified hostname and port.
+Redis `SLAVEOF` 命令可以将当前服务器转变为指定服务器的从属服务器(slave server)。
 
-If a server is already a slave of some master, `SLAVEOF` hostname port will stop
-the replication against the old server and start the synchronization against the
-new one, discarding the old dataset.
+如果当前服务器已经是某个主服务器(master server)的从属服务器，那么执行 SLAVEOF host port 将使当前服务器停止对旧主服务器的同步，丢弃旧数据集，转而开始对新主服务器进行同步。
 
-The form `SLAVEOF` NO ONE will stop replication, turning the server into a
-MASTER, but will not discard the replication.
-So, if the old master stops working, it is possible to turn the slave into a
-master and set the application to use this new master in read/write.
-Later when the other Redis server is fixed, it can be reconfigured to work as a
-slave.
+另外，对一个从属服务器执行命令 `SLAVEOF NO ONE` 将使得这个从属服务器关闭复制功能，并从从属服务器转变回主服务器，原来同步所得的数据集不会被丢弃。
 
-@return
+利用『 SLAVEOF NO ONE 不会丢弃同步所得数据集』这个特性，可以在主服务器失败的时候，将从属服务器用作新的主服务器，从而实现无间断运行。
 
-@simple-string-reply
+##返回值
+
+[simple-string-reply](/topics/protocol.html#simple-string-reply)
