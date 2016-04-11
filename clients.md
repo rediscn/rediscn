@@ -1,7 +1,7 @@
 ---
 layout: index
-title: Redis客户端连接工具资料 -- Redis中文资料站
-excerpt: redis客户端连接工具资料，提供as3redis、credis、Erldis、Go-Redis、Jedis、Predis等各种语言的客户端连接。
+title: Redis客户端连接工具资料 -- Redis中文网
+excerpt: redis客户端连接工具(Redis client)资料，提供as3redis、credis、Erldis、Go-Redis、Jedis、Predis等各种语言的客户端连接。
 permalink: clients.html
 disqusIdentifier: clients
 disqusUrl: http://redis.cn/clients.html

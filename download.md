@@ -1,7 +1,7 @@
 ---
 layout: index
-title: REDIS 3.0.7 下载 -- Redis中文资料站
-excerpt: redis下载中心，下载各种版本的redis，包括最新redis 3.0.7稳定版redid,3.0.7-Beta版本以及win32/64版本
+title: Redis 3.0.7 下载 -- Redis中文网
+excerpt: Redis下载中心(Redis download)，下载各种版本的redis，包括最新redis 3.0.7稳定版redis,3.0.7-Beta版本以及win32/64版本
 permalink: download.html
 disqusIdentifier: download
 disqusUrl: http://redis.cn/download.html
