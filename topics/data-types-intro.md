@@ -6,7 +6,7 @@ disqusIdentifier: topics_data-types-intro
 disqusUrl: http://redis.cn/topics/data-types-intro.html
 ---
 
-An introduction to Redis data types and abstractions
+Redis 数据类型介绍
 ===
 
 你也许已经知道Redis并不是简单的key-value存储，实际上他是一个数据结构服务器，支持不同类型的值。也就是说，你不必仅仅把字符串当作键所指向的值。下列这些数据类型都可作为值类型：
@@ -15,10 +15,8 @@ An introduction to Redis data types and abstractions
 * Lists: 按插入顺序排序的字符串元素的集合。他们基本上就是*链表（linked lists）*。
 * Sets: 不重复且无序的字符串元素的集合。
 * Sorted sets,类似Sets,但是每个字符串元素都关联到一个叫*score*浮动数值（floating number value）。里面的元素总是通过score进行着排序，所以不同的是，它是可以检索的一系列元素。（例如你可能会问：给我前面10个或者后面10个元素）。 
-* Hashes, which are maps composed of fields associated with values. Both the
-  field and the value are strings. This is very similar to Ruby or Python
-  hashes.
-* Bit arrays (or simply bitmaps): it is possible, using special commands, to
+* Hashes,由field和关联的value组成的map。field和value都是字符串的。这和Ruby、Python的hashes很像。
+* Bit arrays (或者说 simply bitmaps): it is possible, using special commands, to
   handle String values like an array of bits: you can set and clear individual
   bits, count all the bits set to 1, find the first set or unset bit, and so
   forth.
@@ -60,7 +58,7 @@ Redis Strings
 
 值可以是任何种类的字符串（包括二进制数据），例如你可以在一个键下保存一副jpeg图片。值的长度不能超过512 MB。
 
-`SET` 命令有些有趣的操作，例如，当key存在时`SET`会失败，或相反的，当key存在时它只会成功。
+`SET` 命令有些有趣的操作，例如，当key存在时`SET`会失败，或相反的，当key不存在时它只会成功。
 
     > set mykey newval nx
     (nil)
