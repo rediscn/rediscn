@@ -1,10 +1,10 @@
 ---
 layout: index
-title: Redis命令（Redis commands）  -- Redis中文网
+title: Redis命令中心（Redis commands）  -- Redis中文网
 permalink: commands.html
 disqusIdentifier: commands
 disqusUrl: http://redis.cn/commands.html
-excerpt : redis命令列表，显示全部已知的redis命令，redis集群相关命令，近期也会翻译过来。
+excerpt : Redis命令，显示全部已知的redis命令，redis集群相关命令，近期也会翻译过来,Redis命令参考，也可以直接输入命令进行命令检索。
 ---
 <section id='commands'>
 <div class='container'>
@@ -2343,4 +2343,7 @@ excerpt : redis命令列表，显示全部已知的redis命令，redis集群相�
             </li>
           </ul>
         </div>
+<div class='container'>
+	如果你对Redis命令使用有任何问题，欢迎到<a href="http://bbs.redis.cn/" target="_blank">Redis论坛</a>进行讨论,这里云集国内Redis使用者，一定有你想要的答案。
+</div>
 </section>
