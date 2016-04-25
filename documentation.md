@@ -1,6 +1,6 @@
 ---
 layout: index
-title: Redis文档中心 -- Redis中文资料站
+title: Redis文档中心 -- Redis官方网站中文版
 excerpt: redis文档中心，这里介绍了redis基本数据类型、完整的命令、持久化、内存优化等一系列redis基本功能和配置使用的介绍文档。
 permalink: documentation.html
 disqusIdentifier: documentation

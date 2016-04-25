@@ -1,10 +1,11 @@
 ---
 layout: commands
-title: eval 命令 -- Redis中文资料站
+title: eval 命令 -- Redis官方网站中文版
 permalink: commands/eval.html
 disqusIdentifier: command_eval
 disqusUrl: http://redis.cn/commands/eval.html
 commandsType: scripting
+excerpt : eval命令简介：EVAL 和 EVALSHA 命令是从 Redis 2.6.0 版本开始的，使用内置的 Lua 解释器，可以对 Lua 脚本进行求值。
 ---
 
 EVAL简介
