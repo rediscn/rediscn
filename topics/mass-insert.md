@@ -1,78 +1,55 @@
 ---
 layout: topics
-title: REDIS mass-insert -- Redis中文资料站
+title: Redis大量数据插入（redis mass-insert） -- Redis中文资料站
 permalink: topics/mass-insert.html
 disqusIdentifier: topics_mass-insert
 disqusUrl: http://redis.cn/topics/mass-insert.html
 ---
 
-Redis Mass Insertion
+Redis 大量数据插入
 ===
 
-Sometimes Redis instances needs to be loaded with big amount of preexisting
-or user generated data in a short amount of time, so that millions of keys
-will be created as fast as possible.
+有些时候，Redis实例需要装载大量用户在短时间内产生的数据，数以百万计的keys需要被快速的创建。
 
-This is called a *mass insertion*, and the goal of this document is to
-provide information about how to feed Redis with data as fast as possible.
+我们称之为*大量数据插入(mass insertion)*,本文档的目标就是提供如下信息：Redis如何尽可能快的处理数据。
 
-Use the protocol, Luke
+使用Luke协议
 ----------------------
 
-Using a normal Redis client to perform mass insertion is not a good idea
-for a few reasons: the naive approach of sending one command after the other
-is slow because you have to pay for the round trip time for every command.
-It is possible to use pipelining, but for mass insertion of many records
-you need to write new commands while you read replies at the same time to
-make sure you are inserting as fast as possible.
+使用正常模式的Redis 客户端执行大量数据插入不是一个好主意：因为一个个的插入会有大量的时间浪费在每一个命令往返时间上。使用管道（pipelining）是一种可行的办法，但是在大量插入数据的同时又需要执行其他新命令时，这时读取数据的同时需要确保请可能快的的写入数据。
 
-Only a small percentage of clients support non-blocking I/O, and not all the
-clients are able to parse the replies in an efficient way in order to maximize
-throughput. For all this reasons the preferred way to mass import data into
-Redis is to generate a text file containing the Redis protocol, in raw format,
-in order to call the commands needed to insert the required data.
+只有一小部分的客户端支持非阻塞输入/输出(non-blocking I/O),并且并不是所有客户端能以最大限度的提高吞吐量的高效的方式来分析答复。
 
-For instance if I need to generate a large data set where there are billions
-of keys in the form: `keyN -> ValueN' I will create a file containing the
-following commands in the Redis protocol format:
+例如，如果我们需要生成一个10亿的`keyN -> ValueN'的大数据集，我们会创建一个如下的redis命令集的文件：
 
     SET Key0 Value0
     SET Key1 Value1
     ...
     SET KeyN ValueN
 
-Once this file is created, the remaining action is to feed it to Redis
-as fast as possible. In the past the way to do this was to use the
-`netcat` with the following command:
+一旦创建了这个文件，其余的就是让Redis尽可能快的执行。在以前我们会用如下的`netcat`命令执行：
 
     (cat data.txt; sleep 10) | nc localhost 6379 > /dev/null
 
-However this is not a very reliable way to perform mass import because netcat
-does not really know when all the data was transferred and can't check for
-errors. In 2.6 or later versions of Redis the `redis-cli` utility
-supports a new mode called **pipe mode** that was designed in order to perform
-mass insertion.
+然而这并不是一个非常可靠的方式，因为用netcat进行大规模插入时不能检查错误。从Redis 2.6开始`redis-cli`支持一种新的被称之为**pipe mode**的新模式用于执行大量数据插入工作。
 
-Using the pipe mode the command to run looks like the following:
+使用**pipe mode**模式的执行命令如下：
 
     cat data.txt | redis-cli --pipe
 
-That will produce an output similar to this:
+这将产生类似如下的输出：
 
     All data transferred. Waiting for the last reply...
     Last reply received from server.
     errors: 0, replies: 1000000
 
-The redis-cli utility will also make sure to only redirect errors received
-from the Redis instance to the standard output.
+使用redis-cli将有效的确保错误输出到Redis实例的标准输出里面。
 
-Generating Redis Protocol
+
+生成Redis协议
 -------------------------
-
-The Redis protocol is extremely simple to generate and parse, and is
-[Documented here](/topics/protocol). However in order to generate protocol for
-the goal of mass insertion you don't need to understand every detail of the
-protocol, but just that every command is represented in the following way:
+它会非常简单的生成和解析Redis协议，Redis协议文档请参考[Redis协议说明](/topics/protocol.html)。
+但是为了生成大量数据插入的目标，你需要了解每一个细节协议，每个命令会用如下方式表示：
 
     *<args><cr><lf>
     $<len><cr><lf>
@@ -81,9 +58,9 @@ protocol, but just that every command is represented in the following way:
     ...
     <argN><cr><lf>
 
-Where `<cr>` means "\r" (or ASCII character 13) and `<lf>` means "\n" (or ASCII character 10).
+这里的`<cr>`是"\r"（或者是ASCII的13）、`<lf>`是"\n"（或者是ASCII的10）。
 
-For instance the command **SET key value** is represented by the following protocol:
+例如：命令**SET key value**协议格式如下：
 
     *3<cr><lf>
     $3<cr><lf>
@@ -93,14 +70,13 @@ For instance the command **SET key value** is represented by the following proto
     $5<cr><lf>
     value<cr><lf>
 
-Or represented as a quoted string:
+或表示为引用字符串：
 
     "*3\r\n$3\r\nSET\r\n$3\r\nkey\r\n$5\r\nvalue\r\n"
 
-The file you need to generate for mass insertion is just composed of commands
-represented in the above way, one after the other.
+你需要将大量插入数据的命令按照上面的方式一个接一个的生成到文件。
 
-The following Ruby function generates valid protocol:
+下面是使用Ruby生成协议的参考：
 
     def gen_redis_proto(*cmd)
         proto = ""
@@ -114,36 +90,30 @@ The following Ruby function generates valid protocol:
 
     puts gen_redis_proto("SET","mykey","Hello World!").inspect
 
-Using the above function it is possible to easily generate the key value pairs
-in the above example, with this program:
+针对上面的例子，使用下面代码可以很容易的生成需要的文件：
 
     (0...1000).each{|n|
         STDOUT.write(gen_redis_proto("SET","Key#{n}","Value#{n}"))
     }
 
-We can run the program directly in pipe to redis-cli in order to perform our
-first mass import session.
+我们可以直接用 redis-cli 的 pipe执行我们的第一个大量数据插入命令，过程如下：
 
     $ ruby proto.rb | redis-cli --pipe
     All data transferred. Waiting for the last reply...
     Last reply received from server.
     errors: 0, replies: 1000
 
-How the pipe mode works under the hoods
+pipe mode的工作原理是什么？
 ---------------------------------------
 
-The magic needed inside the pipe mode of redis-cli is to be as fast as netcat
-and still be able to understand when the last reply was sent by the server
-at the same time.
+难点是保证redis-cli在pipe mode模式下执行和netcat一样快的同时，如何能理解服务器发送的最后一个回复。
 
-This is obtained in the following way:
+这是通过以下方式获得：
 
-+ redis-cli --pipe tries to send data as fast as possible to the server.
-+ At the same time it reads data when available, trying to parse it.
-+ Once there is no more data to read from stdin, it sends a special **ECHO** command with a random 20 bytes string: we are sure this is the latest command sent, and we are sure we can match the reply checking if we receive the same 20 bytes as a bulk reply.
-+ Once this special final command is sent, the code receiving replies starts to match replies with this 20 bytes. When the matching reply is reached it can exit with success.
++ redis-cli --pipe试着尽可能快的发送数据到服务器。
++ 读取数据的同时，解析它。
++ 一旦没有更多的数据输入，它就会发送一个特殊的**ECHO**命令，后面跟着20个随机的字符。我们相信可以通过匹配回复相同的20个字符是同一个命令的行为。
++ 一旦这个特殊命令发出，收到的答复就开始匹配这20个字符，当匹配时，就可以成功退出了。
 
-Using this trick we don't need to parse the protocol we send to the server in order to understand how many commands we are sending, but just the replies.
-
-However while parsing the replies we take a counter of all the replies parsed so that at the end we are able to tell the user the amount of commands transferred to the server by the mass insert session.
+同时，在分析回复的时候，我们会采用计数器的方法计数，以便在最后能够告诉我们大量插入数据的数据量。
 

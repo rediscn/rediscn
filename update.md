@@ -9,6 +9,10 @@ disqusUrl: http://redis.cn/update.html
 redis中文网更新日志
 ===
 
+## 2016年4月27日
+
+1、翻译[Redis 大量数据插入](/topics/mass-insert.html)。<br/>
+
 ## 2016年3月22日
 
 1、翻译[HINCRBYFLOAT](/commands/hincrbyfloat.html)命令。<br/>
