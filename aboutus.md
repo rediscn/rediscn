@@ -20,7 +20,11 @@ disqusUrl: http://redis.cn/aboutus.html
               QQ：277489028
             </span>
           </span>
-          <span class='summary'>程序员一枚</span>
+          <span class='summary'>
+				微信号：<font color="red">rjgcs123</font></span>
+				<span class='summary'>韶华易逝，红颜易老。</span>
+				<span class='summary'>繁华落尽，平淡归真。
+			</span>
           </a>
         </li>
 		<li data-group='string'>
