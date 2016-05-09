@@ -9,6 +9,10 @@ disqusUrl: http://redis.cn/update.html
 redis中文网更新日志
 ===
 
+## 2016年5月9日
+
+1、更新首页和下载页里redis的最新版本3.2.0。<br/>
+
 ## 2016年4月27日
 
 1、翻译[Redis 大量数据插入](/topics/mass-insert.html)。<br/>
