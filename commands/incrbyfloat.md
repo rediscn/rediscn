@@ -7,28 +7,16 @@ disqusUrl: http://redis.cn/commands/incrbyfloat.html
 commandsType: strings
 ---
 
-Increment the string representing a floating point number stored at `key` by the
-specified `increment`.
-If the key does not exist, it is set to `0` before performing the operation.
-An error is returned if one of the following conditions occur:
 
-* The key contains a value of the wrong type (not a string).
-* The current key content or the specified increment are not parsable as a
-  double precision floating point number.
+通过指定浮点数`key`来增长浮点数(存放于string中)的值.
+当键不存在时,先将其值设为0再操作.下面任一情况都会返回错误:
 
-If the command is successful the new incremented value is stored as the new
-value of the key (replacing the old one), and returned to the caller as a
-string.
+* key 包含非法值(不是一个string).
+* 当前的key或者相加后的值不能解析为一个双精度的浮点值.(超出精度范围了)
 
-Both the value already contained in the string key and the increment argument
-can be optionally provided in exponential notation, however the value computed
-after the increment is stored consistently in the same format, that is, an
-integer number followed (if needed) by a dot, and a variable number of digits
-representing the decimal part of the number.
-Trailing zeroes are always removed.
-
-The precision of the output is fixed at 17 digits after the decimal point
-regardless of the actual internal precision of the computation.
+如果操作命令成功, 相加后的值将替换原值存储在对应的键值上, 并以string的类型返回.
+string中已存的值或者相加参数可以任意选用指数符号,但相加计算的结果会以科学计数法的格式存储.
+无论各计算的内部精度如何, 输出精度都固定为小数点后17位.
 
 @return
 
@@ -43,8 +31,5 @@ SET mykey 5.0e3
 INCRBYFLOAT mykey 2.0e2
 ```
 
-## Implementation details
-
-The command is always propagated in the replication link and the Append Only
-File as a `SET` operation, so that differences in the underlying floating point
-math implementation will not be sources of inconsistency.
+## 执行细节
+该命令总是衍生为一个链接复制以及追加文件的set操作 , 所以底层浮点数的实现的差异并不是造成不一致的源头???
