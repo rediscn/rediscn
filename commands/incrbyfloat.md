@@ -18,18 +18,21 @@ commandsType: strings
 string中已存的值或者相加参数可以任意选用指数符号,但相加计算的结果会以科学计数法的格式存储.
 无论各计算的内部精度如何, 输出精度都固定为小数点后17位.
 
-@return
+## 返回值
 
-@bulk-string-reply: the value of `key` after the increment.
+[Bulk-string-reply](/topics/protocol.html#bulk-string-reply): 当前`key`增加increment后的值。
 
-@examples
+##例子
 
-```cli
-SET mykey 10.50
-INCRBYFLOAT mykey 0.1
-SET mykey 5.0e3
-INCRBYFLOAT mykey 2.0e2
-```
+	redis> SET mykey 10.50
+	OK
+	redis> INCRBYFLOAT mykey 0.1
+	"10.6"
+	redis> SET mykey 5.0e3
+	OK
+	redis> INCRBYFLOAT mykey 2.0e2
+	"5200"
+	redis> 
 
 ## 执行细节
 该命令总是衍生为一个链接复制以及追加文件的set操作 , 所以底层浮点数的实现的差异并不是造成不一致的源头???

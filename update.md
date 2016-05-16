@@ -9,6 +9,10 @@ disqusUrl: http://redis.cn/update.html
 redis中文网更新日志
 ===
 
+## 2016年5月16日
+
+1、合并[icbd](https://github.com/icbd)翻译的[INCRBYFLOAT](/commands/incrbyfloat.html)命令。<br/>
+
 ## 2016年5月12日
 
 1、合并[icbd](https://github.com/icbd)翻译的[APPEND](/commands/append.html)命令。<br/>
