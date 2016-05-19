@@ -37,8 +37,8 @@ redis中文网更新日志
 
 ## 2016年2月2日
 
-1、合并[cane1991](https://github.com/cane1991)提交的[INCR](/commands/incr.html)翻译request。<br/>
-2、合并[cane1991](https://github.com/cane1991)提交的[SET](/commands/set.html)翻译request。<br/>
+1、合并[canezk](https://github.com/cane1991)提交的[INCR](/https://github.com/canezk)翻译request。<br/>
+2、合并[canezk](https://github.com/cane1991)提交的[SET](/https://github.com/canezk)翻译request。<br/>
 3、修改[命令(commands)](/commands.html)头部翻译。
 
 ## 2016年1月31日
