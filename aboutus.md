@@ -30,12 +30,12 @@ disqusUrl: http://redis.cn/aboutus.html
 		<li data-group='string'>
 		<a href='#' target="_blank">
           <span class='command'>
-            江苏-java-狗狗
+            狗哥
             <span class='args'>
-              QQ号码
+              QQ号码：156889050
             </span>
           </span>
-          <span class='summary'>简介</span>
+          <span class='summary'>简介：唯品会风控平台架构师</span>
           </a>
         </li>
 		<li data-group='string'>
