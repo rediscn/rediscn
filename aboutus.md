@@ -35,7 +35,8 @@ disqusUrl: http://redis.cn/aboutus.html
               QQ号码：156889050
             </span>
           </span>
-          <span class='summary'>简介：唯品会风控平台架构师</span>
+          <span class='summary'>简介：唯品会风控平台架构师
+          微信号：<font color="red">gougou851129</font></span></span>
           </a>
         </li>
 		<li data-group='string'>
