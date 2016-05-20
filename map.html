@@ -9,6 +9,7 @@
     <meta name="Description" content="redis.cn中文官方文档整体结构图，html5制作的网站图表">
     <link rel="stylesheet" href={{ ""/css/styles.css?143696651" | prepend: site.baseurl }}2">
     
+    <script src="/js/base.js" type="text/javascript"></script>
     <script src="http://lib.csdn.net/js/web/libs/jquery-1.11.1.min.js" type="text/javascript"></script>
     <script src="http://lib.csdn.net/js/web/libs/bootstrap.min.js" type="text/javascript"></script>
     <script src="http://lib.csdn.net/min/statist.min.js" type="text/javascript"></script>
@@ -131,9 +132,15 @@
         <div class="kl_title">
         	<div style="width:1024px;margin:auto;height:60px;">
         		<script type="text/javascript">
-						    var cpro_id = "u2582069";
+        					if(isShowAd){
+	                 		if(isMobileBrowser()){
+				
+											}else{
+									    	var cpro_id = "u2582069";
+									    	document.write('<scr'+'ipt src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></scr'+'ipt>');
+									  	}
+								  	}
 						</script>
-						<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
         	</div>	
         </div>
     </div>

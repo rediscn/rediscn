@@ -1,8 +1,13 @@
+// 是否显示广告
+var isShowAd = false;
+
 $.getUrlParam = function (name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]); return null;
 };
+
+
 
 /**
  * 判断是否是移动浏览器
