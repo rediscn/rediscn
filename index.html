@@ -64,19 +64,21 @@ disqusUrl: http://redis.cn
     </p>
   </section>
 </div>
-<div class='home-intro home-section'>
-	<script type="text/javascript">
-		if(isShowAd){
-			if(isMobileBrowser()){
-				
-			}else{
-	    	var cpro_id = "u2567475";
-	    	document.write('<scr'+'ipt src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></scr'+'ipt>');
-	  	}
-	  }
-	</script>
+
+<script type="text/javascript">
+	if(isShowAd){
+		document.write("<div class='home-intro home-section'>");
+		if(isMobileBrowser()){
+			
+		}else{
+    	var cpro_id = "u2567475";
+    	document.write('<scr'+'ipt src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></scr'+'ipt>');
+  	}
+  	document.write("</div>");
+  }
+</script>
 	
-</div>
+
 <div class='home-intro home-section'>
 	<h2>最新论坛热文</h2>
 	<ul>
