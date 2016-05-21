@@ -7,65 +7,58 @@ disqusUrl: http://redis.cn/commands/bitop.html
 commandsType: strings
 ---
 
-Perform a bitwise operation between multiple keys (containing string values) and
-store the result in the destination key.
+对一个或多个保存二进制位的字符串 key 进行位元操作，并将结果保存到 destkey 上。
 
-The `BITOP` command supports four bitwise operations: **AND**, **OR**, **XOR**
-and **NOT**, thus the valid forms to call the command are:
+`BITOP` 命令支持 AND 、 OR 、 NOT 、 XOR 这四种操作中的任意一种参数：
 
 
-* `BITOP AND destkey srckey1 srckey2 srckey3 ... srckeyN`
-* `BITOP OR  destkey srckey1 srckey2 srckey3 ... srckeyN`
-* `BITOP XOR destkey srckey1 srckey2 srckey3 ... srckeyN`
-* `BITOP NOT destkey srckey`
+* `BITOP AND destkey srckey1 srckey2 srckey3 ... srckeyN` ，对一个或多个 key 求逻辑并，并将结果保存到 destkey 。
+* `BITOP OR  destkey srckey1 srckey2 srckey3 ... srckeyN`，对一个或多个 key 求逻辑或，并将结果保存到 destkey 。
+* `BITOP XOR destkey srckey1 srckey2 srckey3 ... srckeyN`，对一个或多个 key 求逻辑异或，并将结果保存到 destkey 。
+* `BITOP NOT destkey srckey`，对给定 key 求逻辑非，并将结果保存到 destkey 。
 
-As you can see **NOT** is special as it only takes an input key, because it
-performs inversion of bits so it only makes sense as an unary operator.
+除了 NOT 操作之外，其他操作都可以接受一个或多个 key 作为输入。
 
-The result of the operation is always stored at `destkey`.
+执行结果将始终保持到`destkey`里面。
 
-## Handling of strings with different lengths
+## 处理不同长度的字符串
 
-When an operation is performed between strings having different lengths, all the
-strings shorter than the longest string in the set are treated as if they were
-zero-padded up to the length of the longest string.
+当 BITOP 处理不同长度的字符串时，较短的那个字符串所缺少的部分会被看作 0 。
 
-The same holds true for non-existent keys, that are considered as a stream of
-zero bytes up to the length of the longest string.
+空的 key 也被看作是包含 0 的字符串序列。
 
-@return
 
-@integer-reply
+## 返回值
 
-The size of the string stored in the destination key, that is equal to the
-size of the longest input string.
+[Integer reply](/topics/protocol.html#integer-reply)
 
-@examples
+保存到 destkey 的字符串的长度，和输入 key 中最长的字符串长度相等。
 
-```cli
-SET key1 "foobar"
-SET key2 "abcdef"
-BITOP AND dest key1 key2
-GET dest
-```
+##例子
 
-## Pattern: real time metrics using bitmaps
+	redis> SET key1 "foobar"
+	OK
+	redis> SET key2 "abcdef"
+	OK
+	redis> BITOP AND dest key1 key2
+	(integer) 6
+	redis> GET dest
+	"`bc`ab"
+	redis>
 
-`BITOP` is a good complement to the pattern documented in the `BITCOUNT` command
-documentation.
-Different bitmaps can be combined in order to obtain a target bitmap where
-the population counting operation is performed.
+## 模式：使用 bitop 实现用户上线次数统计
 
-See the article called "[Fast easy realtime metrics using Redis
-bitmaps][hbgc212fermurb]" for a interesting use cases.
+`BITOP`是对[BITCOUNT](/commands/bitcount.html)命令一个很好的补充。
 
-[hbgc212fermurb]: http://blog.getspool.com/2011/11/29/fast-easy-realtime-metrics-using-redis-bitmaps
+不同的bitmaps进行组合操作可以获得目标bitmap以进行人口统计操作。
 
-## Performance considerations
+[Fast easy realtime metrics using Redis
+bitmaps](http://blog.getspool.com/2011/11/29/fast-easy-realtime-metrics-using-redis-bitmaps)这篇文章介绍了一个有趣的用例。
 
-`BITOP` is a potentially slow command as it runs in O(N) time.
-Care should be taken when running it against long input strings.
+## 性能
 
-For real-time metrics and statistics involving large inputs a good approach is
-to use a slave (with read-only option disabled) where the bit-wise
-operations are performed to avoid blocking the master instance.
+`BITOP`可能是一个缓慢的命令，它的时间复杂度是O(N)。
+在处理长字符串时应注意一下效率问题。
+
+对于实时的指标和统计，涉及大输入一个很好的方法是
+使用bit-wise操作以避免阻塞主实例。

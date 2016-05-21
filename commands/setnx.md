@@ -7,25 +7,25 @@ disqusUrl: http://redis.cn/commands/setnx.html
 commandsType: strings
 ---
 
-Set `key` to hold string `value` if `key` does not exist.
-In that case, it is equal to `SET`.
-When `key` already holds a value, no operation is performed.
-`SETNX` is short for "**SET** if **N**ot e**X**ists".
+将`key`设置值为`value`，如果`key`不存在，这种情况下等同[SET](/commands/set.html)命令。
+当`key`存在时，什么也不做。`SETNX`是"**SET** if **N**ot e**X**ists"的简写。
 
-@return
+## 返回值
 
-@integer-reply, specifically:
+[Integer reply](/topics/protocol.html#integer-reply), 特定值:
 
-* `1` if the key was set
-* `0` if the key was not set
+* `1` 如果key被设置了
+* `0` 如果key没有被设置
 
-@examples
-
-```cli
-SETNX mykey "Hello"
-SETNX mykey "World"
-GET mykey
-```
+##例子
+	
+	redis> SETNX mykey "Hello"
+	(integer) 1
+	redis> SETNX mykey "World"
+	(integer) 0
+	redis> GET mykey
+	"Hello"
+	redis> 
 
 ## Design pattern: Locking with `!SETNX`
 

@@ -7,69 +7,51 @@ disqusUrl: http://redis.cn/commands/bitcount.html
 commandsType: strings
 ---
 
-Count the number of set bits (population counting) in a string.
+统计字符串被设置为1的bit数.
 
-By default all the bytes contained in the string are examined.
-It is possible to specify the counting operation only in an interval passing the
-additional arguments _start_ and _end_.
+一般情况下，给定的整个字符串都会被进行计数，通过指定额外的 start 或 end 参数，可以让计数只在特定的位上进行。
 
-Like for the `GETRANGE` command start and end can contain negative values in
-order to index bytes starting from the end of the string, where -1 is the last
-byte, -2 is the penultimate, and so forth.
+start 和 end 参数的设置和 [GETRANGE](/commands/getrange.html) 命令类似，都可以使用负数值：比如 -1 表示最后一个位，而 -2 表示倒数第二个位，以此类推。
 
-Non-existent keys are treated as empty strings, so the command will return zero.
+不存在的 key 被当成是空字符串来处理，因此对一个不存在的 key 进行 BITCOUNT 操作，结果为 0 。
 
-## 返回
+## 返回值
 
-@integer-reply
+[Integer reply](/topics/protocol.html#integer-reply)
 
-The number of bits set to 1.
+被设置为 1 的位的数量。
 
 ## 例子
 
-	SET mykey "foobar"
-	BITCOUNT mykey
-	BITCOUNT mykey 0 0
-	BITCOUNT mykey 1 1
+	redis> SET mykey "foobar"
+	OK
+	redis> BITCOUNT mykey
+	(integer) 26
+	redis> BITCOUNT mykey 0 0
+	(integer) 4
+	redis> BITCOUNT mykey 1 1
+	(integer) 6
+	redis>
 
-## Pattern: real-time metrics using bitmaps
+模式：使用 bitmap 实现用户上线次数统计
 
-Bitmaps are a very space-efficient representation of certain kinds of
-information.
-One example is a Web application that needs the history of user visits, so that
-for instance it is possible to determine what users are good targets of beta
-features.
+Bitmap 对于一些特定类型的计算非常有效。
 
-Using the `SETBIT` command this is trivial to accomplish, identifying every day
-with a small progressive integer.
-For instance day 0 is the first day the application was put online, day 1 the
-next day, and so forth.
+假设现在我们希望记录自己网站上的用户的上线频率，比如说，计算用户 A 上线了多少天，用户 B 上线了多少天，诸如此类，以此作为数据，从而决定让哪些用户参加 beta 测试等活动 —— 这个模式可以使用 [SETBIT](/commands/setbit.html) 和 `BITCOUNT` 来实现。
 
-Every time a user performs a page view, the application can register that in
-the current day the user visited the web site using the `SETBIT` command setting
-the bit corresponding to the current day.
+比如说，每当用户在某一天上线的时候，我们就使用 SETBIT ，以用户名作为 key ，将那天所代表的网站的上线日作为 offset 参数，并将这个 offset 上的为设置为 1 。
 
-Later it will be trivial to know the number of single days the user visited the
-web site simply calling the `BITCOUNT` command against the bitmap.
+举个例子，如果今天是网站上线的第 100 天，而用户 peter 在今天阅览过网站，那么执行命令 `SETBIT  peter 100 1` ；如果明天 peter 也继续阅览网站，那么执行命令 `SETBIT peter 101 1` ，以此类推。
 
-A similar pattern where user IDs are used instead of days is described
-in the article called "[Fast easy realtime metrics using Redis
-bitmaps][hbgc212fermurb]".
+当要计算 peter 总共以来的上线次数时，就使用 	`BITCOUNT` 命令：执行 `BITCOUNT peter` ，得出的结果就是 peter 上线的总天数。
 
-[hbgc212fermurb]: http://blog.getspool.com/2011/11/29/fast-easy-realtime-metrics-using-redis-bitmaps
+更详细的实现可以参考博文 [Fast, easy, realtime metrics using Redis bitmaps](http://blog.getspool.com/2011/11/29/fast-easy-realtime-metrics-using-redis-bitmaps) (需要翻墙)
 
-## Performance considerations
+## 性能
 
-In the above example of counting days, even after 10 years the application is
-online we still have just `365*10` bits of data per user, that is just 456 bytes
-per user.
-With this amount of data `BITCOUNT` is still as fast as any other O(1) Redis
-command like `GET` or `INCR`.
+前面的上线次数统计例子，即使运行 10 年，占用的空间也只是每个用户 10*365 比特位(bit)，也即是每个用户 456 字节。对于这种大小的数据来说， `BITCOUNT` 的处理速度就像 [GET](/commands/get.html) 和 [INCR](/commands/incr.html) 这种 O(1) 复杂度的操作一样快。
 
-When the bitmap is big, there are two alternatives:
+如果你的 bitmap 数据非常大，那么可以考虑使用以下两种方法：
 
-* Taking a separated key that is incremented every time the bitmap is modified.
-  This can be very efficient and atomic using a small Redis Lua script.
-* Running the bitmap incrementally using the `BITCOUNT` _start_ and _end_
-  optional parameters, accumulating the results client-side, and optionally
-  caching the result into a key.
+* 将一个大的 bitmap 分散到不同的 key 中，作为小的 bitmap 来处理。使用 Lua 脚本可以很方便地完成这一工作。
+* 使用 `BITCOUNT` 的 start 和 end 参数，每次只对所需的部分位进行计算，将位的累积工作(accumulating)放到客户端进行，并且对结果进行缓存 (caching)。

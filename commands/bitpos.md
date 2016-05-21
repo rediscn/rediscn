@@ -7,47 +7,48 @@ disqusUrl: http://redis.cn/commands/bitpos.html
 commandsType: strings
 ---
 
-Return the position of the first bit set to 1 or 0 in a string.
+返回字符串里面第一个被设置为1或者0的bit位。
 
-The position is returned, thinking of the string as an array of bits from left to
-right, where the first byte's most significant bit is at position 0, the second
-byte's most significant bit is at position 8, and so forth.
+返回一个位置，把字符串当做一个从左到右的字节数组，第一个符合条件的在位置0，其次在位置8，等等。
 
-The same bit position convention is followed by `GETBIT` and `SETBIT`.
+[GETBIT](/commands/getbit.html) 和 [SETBIT](/commands/setbit.html) 相似的也是操作字节位的命令。
 
-By default, all the bytes contained in the string are examined.
-It is possible to look for bits only in a specified interval passing the additional arguments _start_ and _end_ (it is possible to just pass _start_, the operation will assume that the end is the last byte of the string. However there are semantic differences as explained later). The range is interpreted as a range of bytes and not a range of bits, so `start=0` and `end=2` means to look at the first three bytes.
+默认情况下整个字符串都会被检索一次，只有在指定start和end参数(指定start和end位是可行的)，该范围被解释为一个字节的范围，而不是一系列的位。所以`start=0` 并且 `end=2`是指前三个字节范围内查找。
 
-Note that bit positions are returned always as absolute values starting from bit zero even when _start_ and _end_ are used to specify a range.
+注意，返回的位的位置始终是从0开始的，即使使用了start来指定了一个开始字节也是这样。
 
-Like for the `GETRANGE` command start and end can contain negative values in
-order to index bytes starting from the end of the string, where -1 is the last
-byte, -2 is the penultimate, and so forth.
+和[GETRANGE](/commands/getrange.html)命令一样，start和end也可以包含负值，负值将从字符串的末尾开始计算，-1是字符串的最后一个字节，-2是倒数第二个，等等。
 
-Non-existent keys are treated as empty strings.
+不存在的key将会被当做空字符串来处理。
 
-@return
+## 返回值
 
-@integer-reply
+[Integer reply](/topics/protocol.html#integer-reply)
 
-The command returns the position of the first bit set to 1 or 0 according to the request.
+命令返回字符串里面第一个被设置为1或者0的bit位。
 
-If we look for set bits (the bit argument is 1) and the string is empty or composed of just zero bytes, -1 is returned.
+如果我们在空字符串或者0字节的字符串里面查找bit为1的内容，那么结果将返回-1。
 
-If we look for clear bits (the bit argument is 0) and the string only contains bit set to 1, the function returns the first bit not part of the string on the right. So if the string is three bytes set to the value `0xff` the command `BITPOS key 0` will return 24, since up to bit 23 all the bits are 1.
+如果我们在字符串里面查找bit为0而且字符串只包含1的值时，将返回字符串最右边的第一个空位。如果有一个字符串是三个字节的值为`0xff`的字符串，那么命令`BITPOS key 0`将会返回24，因为0-23位都是1。
 
-Basically, the function considers the right of the string as padded with zeros if you look for clear bits and specify no range or the _start_ argument **only**.
+基本上，我们可以把字符串看成右边有无数个0。
 
-However, this behavior changes if you are looking for clear bits and specify a range with both __start__ and __end__. If no clear bit is found in the specified range, the function returns -1 as the user specified a clear range and there are no 0 bits in that range.
+然而，如果你用指定start和end范围进行查找指定值时，如果该范围内没有对应值，结果将返回-1。
 
-@examples
+##例子
 
-```cli
-SET mykey "\xff\xf0\x00"
-BITPOS mykey 0
-SET mykey "\x00\xff\xf0"
-BITPOS mykey 1 0
-BITPOS mykey 1 2
-set mykey "\x00\x00\x00"
-BITPOS mykey 1
-```
+	redis> SET mykey "\xff\xf0\x00"
+	OK
+	redis> BITPOS mykey 0 # 查找字符串里面bit值为0的位置
+	(integer) 12
+	redis> SET mykey "\x00\xff\xf0"
+	OK
+	redis> BITPOS mykey 1 0 # 查找字符串里面bit值为1从第0个字节开始的位置
+	(integer) 8
+	redis> BITPOS mykey 1 2 # 查找字符串里面bit值为1从第2个字节(12)开始的位置
+	(integer) 16
+	redis> set mykey "\x00\x00\x00"
+	OK
+	redis> BITPOS mykey 1 # 查找字符串里面bit值为1的位置
+	(integer) -1
+	redis>
