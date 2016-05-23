@@ -7,27 +7,28 @@ disqusUrl: http://redis.cn/commands/ttl.html
 commandsType: keys
 ---
 
-Returns the remaining time to live of a key that has a timeout.
-This introspection capability allows a Redis client to check how many seconds a
-given key will continue to be part of the dataset.
+返回key剩余的过期时间。
+这种反射能力允许Redis客户端检查指定key在数据集里面剩余的有效期。
 
-In Redis 2.6 or older the command returns `-1` if the key does not exist or if the key exist but has no associated expire.
+在Redis 2.6和之前版本，如果key不存在或者已过期时返回`-1`。
 
-Starting with Redis 2.8 the return value in case of error changed:
+从Redis2.8开始，错误返回值的结果有如下改变：
 
-* The command returns `-2` if the key does not exist.
-* The command returns `-1` if the key exists but has no associated expire.
+* 如果key不存在或者已过期，返回 `-2` 
+* 如果key没有设置过期时间（永久有效），返回 `-1` 。
 
-See also the `PTTL` command that returns the same information with milliseconds resolution (Only available in Redis 2.6 or greater).
+另见[PTTL](/commands/pttl.html)命令返回相同的信息，只不过他的时间单位是毫秒（仅适用于Redis 2.6及更高版本）。
 
-@return
+## 返回值
 
-@integer-reply: TTL in seconds, or a negative value in order to signal an error (see the description above).
+[Integer reply](/topics/protocol.html#integer-reply)： key有效的秒数（TTL in seconds）,或者一个负值的错误 (参考上文)。
 
-@examples
-
-```cli
-SET mykey "Hello"
-EXPIRE mykey 10
-TTL mykey
-```
+##例子
+	
+	redis> SET mykey "Hello"
+	OK
+	redis> EXPIRE mykey 10 # 设置mykey 10秒后过期
+	(integer) 1
+	redis> TTL mykey # 查看mykey剩余的过期时间
+	(integer) 10
+	redis> 
