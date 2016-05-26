@@ -9,6 +9,10 @@ disqusUrl: http://redis.cn/update.html
 redis中文网更新日志
 ===
 
+## 2016年5月26日
+
+1、更新[许瑞](https://github.com/gougou851129)翻译的[CLUSTER-ADDSLOTS](/commands/cluster-addslots.html)命令。<br/>
+
 ## 2016年5月23日
 
 1、翻译[TTL](/commands/ttl.html)命令。<br/>

@@ -7,54 +7,47 @@ disqusUrl: http://redis.cn/commands/cluster-addslots.html
 commandsType: cluster
 ---
 
-This command is useful in order to modify a node's view of the cluster
-configuration. Specifically it assigns a set of hash slots to the node
-receiving the command. If the command is successful, the node will map
-the specified hash slots to itself, and will start broadcasting the new
-configuration.
+这个命令是用于修改某个节点上的集群配置。具体的说它把一组hash slots分配给接收命令的节点。
+如果命令执行成功，节点将指定的hash slots映射到自身，节点将获得指定的hash slots，同时开始向集群广播新的配置。
 
-However note that:
 
-1. The command only works if all the specified slots are, from the point of view of the node receiving the command, currently not assigned. A node will refuse to take ownership for slots that already belong to some other node (including itself).
-2. The command fails if the same slot is specified multiple times.
-3. As a side effect of the command execution, if a slot among the ones specified as argument is set as `importing`, this state gets cleared once the node assigns the (previously unbound) slot to itself.
 
-## Example
+需要注意：
 
-For example the following command assigns slots 1 2 3 to the node receiving
-the command:
+1. 该命令只有当所有指定的slots在接收命令的节点上还没有分配得的情况下生效。节点将
+拒绝接纳已经分配到其他节点的slots（包括它自己的）。
+
+2. 同一个slot被指定多次的情况下命令会失败。
+3. 执行这个命令有一个副作用，如果slot作为其中一个参数设置为`importing`，一旦节点向自己分配该slot（以前未绑定）这个状态将会被清除。
+
+## 例子
+
+例如以下命令分配 1 2 3 slot到接收命令的节点：
 
     > CLUSTER ADDSLOTS 1 2 3
     OK
 
-However trying to execute it again results into an error since the slots
-are already assigned:
+但是试图再次执行命令结果将会错误，因为slots已经被分配了。
 
     > CLUSTER ADDSLOTS 1 2 3
     ERR Slot 1 is already busy
 
-## Usage in Redis Cluster
+## 在Redis集群中的应用
 
-This command only works in cluster mode and is useful in the following
-Redis Cluster operations:
+这个命令仅在cluster 模式下生效，而且作用于redis集群以下操作：
 
-1. To create a new cluster ADDSLOTS is used in order to initially setup master nodes splitting the available hash slots among them.
-2. In order to fix a broken cluster where certain slots are unassigned.
+1. 创建新集群时，ADDSLOTS用于主节点初始化分配可用的hash slots。
+2. 为了修复有未分配slots的坏集群。
 
-## Information about slots propagation and warnings
+## 有关slots的传播和警告
 
-Note that once a node assigns a set of slots to itself, it will start
-propagating this information in heartbeat packet headers. However the
-other nodes will accept the information only if they have the slot as
-not already bound with another node, or if the configuration epoch of the
-node advertising the new hash slot, is greater than the node currently listed
-in the table.
+注意一旦一个节点为自己分配了一个slot集合，它就会开始将这个信息在心跳包的头里传播出去。然而其他节点只有在他们有slot没有被其他节点绑定或者传播的新的hash slot的配置年代大于列表中的节点时才会接受这个信息。
 
-This means that this command should be used with care only by applications
-orchestrating Redis Cluster, like `redis-trib`, and the command if used
-out of the right context can leave the cluster in a wrong state or cause
-data loss.
+这意味着这个命令应该仅通过redis集群应用管理客户端例如redsi-trib谨慎使用，而且这个命令如果使用了错误的上下文会导致集群处于错误的状态或者导致数据丢失。
 
-@return
 
-@simple-string-reply: `OK` if the command was successful. Otherwise an error is returned.
+## 返回值
+
+[simple-string-reply](/topics/protocol.html#simple-string-reply): 如果命令执行成功返回`OK`，否则返回错误信息。
+
+本文由许瑞翻译，巢鹏校验
