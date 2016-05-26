@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-addslots 命令 -- Redis中文资料站
+title: cluster-addslots 命令 -- Redis中国用户组
 permalink: commands/cluster-addslots.html
 disqusIdentifier: command_cluster-addslots
 disqusUrl: http://redis.cn/commands/cluster-addslots.html
