@@ -7,7 +7,7 @@ disqusUrl: http://redis.cn/commands/cluster-countkeysinslot.html
 commandsType: cluster
 ---
 
-返回连接节点负责的指定hash slot的key的数量。该命令只查询连接节点的数据集，所以如果连接节点没有分配到该hash slot会返回0。
+返回连接节点负责的指定hash slot的key的数量。该命令只查询连接节点的数据集，所以如果连接节点指派到该hash slot会返回0。
 
 ```
 > CLUSTER COUNTKEYSINSLOT 7000
