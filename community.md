@@ -30,15 +30,11 @@ disqusUrl: http://redis.cn/community.html
 
 由于微信群成员已超过100，需要加信群的请加下面李强、许瑞个人微信二维码，备注Redis加群
 
-李强（geelou ）个人微信号：rjgcs123，二维码：
+李强（geelou ）个人微信号：rjgcs123，二维码：<br/>
+<img src="http://redis.cn/images/weixin/geelou.png" width="50%"/>
 
-![李强](http://redis.cn/images/weixin/geelou.png)
-
-
-
-许瑞（小笨狗）个人微信号：gougou851129，二维码：
-
-![许瑞](http://redis.cn/images/weixin/gougou851129.jpg)
+许瑞（小笨狗）个人微信号：gougou851129，二维码：<br/>
+<img src="http://redis.cn/images/weixin/gougou851129.jpg" width="50%"/>
 
 ## 社区 ##
 
