@@ -9,6 +9,8 @@ disqusUrl: http://redis.cn/community.html
 
 # 欢迎加入Redis中国用户组（CRUG）大家庭 #
 
+大家在使用Redis中遇到的问题可以访问[Redis中文论坛](http://bbs.redis.cn)进行交流讨论，也可以通过下面的QQ群、微信群进行及时的交流沟通。
+
 ## Redis技术交流QQ群列表： ##
 
 - Redis中国用户组(CRUG) <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=9b5015a8103c04144bd82bed3c5d27d92df31512290cba413ad53e235cd5d3c8"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis中国用户组(CRUG)" title="Redis中国用户组(CRUG)"></a>
