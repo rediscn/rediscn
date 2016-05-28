@@ -11,13 +11,13 @@ commandsType: cluster
 
 这个命令的主要是用于rehash期间slot从一个节点移动到另外一个节点。集群rehash的具体做法在Redis集群规范文档，或者你可以查询`CLUSTER SETSLOT`命令文档的附录。
 
-```
-> CLUSTER GETKEYSINSLOT 7000 3
-"47344|273766|70329104160040|key_39015"
-"47344|273766|70329104160040|key_89793"
-"47344|273766|70329104160040|key_92937"
-```
 
-@return
+	> CLUSTER GETKEYSINSLOT 7000 3
+	"47344|273766|70329104160040|key_39015"
+	"47344|273766|70329104160040|key_89793"
+	"47344|273766|70329104160040|key_92937"
 
-@array-reply: 返回*count*个key的列表。
+
+## 返回值
+
+[array-reply](/topics/protocol.html#array-reply): 返回*count*个key的列表。
