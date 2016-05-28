@@ -7,26 +7,26 @@
 
 ### 2016年5月28日
 
-1、更新[许瑞](https://github.com/gougou851129)翻译的[CLUSTER COUNTKEYSINSLOT](/commands/cluster-countkeysinslot.html)命令。<br/>
-2、更新[许瑞](https://github.com/gougou851129)翻译的[CLUSTER GETKEYSINSLOT](/commands/cluster-getkeysinslot.html)命令。<br/>
-3、更新[李强](https://github.com/geelou)翻译的[SCRIPT FLUSH](/commands/script-flush)命令。<br/>
-4、更新[李强](https://github.com/geelou)翻译的[SCRIPT EXISTS](/commands/script-exists)命令。<br/>
+1、更新[许瑞](https://github.com/gougou851129)翻译的[CLUSTER COUNTKEYSINSLOT](http://redis.cn/commands/cluster-countkeysinslot.html)命令。<br/>
+2、更新[许瑞](https://github.com/gougou851129)翻译的[CLUSTER GETKEYSINSLOT](http://redis.cn/commands/cluster-getkeysinslot.html)命令。<br/>
+3、更新[李强](https://github.com/geelou)翻译的[SCRIPT FLUSH](http://redis.cn/commands/script-flush)命令。<br/>
+4、更新[李强](https://github.com/geelou)翻译的[SCRIPT EXISTS](http://redis.cn/commands/script-exists)命令。<br/>
 
 ### 2016年5月26日
 
-1、更新[许瑞](https://github.com/gougou851129)翻译的[CLUSTER-ADDSLOTS](/commands/cluster-addslots.html)命令。<br/>
+1、更新[许瑞](https://github.com/gougou851129)翻译的[CLUSTER-ADDSLOTS](http://redis.cn/commands/cluster-addslots.html)命令。<br/>
 
 ### 2016年5月23日
 
-1、翻译[TTL](/commands/ttl.html)命令。<br/>
+1、翻译[TTL](http://redis.cn/commands/ttl.html)命令。<br/>
 
 ### 2016年5月16日
 
-1、合并[icbd](https://github.com/icbd)翻译的[INCRBYFLOAT](/commands/incrbyfloat.html)命令。<br/>
+1、合并[icbd](https://github.com/icbd)翻译的[INCRBYFLOAT](http://redis.cn/commands/incrbyfloat.html)命令。<br/>
 
 ### 2016年5月12日
 
-1、合并[icbd](https://github.com/icbd)翻译的[APPEND](/commands/append.html)命令。<br/>
+1、合并[icbd](https://github.com/icbd)翻译的[APPEND](http://redis.cn/commands/append.html)命令。<br/>
 
 ### 2016年5月9日
 
@@ -34,23 +34,23 @@
 
 ### 2016年4月27日
 
-1、翻译[Redis 大量数据插入](/topics/mass-insert.html)。<br/>
+1、翻译[Redis 大量数据插入](http://redis.cn/topics/mass-insert.html)。<br/>
 
 ### 2016年3月22日
 
-1、翻译[HINCRBYFLOAT](/commands/hincrbyfloat.html)命令。<br/>
-2、翻译[EXPIRE](/commands/expire.html)命令。
+1、翻译[HINCRBYFLOAT](http://redis.cn/commands/hincrbyfloat.html)命令。<br/>
+2、翻译[EXPIRE](http://redis.cn/commands/expire.html)命令。
 
 ### 2016年3月21日
 
-1、翻译[GEO](/commands.html#geo)相关命令。<br/>
-2、优化翻译[commands](/commands.html)页面。
+1、翻译[GEO](http://redis.cn/commands.html#geo)相关命令。<br/>
+2、优化翻译[commands](http://redis.cn/commands.html)页面。
 
 ### 2016年2月2日
 
-1、合并[canezk](https://github.com/cane1991)提交的[INCR](/https://github.com/canezk)翻译request。<br/>
-2、合并[canezk](https://github.com/cane1991)提交的[SET](/https://github.com/canezk)翻译request。<br/>
-3、修改[命令(commands)](/commands.html)头部翻译。
+1、合并[canezk](https://github.com/cane1991)提交的[INCR](http://redis.cn/https://github.com/canezk)翻译request。<br/>
+2、合并[canezk](https://github.com/cane1991)提交的[SET](http://redis.cn/https://github.com/canezk)翻译request。<br/>
+3、修改[命令(commands)](http://redis.cn/commands.html)头部翻译。
 
 ### 2016年1月31日
 
@@ -75,9 +75,9 @@
 
 ### 2015年1月27日
 
-1、更新[PFADD](/commands/pfadd.html)相关命令<br/>
-2、更新[PFCOUNT](/commands/pfcount.html)页面<br/>
-3、更新[PFMERGE](/commands/pfmerge.html)页面
+1、更新[PFADD](http://redis.cn/commands/pfadd.html)相关命令<br/>
+2、更新[PFCOUNT](http://redis.cn/commands/pfcount.html)页面<br/>
+3、更新[PFMERGE](http://redis.cn/commands/pfmerge.html)页面
 
 ### 2015年1月17日
 
@@ -114,7 +114,7 @@
 ### 2014年2月27日
 
 1、更新Redis 集群教程 <br/>
-2、添加[PUBSUB](/commands/pubsub.html)、[CONFIG REWRITE](/commands/config-rewrite.html)、[CLIENT PAUSE](/commands/client-pause.html)命令
+2、添加[PUBSUB](http://redis.cn/commands/pubsub.html)、[CONFIG REWRITE](http://redis.cn/commands/config-rewrite.html)、[CLIENT PAUSE](http://redis.cn/commands/client-pause.html)命令
 
 ### 2014年2月21日
 
@@ -217,4 +217,5 @@
 ### 2011年11月11日
 
 redis.cn网站正式开通，开始翻译redis.io全站内容。
+
 
