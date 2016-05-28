@@ -1,7 +1,7 @@
 var rediscn_commands={
   "APPEND": {
     "summary": "追加一个值到key上",
-    "complexity": "O(1). The amortized time complexity is O(1) 因为redis用的动态字符串的库在每次分配空间的时候会增加一倍的可用空闲空间，所以在添加的value较小而且已经存在的 value是任意大小的情况下，均摊时间复杂度是O(1) 。",
+    "complexity": "O(1)。均摊时间复杂度是O(1)， 因为redis用的动态字符串的库在每次分配空间的时候会增加一倍的可用空闲空间，所以在添加的value较小而且已经存在的 value是任意大小的情况下，均摊时间复杂度是O(1) 。",
     "arguments": [
       {
         "name": "key",
@@ -54,7 +54,7 @@ var rediscn_commands={
     "group": "string"
   },
   "BITOP": {
-    "summary": "Perform bitwise operations between strings",
+    "summary": "在字符串上按位执行运算",
     "complexity": "O(N)",
     "arguments": [
       {
@@ -75,7 +75,7 @@ var rediscn_commands={
     "group": "string"
   },
   "BITPOS": {
-    "summary": "Find first bit set or clear in a string",
+    "summary": "在字符串中查找第一个满足条件的位置(bit)",
     "complexity": "O(N)",
     "arguments": [
       {
@@ -156,7 +156,7 @@ var rediscn_commands={
   },
   "CLIENT KILL": {
     "summary": "关闭客户端连接",
-    "complexity": "O(N) where N is the number of client connections",
+    "complexity": "O(N) N是客户端连接数量",
     "arguments": [
       {
         "name": "ip:port",
@@ -193,7 +193,7 @@ var rediscn_commands={
   },
   "CLIENT LIST": {
     "summary": "获得客户端连接列表",
-    "complexity": "O(N) where N is the number of client connections",
+    "complexity": "O(N) N是客户端连接数量",
     "since": "2.4.0",
     "group": "server"
   },
@@ -228,8 +228,8 @@ var rediscn_commands={
     "group": "server"
   },
   "CLUSTER ADDSLOTS": {
-    "summary": "Assign new hash slots to receiving node",
-    "complexity": "O(N) where N is the total number of hash slot arguments",
+    "summary": "为新的node分配哈希插槽（hash slots）",
+    "complexity": "O(N) N是参数的哈希插槽总数",
     "arguments": [
       {
         "name": "slot",
@@ -241,8 +241,8 @@ var rediscn_commands={
     "group": "cluster"
   },
   "CLUSTER COUNT-FAILURE-REPORTS": {
-    "summary": "Return the number of failure reports active for a given node",
-    "complexity": "O(N) where N is the number of failure reports",
+    "summary": "返回给定节点的故障报告的数目",
+    "complexity": "O(N) N是故障报告的数量",
     "arguments": [
       {
         "name": "node-id",
@@ -253,7 +253,7 @@ var rediscn_commands={
     "group": "cluster"
   },
   "CLUSTER COUNTKEYSINSLOT": {
-    "summary": "Return the number of local keys in the specified hash slot",
+    "summary": "返回指定的哈希槽中的本地键的数目",
     "complexity": "O(1)",
     "arguments": [
       {
@@ -562,7 +562,7 @@ var rediscn_commands={
   },
   "DEL": {
     "summary": "删除一个key",
-    "complexity": "O(N) where N is the number of keys that will be removed. When a key to remove holds a value other than a string, the individual complexity for this key is O(M) where M is the number of elements in the list, set, sorted set or hash. Removing a single key that holds a string value is O(1).",
+    "complexity": "O(N) 将要被删除的key的数量，当删除的key是字符串以外的复杂数据类型时比如List,Set,Hash删除这个key的时间复杂度是O(1)。",
     "arguments": [
       {
         "name": "key",
@@ -603,7 +603,7 @@ var rediscn_commands={
   },
   "EVAL": {
     "summary": "在服务器端执行 LUA 脚本",
-    "complexity": "Depends on the script that is executed.",
+    "complexity": "取决于脚本本身的执行的时间复杂度。",
     "arguments": [
       {
         "name": "script",
@@ -629,7 +629,7 @@ var rediscn_commands={
   },
   "EVALSHA": {
     "summary": "在服务器端执行 LUA 脚本",
-    "complexity": "Depends on the script that is executed.",
+    "complexity": "取决于脚本本身的执行的时间复杂度。",
     "arguments": [
       {
         "name": "sha1",
@@ -714,8 +714,8 @@ var rediscn_commands={
     "group": "server"
   },
   "GEOADD": {
-    "summary": "Add one or more geospatial items in the geospatial index represented using a sorted set",
-    "complexity": "O(log(N)) for each item added, where N is the number of elements in the sorted set.",
+    "summary": "添加一个或多个地理空间位置到sorted set",
+    "complexity": "每一个元素添加是O(log(N)) ，N是sorted set的元素数量。",
     "arguments": [
       {
         "name": "key",
@@ -915,7 +915,7 @@ var rediscn_commands={
   },
   "GETRANGE": {
     "summary": "获取存储在key上的值的一个子字符串",
-    "complexity": "O(N) where N is the length of the returned string. The complexity is ultimately determined by the returned length, but because creating a substring from an existing string is very cheap, it can be considered O(1) for small strings.",
+    "complexity": "O(N) N是字符串长度，复杂度由最终返回长度决定，但由于通过一个字符串创建子字符串是很容易的，它可以被认为是O(1)。",
     "arguments": [
       {
         "name": "key",
@@ -951,7 +951,7 @@ var rediscn_commands={
   },
   "HDEL": {
     "summary": "删除一个或多个Hash的field",
-    "complexity": "O(N) where N is the number of fields to be removed.",
+    "complexity": "O(N) N是被删除的字段数量。",
     "arguments": [
       {
         "name": "key",
@@ -3066,6 +3066,7 @@ $(document).ready(function(){
   var curUrl = window.location.href;
 	var curCmd = curUrl.substring(curUrl.lastIndexOf("/")+1,curUrl.lastIndexOf("."));
 	curCommand = curCmd.toUpperCase();
+	curCommand = curCommand.replace("-"," ");
 	
 	var commandName = $('.command .name');
 	if(commandName) commandName.html(curCommand);

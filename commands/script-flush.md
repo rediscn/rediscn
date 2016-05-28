@@ -7,11 +7,11 @@ disqusUrl: http://redis.cn/commands/script-flush.html
 commandsType: scripting
 ---
 
+清空Lua脚本缓存
 Flush the Lua scripts cache.
 
-Please refer to the `EVAL` documentation for detailed information about Redis
-Lua scripting.
+更多细节信息请参考[EVAL](/commands/eval.html)命令。
 
-@return
+## 返回值
 
-@simple-string-reply
+[simple-string-reply](/topics/protocol.html#simple-string-reply)
