@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS encryption -- Redis中文资料站
+title: REDIS encryption
 permalink: topics/encryption.html
 disqusIdentifier: topics_encryption
 disqusUrl: http://redis.cn/topics/encryption.html

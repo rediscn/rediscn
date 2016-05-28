@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: linsert 命令 -- Redis中文资料站
+title: linsert 命令
 permalink: commands/linsert.html
 disqusIdentifier: command_linsert
 disqusUrl: http://redis.cn/commands/linsert.html

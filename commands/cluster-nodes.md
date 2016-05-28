@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-nodes 命令 -- Redis中文资料站
+title: cluster-nodes 命令
 permalink: commands/cluster-nodes.html
 disqusIdentifier: command_cluster-nodes
 disqusUrl: http://redis.cn/commands/cluster-nodes.html

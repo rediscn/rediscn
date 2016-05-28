@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: rpushx 命令 -- Redis中文资料站
+title: rpushx 命令
 permalink: commands/rpushx.html
 disqusIdentifier: command_rpushx
 disqusUrl: http://redis.cn/commands/rpushx.html

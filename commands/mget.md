@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: mget 命令 -- Redis中文资料站
+title: mget 命令
 permalink: commands/mget.html
 disqusIdentifier: command_mget
 disqusUrl: http://redis.cn/commands/mget.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: pexpireat 命令 -- Redis中文资料站
+title: pexpireat 命令
 permalink: commands/pexpireat.html
 disqusIdentifier: command_pexpireat
 disqusUrl: http://redis.cn/commands/pexpireat.html

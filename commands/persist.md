@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: persist 命令 -- Redis中文资料站
+title: persist 命令
 permalink: commands/persist.html
 disqusIdentifier: command_persist
 disqusUrl: http://redis.cn/commands/persist.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: subscribe 命令 -- Redis中文资料站
+title: subscribe 命令
 permalink: commands/subscribe.html
 disqusIdentifier: command_subscribe
 disqusUrl: http://redis.cn/commands/subscribe.html

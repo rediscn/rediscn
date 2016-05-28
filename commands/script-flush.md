@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: script-flush 命令 -- Redis中文资料站
+title: script-flush 命令
 permalink: commands/script-flush.html
 disqusIdentifier: command_script-flush
 disqusUrl: http://redis.cn/commands/script-flush.html

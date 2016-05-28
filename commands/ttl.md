@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: ttl 命令 -- Redis中文资料站
+title: ttl 命令
 permalink: commands/ttl.html
 disqusIdentifier: command_ttl
 disqusUrl: http://redis.cn/commands/ttl.html

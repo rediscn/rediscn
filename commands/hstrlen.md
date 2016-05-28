@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: hstrlen 命令 -- Redis中文资料站
+title: hstrlen 命令
 permalink: commands/hstrlen.html
 disqusIdentifier: command_hstrlen
 disqusUrl: http://redis.cn/commands/hstrlen.html

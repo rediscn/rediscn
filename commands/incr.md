@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: incr 命令 -- Redis中文资料站
+title: incr 命令
 permalink: commands/incr.html
 disqusIdentifier: command_incr
 disqusUrl: http://redis.cn/commands/incr.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: bitop 命令 -- Redis中文资料站
+title: bitop 命令
 permalink: commands/bitop.html
 disqusIdentifier: command_bitop
 disqusUrl: http://redis.cn/commands/bitop.html

@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS latency -- Redis中文资料站
+title: REDIS latency
 permalink: topics/latency.html
 disqusIdentifier: topics_latency
 disqusUrl: http://redis.cn/topics/latency.html

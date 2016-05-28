@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS debugging -- Redis中文资料站
+title: REDIS debugging
 permalink: topics/debugging.html
 disqusIdentifier: topics_debugging
 disqusUrl: http://redis.cn/topics/debugging.html

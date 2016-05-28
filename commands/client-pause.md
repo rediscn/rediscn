@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: client-pause 命令 -- Redis中文资料站
+title: client-pause 命令
 permalink: commands/client-pause.html
 disqusIdentifier: command_client-pause
 disqusUrl: http://redis.cn/commands/client-pause.html

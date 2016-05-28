@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS 许可 -- Redis中文资料站
+title: REDIS 许可
 permalink: topics/license.html
 disqusIdentifier: license
 disqusUrl: http://redis.cn/topics/license.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: smove 命令 -- Redis中文资料站
+title: smove 命令
 permalink: commands/smove.html
 disqusIdentifier: command_smove
 disqusUrl: http://redis.cn/commands/smove.html

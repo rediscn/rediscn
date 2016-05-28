@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: geodecode 命令 -- Redis中文资料站
+title: geodecode 命令
 permalink: commands/geodecode.html
 disqusIdentifier: command_geodecode
 disqusUrl: http://redis.cn/commands/geodecode.html

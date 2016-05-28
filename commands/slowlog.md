@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: slowlog 命令 -- Redis中文资料站
+title: slowlog 命令
 permalink: commands/slowlog.html
 disqusIdentifier: command_slowlog
 disqusUrl: http://redis.cn/commands/slowlog.html

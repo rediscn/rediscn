@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: geodist 命令 -- Redis中文资料站
+title: geodist 命令
 permalink: commands/geodist.html
 disqusIdentifier: command_geodist
 disqusUrl: http://redis.cn/commands/geodist.html

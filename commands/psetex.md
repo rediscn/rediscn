@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: psetex 命令 -- Redis中文资料站
+title: psetex 命令
 permalink: commands/psetex.html
 disqusIdentifier: command_psetex
 disqusUrl: http://redis.cn/commands/psetex.html

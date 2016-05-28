@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: bgsave 命令 -- Redis中文资料站
+title: bgsave 命令
 permalink: commands/bgsave.html
 disqusIdentifier: command_bgsave
 disqusUrl: http://redis.cn/commands/bgsave.html

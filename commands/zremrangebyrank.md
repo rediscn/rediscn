@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zremrangebyrank 命令 -- Redis中文资料站
+title: zremrangebyrank 命令
 permalink: commands/zremrangebyrank.html
 disqusIdentifier: command_zremrangebyrank
 disqusUrl: http://redis.cn/commands/zremrangebyrank.html

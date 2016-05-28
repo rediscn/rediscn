@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: dump 命令 -- Redis中文资料站
+title: dump 命令
 permalink: commands/dump.html
 disqusIdentifier: command_dump
 disqusUrl: http://redis.cn/commands/dump.html

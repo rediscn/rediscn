@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: hincrbyfloat 命令 -- Redis中文资料站
+title: hincrbyfloat 命令
 permalink: commands/hincrbyfloat.html
 disqusIdentifier: command_hincrbyfloat
 disqusUrl: http://redis.cn/commands/hincrbyfloat.html

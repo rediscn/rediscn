@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS 虚拟内存 -- Redis中文资料站
+title: REDIS 虚拟内存
 permalink: topics/virtual-memory.html
 disqusIdentifier: virtual-memory
 disqusUrl: http://redis.cn/topics/virtual-memory.html

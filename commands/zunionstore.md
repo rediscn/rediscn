@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zunionstore 命令 -- Redis中文资料站
+title: zunionstore 命令
 permalink: commands/zunionstore.html
 disqusIdentifier: command_zunionstore
 disqusUrl: http://redis.cn/commands/zunionstore.html

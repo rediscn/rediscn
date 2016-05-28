@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: srandmember 命令 -- Redis中文资料站
+title: srandmember 命令
 permalink: commands/srandmember.html
 disqusIdentifier: command_srandmember
 disqusUrl: http://redis.cn/commands/srandmember.html

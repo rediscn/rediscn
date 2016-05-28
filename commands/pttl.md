@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: pttl 命令 -- Redis中文资料站
+title: pttl 命令
 permalink: commands/pttl.html
 disqusIdentifier: command_pttl
 disqusUrl: http://redis.cn/commands/pttl.html

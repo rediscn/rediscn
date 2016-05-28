@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS lru-cache -- Redis中文资料站
+title: REDIS lru-cache
 permalink: topics/latency-monitor.html
 disqusIdentifier: topics_latency-monitor
 disqusUrl: http://redis.cn/topics/latency-monitor.html

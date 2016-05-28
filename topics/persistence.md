@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS persistence -- Redis中文资料站
+title: REDIS persistence
 permalink: topics/persistence.html
 disqusIdentifier: topics_persistence
 disqusUrl: http://redis.cn/topics/persistence.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-slots 命令 -- Redis中文资料站
+title: cluster-slots 命令
 permalink: commands/cluster-slots.html
 disqusIdentifier: command_cluster-slots
 disqusUrl: http://redis.cn/commands/cluster-slots.html

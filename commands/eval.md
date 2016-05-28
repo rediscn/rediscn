@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: eval 命令 -- Redis官方网站中文版
+title: eval 命令
 permalink: commands/eval.html
 disqusIdentifier: command_eval
 disqusUrl: http://redis.cn/commands/eval.html

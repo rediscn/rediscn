@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: scan 命令 -- Redis中文资料站
+title: scan 命令
 permalink: commands/scan.html
 disqusIdentifier: command_scan
 disqusUrl: http://redis.cn/commands/scan.html

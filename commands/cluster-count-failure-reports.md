@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-count-failure-reports 命令 -- Redis中文资料站
+title: cluster-count-failure-reports 命令
 permalink: commands/cluster-count-failure-reports.html
 disqusIdentifier: command_cluster-count-failure-reports
 disqusUrl: http://redis.cn/commands/cluster-count-failure-reports.html

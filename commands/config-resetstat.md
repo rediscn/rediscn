@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: config-resetstat 命令 -- Redis中文资料站
+title: config-resetstat 命令
 permalink: commands/config-resetstat.html
 disqusIdentifier: command_config-resetstat
 disqusUrl: http://redis.cn/commands/config-resetstat.html

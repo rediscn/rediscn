@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: geoencode 命令 -- Redis中文资料站
+title: geoencode 命令
 permalink: commands/geoencode.html
 disqusIdentifier: command_geoencode
 disqusUrl: http://redis.cn/commands/geoencode.html

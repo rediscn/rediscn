@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: migrate 命令 -- Redis中文资料站
+title: migrate 命令
 permalink: commands/migrate.html
 disqusIdentifier: command_migrate
 disqusUrl: http://redis.cn/commands/migrate.html

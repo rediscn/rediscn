@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: rpop 命令 -- Redis中文资料站
+title: rpop 命令
 permalink: commands/rpop.html
 disqusIdentifier: command_rpop
 disqusUrl: http://redis.cn/commands/rpop.html

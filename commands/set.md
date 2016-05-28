@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: set 命令 -- Redis中文资料站
+title: set 命令
 permalink: commands/set.html
 disqusIdentifier: command_set
 disqusUrl: http://redis.cn/commands/set.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: hdel 命令 -- Redis中文资料站
+title: hdel 命令
 permalink: commands/hdel.html
 disqusIdentifier: command_hdel
 disqusUrl: http://redis.cn/commands/hdel.html

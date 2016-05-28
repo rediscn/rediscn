@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: getrange 命令 -- Redis中文资料站
+title: getrange 命令
 permalink: commands/getrange.html
 disqusIdentifier: command_getrange
 disqusUrl: http://redis.cn/commands/getrange.html

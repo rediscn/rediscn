@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: srem 命令 -- Redis中文资料站
+title: srem 命令
 permalink: commands/srem.html
 disqusIdentifier: command_srem
 disqusUrl: http://redis.cn/commands/srem.html

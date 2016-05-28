@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: sadd 命令 -- Redis中文资料站
+title: sadd 命令
 permalink: commands/sadd.html
 disqusIdentifier: command_sadd
 disqusUrl: http://redis.cn/commands/sadd.html

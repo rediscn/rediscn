@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: incrbyfloat 命令 -- Redis中文资料站
+title: incrbyfloat 命令
 permalink: commands/incrbyfloat.html
 disqusIdentifier: command_incrbyfloat
 disqusUrl: http://redis.cn/commands/incrbyfloat.html

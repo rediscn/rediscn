@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-meet 命令 -- Redis中文资料站
+title: cluster-meet 命令
 permalink: commands/cluster-meet.html
 disqusIdentifier: command_cluster-meet
 disqusUrl: http://redis.cn/commands/cluster-meet.html

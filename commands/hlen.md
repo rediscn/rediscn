@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: hlen 命令 -- Redis中文资料站
+title: hlen 命令
 permalink: commands/hlen.html
 disqusIdentifier: command_hlen
 disqusUrl: http://redis.cn/commands/hlen.html

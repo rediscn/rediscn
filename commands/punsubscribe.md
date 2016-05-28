@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: punsubscribe 命令 -- Redis中文资料站
+title: punsubscribe 命令
 permalink: commands/punsubscribe.html
 disqusIdentifier: command_punsubscribe
 disqusUrl: http://redis.cn/commands/punsubscribe.html

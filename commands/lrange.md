@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: lrange 命令 -- Redis中文资料站
+title: lrange 命令
 permalink: commands/lrange.html
 disqusIdentifier: command_lrange
 disqusUrl: http://redis.cn/commands/lrange.html

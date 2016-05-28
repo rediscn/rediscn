@@ -1,6 +1,6 @@
 ---
 layout: index
-title: Redis社区 -- Redis中文资料站
+title: Redis社区
 excerpt: Redis中文技术交流社区，学习交流redis技术欢迎来redis.cn中文官方网站。
 permalink: community.html
 disqusIdentifier: community

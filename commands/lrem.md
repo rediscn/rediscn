@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: lrem 命令 -- Redis中文资料站
+title: lrem 命令
 permalink: commands/lrem.html
 disqusIdentifier: command_lrem
 disqusUrl: http://redis.cn/commands/lrem.html

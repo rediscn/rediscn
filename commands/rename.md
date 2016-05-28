@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: rename 命令 -- Redis中文资料站
+title: rename 命令
 permalink: commands/rename.html
 disqusIdentifier: command_rename
 disqusUrl: http://redis.cn/commands/rename.html

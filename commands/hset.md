@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: hset 命令 -- Redis中文资料站
+title: hset 命令
 permalink: commands/hset.html
 disqusIdentifier: command_hset
 disqusUrl: http://redis.cn/commands/hset.html

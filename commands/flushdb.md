@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: flushdb 命令 -- Redis中文资料站
+title: flushdb 命令
 permalink: commands/flushdb.html
 disqusIdentifier: command_flushdb
 disqusUrl: http://redis.cn/commands/flushdb.html

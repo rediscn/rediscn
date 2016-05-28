@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: restore 命令 -- Redis中文资料站
+title: restore 命令
 permalink: commands/restore.html
 disqusIdentifier: command_restore
 disqusUrl: http://redis.cn/commands/restore.html

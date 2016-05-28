@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-saveconfig 命令 -- Redis中文资料站
+title: cluster-saveconfig 命令
 permalink: commands/cluster-saveconfig.html
 disqusIdentifier: command_cluster-saveconfig
 disqusUrl: http://redis.cn/commands/cluster-saveconfig.html

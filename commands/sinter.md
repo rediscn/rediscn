@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: sinter 命令 -- Redis中文资料站
+title: sinter 命令
 permalink: commands/sinter.html
 disqusIdentifier: command_sinter
 disqusUrl: http://redis.cn/commands/sinter.html

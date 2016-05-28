@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS lru-cache -- Redis中文资料站
+title: REDIS lru-cache
 permalink: topics/lru-cache.html
 disqusIdentifier: topics_lru-cache
 disqusUrl: http://redis.cn/topics/lru-cache.html

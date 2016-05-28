@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: exists 命令 -- Redis中文资料站
+title: exists 命令
 permalink: commands/exists.html
 disqusIdentifier: command_exists
 disqusUrl: http://redis.cn/commands/exists.html

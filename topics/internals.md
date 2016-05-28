@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS internals -- Redis中文资料站
+title: REDIS internals
 permalink: topics/internals.html
 disqusIdentifier: topics_internals
 disqusUrl: http://redis.cn/topics/internals.html

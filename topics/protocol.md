@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS protocol -- Redis中文资料站
+title: REDIS protocol
 permalink: topics/protocol.html
 disqusIdentifier: topics_protocol
 disqusUrl: http://redis.cn/topics/protocol.html

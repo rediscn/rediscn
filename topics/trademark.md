@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: redis商标指南 -- Redis中文资料站
+title: redis商标指南
 permalink: topics/trademark.html
 disqusIdentifier: trademark
 disqusUrl: http://redis.cn/topics/trademark.html

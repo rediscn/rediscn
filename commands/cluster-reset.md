@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-reset 命令 -- Redis中文资料站
+title: cluster-reset 命令
 permalink: commands/cluster-reset.html
 disqusIdentifier: command_cluster-reset
 disqusUrl: http://redis.cn/commands/cluster-reset.html

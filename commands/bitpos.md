@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: bitpos 命令 -- Redis中文资料站
+title: bitpos 命令
 permalink: commands/bitpos.html
 disqusIdentifier: command_bitpos
 disqusUrl: http://redis.cn/commands/bitpos.html

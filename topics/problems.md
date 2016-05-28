@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS problems -- Redis中文资料站
+title: REDIS problems
 permalink: topics/problems.html
 disqusIdentifier: topics_problems
 disqusUrl: http://redis.cn/topics/problems.html

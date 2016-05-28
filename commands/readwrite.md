@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: readwrite 命令 -- Redis中文资料站
+title: readwrite 命令
 permalink: commands/readwrite.html
 disqusIdentifier: command_readwrite
 disqusUrl: http://redis.cn/commands/readwrite.html

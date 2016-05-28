@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: expireat 命令 -- Redis中文资料站
+title: expireat 命令
 permalink: commands/expireat.html
 disqusIdentifier: command_expireat
 disqusUrl: http://redis.cn/commands/expireat.html

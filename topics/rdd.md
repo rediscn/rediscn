@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS rdd -- Redis中文资料站
+title: REDIS rdd
 permalink: topics/rdd.html
 disqusIdentifier: topics_rdd
 disqusUrl: http://redis.cn/topics/rdd.html

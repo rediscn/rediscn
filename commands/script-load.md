@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: script-load 命令 -- Redis中文资料站
+title: script-load 命令
 permalink: commands/script-load.html
 disqusIdentifier: command_script-load
 disqusUrl: http://redis.cn/commands/script-load.html

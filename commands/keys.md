@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: keys 命令 -- Redis中文资料站
+title: keys 命令
 permalink: commands/keys.html
 disqusIdentifier: command_keys
 disqusUrl: http://redis.cn/commands/keys.html

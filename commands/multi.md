@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: multi 命令 -- Redis中文资料站
+title: multi 命令
 permalink: commands/multi.html
 disqusIdentifier: command_multi
 disqusUrl: http://redis.cn/commands/multi.html

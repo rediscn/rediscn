@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: Redis安全性 -- Redis中文资料站
+title: Redis安全性
 permalink: topics/security.html
 disqusIdentifier: topics_security
 disqusUrl: http://redis.cn/topics/security.html

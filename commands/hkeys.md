@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: hkeys 命令 -- Redis中文资料站
+title: hkeys 命令
 permalink: commands/hkeys.html
 disqusIdentifier: command_hkeys
 disqusUrl: http://redis.cn/commands/hkeys.html

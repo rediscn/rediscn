@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: client-getname 命令 -- Redis中文资料站
+title: client-getname 命令
 permalink: commands/client-getname.html
 disqusIdentifier: command_client-getname
 disqusUrl: http://redis.cn/commands/client-getname.html

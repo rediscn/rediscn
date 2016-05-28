@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS notifications -- Redis中文资料站
+title: REDIS notifications
 permalink: topics/notifications.html
 disqusIdentifier: topics_notifications
 disqusUrl: http://redis.cn/topics/notifications.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: brpoplpush 命令 -- Redis中文资料站
+title: brpoplpush 命令
 permalink: commands/brpoplpush.html
 disqusIdentifier: command_brpoplpush
 disqusUrl: http://redis.cn/commands/brpoplpush.html

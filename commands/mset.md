@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: mset 命令 -- Redis中文资料站
+title: mset 命令
 permalink: commands/mset.html
 disqusIdentifier: command_mset
 disqusUrl: http://redis.cn/commands/mset.html

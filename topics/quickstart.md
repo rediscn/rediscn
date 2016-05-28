@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS quickstart -- Redis中文资料站
+title: REDIS quickstart
 permalink: topics/quickstart.html
 disqusIdentifier: topics_quickstart
 disqusUrl: http://redis.cn/topics/quickstart.html

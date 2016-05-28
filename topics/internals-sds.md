@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS internals-sds -- Redis中文资料站
+title: REDIS internals-sds
 permalink: topics/internals-sds.html
 disqusIdentifier: topics_internals-sds
 disqusUrl: http://redis.cn/topics/internals-sds.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: info 命令 -- Redis中文资料站
+title: info 命令
 permalink: commands/info.html
 disqusIdentifier: command_info
 disqusUrl: http://redis.cn/commands/info.html

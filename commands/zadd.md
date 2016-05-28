@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zadd 命令 -- Redis中文资料站
+title: zadd 命令
 permalink: commands/zadd.html
 disqusIdentifier: command_zadd
 disqusUrl: http://redis.cn/commands/zadd.html

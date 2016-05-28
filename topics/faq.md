@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS faq -- Redis中文资料站
+title: REDIS faq
 permalink: topics/faq.html
 disqusIdentifier: topics_faq
 disqusUrl: http://redis.cn/topics/faq.html

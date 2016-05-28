@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: psubscribe 命令 -- Redis中文资料站
+title: psubscribe 命令
 permalink: commands/psubscribe.html
 disqusIdentifier: command_psubscribe
 disqusUrl: http://redis.cn/commands/psubscribe.html

@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS sentinel-spec -- Redis中文资料站
+title: REDIS sentinel-spec
 permalink: topics/sentinel-spec.html
 disqusIdentifier: sentinel-spec
 disqusUrl: http://redis.cn/topics/sentinel-spec.html

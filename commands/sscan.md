@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: sscan 命令 -- Redis中文资料站
+title: sscan 命令
 permalink: commands/sscan.html
 disqusIdentifier: command_sscan
 disqusUrl: http://redis.cn/commands/sscan.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: lset 命令 -- Redis中文资料站
+title: lset 命令
 permalink: commands/lset.html
 disqusIdentifier: command_lset
 disqusUrl: http://redis.cn/commands/lset.html

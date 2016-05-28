@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: lastsave 命令 -- Redis中文资料站
+title: lastsave 命令
 permalink: commands/lastsave.html
 disqusIdentifier: command_lastsave
 disqusUrl: http://redis.cn/commands/lastsave.html

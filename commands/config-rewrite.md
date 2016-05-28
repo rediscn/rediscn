@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: config-rewrite 命令 -- Redis中文资料站
+title: config-rewrite 命令
 permalink: commands/config-rewrite.html
 disqusIdentifier: command_config-rewrite
 disqusUrl: http://redis.cn/commands/config-rewrite.html

@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS 介绍 -- Redis中文资料站
+title: REDIS 介绍
 excerpt: REDIS 详细介绍，Redis 是一个开源（BSD许可）的，内存中的数据结构存储系统，它可以用作数据库、缓存和消息中间件.
 permalink: topics/introduction.html
 disqusIdentifier: topics_introduction

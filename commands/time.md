@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: time 命令 -- Redis中文资料站
+title: time 命令
 permalink: commands/time.html
 disqusIdentifier: command_time
 disqusUrl: http://redis.cn/commands/time.html

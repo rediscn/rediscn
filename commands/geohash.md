@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: geohash 命令 -- Redis中文资料站
+title: geohash 命令
 permalink: commands/geohash.html
 disqusIdentifier: command_geohash
 disqusUrl: http://redis.cn/commands/geohash.html

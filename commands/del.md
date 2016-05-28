@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: del 命令 -- Redis中文资料站
+title: del 命令
 permalink: commands/del.html
 disqusIdentifier: command_del
 disqusUrl: http://redis.cn/commands/del.html

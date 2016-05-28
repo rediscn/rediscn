@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: pfcount 命令 -- Redis中文资料站
+title: pfcount 命令
 permalink: commands/pfcount.html
 disqusIdentifier: command_pfcount
 disqusUrl: http://redis.cn/commands/pfcount.html

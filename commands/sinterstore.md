@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: sinterstore 命令 -- Redis中文资料站
+title: sinterstore 命令
 permalink: commands/sinterstore.html
 disqusIdentifier: command_sinterstore
 disqusUrl: http://redis.cn/commands/sinterstore.html

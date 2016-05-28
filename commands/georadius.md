@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: georadius 命令 -- Redis中文资料站
+title: georadius 命令
 permalink: commands/georadius.html
 disqusIdentifier: command_georadius
 disqusUrl: http://redis.cn/commands/georadius.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: select 命令 -- Redis中文资料站
+title: select 命令
 permalink: commands/select.html
 disqusIdentifier: command_select
 disqusUrl: http://redis.cn/commands/select.html

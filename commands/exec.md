@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: exec 命令 -- Redis中文资料站
+title: exec 命令
 permalink: commands/exec.html
 disqusIdentifier: command_exec
 disqusUrl: http://redis.cn/commands/exec.html

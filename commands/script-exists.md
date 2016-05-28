@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: script-exists 命令 -- Redis中文资料站
+title: script-exists 命令
 permalink: commands/script-exists.html
 disqusIdentifier: command_script-exists
 disqusUrl: http://redis.cn/commands/script-exists.html

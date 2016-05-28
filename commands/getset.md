@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: getset 命令 -- Redis中文资料站
+title: getset 命令
 permalink: commands/getset.html
 disqusIdentifier: command_getset
 disqusUrl: http://redis.cn/commands/getset.html

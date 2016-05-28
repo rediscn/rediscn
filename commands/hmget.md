@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: hmget 命令 -- Redis中文资料站
+title: hmget 命令
 permalink: commands/hmget.html
 disqusIdentifier: command_hmget
 disqusUrl: http://redis.cn/commands/hmget.html

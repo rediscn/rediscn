@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: renamenx 命令 -- Redis中文资料站
+title: renamenx 命令
 permalink: commands/renamenx.html
 disqusIdentifier: command_renamenx
 disqusUrl: http://redis.cn/commands/renamenx.html

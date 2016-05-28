@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: ltrim 命令 -- Redis中文资料站
+title: ltrim 命令
 permalink: commands/ltrim.html
 disqusIdentifier: command_ltrim
 disqusUrl: http://redis.cn/commands/ltrim.html

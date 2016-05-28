@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zrevrangebylex 命令 -- Redis中文资料站
+title: zrevrangebylex 命令
 permalink: commands/zrevrangebylex.html
 disqusIdentifier: command_zrevrangebylex
 disqusUrl: http://redis.cn/commands/zrevrangebylex.html

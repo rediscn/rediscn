@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS internals-vm -- Redis中文资料站
+title: REDIS internals-vm
 permalink: topics/internals-vm.html
 disqusIdentifier: topics_internals-vm
 disqusUrl: http://redis.cn/topics/internals-vm.html

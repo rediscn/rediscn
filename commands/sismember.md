@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: sismember 命令 -- Redis中文资料站
+title: sismember 命令
 permalink: commands/sismember.html
 disqusIdentifier: command_sismember
 disqusUrl: http://redis.cn/commands/sismember.html

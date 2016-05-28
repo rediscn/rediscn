@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS 事务处理 -- Redis中文资料站
+title: REDIS 事务处理
 permalink: topics/transactions.html
 disqusIdentifier: transactions
 disqusUrl: http://redis.cn/topics/transactions.html

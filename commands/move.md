@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: move 命令 -- Redis中文资料站
+title: move 命令
 permalink: commands/move.html
 disqusIdentifier: command_move
 disqusUrl: http://redis.cn/commands/move.html

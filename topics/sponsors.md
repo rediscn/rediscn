@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: Redis的赞助商 -- Redis中文资料站
+title: Redis的赞助商
 permalink: topics/sponsors.html
 disqusIdentifier: sponsors
 disqusUrl: http://redis.cn/topics/sponsors.html

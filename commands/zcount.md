@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zcount 命令 -- Redis中文资料站
+title: zcount 命令
 permalink: commands/zcount.html
 disqusIdentifier: command_zcount
 disqusUrl: http://redis.cn/commands/zcount.html

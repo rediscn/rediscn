@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-countkeysinslot 命令 -- Redis中文资料站
+title: cluster-countkeysinslot 命令
 permalink: commands/cluster-countkeysinslot.html
 disqusIdentifier: command_cluster-countkeysinslot
 disqusUrl: http://redis.cn/commands/cluster-countkeysinslot.html

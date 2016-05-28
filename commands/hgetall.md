@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: hgetall 命令 -- Redis中文资料站
+title: hgetall 命令
 permalink: commands/hgetall.html
 disqusIdentifier: command_hgetall
 disqusUrl: http://redis.cn/commands/hgetall.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: wait 命令 -- Redis中文资料站
+title: wait 命令
 permalink: commands/wait.html
 disqusIdentifier: command_wait
 disqusUrl: http://redis.cn/commands/wait.html

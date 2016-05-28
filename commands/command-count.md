@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: command-count 命令 -- Redis中文资料站
+title: command-count 命令
 permalink: commands/command-count.html
 disqusIdentifier: command_command-count
 disqusUrl: http://redis.cn/commands/command-count.html

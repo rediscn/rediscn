@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: hvals 命令 -- Redis中文资料站
+title: hvals 命令
 permalink: commands/hvals.html
 disqusIdentifier: command_hvals
 disqusUrl: http://redis.cn/commands/hvals.html

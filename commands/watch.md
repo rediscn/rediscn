@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: watch 命令 -- Redis中文资料站
+title: watch 命令
 permalink: commands/watch.html
 disqusIdentifier: command_watch
 disqusUrl: http://redis.cn/commands/watch.html

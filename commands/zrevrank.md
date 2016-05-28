@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zrevrank 命令 -- Redis中文资料站
+title: zrevrank 命令
 permalink: commands/zrevrank.html
 disqusIdentifier: command_zrevrank
 disqusUrl: http://redis.cn/commands/zrevrank.html

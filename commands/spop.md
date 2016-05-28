@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: spop 命令 -- Redis中文资料站
+title: spop 命令
 permalink: commands/spop.html
 disqusIdentifier: command_spop
 disqusUrl: http://redis.cn/commands/spop.html

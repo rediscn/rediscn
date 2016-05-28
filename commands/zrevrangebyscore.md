@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zrevrangebyscore 命令 -- Redis中文资料站
+title: zrevrangebyscore 命令
 permalink: commands/zrevrangebyscore.html
 disqusIdentifier: command_zrevrangebyscore
 disqusUrl: http://redis.cn/commands/zrevrangebyscore.html

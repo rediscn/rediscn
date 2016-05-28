@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-replicate 命令 -- Redis中文资料站
+title: cluster-replicate 命令
 permalink: commands/cluster-replicate.html
 disqusIdentifier: command_cluster-replicate
 disqusUrl: http://redis.cn/commands/cluster-replicate.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: smembers 命令 -- Redis中文资料站
+title: smembers 命令
 permalink: commands/smembers.html
 disqusIdentifier: command_smembers
 disqusUrl: http://redis.cn/commands/smembers.html

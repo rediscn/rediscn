@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: config-get 命令 -- Redis中文资料站
+title: config-get 命令
 permalink: commands/config-get.html
 disqusIdentifier: command_config-get
 disqusUrl: http://redis.cn/commands/config-get.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: geopos 命令 -- Redis中文资料站
+title: geopos 命令
 permalink: commands/geopos.html
 disqusIdentifier: command_geopos
 disqusUrl: http://redis.cn/commands/geopos.html

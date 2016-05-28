@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: setex 命令 -- Redis中文资料站
+title: setex 命令
 permalink: commands/setex.html
 disqusIdentifier: command_setex
 disqusUrl: http://redis.cn/commands/setex.html

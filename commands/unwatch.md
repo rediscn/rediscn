@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: unwatch 命令 -- Redis中文资料站
+title: unwatch 命令
 permalink: commands/unwatch.html
 disqusIdentifier: command_unwatch
 disqusUrl: http://redis.cn/commands/unwatch.html

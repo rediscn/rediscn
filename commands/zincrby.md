@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zincrby 命令 -- Redis中文资料站
+title: zincrby 命令
 permalink: commands/zincrby.html
 disqusIdentifier: command_zincrby
 disqusUrl: http://redis.cn/commands/zincrby.html

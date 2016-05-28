@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: flushall 命令 -- Redis中文资料站
+title: flushall 命令
 permalink: commands/flushall.html
 disqusIdentifier: command_flushall
 disqusUrl: http://redis.cn/commands/flushall.html

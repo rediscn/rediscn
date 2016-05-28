@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS 的用户群 -- Redis中文资料站
+title: REDIS 的用户群
 permalink: topics/whos-using-redis.html
 disqusIdentifier: whos-using-redis
 disqusUrl: http://redis.cn/topics/whos-using-redis.html

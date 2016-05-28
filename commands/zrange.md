@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zrange 命令 -- Redis中文资料站
+title: zrange 命令
 permalink: commands/zrange.html
 disqusIdentifier: command_zrange
 disqusUrl: http://redis.cn/commands/zrange.html

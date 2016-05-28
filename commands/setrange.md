@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: setrange 命令 -- Redis中文资料站
+title: setrange 命令
 permalink: commands/setrange.html
 disqusIdentifier: command_setrange
 disqusUrl: http://redis.cn/commands/setrange.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: object 命令 -- Redis中文资料站
+title: object 命令
 permalink: commands/object.html
 disqusIdentifier: command_object
 disqusUrl: http://redis.cn/commands/object.html

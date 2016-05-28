@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-info 命令 -- Redis中文资料站
+title: cluster-info 命令
 permalink: commands/cluster-info.html
 disqusIdentifier: command_cluster-info
 disqusUrl: http://redis.cn/commands/cluster-info.html

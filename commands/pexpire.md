@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: pexpire 命令 -- Redis中文资料站
+title: pexpire 命令
 permalink: commands/pexpire.html
 disqusIdentifier: command_pexpire
 disqusUrl: http://redis.cn/commands/pexpire.html

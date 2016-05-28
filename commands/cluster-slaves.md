@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-slaves 命令 -- Redis中文资料站
+title: cluster-slaves 命令
 permalink: commands/cluster-slaves.html
 disqusIdentifier: command_cluster-slaves
 disqusUrl: http://redis.cn/commands/cluster-slaves.html

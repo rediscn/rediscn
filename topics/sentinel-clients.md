@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS sentinel-old -- Redis中文资料站
+title: REDIS sentinel-old
 permalink: topics/sentinel-clients.html
 disqusIdentifier: topics_sentinel-clients
 disqusUrl: http://redis.cn/topics/sentinel-clients.html

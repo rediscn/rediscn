@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-setslot 命令 -- Redis中文资料站
+title: cluster-setslot 命令
 permalink: commands/cluster-setslot.html
 disqusIdentifier: command_cluster-setslot
 disqusUrl: http://redis.cn/commands/cluster-setslot.html

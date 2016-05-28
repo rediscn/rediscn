@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS partitioning -- Redis中文资料站
+title: REDIS partitioning
 permalink: topics/partitioning.html
 disqusIdentifier: topics_partitioning
 disqusUrl: http://redis.cn/topics/partitioning.html

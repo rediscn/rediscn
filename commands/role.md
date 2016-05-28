@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: role 命令 -- Redis中文资料站
+title: role 命令
 permalink: commands/role.html
 disqusIdentifier: command_role
 disqusUrl: http://redis.cn/commands/role.html

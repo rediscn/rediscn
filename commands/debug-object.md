@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: debug-object 命令 -- Redis中文资料站
+title: debug-object 命令
 permalink: commands/debug-object.html
 disqusIdentifier: command_debug-object
 disqusUrl: http://redis.cn/commands/debug-object.html

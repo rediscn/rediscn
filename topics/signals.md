@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS signals -- Redis中文资料站
+title: REDIS signals
 permalink: topics/signals.html
 disqusIdentifier: signals
 disqusUrl: http://redis.cn/topics/signals.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: decrby 命令 -- Redis中文资料站
+title: decrby 命令
 permalink: commands/decrby.html
 disqusIdentifier: command_decrby
 disqusUrl: http://redis.cn/commands/decrby.html

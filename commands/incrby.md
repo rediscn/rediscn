@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: incrby 命令 -- Redis中文资料站
+title: incrby 命令
 permalink: commands/incrby.html
 disqusIdentifier: command_incrby
 disqusUrl: http://redis.cn/commands/incrby.html

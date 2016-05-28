@@ -1,6 +1,6 @@
 ---
 layout: index
-title: 支持 -- Redis中文资料站
+title: 支持
 permalink: support.html
 disqusIdentifier: support
 disqusUrl: http://redis.cn/support.html

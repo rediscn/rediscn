@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS memory-optimization -- Redis中文资料站
+title: REDIS memory-optimization
 permalink: topics/memory-optimization.html
 disqusIdentifier: topics_memory-optimization
 disqusUrl: http://redis.cn/topics/memory-optimization.html

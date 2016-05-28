@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: quit 命令 -- Redis中文资料站
+title: quit 命令
 permalink: commands/quit.html
 disqusIdentifier: command_quit
 disqusUrl: http://redis.cn/commands/quit.html

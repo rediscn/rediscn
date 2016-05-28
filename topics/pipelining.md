@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS pipelining -- Redis中文资料站
+title: REDIS pipelining
 permalink: topics/pipelining.html
 disqusIdentifier: topics_pipelining
 disqusUrl: http://redis.cn/topics/pipelining.html

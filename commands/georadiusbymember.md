@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: georadiusbymember 命令 -- Redis中文资料站
+title: georadiusbymember 命令
 permalink: commands/georadiusbymember.html
 disqusIdentifier: command_georadiusbymember
 disqusUrl: http://redis.cn/commands/georadiusbymember.html

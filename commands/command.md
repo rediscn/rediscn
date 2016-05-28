@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: command 命令 -- Redis中文资料站
+title: command 命令
 permalink: commands/command.html
 disqusIdentifier: command_command
 disqusUrl: http://redis.cn/commands/command.html

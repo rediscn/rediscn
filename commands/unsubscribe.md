@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: unsubscribe 命令 -- Redis中文资料站
+title: unsubscribe 命令
 permalink: commands/unsubscribe.html
 disqusIdentifier: command_unsubscribe
 disqusUrl: http://redis.cn/commands/unsubscribe.html

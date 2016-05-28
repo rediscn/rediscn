@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: geoadd 命令 -- Redis中文资料站
+title: geoadd 命令
 permalink: commands/geoadd.html
 disqusIdentifier: command_geoadd
 disqusUrl: http://redis.cn/commands/geoadd.html

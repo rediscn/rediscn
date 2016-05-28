@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: pfadd 命令 -- Redis中文资料站
+title: pfadd 命令
 permalink: commands/pfadd.html
 disqusIdentifier: command_pfadd
 disqusUrl: http://redis.cn/commands/pfadd.html

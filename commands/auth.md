@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: auth 命令 -- Redis中文资料站
+title: auth 命令
 permalink: commands/auth.html
 disqusIdentifier: command_auth
 disqusUrl: http://redis.cn/commands/auth.html

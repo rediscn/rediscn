@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: command-getkeys 命令 -- Redis中文资料站
+title: command-getkeys 命令
 permalink: commands/command-getkeys.html
 disqusIdentifier: command_command-getkeys
 disqusUrl: http://redis.cn/commands/command-getkeys.html

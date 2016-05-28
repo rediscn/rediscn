@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: pubsub 命令 -- Redis中文资料站
+title: pubsub 命令
 permalink: commands/pubsub.html
 disqusIdentifier: command_pubsub
 disqusUrl: http://redis.cn/commands/pubsub.html

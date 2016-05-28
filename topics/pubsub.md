@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS pubsub -- Redis中文资料站
+title: REDIS pubsub
 permalink: topics/pubsub.html
 disqusIdentifier: topics_pubsub
 disqusUrl: http://redis.cn/topics/pubsub.html

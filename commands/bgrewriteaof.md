@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: bgrewriteaof 命令 -- Redis中文资料站
+title: bgrewriteaof 命令
 permalink: commands/bgrewriteaof.html
 disqusIdentifier: command_bgrewriteaof
 disqusUrl: http://redis.cn/commands/bgrewriteaof.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: lindex 命令 -- Redis中文资料站
+title: lindex 命令
 permalink: commands/lindex.html
 disqusIdentifier: command_lindex
 disqusUrl: http://redis.cn/commands/lindex.html

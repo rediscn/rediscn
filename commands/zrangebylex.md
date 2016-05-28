@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zrangebylex 命令 -- Redis中文资料站
+title: zrangebylex 命令
 permalink: commands/zrangebylex.html
 disqusIdentifier: command_zrangebylex
 disqusUrl: http://redis.cn/commands/zrangebylex.html
@@ -55,15 +55,25 @@ comparison of the numbers. This can be used in order to implement range
 queries on 64 bit values. As in the example below, after the first 8 bytes
 we can store the value of the element we are actually indexing.
 
-@return
+##返回值
 
-@array-reply: list of elements in the specified score range.
+[array-reply](/topics/protocol#array-reply): list of elements in the specified score range.
 
-@examples
+##例子
 
-```cli
-ZADD myzset 0 a 0 b 0 c 0 d 0 e 0 f 0 g
-ZRANGEBYLEX myzset - [c
-ZRANGEBYLEX myzset - (c
-ZRANGEBYLEX myzset [aaa (g
-```
+redis> ZADD myzset 0 a 0 b 0 c 0 d 0 e 0 f 0 g
+(integer) 7
+redis> ZRANGEBYLEX myzset - [c
+1) "a"
+2) "b"
+3) "c"
+redis> ZRANGEBYLEX myzset - (c
+1) "a"
+2) "b"
+redis> ZRANGEBYLEX myzset [aaa (g
+1) "b"
+2) "c"
+3) "d"
+4) "e"
+5) "f"
+redis> 

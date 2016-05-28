@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: monitor 命令 -- Redis中文资料站
+title: monitor 命令
 permalink: commands/monitor.html
 disqusIdentifier: command_monitor
 disqusUrl: http://redis.cn/commands/monitor.html

@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS twitter-clone -- Redis中文资料站
+title: REDIS twitter-clone
 permalink: topics/twitter-clone.html
 disqusIdentifier: twitter-clone
 disqusUrl: http://redis.cn/topics/twitter-clone.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: hexists 命令 -- Redis中文资料站
+title: hexists 命令
 permalink: commands/hexists.html
 disqusIdentifier: command_hexists
 disqusUrl: http://redis.cn/commands/hexists.html

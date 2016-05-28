@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: blpop 命令 -- Redis中文资料站
+title: blpop 命令
 permalink: commands/blpop.html
 disqusIdentifier: command_blpop
 disqusUrl: http://redis.cn/commands/blpop.html

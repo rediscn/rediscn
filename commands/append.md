@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: APPEND命令 -- Redis中文资料站
+title: APPEND命令
 permalink: commands/append.html
 disqusIdentifier: command_append
 disqusUrl: http://redis.cn/commands/append.html

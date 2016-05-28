@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: readonly 命令 -- Redis中文资料站
+title: readonly 命令
 permalink: commands/readonly.html
 disqusIdentifier: command_readonly
 disqusUrl: http://redis.cn/commands/readonly.html

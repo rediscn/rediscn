@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: slaveof 命令 -- Redis中文资料站
+title: slaveof 命令
 permalink: commands/slaveof.html
 disqusIdentifier: command_slaveof
 disqusUrl: http://redis.cn/commands/slaveof.html

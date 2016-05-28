@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zlexcount 命令 -- Redis中文资料站
+title: zlexcount 命令
 permalink: commands/zlexcount.html
 disqusIdentifier: command_zlexcount
 disqusUrl: http://redis.cn/commands/zlexcount.html
@@ -20,9 +20,12 @@ Note: the command has a complexity of just O(log(N)) because it uses elements ra
 
 @examples
 
-```cli
-ZADD myzset 0 a 0 b 0 c 0 d 0 e
-ZADD myzset 0 f 0 g
-ZLEXCOUNT myzset - +
-ZLEXCOUNT myzset [b [f
-```
+	redis> ZADD myzset 0 a 0 b 0 c 0 d 0 e
+	(integer) 5
+	redis> ZADD myzset 0 f 0 g
+	(integer) 2
+	redis> ZLEXCOUNT myzset - +
+	(integer) 7
+	redis> ZLEXCOUNT myzset [b [f
+	(integer) 5
+	redis> 

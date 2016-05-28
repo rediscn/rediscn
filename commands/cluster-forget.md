@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-forget 命令 -- Redis中文资料站
+title: cluster-forget 命令
 permalink: commands/cluster-forget.html
 disqusIdentifier: command_cluster-forget
 disqusUrl: http://redis.cn/commands/cluster-forget.html

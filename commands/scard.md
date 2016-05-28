@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: scard 命令 -- Redis中文资料站
+title: scard 命令
 permalink: commands/scard.html
 disqusIdentifier: command_scard
 disqusUrl: http://redis.cn/commands/scard.html

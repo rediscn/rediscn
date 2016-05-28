@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: expire 命令 -- Redis中文资料站
+title: expire 命令
 permalink: commands/expire.html
 disqusIdentifier: command_expire
 disqusUrl: http://redis.cn/commands/expire.html

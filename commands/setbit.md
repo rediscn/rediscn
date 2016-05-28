@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: setbit 命令 -- Redis中文资料站
+title: setbit 命令
 permalink: commands/setbit.html
 disqusIdentifier: command_setbit
 disqusUrl: http://redis.cn/commands/setbit.html

@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-keyslot 命令 -- Redis中文资料站
+title: cluster-keyslot 命令
 permalink: commands/cluster-keyslot.html
 disqusIdentifier: command_cluster-keyslot
 disqusUrl: http://redis.cn/commands/cluster-keyslot.html

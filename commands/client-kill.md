@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: client-kill 命令 -- Redis中文资料站
+title: client-kill 命令
 permalink: commands/client-kill.html
 disqusIdentifier: command_client-kill
 disqusUrl: http://redis.cn/commands/client-kill.html

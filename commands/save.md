@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: save 命令 -- Redis中文资料站
+title: save 命令
 permalink: commands/save.html
 disqusIdentifier: command_save
 disqusUrl: http://redis.cn/commands/save.html

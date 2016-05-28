@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: discard 命令 -- Redis中文资料站
+title: discard 命令
 permalink: commands/discard.html
 disqusIdentifier: command_discard
 disqusUrl: http://redis.cn/commands/discard.html

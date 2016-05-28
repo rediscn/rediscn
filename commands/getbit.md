@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: getbit 命令 -- Redis中文资料站
+title: getbit 命令
 permalink: commands/getbit.html
 disqusIdentifier: command_getbit
 disqusUrl: http://redis.cn/commands/getbit.html

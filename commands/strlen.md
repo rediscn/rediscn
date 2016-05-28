@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: strlen 命令 -- Redis中文资料站
+title: strlen 命令
 permalink: commands/strlen.html
 disqusIdentifier: command_strlen
 disqusUrl: http://redis.cn/commands/strlen.html

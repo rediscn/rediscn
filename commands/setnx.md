@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: setnx 命令 -- Redis中文资料站
+title: setnx 命令
 permalink: commands/setnx.html
 disqusIdentifier: command_setnx
 disqusUrl: http://redis.cn/commands/setnx.html

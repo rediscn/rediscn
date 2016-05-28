@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: ping 命令 -- Redis中文资料站
+title: ping 命令
 permalink: commands/ping.html
 disqusIdentifier: command_ping
 disqusUrl: http://redis.cn/commands/ping.html

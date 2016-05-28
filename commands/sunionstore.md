@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: sunionstore 命令 -- Redis中文资料站
+title: sunionstore 命令
 permalink: commands/sunionstore.html
 disqusIdentifier: command_sunionstore
 disqusUrl: http://redis.cn/commands/sunionstore.html

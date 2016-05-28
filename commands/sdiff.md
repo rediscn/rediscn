@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: sdiff 命令 -- Redis中文资料站
+title: sdiff 命令
 permalink: commands/sdiff.html
 disqusIdentifier: command_sdiff
 disqusUrl: http://redis.cn/commands/sdiff.html

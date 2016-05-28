@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: bitcount 命令 -- Redis中文资料站
+title: bitcount 命令
 permalink: commands/bitcount.html
 disqusIdentifier: command_bitcount
 disqusUrl: http://redis.cn/commands/bitcount.html

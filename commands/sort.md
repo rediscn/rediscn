@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: sort 命令 -- Redis中文资料站
+title: sort 命令
 permalink: commands/sort.html
 disqusIdentifier: command_sort
 disqusUrl: http://redis.cn/commands/sort.html

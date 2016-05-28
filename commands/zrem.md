@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zrem 命令 -- Redis中文资料站
+title: zrem 命令
 permalink: commands/zrem.html
 disqusIdentifier: command_zrem
 disqusUrl: http://redis.cn/commands/zrem.html

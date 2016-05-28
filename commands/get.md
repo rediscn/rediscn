@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: get 命令 -- Redis中文资料站
+title: get 命令
 permalink: commands/get.html
 disqusIdentifier: command_get
 disqusUrl: http://redis.cn/commands/get.html

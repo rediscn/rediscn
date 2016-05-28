@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: hsetnx 命令 -- Redis中文资料站
+title: hsetnx 命令
 permalink: commands/hsetnx.html
 disqusIdentifier: command_hsetnx
 disqusUrl: http://redis.cn/commands/hsetnx.html

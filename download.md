@@ -1,6 +1,6 @@
 ---
 layout: index
-title: Redis 3.2.0 下载 -- Redis官方网站中文版
+title: Redis 3.2.0 下载
 excerpt: Redis下载中心(Redis download)，下载各种版本的redis，包括最新redis 3.2.0稳定版redis,3.2.0-Beta版本以及win32/64版本
 permalink: download.html
 disqusIdentifier: download

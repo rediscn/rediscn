@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: client-setname 命令 -- Redis中文资料站
+title: client-setname 命令
 permalink: commands/client-setname.html
 disqusIdentifier: command_client-setname
 disqusUrl: http://redis.cn/commands/client-setname.html

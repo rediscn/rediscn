@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: zrank 命令 -- Redis中文资料站
+title: zrank 命令
 permalink: commands/zrank.html
 disqusIdentifier: command_zrank
 disqusUrl: http://redis.cn/commands/zrank.html

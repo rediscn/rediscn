@@ -1,6 +1,6 @@
 ---
 layout: commands
-title: cluster-getkeysinslot 命令 -- Redis中文资料站
+title: cluster-getkeysinslot 命令
 permalink: commands/cluster-getkeysinslot.html
 disqusIdentifier: command_cluster-getkeysinslot
 disqusUrl: http://redis.cn/commands/cluster-getkeysinslot.html
