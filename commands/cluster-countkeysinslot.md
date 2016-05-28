@@ -7,10 +7,7 @@ disqusUrl: http://redis.cn/commands/cluster-countkeysinslot.html
 commandsType: cluster
 ---
 
-Returns the number of keys in the specified Redis Cluster hash slot. The
-command only queries the local data set, so contacting a node
-that is not serving the specified hash slot will always result in a count of
-zero being returned.
+返回连接节点负责的指定hash slot的key的数量。该命令只查询连接节点的数据集，所以如果连接节点指派到该hash slot会返回0。
 
 ```
 > CLUSTER COUNTKEYSINSLOT 7000
@@ -19,4 +16,4 @@ zero being returned.
 
 @return
 
-@integer-reply: The number of keys in the specified hash slot, or an error if the hash slot is invalid.
+@integer-reply: 返回连接节点负责的指定hash slot的key的数量, 如果hash slot不合法则返回错误
