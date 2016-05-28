@@ -28,7 +28,7 @@ disqusUrl: http://redis.cn/community.html
 - Redis两千人群官方微信群
 - Redis中国用户组
 
-由于群成员已超过100，需要加群的请加下面李强、许瑞个人二维码，备注Redis加群
+由于微信群成员已超过100，需要加信群的请加下面李强、许瑞个人微信二维码，备注Redis加群
 
 李强（geelou ）个人微信号：rjgcs123，二维码：
 
