@@ -13,11 +13,12 @@ disqusUrl: http://redis.cn/community.html
 
 ## Redis技术交流QQ群列表： ##
 
-- Redis中国用户组(CRUG) <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=9b5015a8103c04144bd82bed3c5d27d92df31512290cba413ad53e235cd5d3c8"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis中国用户组(CRUG)" title="Redis中国用户组(CRUG)"></a>
+- Redis中国用户组(CRUG) （已满）
+- Redis中国用户组(CRUG)2 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=65eea4d47c1ce55a3e2aa47abef174ca10dc11f277bdd940480e81493f60e433"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis中国用户组(CRUG)2群" title="Redis中国用户组(CRUG)2群"></a>
 - redis两千人总群（已满） 
 - redis千人群1（已满） 
 - redis千人群2 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=182db3534b98018983c9e4ddd72ca767a54a8e9c4313c78288997f300100f60c"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="redis千人群2" title="redis千人群2"></a>
-- redis 脚本群一 
+- redis 脚本群一（已满）
 - redis 脚本群二 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=e18f50bcb0e049f5fadb6c8193ee12315d2ed244fe5a944cd3c594eb82bbe9c7"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis 脚本群二" title="Redis 脚本群二"></a>
 - Redis c,c++,c#分群 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=1c4e07d4cd4fd2a118cc6d353feaf197cb40ed460a118ae46b779eacbf66a0d9"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis c,c++,c#分群" title="Redis c,c++,c#分群"></a>
 - redis java分群一（已满） 
