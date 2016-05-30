@@ -15,13 +15,16 @@ permalink: yqm.html
 <div class='home-intro home-section'>
 	请选择要加入的群 ：
 	<select id="qunList">
-		<option value="112121693">redis千人群1 112121693</option>
+		<option value="112121693">redis千人群1 （已满）</option>
 		<option value="187095642">redis千人群2 187095642</option>
-		<option value="163264749">redis java分群一 163264749</option>
-		<option value="209751645">redis java分群二 209751645</option>
-		<option value="69287882">redis 脚本群 69287882</option>
+		<option value="163264749">redis java分群一 （已满）</option>
+		<option value="209751645">redis java分群二 （已满）</option>
+		<option value="209751645">redis java分群二 197643943</option>
+		<option value="69287882">redis 脚本群一 （已满）</option>
+		<option value="69287882">redis 脚本群二 197102873</option>
 		<option value="163269313">Redis c,c++,c#分群 163269313</option>
-		<option value="163265386">Redis□PHP分群 163265386</option>
+		<option value="163265386">Redis□PHP分群一 （已满）</option>
+		<option value="163265386">Redis□PHP分群二 196677618</option>
 	</select>
 	<br/>
 	<br/>
