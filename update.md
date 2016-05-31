@@ -22,6 +22,10 @@ disqusUrl: http://redis.cn/update.html
 
 1、翻译[TTL](http://redis.cn/commands/ttl.html)命令。<br/>
 
+### 2016年5月20日
+
+1、**REDIS中国用户组(CURG)**正式成立，redis.cn宣布加入组织。
+
 ### 2016年5月16日
 
 1、合并[icbd](https://github.com/icbd)翻译的[INCRBYFLOAT](http://redis.cn/commands/incrbyfloat.html)命令。<br/>
