@@ -7,84 +7,78 @@ disqusUrl: http://redis.cn/commands/zadd.html
 commandsType: sortedsets
 ---
 
-Adds all the specified members with the specified scores to the sorted set
-stored at `key`.
-It is possible to specify multiple score / member pairs.
-If a specified member is already a member of the sorted set, the score is
-updated and the element reinserted at the right position to ensure the correct
-ordering.
+将所有指定成员添加到键为`key`有序集合（sorted set）里面。
+添加时可以指定多个分数/成员（score/member）对。
+如果指定添加的成员已经是有序集合里面的成员，则会更新改成员的分数（scrore）并更新到正确的排序位置。
 
-If `key` does not exist, a new sorted set with the specified members as sole
-members is created, like if the sorted set was empty. If the key exists but does not hold a sorted set, an error is returned.
+如果`key`不存在，将会创建一个新的有序集合（sorted set）并将分数/成员（score/member）对添加到有序集合，就像原来存在一个空的有序集合一样。如果`key`存在，但是类型不是有序集合，将会返回一个错误应答。
 
-The score values should be the string representation of a double precision floating point number. `+inf` and `-inf` values are valid values as well.
+分数值是一个双精度的浮点型数字字符串。`+inf`和`-inf`都是有效值。
 
-ZADD options (Redis 3.0.2 or greater)
+ZADD 参数（options） (>= Redis 3.0.2)
 ---
 
-ZADD supports a list of options, specified after the name of the key and before
-the first score argument. Options are:
+ZADD 命令在`key`后面分数/成员（score/member）对前面支持一些参数，他们是：
 
-* **XX**: Only update elements that already exist. Never add elements.
-* **NX**: Don't update already existing elements. Always add new elements.
-* **CH**: Modify the return value from the number of new elements added, to the total number of elements changed (CH is an abbreviation of *changed*). Changed elements are **new elements added** and elements already existing for which **the score was updated**. So elements specified in the command line having the same score as they had in the past are not counted. Note: normally the return value of `ZADD` only counts the number of new elements added.
-* **INCR**: When this option is specified `ZADD` acts like `ZINCRBY`. Only one score-element pair can be specified in this mode.
+* **XX**: 仅仅更新存在的成员，不添加新成员。
+* **NX**: 不更新存在的成员。只添加新成员。
+* **CH**: 修改返回值为发生变化的成员总数，原始是返回新添加成员的总数 (CH 是 *changed* 的意思)。更改的元素是**新添加的成员**，已经存在的成员**更新分数**。 所以在命令中指定的成员有相同的分数将不被计算在内。注：在通常情况下，`ZADD`返回值只计算新添加成员的数量。
+* **INCR**: 当`ZADD`指定这个选项时，成员的操作就等同[ZINCRBY](/commands/zincrby.html)命令，对成员的分数进行递增操作。
 
-Range of integer scores that can be expressed precisely
+分数可以精确的表示的整数的范围
 ---
 
-Redis sorted sets use a *double 64-bit floating point number* to represent the score. In all the architectures we support, this is represented as an **IEEE 754 floating point number**, that is able to represent precisely integer numbers between `-(2^53)` and `+(2^53)` included. In more practical terms, all the integers between -9007199254740992 and 9007199254740992 are perfectly representable. Larger integers, or fractions, are internally represented in exponential form, so it is possible that you get only an approximation of the decimal number, or of the very big integer, that you set as score.
+Redis 有序集合的分数使用*双精度64位浮点数*。我们支持所有的架构，这表示为一个**IEEE 754 floating point number**，它能包括的整数范围是`-(2^53)` 到 `+(2^53)`。或者说是-9007199254740992 到 9007199254740992。更大的整数在内部用指数形式表示，所以，如果为分数设置一个非常大的整数，你得到的是一个近似的十进制数。
 
 Sorted sets 101
 ---
 
-Sorted sets are sorted by their score in an ascending way.
-The same element only exists a single time, no repeated elements are
-permitted. The score can be modified both by `ZADD` that will update the
-element score, and as a side effect, its position on the sorted set, and
-by `ZINCRBY` that can be used in order to update the score relatively to its
-previous value.
+有序集合按照分数以递增的方式进行排序。相同的成员（member）只存在一次，有序集合不允许存在重复的成员。
+分数可以通过`ZADD`命令进行更新或者也可以通过`ZINCRBY`命令递增来修改之前的值，相应的他们的排序位置也会随着分数变化而改变。
 
-The current score of an element can be retrieved using the `ZSCORE` command,
-that can also be used to verify if an element already exists or not.
+获取一个成员当前的分数可以使用[ZSCORE](/commands/zscore.html)命令，也可以用它来验证成员是否存在。
 
-For an introduction to sorted sets, see the data types page on [sorted
-sets][tdtss].
+更多关于有序集合的信息请参考[数据类型-有序集合](/topics/data-types.html#sorted-sets)。
 
-[tdtss]: /topics/data-types#sorted-sets
-
-Elements with the same score
+相同分数的成员
 ---
 
-While the same element can't be repeated in a sorted set since every element
-is unique, it is possible to add multiple different elements *having the same score*. When multiple elements have the same score, they are *ordered lexicographically* (they are still ordered by score as a first key, however, locally, all the elements with the same score are relatively ordered lexicographically).
+有序集合里面的成员是不能重复的都是唯一的，但是，不同成员间有可能*有相同的分数*。当多个成员有相同的分数时，他们将是*有序的字典*（ordered lexicographically）（仍由分数作为第一排序条件，然后，相同分数的成员按照字典规则相对排序）。
 
-The lexicographic ordering used is binary, it compares strings as array of bytes.
+字典顺序排序用的是二进制，它比较的是字符串的字节数组。
 
-If the user inserts all the elements in a sorted set with the same score (for example 0), all the elements of the sorted set are sorted lexicographically, and range queries on elements are possible using the command `ZRANGEBYLEX` (Note: it is also possible to query sorted sets by range of scores using `ZRANGEBYSCORE`).
+如果用户将所有元素设置相同分数（例如0），有序集合里面的所有元素将按照字典顺序进行排序，范围查询元素可以使用[ZRANGEBYLEX](/commands/zrangebylex.html)命令（注：范围查询分数可以使用[ZRANGEBYSCORE](/commands/zrangebyscore.html)命令）。
 
-@return
+## 返回值
 
-@integer-reply, specifically:
+[Integer reply](/topics/protocol.html#integer-reply), 包括:
 
-* The number of elements added to the sorted sets, not including elements
-  already existing for which the score was updated.
+* 添加到有序集合的成员数量，不包括已经存在更新分数的成员。
 
-If the `INCR` option is specified, the return value will be @bulk-string-reply:
+如果指定`INCR`参数, 返回将会变成[bulk-string-reply](/topics/protocol.html#bulk-string-reply) ：
 
-* the new score of `member` (a double precision floating point number), represented as string.
+* 成员的新分数（双精度的浮点型数字）字符串。
 
-@history
+## 历史
 
-* `>= 2.4`: Accepts multiple elements.
-  In Redis versions older than 2.4 it was possible to add or update a single
-  member per call.
+* `>= 2.4`: 接受多个成员。
+  在Redis 2.4以前，命令只能添加或者更新一个成员。
 
-@examples
+##例子
 
-```cli
-ZADD myzset 1 "one"
-ZADD myzset 1 "uno"
-ZADD myzset 2 "two" 3 "three"
-ZRANGE myzset 0 -1 WITHSCORES
-```
+	redis> ZADD myzset 1 "one"
+	(integer) 1
+	redis> ZADD myzset 1 "uno"
+	(integer) 1
+	redis> ZADD myzset 2 "two" 3 "three"
+	(integer) 2
+	redis> ZRANGE myzset 0 -1 WITHSCORES
+	1) "one"
+	2) "1"
+	3) "uno"
+	4) "1"
+	5) "two"
+	6) "2"
+	7) "three"
+	8) "3"
+	redis> 

@@ -5,12 +5,15 @@
 
 ## 更新日志： ##
 
+### 2016年6月14日
+1、更新[李强](https://github.com/geelou)翻译的[SCRIPT EXISTS](http://redis.cn/commands/zadd.html)命令。<br/>
+
 ### 2016年5月28日
 
 1、更新[许瑞](https://github.com/gougou851129)翻译的[CLUSTER COUNTKEYSINSLOT](http://redis.cn/commands/cluster-countkeysinslot.html)命令。<br/>
 2、更新[许瑞](https://github.com/gougou851129)翻译的[CLUSTER GETKEYSINSLOT](http://redis.cn/commands/cluster-getkeysinslot.html)命令。<br/>
-3、更新[李强](https://github.com/geelou)翻译的[SCRIPT FLUSH](http://redis.cn/commands/script-flush)命令。<br/>
-4、更新[李强](https://github.com/geelou)翻译的[SCRIPT EXISTS](http://redis.cn/commands/script-exists)命令。<br/>
+3、更新[李强](https://github.com/geelou)翻译的[SCRIPT FLUSH](http://redis.cn/commands/script-flush.html)命令。<br/>
+4、更新[李强](https://github.com/geelou)翻译的[SCRIPT EXISTS](http://redis.cn/commands/script-exists.html)命令。<br/>
 
 ### 2016年5月26日
 
