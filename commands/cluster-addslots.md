@@ -50,4 +50,4 @@ commandsType: cluster
 
 [simple-string-reply](/topics/protocol.html#simple-string-reply): 如果命令执行成功返回`OK`，否则返回错误信息。
 
-本文由许瑞翻译，巢鹏校验
+本文由许瑞翻译，赵艺璇，巢鹏校验
