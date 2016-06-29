@@ -28,7 +28,7 @@ commandsType: keys
 [integer-reply](/topics/protocol.html#integer-reply), 具体的:
 
 * `1` 如果成功设置过期时间。
-* `0` 如果`key`不存在火灾不能设置过期时间。
+* `0` 如果`key`不存在或者不能设置过期时间。
 
 ## 例子
 
