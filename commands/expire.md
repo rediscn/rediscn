@@ -11,7 +11,7 @@ commandsType: keys
 
 超时后只有对`key`执行[DEL](/commands/del.html)命令或者[SET](/commands/set.html)命令或者[GETSET](/commands/getset.html)时才会清除。
 这意味着，从概念上讲所有改变`key`的值的操作都会使他清除。
-例如，[INCR](/commands/incr.html)递增key的值，执行[LPUSH](/commands/lpush.html)操作，或者用[HSET](/commands/hset.html)改变hash的`field`所有这些操作都会触发超时。
+例如，[INCR](/commands/incr.html)递增key的值，执行[LPUSH](/commands/lpush.html)操作，或者用[HSET](/commands/hset.html)改变hash的`field`所有这些操作都会触发删除动作。
 
 使用[PERSIST](/commands/persist.html)命令可以清除超时，使其变成一个永久的`key`。
 
