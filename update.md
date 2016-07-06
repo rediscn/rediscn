@@ -7,6 +7,10 @@ disqusUrl: http://redis.cn/update.html
 ---
 # redis中文网更新日志 #
 
+### 2016年7月6日
+
+1、更新首页和下载页里redis的最新版本3.2.1。<br/>
+
 ### 2016年6月14日
 1、更新[李强](https://github.com/geelou)翻译的[SCRIPT EXISTS](http://redis.cn/commands/zadd.html)命令。<br/>
 
