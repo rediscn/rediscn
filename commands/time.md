@@ -7,7 +7,7 @@ disqusUrl: http://redis.cn/commands/time.html
 commandsType: server
 ---
 
-TIME 命令返回当前Unix时间戳和当天已经过去的微秒的数。 基本上，该接口非常相似gettimeofday.
+TIME 命令返回当前Unix时间戳和这一秒已经过去的微秒数。基本上，该接口非常相似gettimeofday.
 
 ## 返回值
 

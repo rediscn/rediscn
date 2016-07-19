@@ -7,23 +7,19 @@ disqusUrl: http://redis.cn/commands/wait.html
 commandsType: keys
 ---
 
-This command blocks the current client until all the previous write commands
-are successfully transferred and acknowledged by at least the specified number
-of slaves. If the timeout, specified in milliseconds, is reached, the command
-returns even if the specified number of slaves were not yet reached.
+此命令阻塞当前客户端，直到所有以前的写命令都成功的传输和指定的slaves确认。如果超时，指定以毫秒为单位，即使指定的slaves还没有到达，命令任然返回。
 
-The command **will always return** the number of slaves that acknowledged
-the write commands sent before the `WAIT` command, both in the case where
-the specified number of slaves are reached, or when the timeout is reached.
+命令**始终返回**之前写命令发送的slaves的数量，无论是在指定slaves的情况还是达到超时。
 
-A few remarks:
 
-1. When `WAIT` returns, all the previous write commands sent in the context of the current connection are guaranteed to be received by the number of slaves returned by `WAIT`.
-2. If the command is sent as part of a `MULTI` transaction, the command does not block but instead just return ASAP the number of slaves that acknowledged the previous write commands.
-3. A timeout of 0 means to block forever.
-4. Since `WAIT` returns the number of slaves reached both in case of failure and success, the client should check that the returned value is equal or greater to the replication level it demanded.
+注意点:
 
-Consistency and WAIT
+1. 当'WAIT'返回时，所有之前的写命令保证接收由`WAIT`返回的slaves的数量。
+2. 如果命令呗当做事务的一部分发送，该命令不阻塞，而是只尽快返回先前写命令的slaves的数量。
+3. 如果timeout是0那意味着永远阻塞。
+4. 由于`WAIT`返回的是在失败和成功的情况下的slaves的数量。客户端应该检查返回的slaves的数量是等于或更大的复制水平。
+
+一致性（Consistency and WAIT）
 ---
 
 Note that `WAIT` does not make Redis a strongly consistent store: while synchronous replication is part of a replicated state machine, it is not the only thing needed. However in the context of Sentinel or Redis Cluster failover, `WAIT` improves the real world data safety.
