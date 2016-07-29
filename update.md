@@ -7,6 +7,10 @@ disqusUrl: http://redis.cn/update.html
 ---
 # redis中文网更新日志 #
 
+### 2016年7月29日
+
+1、更新首页和下载页里redis的最新版本3.2.2。<br/>
+
 ### 2016年7月6日
 
 1、更新首页和下载页里redis的最新版本3.2.1。<br/>
