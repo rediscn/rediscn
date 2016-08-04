@@ -20,7 +20,8 @@ disqusUrl: http://redis.cn/community.html
 - redis千人群2 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=182db3534b98018983c9e4ddd72ca767a54a8e9c4313c78288997f300100f60c"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="redis千人群2" title="redis千人群2"></a>
 - redis 脚本群一（已满）
 - redis 脚本群二 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=e18f50bcb0e049f5fadb6c8193ee12315d2ed244fe5a944cd3c594eb82bbe9c7"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis 脚本群二" title="Redis 脚本群二"></a>
-- Redis c,c++,c#分群 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=1c4e07d4cd4fd2a118cc6d353feaf197cb40ed460a118ae46b779eacbf66a0d9"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis c,c++,c#分群" title="Redis c,c++,c#分群"></a>
+- Redis c,c++,c#分群（已满）
+- Redis c,c++,c#分群二 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=58349631baaeb2d902ad7dbc1cedcb39a570c7ea16a0124700e55ce31d03aacd"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis c,c++,c#分群二" title="Redis c,c++,c#分群二"></a>
 - redis java分群一（已满） 
 - redis java分群二（已满） 
 - redis java分群三 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=ca478975967851c74655fe4697c4e3804fd4424ba6549cfe046c233ac4b3d095"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis Java分群三" title="Redis Java分群三"></a>

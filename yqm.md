@@ -22,7 +22,8 @@ permalink: yqm.html
 		<option value="209751645">redis java分群二 197643943</option>
 		<option value="69287882">redis 脚本群一 （已满）</option>
 		<option value="69287882">redis 脚本群二 197102873</option>
-		<option value="163269313">Redis c,c++,c#分群 163269313</option>
+		<option value="163269313">Redis c,c++,c#分群（已满）</option>
+		<option value="163269313">Redis c,c++,c#分群二 196677856</option>
 		<option value="163265386">Redis□PHP分群一 （已满）</option>
 		<option value="163265386">Redis□PHP分群二 196677618</option>
 	</select>
