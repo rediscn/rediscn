@@ -7,6 +7,10 @@ disqusUrl: http://redis.cn/update.html
 ---
 # redis中文网更新日志 #
 
+### 2016年8月11日
+
+1、更新[pipelining](http://www.redis.cn/topics/pipelining.html)翻译文字错误，感谢Yongfeng Sun发现问题。<br/>
+
 ### 2016年7月29日
 
 1、更新首页和下载页里redis的最新版本3.2.2。<br/>
