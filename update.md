@@ -7,6 +7,10 @@ disqusUrl: http://redis.cn/update.html
 ---
 # redis中文网更新日志 #
 
+### 2016年8月25日
+
+1、更新[pubsub](http://www.redis.cn/topics/pubsub.html)翻译，感谢zhaoyang xu提供的翻译。
+
 ### 2016年8月12日
 
 1、更新首页和下载页里redis的最新版本3.2.3。<br/>
