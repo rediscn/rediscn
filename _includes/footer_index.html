@@ -17,6 +17,22 @@
         </div>
       </footer>
     </div>
+    
+    <script type="text/javascript" src="/js/layer/layer.js"></script> 
+    
+    <script type="text/javascript">
+		$(document).ready(function(){ 
+				if($('#alert_div').length){
+					layer.open({
+					  time: 10,
+					  title:'<span style="font-weight:bold;">Redis线上分享会</span>',
+					  style:'padding:0',
+					  content: $('#alert_div').html()
+					}); 
+				}
+		});
+	</script>
+
   </body>
 </html>
 
