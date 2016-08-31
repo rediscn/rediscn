@@ -5,6 +5,7 @@ excerpt: redis文档中心，这里介绍了redis基本数据类型、完整的�
 permalink: documentation.html
 disqusIdentifier: documentation
 disqusUrl: http://redis.cn/documentation.html
+discuzTid: 852
 ---
 
 <h1>文档</h1>

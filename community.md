@@ -5,6 +5,7 @@ excerpt: Redis中文技术交流社区，学习交流redis技术欢迎来redis.c
 permalink: community.html
 disqusIdentifier: community
 disqusUrl: http://redis.cn/community.html
+discuzTid: 853
 ---
 
 # 欢迎加入Redis中国用户组（CRUG）大家庭 #

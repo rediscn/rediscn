@@ -5,6 +5,7 @@ excerpt: Redis下载中心(Redis download)，下载各种版本的redis，包括
 permalink: download.html
 disqusIdentifier: download
 disqusUrl: http://redis.cn/download.html
+discuzTid: 854
 ---
 
 

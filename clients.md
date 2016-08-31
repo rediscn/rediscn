@@ -5,6 +5,7 @@ excerpt: redis客户端连接工具(Redis client)资料，提供as3redis、credi
 permalink: clients.html
 disqusIdentifier: clients
 disqusUrl: http://redis.cn/clients.html
+discuzTid: 851
 ---
 
 <div class='text'>

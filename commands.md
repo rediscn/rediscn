@@ -5,6 +5,7 @@ permalink: commands.html
 disqusIdentifier: commands
 disqusUrl: http://redis.cn/commands.html
 excerpt : Redis命令大全，显示全部已知的redis命令，redis集群相关命令，近期也会翻译过来,Redis命令参考，也可以直接输入命令进行命令检索。
+discuzTid: 850
 ---
 <section id='commands'>
 <div class='container'>
