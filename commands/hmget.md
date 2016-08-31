@@ -5,6 +5,7 @@ permalink: commands/hmget.html
 disqusIdentifier: command_hmget
 disqusUrl: http://redis.cn/commands/hmget.html
 commandsType: hashes
+discuzTid: 980
 ---
 
 返回 `key` 指定的哈希集中指定字段的值。

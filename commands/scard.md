@@ -5,6 +5,7 @@ permalink: commands/scard.html
 disqusIdentifier: command_scard
 disqusUrl: http://redis.cn/commands/scard.html
 commandsType: sets
+discuzTid: 1039
 ---
 
 返回集合存储的key的基数 (集合元素的数量).

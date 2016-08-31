@@ -5,6 +5,7 @@ permalink: commands/hincrby.html
 disqusIdentifier: command_hincrby
 disqusUrl: http://redis.cn/commands/hincrby.html
 commandsType: hashes
+discuzTid: 976
 ---
 
 增加 `key` 指定的哈希集中指定字段的数值。如果 `key` 不存在，会创建一个新的哈希集并与 `key` 关联。如果字段不存在，则字段的值在该操作执行前被设置为 0

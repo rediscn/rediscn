@@ -5,6 +5,7 @@ permalink: commands/client-getname.html
 disqusIdentifier: command_client-getname
 disqusUrl: http://redis.cn/commands/client-getname.html
 commandsType: server
+discuzTid: 912
 ---
 
 `CLIENT GETNAME` 返回当前连接由`CLIENT SETNAME`设置的名字。如果没有用`CLIENT SETNAME`设置名字，将返回一个空的回复。

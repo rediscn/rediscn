@@ -5,6 +5,7 @@ permalink: commands/lindex.html
 disqusIdentifier: command_lindex
 disqusUrl: http://redis.cn/commands/lindex.html
 commandsType: lists
+discuzTid: 993
 ---
 
 返回列表里的元素的索引 index 存储在 key 里面。 下标是从0开始索引的，所以 0 是表示第一个元素， 1 表示第二个元素，并以此类推。 负数索引用于指定从列表尾部开始索引的元素。在这种方法下，-1 表示最后一个元素，-2 表示倒数第二个元素，并以此往前推。

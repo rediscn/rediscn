@@ -5,6 +5,7 @@ permalink: commands/zrevrank.html
 disqusIdentifier: command_zrevrank
 disqusUrl: http://redis.cn/commands/zrevrank.html
 commandsType: sortedsets
+discuzTid: 1094
 ---
 
 返回有序集key中成员member的排名，其中有序集成员按score值从大到小排列。排名以0为底，也就是说，score值最大的成员排名为0。

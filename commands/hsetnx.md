@@ -5,6 +5,7 @@ permalink: commands/hsetnx.html
 disqusIdentifier: command_hsetnx
 disqusUrl: http://redis.cn/commands/hsetnx.html
 commandsType: hashes
+discuzTid: 984
 ---
 
 只在 `key` 指定的哈希集中不存在指定的字段时，设置字段的值。如果 `key` 指定的哈希集不存在，会创建一个新的哈希集并与 `key` 关联。如果字段已存在，该操作无效果。

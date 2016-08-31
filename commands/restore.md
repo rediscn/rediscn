@@ -5,6 +5,7 @@ permalink: commands/restore.html
 disqusIdentifier: command_restore
 disqusUrl: http://redis.cn/commands/restore.html
 commandsType: keys
+discuzTid: 1030
 ---
 
 反序列化给定的序列化值，并将它和给定的 key 关联。

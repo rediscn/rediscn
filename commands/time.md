@@ -5,6 +5,7 @@ permalink: commands/time.html
 disqusIdentifier: command_time
 disqusUrl: http://redis.cn/commands/time.html
 commandsType: server
+discuzTid: 1070
 ---
 
 TIME 命令返回当前Unix时间戳和这一秒已经过去的微秒数。基本上，该接口非常相似gettimeofday.

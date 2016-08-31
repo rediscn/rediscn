@@ -5,6 +5,7 @@ permalink: commands/cluster-getkeysinslot.html
 disqusIdentifier: command_cluster-getkeysinslot
 disqusUrl: http://redis.cn/commands/cluster-getkeysinslot.html
 commandsType: cluster
+discuzTid: 923
 ---
 
 本命令返回存储在连接节点的指定hash slot里面的key的列表。key的最大数量通过`count`参数指定，所以这个API可以用作keys的批处理。

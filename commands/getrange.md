@@ -5,6 +5,7 @@ permalink: commands/getrange.html
 disqusIdentifier: command_getrange
 disqusUrl: http://redis.cn/commands/getrange.html
 commandsType: strings
+discuzTid: 970
 ---
 
 **警告**：这个命令是被改成GETRANGE的，在小于2.0的Redis版本中叫SUBSTR。 返回key对应的字符串value的子串，这个子串是由start和end位移决定的（两者都在string内）。可以用负的位移来表示从string尾部开始数的下标。所以-1就是最后一个字符，-2就是倒数第二个，以此类推。

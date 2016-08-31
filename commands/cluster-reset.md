@@ -5,6 +5,7 @@ permalink: commands/cluster-reset.html
 disqusIdentifier: command_cluster-reset
 disqusUrl: http://redis.cn/commands/cluster-reset.html
 commandsType: cluster
+discuzTid: 929
 ---
 
 Reset a Redis Cluster node, in a more or less drastic way depending on the

@@ -5,6 +5,7 @@ permalink: commands/scan.html
 disqusIdentifier: command_scan
 disqusUrl: http://redis.cn/commands/scan.html
 commandsType: keys
+discuzTid: 1038
 ---
 
 [SCAN](/commands/scan.html) 命令及其相关的 [SSCAN](/commands/sscan.html), [HSCAN](/commands/hscan.html) 和 [ZSCAN](/commands/zscan.html) 命令都用于增量迭代一个集合元素。

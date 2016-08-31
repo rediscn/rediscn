@@ -5,6 +5,7 @@ permalink: commands/dump.html
 disqusIdentifier: command_dump
 disqusUrl: http://redis.cn/commands/dump.html
 commandsType: keys
+discuzTid: 950
 ---
 
 序列化给定 key ，并返回被序列化的值，使用 [RESTORE](/commands/restore) 命令可以将这个值反序列化为 Redis 键。

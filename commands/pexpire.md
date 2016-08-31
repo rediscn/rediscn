@@ -5,6 +5,7 @@ permalink: commands/pexpire.html
 disqusIdentifier: command_pexpire
 disqusUrl: http://redis.cn/commands/pexpire.html
 commandsType: keys
+discuzTid: 1012
 ---
 
 这个命令和[EXPIRE](/commands/expire.html)命令的作用类似，但是它以毫秒为单位设置 key 的生存时间，而不像[EXPIRE](/commands/expire.html)命令那样，以秒为单位。

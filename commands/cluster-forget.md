@@ -5,6 +5,7 @@ permalink: commands/cluster-forget.html
 disqusIdentifier: command_cluster-forget
 disqusUrl: http://redis.cn/commands/cluster-forget.html
 commandsType: cluster
+discuzTid: 922
 ---
 
 The command is used in order to remove the node, specified via its node ID,

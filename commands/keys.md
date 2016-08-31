@@ -5,6 +5,7 @@ permalink: commands/keys.html
 disqusIdentifier: command_keys
 disqusUrl: http://redis.cn/commands/keys.html
 commandsType: keys
+discuzTid: 991
 ---
 
 查找所有符合给定模式pattern（正则表达式）的 key 。

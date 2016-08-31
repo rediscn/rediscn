@@ -5,6 +5,7 @@ permalink: commands/flushall.html
 disqusIdentifier: command_flushall
 disqusUrl: http://redis.cn/commands/flushall.html
 commandsType: server
+discuzTid: 958
 ---
 
 删除所有数据库里面的所有数据，注意不是当前数据库，而是所有数据库。

@@ -5,6 +5,7 @@ permalink: commands/object.html
 disqusIdentifier: command_object
 disqusUrl: http://redis.cn/commands/object.html
 commandsType: keys
+discuzTid: 1010
 ---
 
 `OBJECT` 命令可以在内部调试(debugging)给出keys的内部对象，它用于检查或者了解你的keys是否用到了特殊编码 的数据类型来存储空间z。 当redis作为缓存使用的时候，你的应用也可能用到这些由`OBJECT`命令提供的信息来决定应用层的key的驱逐策略(eviction policies)

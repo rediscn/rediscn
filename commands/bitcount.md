@@ -5,6 +5,7 @@ permalink: commands/bitcount.html
 disqusIdentifier: command_bitcount
 disqusUrl: http://redis.cn/commands/bitcount.html
 commandsType: strings
+discuzTid: 906
 ---
 
 统计字符串被设置为1的bit数.

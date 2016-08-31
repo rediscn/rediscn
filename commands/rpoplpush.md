@@ -5,6 +5,7 @@ permalink: commands/rpoplpush.html
 disqusIdentifier: command_rpoplpush
 disqusUrl: http://redis.cn/commands/rpoplpush.html
 commandsType: lists
+discuzTid: 1033
 ---
 
 原子性地返回并移除存储在 source 的列表的最后一个元素（列表尾部元素）， 并把该元素放入存储在 destination 的列表的第一个元素位置（列表头部）。

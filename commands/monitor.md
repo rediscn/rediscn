@@ -5,6 +5,7 @@ permalink: commands/monitor.html
 disqusIdentifier: command_monitor
 disqusUrl: http://redis.cn/commands/monitor.html
 commandsType: server
+discuzTid: 1005
 ---
 
 [MONITOR](/commands/monitor.html) 是一个调试命令，返回服务器处理的每一个命令，它能帮助我们了解在数据库上发生了什么操作，可以通过redis-cli和telnet命令使用.

@@ -5,6 +5,7 @@ permalink: commands/hget.html
 disqusIdentifier: command_hget
 disqusUrl: http://redis.cn/commands/hget.html
 commandsType: hashes
+discuzTid: 974
 ---
 
 返回 key 指定的哈希集中该字段所关联的值

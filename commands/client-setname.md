@@ -5,6 +5,7 @@ permalink: commands/client-setname.html
 disqusIdentifier: command_client-setname
 disqusUrl: http://redis.cn/commands/client-setname.html
 commandsType: server
+discuzTid: 916
 ---
 
 The `CLIENT SETNAME` command assigns a name to the current connection.

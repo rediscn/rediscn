@@ -5,6 +5,7 @@ permalink: commands/lrem.html
 disqusIdentifier: command_lrem
 disqusUrl: http://redis.cn/commands/lrem.html
 commandsType: lists
+discuzTid: 1000
 ---
 
 从存于 key 的列表里移除前 count 次出现的值为 value 的元素。 这个 count 参数通过下面几种方式影响这个操作：

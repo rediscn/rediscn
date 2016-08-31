@@ -5,6 +5,7 @@ permalink: commands/config-resetstat.html
 disqusIdentifier: command_config-resetstat
 disqusUrl: http://redis.cn/commands/config-resetstat.html
 commandsType: server
+discuzTid: 940
 ---
 
 重置INFO命令统计里面的一些计算器。

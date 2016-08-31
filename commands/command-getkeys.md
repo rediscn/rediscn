@@ -5,6 +5,7 @@ permalink: commands/command-getkeys.html
 disqusIdentifier: command_command-getkeys
 disqusUrl: http://redis.cn/commands/command-getkeys.html
 commandsType: server
+discuzTid: 937
 ---
 
 Returns @array-reply of keys from a full Redis command.

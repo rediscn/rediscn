@@ -5,6 +5,7 @@ permalink: commands/mget.html
 disqusIdentifier: command_mget
 disqusUrl: http://redis.cn/commands/mget.html
 commandsType: strings
+discuzTid: 1003
 ---
 
 返回所有指定的key的value。对于每个不对应string或者不存在的key，都返回特殊值`nil`。正因为此，这个操作从来不会失败。

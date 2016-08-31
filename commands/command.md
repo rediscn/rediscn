@@ -5,6 +5,7 @@ permalink: commands/command.html
 disqusIdentifier: command_command
 disqusUrl: http://redis.cn/commands/command.html
 commandsType: server
+discuzTid: 935
 ---
 
 返回Redis所有命令数组。

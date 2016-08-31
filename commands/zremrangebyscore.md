@@ -5,6 +5,7 @@ permalink: commands/zremrangebyscore.html
 disqusIdentifier: command_zremrangebyscore
 disqusUrl: http://redis.cn/commands/zremrangebyscore.html
 commandsType: sortedsets
+discuzTid: 1090
 ---
 
 移除有序集key中，所有score值介于min和max之间(包括等于min或max)的成员。

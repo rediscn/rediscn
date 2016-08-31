@@ -5,6 +5,7 @@ permalink: commands/readonly.html
 disqusIdentifier: command_readonly
 disqusUrl: http://redis.cn/commands/readonly.html
 commandsType: cluster
+discuzTid: 1026
 ---
 
 Enables read queries for a connection to a Redis Cluster slave node. 

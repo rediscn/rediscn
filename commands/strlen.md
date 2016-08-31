@@ -5,6 +5,7 @@ permalink: commands/strlen.html
 disqusIdentifier: command_strlen
 disqusUrl: http://redis.cn/commands/strlen.html
 commandsType: strings
+discuzTid: 1065
 ---
 
 返回key的string类型value的长度。如果key对应的非string类型，就返回错误。

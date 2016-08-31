@@ -5,6 +5,7 @@ permalink: commands/pexpireat.html
 disqusIdentifier: command_pexpireat
 disqusUrl: http://redis.cn/commands/pexpireat.html
 commandsType: keys
+discuzTid: 1013
 ---
 
 `PEXPIREAT` 这个命令和[EXPIREAT](/commands/expireat.html)命令类似，但它以毫秒为单位设置 key 的过期 `unix` 时间戳，而不是像[EXPIREAT](/commands/expireat.html)那样，以秒为单位。

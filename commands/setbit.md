@@ -5,6 +5,7 @@ permalink: commands/setbit.html
 disqusIdentifier: command_setbit
 disqusUrl: http://redis.cn/commands/setbit.html
 commandsType: strings
+discuzTid: 1048
 ---
 
 设置或者清空key的value(字符串)在offset处的bit值。

@@ -5,6 +5,7 @@ permalink: commands/expire.html
 disqusIdentifier: command_expire
 disqusUrl: http://redis.cn/commands/expire.html
 commandsType: keys
+discuzTid: 956
 ---
 
 设置`key`的过期时间，超过时间后，将会自动删除该`key`。在Redis的术语中一个`key`的相关超时是不确定的。

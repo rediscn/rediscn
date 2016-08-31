@@ -5,6 +5,7 @@ permalink: commands/rpushx.html
 disqusIdentifier: command_rpushx
 disqusUrl: http://redis.cn/commands/rpushx.html
 commandsType: lists
+discuzTid: 1035
 ---
 
 将值 value 插入到列表 key 的表尾, 当且仅当 key 存在并且是一个列表。 和 [RPUSH](/commands/rpush.html) 命令相反, 当 key 不存在时，RPUSHX 命令什么也不做。

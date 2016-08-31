@@ -5,6 +5,7 @@ permalink: commands/cluster-keyslot.html
 disqusIdentifier: command_cluster-keyslot
 disqusUrl: http://redis.cn/commands/cluster-keyslot.html
 commandsType: cluster
+discuzTid: 925
 ---
 
 Returns an integer identifying the hash slot the specified key hashes to.

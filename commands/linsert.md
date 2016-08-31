@@ -5,6 +5,7 @@ permalink: commands/linsert.html
 disqusIdentifier: command_linsert
 disqusUrl: http://redis.cn/commands/linsert.html
 commandsType: lists
+discuzTid: 994
 ---
 
 把 value 插入存于 key 的列表中在基准值 pivot 的前面或后面。

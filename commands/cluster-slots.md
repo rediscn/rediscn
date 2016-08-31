@@ -5,6 +5,7 @@ permalink: commands/cluster-slots.html
 disqusIdentifier: command_cluster-slots
 disqusUrl: http://redis.cn/commands/cluster-slots.html
 commandsType: cluster
+discuzTid: 934
 ---
 
 `CLUSTER SLOTS` returns details about which cluster slots map to which

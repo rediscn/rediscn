@@ -5,6 +5,7 @@ permalink: commands/mset.html
 disqusIdentifier: command_mset
 disqusUrl: http://redis.cn/commands/mset.html
 commandsType: strings
+discuzTid: 1007
 ---
 
 对应给定的keys到他们相应的values上。`MSET`会用新的value替换已经存在的value，就像普通的[SET](/commands/set.html)命令一样。如果你不想覆盖已经存在的values，请参看命令[MSETNX](/commands/msetnx.html)。

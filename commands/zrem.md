@@ -5,6 +5,7 @@ permalink: commands/zrem.html
 disqusIdentifier: command_zrem
 disqusUrl: http://redis.cn/commands/zrem.html
 commandsType: sortedsets
+discuzTid: 1087
 ---
 
 当key存在，但是其不是有序集合类型，就返回一个错误。

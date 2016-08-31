@@ -5,6 +5,7 @@ permalink: commands/bitop.html
 disqusIdentifier: command_bitop
 disqusUrl: http://redis.cn/commands/bitop.html
 commandsType: strings
+discuzTid: 907
 ---
 
 对一个或多个保存二进制位的字符串 key 进行位元操作，并将结果保存到 destkey 上。

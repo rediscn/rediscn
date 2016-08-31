@@ -5,6 +5,7 @@ permalink: commands/cluster-set-config-epoch.html
 disqusIdentifier: command_cluster-set-config-epoch
 disqusUrl: http://redis.cn/commands/cluster-set-config-epoch.html
 commandsType: cluster
+discuzTid: 931
 ---
 
 This command sets a specific *config epoch* in a fresh node. It only works when:

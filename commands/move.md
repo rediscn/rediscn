@@ -5,6 +5,7 @@ permalink: commands/move.html
 disqusIdentifier: command_move
 disqusUrl: http://redis.cn/commands/move.html
 commandsType: keys
+discuzTid: 1006
 ---
 
 将当前数据库的 key 移动到给定的数据库 db 当中。

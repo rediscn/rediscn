@@ -5,6 +5,7 @@ permalink: commands/persist.html
 disqusIdentifier: command_persist
 disqusUrl: http://redis.cn/commands/persist.html
 commandsType: keys
+discuzTid: 1011
 ---
 
 移除给定key的生存时间，将这个 key 从『易失的』(带生存时间 key )转换成『持久的』(一个不带生存时间、永不过期的 key )。

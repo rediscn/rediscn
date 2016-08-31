@@ -5,6 +5,7 @@ permalink: commands/expireat.html
 disqusIdentifier: command_expireat
 disqusUrl: http://redis.cn/commands/expireat.html
 commandsType: keys
+discuzTid: 957
 ---
 
 [EXPIREAT](/commands/expireat.html) 的作用和 [EXPIRE](/commands/expire.html)类似，都用于为 key 设置生存时间。不同在于 [EXPIREAT](/commands/expireat.html) 命令接受的时间参数是 UNIX 时间戳 Unix timestamp 。

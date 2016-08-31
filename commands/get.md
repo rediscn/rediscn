@@ -5,6 +5,7 @@ permalink: commands/get.html
 disqusIdentifier: command_get
 disqusUrl: http://redis.cn/commands/get.html
 commandsType: strings
+discuzTid: 968
 ---
 
 返回`key`的`value`。如果key不存在，返回特殊值`nil`。如果`key`的`value`不是string，就返回错误，因为`GET`只处理string类型的`values`。

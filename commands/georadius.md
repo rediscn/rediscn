@@ -5,6 +5,7 @@ permalink: commands/georadius.html
 disqusIdentifier: command_georadius
 disqusUrl: http://redis.cn/commands/georadius.html
 commandsType: geo
+discuzTid: 966
 ---
 
 以给定的经纬度为中心， 返回键包含的位置元素当中， 与中心的距离不超过给定最大距离的所有位置元素。

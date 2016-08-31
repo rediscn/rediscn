@@ -5,6 +5,7 @@ permalink: commands/publish.html
 disqusIdentifier: command_publish
 disqusUrl: http://redis.cn/commands/publish.html
 commandsType: pubsub
+discuzTid: 1021
 ---
 
 将信息 message 发送到指定的频道 channel

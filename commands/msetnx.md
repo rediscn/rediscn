@@ -5,6 +5,7 @@ permalink: commands/msetnx.html
 disqusIdentifier: command_msetnx
 disqusUrl: http://redis.cn/commands/msetnx.html
 commandsType: strings
+discuzTid: 1008
 ---
 
 对应给定的keys到他们相应的values上。只要有一个key已经存在，`MSETNX`一个操作都不会执行。 由于这种特性，`MSETNX`可以实现要么所有的操作都成功，要么一个都不执行，这样可以用来设置不同的key，来表示一个唯一的对象的不同字段。

@@ -5,6 +5,7 @@ permalink: commands/echo.html
 disqusIdentifier: command_echo
 disqusUrl: http://redis.cn/commands/echo.html
 commandsType: connection
+discuzTid: 951
 ---
 
 返回消息

@@ -5,6 +5,7 @@ permalink: commands/hgetall.html
 disqusIdentifier: command_hgetall
 disqusUrl: http://redis.cn/commands/hgetall.html
 commandsType: hashes
+discuzTid: 975
 ---
 
 返回 key 指定的哈希集中所有的字段和值。返回值中，每个字段名的下一个是它的值，所以返回值的长度是哈希集大小的两倍

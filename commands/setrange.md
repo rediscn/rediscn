@@ -5,6 +5,7 @@ permalink: commands/setrange.html
 disqusIdentifier: command_setrange
 disqusUrl: http://redis.cn/commands/setrange.html
 commandsType: strings
+discuzTid: 1051
 ---
 
 这个命令的作用是覆盖key对应的string的一部分，从指定的offset处开始，覆盖value的长度。如果offset比当前key对应string还要长，那这个string后面就补0以达到offset。不存在的keys被认为是空字符串，所以这个命令可以确保key有一个足够大的字符串，能在offset处设置value。

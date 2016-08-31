@@ -5,6 +5,7 @@ permalink: commands/config-rewrite.html
 disqusIdentifier: command_config-rewrite
 disqusUrl: http://redis.cn/commands/config-rewrite.html
 commandsType: server
+discuzTid: 941
 ---
 
 The `CONFIG REWRITE` command rewrites the `redis.conf` file the server was started with, applying the minimal changes needed to make it reflecting the configuration currently used by the server, that may be different compared to the original one because of the use of the `CONFIG SET` command.

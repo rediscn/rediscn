@@ -5,6 +5,7 @@ permalink: commands/ping.html
 disqusIdentifier: command_ping
 disqusUrl: http://redis.cn/commands/ping.html
 commandsType: connection
+discuzTid: 1017
 ---
 
 如果后面没有参数时返回`PONG`，否则会返回后面带的参数。

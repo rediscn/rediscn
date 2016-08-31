@@ -5,6 +5,7 @@ permalink: commands/zrevrangebyscore.html
 disqusIdentifier: command_zrevrangebyscore
 disqusUrl: http://redis.cn/commands/zrevrangebyscore.html
 commandsType: sortedsets
+discuzTid: 1093
 ---
 
 返回key的有序集合中的分数在max和min之间的所有元素（包括分数等于max或者min的元素）。与有序集合的默认排序相反，对于这个命令，元素被认为是从高分到低具有相同分数的元素按字典反序。

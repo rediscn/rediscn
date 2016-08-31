@@ -5,6 +5,7 @@ permalink: commands/debug-object.html
 disqusIdentifier: command_debug-object
 disqusUrl: http://redis.cn/commands/debug-object.html
 commandsType: server
+discuzTid: 944
 ---
 
 `DEBUG OBJECT` 是一个不应该被客户端使用的调试命令。

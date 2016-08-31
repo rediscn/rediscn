@@ -5,6 +5,7 @@ permalink: commands/wait.html
 disqusIdentifier: command_wait
 disqusUrl: http://redis.cn/commands/wait.html
 commandsType: keys
+discuzTid: 1075
 ---
 
 此命令阻塞当前客户端，直到所有以前的写命令都成功的传输和指定的slaves确认。如果超时，指定以毫秒为单位，即使指定的slaves还没有到达，命令任然返回。

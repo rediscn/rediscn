@@ -5,6 +5,7 @@ permalink: commands/append.html
 disqusIdentifier: command_append
 disqusUrl: http://redis.cn/commands/append.html
 commandsType: strings
+discuzTid: 902
 ---
 
 如果 `key` 已经存在，并且值为字符串，那么这个命令会把 `value` 追加到原来值（value）的结尾。 如果 `key` 不存在，那么它将首先创建一个空字符串的`key`，再执行追加操作，这种情况 [APPEND](/ommands/append.html) 将类似于 [SET](/ommands/set.html) 操作。

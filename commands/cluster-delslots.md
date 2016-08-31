@@ -5,6 +5,7 @@ permalink: commands/cluster-delslots.html
 disqusIdentifier: command_cluster-delslots
 disqusUrl: http://redis.cn/commands/cluster-delslots.html
 commandsType: cluster
+discuzTid: 920
 ---
 
 In Redis Cluster, each node keeps track of which master is serving

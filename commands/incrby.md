@@ -5,6 +5,7 @@ permalink: commands/incrby.html
 disqusIdentifier: command_incrby
 disqusUrl: http://redis.cn/commands/incrby.html
 commandsType: strings
+discuzTid: 988
 ---
 
 将key对应的数字加decrement。如果key不存在，操作之前，key就会被置为0。如果key的value类型错误或者是个不能表示成数字的字符串，就返回错误。这个操作最多支持64位有符号的正型数字。

@@ -5,6 +5,7 @@ permalink: commands/script-load.html
 disqusIdentifier: command_script-load
 disqusUrl: http://redis.cn/commands/script-load.html
 commandsType: scripting
+discuzTid: 1043
 ---
 
 Load a script into the scripts cache, without executing it.

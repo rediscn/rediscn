@@ -5,6 +5,7 @@ permalink: commands/punsubscribe.html
 disqusIdentifier: command_punsubscribe
 disqusUrl: http://redis.cn/commands/punsubscribe.html
 commandsType: pubsub
+discuzTid: 1023
 ---
 
 Unsubscribes the client from the given patterns, or from all of them if none is

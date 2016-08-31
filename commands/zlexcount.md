@@ -5,6 +5,7 @@ permalink: commands/zlexcount.html
 disqusIdentifier: command_zlexcount
 disqusUrl: http://redis.cn/commands/zlexcount.html
 commandsType: sortedsets
+discuzTid: 1082
 ---
 
 When all the elements in a sorted set are inserted with the same score, in order to force lexicographical ordering, this command returns the number of elements in the sorted set at `key` with a value between `min` and `max`.

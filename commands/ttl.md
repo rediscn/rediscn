@@ -5,6 +5,7 @@ permalink: commands/ttl.html
 disqusIdentifier: command_ttl
 disqusUrl: http://redis.cn/commands/ttl.html
 commandsType: keys
+discuzTid: 1071
 ---
 
 返回key剩余的过期时间。

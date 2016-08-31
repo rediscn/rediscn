@@ -5,6 +5,7 @@ permalink: commands/rpush.html
 disqusIdentifier: command_rpush
 disqusUrl: http://redis.cn/commands/rpush.html
 commandsType: lists
+discuzTid: 1034
 ---
 
 向存于 key 的列表的尾部插入所有指定的值。如果 key 不存在，那么会创建一个空的列表然后再进行 push 操作。 当 key 保存的不是一个列表，那么会返回一个错误。

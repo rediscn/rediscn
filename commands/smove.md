@@ -5,6 +5,7 @@ permalink: commands/smove.html
 disqusIdentifier: command_smove
 disqusUrl: http://redis.cn/commands/smove.html
 commandsType: sets
+discuzTid: 1059
 ---
 
 将member从source集合移动到destination集合中. 对于其他的客户端,在特定的时间元素将会作为source或者destination集合的成员出现.

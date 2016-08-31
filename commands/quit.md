@@ -5,6 +5,7 @@ permalink: commands/quit.html
 disqusIdentifier: command_quit
 disqusUrl: http://redis.cn/commands/quit.html
 commandsType: connection
+discuzTid: 1024
 ---
 
 请求服务器关闭连接。连接将会尽可能快的将未完成的客户端请求完成处理。

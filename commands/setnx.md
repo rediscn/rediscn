@@ -5,6 +5,7 @@ permalink: commands/setnx.html
 disqusIdentifier: command_setnx
 disqusUrl: http://redis.cn/commands/setnx.html
 commandsType: strings
+discuzTid: 1050
 ---
 
 将`key`设置值为`value`，如果`key`不存在，这种情况下等同[SET](/commands/set.html)命令。

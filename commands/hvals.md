@@ -5,6 +5,7 @@ permalink: commands/hvals.html
 disqusIdentifier: command_hvals
 disqusUrl: http://redis.cn/commands/hvals.html
 commandsType: hashes
+discuzTid: 986
 ---
 
 返回 key 指定的哈希集中所有字段的值。

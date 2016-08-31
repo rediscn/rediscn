@@ -5,6 +5,7 @@ permalink: commands/unsubscribe.html
 disqusIdentifier: command_unsubscribe
 disqusUrl: http://redis.cn/commands/unsubscribe.html
 commandsType: pubsub
+discuzTid: 1073
 ---
 
 Unsubscribes the client from the given channels, or from all of them if none is

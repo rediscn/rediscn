@@ -5,6 +5,7 @@ permalink: commands/incrbyfloat.html
 disqusIdentifier: command_incrbyfloat
 disqusUrl: http://redis.cn/commands/incrbyfloat.html
 commandsType: strings
+discuzTid: 989
 ---
 
 

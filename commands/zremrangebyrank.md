@@ -5,6 +5,7 @@ permalink: commands/zremrangebyrank.html
 disqusIdentifier: command_zremrangebyrank
 disqusUrl: http://redis.cn/commands/zremrangebyrank.html
 commandsType: sortedsets
+discuzTid: 1089
 ---
 
 移除有序集key中，指定排名(rank)区间内的所有成员。下标参数start和stop都以0为底，0处是分数最小的那个元素。这些索引也可是负数，表示位移从最高分处开始数。例如，-1是分数最高的元素，-2是分数第二高的，依次类推。

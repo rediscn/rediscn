@@ -5,6 +5,7 @@ permalink: commands/zrevrangebylex.html
 disqusIdentifier: command_zrevrangebylex
 disqusUrl: http://redis.cn/commands/zrevrangebylex.html
 commandsType: sortedsets
+discuzTid: 1092
 ---
 
 When all the elements in a sorted set are inserted with the same score, in order to force lexicographical ordering, this command returns all the elements in the sorted set at `key` with a value between `max` and `min`.

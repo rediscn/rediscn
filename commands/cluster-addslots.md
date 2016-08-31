@@ -5,6 +5,7 @@ permalink: commands/cluster-addslots.html
 disqusIdentifier: command_cluster-addslots
 disqusUrl: http://redis.cn/commands/cluster-addslots.html
 commandsType: cluster
+discuzTid: 917
 ---
 
 这个命令是用于修改某个节点上的集群配置。具体的说它把一组hash slots分配给接收命令的节点。

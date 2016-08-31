@@ -5,6 +5,7 @@ permalink: commands/script-exists.html
 disqusIdentifier: command_script-exists
 disqusUrl: http://redis.cn/commands/script-exists.html
 commandsType: scripting
+discuzTid: 1040
 ---
 
 检查脚本是否存在脚本缓存里面。

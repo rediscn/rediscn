@@ -5,6 +5,7 @@ permalink: commands/ltrim.html
 disqusIdentifier: command_ltrim
 disqusUrl: http://redis.cn/commands/ltrim.html
 commandsType: lists
+discuzTid: 1002
 ---
 
 修剪(trim)一个已存在的 list，这样 list 就会只包含指定范围的指定元素。start 和 stop 都是由0开始计数的， 这里的 0 是列表里的第一个元素（表头），1 是第二个元素，以此类推。

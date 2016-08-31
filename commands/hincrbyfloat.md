@@ -5,6 +5,7 @@ permalink: commands/hincrbyfloat.html
 disqusIdentifier: command_hincrbyfloat
 disqusUrl: http://redis.cn/commands/hincrbyfloat.html
 commandsType: hashes
+discuzTid: 977
 ---
 
 为指定`key`的hash的`field`字段值执行float类型的`increment`加。如果`field`不存在，则在执行该操作前设置为0.如果出现下列情况之一，则返回错误：

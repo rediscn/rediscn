@@ -5,6 +5,7 @@ permalink: commands/config-get.html
 disqusIdentifier: command_config-get
 disqusUrl: http://redis.cn/commands/config-get.html
 commandsType: server
+discuzTid: 939
 ---
 
 CONFIG GET命令用来读取redis服务器的配置文件参数，但并不是所有参数都支持。 与之对应的命令是CONFIG SET用来设置服务器的配置参数。

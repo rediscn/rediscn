@@ -5,6 +5,7 @@ permalink: commands/sinterstore.html
 disqusIdentifier: command_sinterstore
 disqusUrl: http://redis.cn/commands/sinterstore.html
 commandsType: sets
+discuzTid: 1054
 ---
 
 这个命令与[SINTER](/commands/sinter.html)命令类似, 但是它并不是直接返回结果集,而是将结果保存在 destination集合中.

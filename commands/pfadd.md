@@ -5,6 +5,7 @@ permalink: commands/pfadd.html
 disqusIdentifier: command_pfadd
 disqusUrl: http://redis.cn/commands/pfadd.html
 commandsType: hyperloglog
+discuzTid: 1014
 ---
 
 将除了第一个参数以外的参数存储到以第一个参数为变量名的HyperLogLog结构中.

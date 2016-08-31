@@ -5,6 +5,7 @@ permalink: commands/zrangebyscore.html
 disqusIdentifier: command_zrangebyscore
 disqusUrl: http://redis.cn/commands/zrangebyscore.html
 commandsType: sortedsets
+discuzTid: 1085
 ---
 
 如果M是常量（比如，用limit总是请求前10个元素），你可以认为是O(log(N))。 

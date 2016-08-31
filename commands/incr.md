@@ -5,6 +5,7 @@ permalink: commands/incr.html
 disqusIdentifier: command_incr
 disqusUrl: http://redis.cn/commands/incr.html
 commandsType: strings
+discuzTid: 987
 ---
 
 

@@ -5,6 +5,7 @@ permalink: commands/discard.html
 disqusIdentifier: command_discard
 disqusUrl: http://redis.cn/commands/discard.html
 commandsType: transactions
+discuzTid: 949
 ---
 
 刷新一个事务中所有在排队等待的指令，并且将连接状态恢复到正常。

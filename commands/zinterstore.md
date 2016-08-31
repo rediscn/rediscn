@@ -5,6 +5,7 @@ permalink: commands/zinterstore.html
 disqusIdentifier: command_zinterstore
 disqusUrl: http://redis.cn/commands/zinterstore.html
 commandsType: sortedsets
+discuzTid: 1081
 ---
 
 计算给定的numkeys个有序集合的交集，并且把结果放到destination中。 在给定要计算的key和其它参数之前，必须先给定key个数(numberkeys)。

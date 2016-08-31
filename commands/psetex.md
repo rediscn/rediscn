@@ -5,6 +5,7 @@ permalink: commands/psetex.html
 disqusIdentifier: command_psetex
 disqusUrl: http://redis.cn/commands/psetex.html
 commandsType: strings
+discuzTid: 1018
 ---
 
 [PSETEX](/commands/psetex.html)和[SETEX](/commands/setex.html)一样，唯一的区别是到期时间以毫秒为单位,而不是秒。

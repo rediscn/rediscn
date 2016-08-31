@@ -5,6 +5,7 @@ permalink: commands/rpop.html
 disqusIdentifier: command_rpop
 disqusUrl: http://redis.cn/commands/rpop.html
 commandsType: lists
+discuzTid: 1032
 ---
 
 移除并返回存于 key 的 list 的最后一个元素。

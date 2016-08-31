@@ -5,6 +5,7 @@ permalink: commands/georadiusbymember.html
 disqusIdentifier: command_georadiusbymember
 disqusUrl: http://redis.cn/commands/georadiusbymember.html
 commandsType: geo
+discuzTid: 967
 ---
 
 这个命令和 [GEORADIUS](/commands/georadius.html) 命令一样， 都可以找出位于指定范围内的元素， 但是 `GEORADIUSBYMEMBER` 的中心点是由给定的位置元素决定的， 而不是像 [GEORADIUS](/commands/georadius.html) 那样， 使用输入的经度和纬度来决定中心点

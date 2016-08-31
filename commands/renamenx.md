@@ -5,6 +5,7 @@ permalink: commands/renamenx.html
 disqusIdentifier: command_renamenx
 disqusUrl: http://redis.cn/commands/renamenx.html
 commandsType: keys
+discuzTid: 1029
 ---
 
 当且仅当 newkey 不存在时，将 key 改名为 newkey 。

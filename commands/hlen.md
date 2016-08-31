@@ -5,6 +5,7 @@ permalink: commands/hlen.html
 disqusIdentifier: command_hlen
 disqusUrl: http://redis.cn/commands/hlen.html
 commandsType: hashes
+discuzTid: 979
 ---
 
 返回 `key` 指定的哈希集包含的字段的数量。

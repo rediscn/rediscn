@@ -5,6 +5,7 @@ permalink: commands/script-flush.html
 disqusIdentifier: command_script-flush
 disqusUrl: http://redis.cn/commands/script-flush.html
 commandsType: scripting
+discuzTid: 1041
 ---
 
 清空Lua脚本缓存

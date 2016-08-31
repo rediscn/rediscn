@@ -5,6 +5,7 @@ permalink: commands/cluster-slaves.html
 disqusIdentifier: command_cluster-slaves
 disqusUrl: http://redis.cn/commands/cluster-slaves.html
 commandsType: cluster
+discuzTid: 933
 ---
 
 The command provides a list of slave nodes replicating from the specified

@@ -5,6 +5,7 @@ permalink: commands/zrank.html
 disqusIdentifier: command_zrank
 disqusUrl: http://redis.cn/commands/zrank.html
 commandsType: sortedsets
+discuzTid: 1086
 ---
 
 返回有序集key中成员member的排名。其中有序集成员按score值递增(从小到大)顺序排列。排名以0为底，也就是说，score值最小的成员排名为0。

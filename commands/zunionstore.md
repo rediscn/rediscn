@@ -5,6 +5,7 @@ permalink: commands/zunionstore.html
 disqusIdentifier: command_zunionstore
 disqusUrl: http://redis.cn/commands/zunionstore.html
 commandsType: sortedsets
+discuzTid: 1097
 ---
 
 计算给定的numkeys个有序集合的并集，并且把结果放到destination中。在给定要计算的key和其它参数之前，必须先给定key个数(numberkeys)。 默认情况下，结果集中某个成员的score值是所有给定集下该成员score值之和。

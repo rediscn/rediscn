@@ -5,6 +5,7 @@ permalink: commands/zcard.html
 disqusIdentifier: command_zcard
 disqusUrl: http://redis.cn/commands/zcard.html
 commandsType: sortedsets
+discuzTid: 1078
 ---
 
 返回key的有序集元素个数。

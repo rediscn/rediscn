@@ -5,6 +5,7 @@ permalink: commands/geodist.html
 disqusIdentifier: command_geodist
 disqusUrl: http://redis.cn/commands/geodist.html
 commandsType: geo
+discuzTid: 962
 ---
 
 返回两个给定位置之间的距离。

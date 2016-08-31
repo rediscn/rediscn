@@ -5,6 +5,7 @@ permalink: commands/command-info.html
 disqusIdentifier: command_command-info
 disqusUrl: http://redis.cn/commands/command-info.html
 commandsType: server
+discuzTid: 938
 ---
 
 Returns @array-reply of details about multiple Redis commands.

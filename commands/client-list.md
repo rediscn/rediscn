@@ -5,6 +5,7 @@ permalink: commands/client-list.html
 disqusIdentifier: command_client-list
 disqusUrl: http://redis.cn/commands/client-list.html
 commandsType: server
+discuzTid: 914
 ---
 
 Redis `CLIENT LIST`命令用于返回所有连接到服务器的客户端信息和统计数据。

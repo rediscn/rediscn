@@ -5,6 +5,7 @@ permalink: commands/shutdown.html
 disqusIdentifier: command_shutdown
 disqusUrl: http://redis.cn/commands/shutdown.html
 commandsType: server
+discuzTid: 1052
 ---
 
 这个命令执行如下操作:

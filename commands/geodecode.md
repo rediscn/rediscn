@@ -5,6 +5,7 @@ permalink: commands/geodecode.html
 disqusIdentifier: command_geodecode
 disqusUrl: http://redis.cn/commands/geodecode.html
 commandsType: geo
+discuzTid: 961
 ---
 
 Geospatial Redis commands encode positions of objects in a single 52 bit integer, using a technique called geohash. Those 52 bit integers are:

@@ -5,6 +5,7 @@ permalink: commands/watch.html
 disqusIdentifier: command_watch
 disqusUrl: http://redis.cn/commands/watch.html
 commandsType: transactions
+discuzTid: 1076
 ---
 
 标记所有指定的key 被监视起来，在事务中有条件的执行（乐观锁）。

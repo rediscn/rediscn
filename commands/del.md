@@ -5,6 +5,7 @@ permalink: commands/del.html
 disqusIdentifier: command_del
 disqusUrl: http://redis.cn/commands/del.html
 commandsType: keys
+discuzTid: 948
 ---
 
 如果删除的key不存在，则直接忽略。

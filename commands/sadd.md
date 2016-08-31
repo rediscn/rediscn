@@ -5,6 +5,7 @@ permalink: commands/sadd.html
 disqusIdentifier: command_sadd
 disqusUrl: http://redis.cn/commands/sadd.html
 commandsType: sets
+discuzTid: 1036
 ---
 
 添加一个或多个指定的member元素到集合的 key中.指定的一个或者多个元素member 如果已经在集合key中存在则忽略.如果集合key 不存在，则新建集合key,并添加member元素到集合key中.

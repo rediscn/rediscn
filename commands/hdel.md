@@ -5,6 +5,7 @@ permalink: commands/hdel.html
 disqusIdentifier: command_hdel
 disqusUrl: http://redis.cn/commands/hdel.html
 commandsType: hashes
+discuzTid: 972
 ---
 
 从 key 指定的哈希集中移除指定的域。在哈希集中不存在的域将被忽略。

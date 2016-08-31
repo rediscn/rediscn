@@ -5,6 +5,7 @@ permalink: commands/save.html
 disqusIdentifier: command_save
 disqusUrl: http://redis.cn/commands/save.html
 commandsType: server
+discuzTid: 1037
 ---
 
 SAVE 命令执行一个同步操作，以RDB文件的方式保存所有数据的快照

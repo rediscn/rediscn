@@ -5,6 +5,7 @@ permalink: commands/zrange.html
 disqusIdentifier: command_zrange
 disqusUrl: http://redis.cn/commands/zrange.html
 commandsType: sortedsets
+discuzTid: 1083
 ---
 
 Returns the specified range of elements in the sorted set stored at `key`.

@@ -5,6 +5,7 @@ permalink: commands/zcount.html
 disqusIdentifier: command_zcount
 disqusUrl: http://redis.cn/commands/zcount.html
 commandsType: sortedsets
+discuzTid: 1079
 ---
 
 返回有序集key中，score值在min和max之间(默认包括score值等于min或max)的成员。 关于参数min和max的详细使用方法，请参考[ZRANGEBYSCORE](/commands/zrangebyscore.html)命令。

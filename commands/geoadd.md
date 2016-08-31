@@ -5,6 +5,7 @@ permalink: commands/geoadd.html
 disqusIdentifier: command_geoadd
 disqusUrl: http://redis.cn/commands/geoadd.html
 commandsType: geo
+discuzTid: 960
 ---
 
 将指定的地理空间位置（纬度、经度、名称）添加到指定的`key`中。这些数据将会存储到`sorted set`这样的目的是为了方便使用[GEORADIUS](/commands/georadius.html)或者[GEORADIUSBYMEMBER](/commands/georadiusbymember.html)命令对数据进行半径查询等操作。

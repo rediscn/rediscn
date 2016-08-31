@@ -5,6 +5,7 @@ permalink: commands/sdiffstore.html
 disqusIdentifier: command_sdiffstore
 disqusUrl: http://redis.cn/commands/sdiffstore.html
 commandsType: sets
+discuzTid: 1045
 ---
 
 该命令类似于 [SDIFF](/commands/sdiff.html), 不同之处在于该命令不返回结果集，而是将结果存放在`destination`集合中.

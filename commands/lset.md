@@ -5,6 +5,7 @@ permalink: commands/lset.html
 disqusIdentifier: command_lset
 disqusUrl: http://redis.cn/commands/lset.html
 commandsType: lists
+discuzTid: 1001
 ---
 
 设置 index 位置的list元素的值为 value。 更多关于 index 参数的信息，详见 [LINDEX](/commands/lindex.html)。

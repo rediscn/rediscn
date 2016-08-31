@@ -5,6 +5,7 @@ permalink: commands/readwrite.html
 disqusIdentifier: command_readwrite
 disqusUrl: http://redis.cn/commands/readwrite.html
 commandsType: cluster
+discuzTid: 1027
 ---
 
 Disables read queries for a connection to a Redis Cluster slave node.

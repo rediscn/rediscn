@@ -5,6 +5,7 @@ permalink: commands/exec.html
 disqusIdentifier: command_exec
 disqusUrl: http://redis.cn/commands/exec.html
 commandsType: transactions
+discuzTid: 954
 ---
 
 执行事务中所有在排队等待的指令并将链接状态恢复到正常

@@ -5,6 +5,7 @@ permalink: commands/srandmember.html
 disqusIdentifier: command_srandmember
 disqusUrl: http://redis.cn/commands/srandmember.html
 commandsType: sets
+discuzTid: 1062
 ---
 
 仅提供key参数,那么随机返回key集合中的一个元素.

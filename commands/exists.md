@@ -5,6 +5,7 @@ permalink: commands/exists.html
 disqusIdentifier: command_exists
 disqusUrl: http://redis.cn/commands/exists.html
 commandsType: keys
+discuzTid: 955
 ---
 
 返回key是否存在。

@@ -5,6 +5,7 @@ permalink: commands/lrange.html
 disqusIdentifier: command_lrange
 disqusUrl: http://redis.cn/commands/lrange.html
 commandsType: lists
+discuzTid: 999
 ---
 
 返回存储在 key 的列表里指定范围内的元素。 start 和 end 偏移量都是基于0的下标，即list的第一个元素下标是0（list的表头），第二个元素下标是1，以此类推。

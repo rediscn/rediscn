@@ -5,6 +5,7 @@ permalink: commands/bgrewriteaof.html
 disqusIdentifier: command_bgrewriteaof
 disqusUrl: http://redis.cn/commands/bgrewriteaof.html
 commandsType: server
+discuzTid: 904
 ---
 
 Redis `BGREWRITEAOF` 命令用于异步执行一个 AOF（AppendOnly File）文件重写操作。重写会创建一个当前AOF文件的体积优化版本。

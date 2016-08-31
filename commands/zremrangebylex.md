@@ -5,6 +5,7 @@ permalink: commands/zremrangebylex.html
 disqusIdentifier: command_zremrangebylex
 disqusUrl: http://redis.cn/commands/zremrangebylex.html
 commandsType: sortedsets
+discuzTid: 1088
 ---
 
 When all the elements in a sorted set are inserted with the same score, in order to force lexicographical ordering, this command removes all elements in the sorted set stored at `key` between the lexicographical range specified by `min` and `max`.

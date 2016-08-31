@@ -5,6 +5,7 @@ permalink: commands/hstrlen.html
 disqusIdentifier: command_hstrlen
 disqusUrl: http://redis.cn/commands/hstrlen.html
 commandsType: hashes
+discuzTid: 985
 ---
 
 返回hash指定field的value的字符串长度，如果hash或者field不存在，返回0.

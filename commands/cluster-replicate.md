@@ -5,6 +5,7 @@ permalink: commands/cluster-replicate.html
 disqusIdentifier: command_cluster-replicate
 disqusUrl: http://redis.cn/commands/cluster-replicate.html
 commandsType: cluster
+discuzTid: 928
 ---
 
 The command reconfigures a node as a slave of the specified master.

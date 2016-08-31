@@ -5,6 +5,7 @@ permalink: commands/lpop.html
 disqusIdentifier: command_lpop
 disqusUrl: http://redis.cn/commands/lpop.html
 commandsType: lists
+discuzTid: 996
 ---
 
 移除并且返回 key 对应的 list 的第一个元素。

@@ -5,6 +5,7 @@ permalink: commands/srem.html
 disqusIdentifier: command_srem
 disqusUrl: http://redis.cn/commands/srem.html
 commandsType: sets
+discuzTid: 1063
 ---
 
 在key集合中移除指定的元素. 如果指定的元素不是key集合中的元素则忽略 如果key集合不存在则被视为一个空的集合，该命令返回0.

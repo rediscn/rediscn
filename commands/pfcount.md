@@ -5,6 +5,7 @@ permalink: commands/pfcount.html
 disqusIdentifier: command_pfcount
 disqusUrl: http://redis.cn/commands/pfcount.html
 commandsType: hyperloglog
+discuzTid: 1015
 ---
 
 当参数为一个key时,返回存储在HyperLogLog结构体的该变量的近似基数，如果该变量不存在,则返回0.

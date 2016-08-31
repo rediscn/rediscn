@@ -5,6 +5,7 @@ permalink: commands/slowlog.html
 disqusIdentifier: command_slowlog
 disqusUrl: http://redis.cn/commands/slowlog.html
 commandsType: server
+discuzTid: 1057
 ---
 
 This command is used in order to read and reset the Redis slow queries log.

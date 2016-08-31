@@ -5,6 +5,7 @@ permalink: commands/hexists.html
 disqusIdentifier: command_hexists
 disqusUrl: http://redis.cn/commands/hexists.html
 commandsType: hashes
+discuzTid: 973
 ---
 
 返回hash里面key是否存在的标志

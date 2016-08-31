@@ -5,6 +5,7 @@ permalink: commands/cluster-info.html
 disqusIdentifier: command_cluster-info
 disqusUrl: http://redis.cn/commands/cluster-info.html
 commandsType: cluster
+discuzTid: 924
 ---
 
 `CLUSTER INFO` provides `INFO` style information about Redis Cluster

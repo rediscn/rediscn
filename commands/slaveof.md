@@ -5,6 +5,7 @@ permalink: commands/slaveof.html
 disqusIdentifier: command_slaveof
 disqusUrl: http://redis.cn/commands/slaveof.html
 commandsType: server
+discuzTid: 1056
 ---
 
 Redis `SLAVEOF` 命令可以将当前服务器转变为指定服务器的从属服务器(slave server)。

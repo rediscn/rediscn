@@ -5,6 +5,7 @@ permalink: commands/psubscribe.html
 disqusIdentifier: command_psubscribe
 disqusUrl: http://redis.cn/commands/psubscribe.html
 commandsType: pubsub
+discuzTid: 1019
 ---
 
 订阅给定的模式(patterns)。

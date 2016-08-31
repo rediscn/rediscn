@@ -5,6 +5,7 @@ permalink: commands/script-kill.html
 disqusIdentifier: command_script-kill
 disqusUrl: http://redis.cn/commands/script-kill.html
 commandsType: scripting
+discuzTid: 1042
 ---
 
 杀死当前正在运行的 Lua 脚本，当且仅当这个脚本没有执行过任何写操作时，这个命令才生效。

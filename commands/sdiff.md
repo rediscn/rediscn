@@ -5,6 +5,7 @@ permalink: commands/sdiff.html
 disqusIdentifier: command_sdiff
 disqusUrl: http://redis.cn/commands/sdiff.html
 commandsType: sets
+discuzTid: 1044
 ---
 
 返回一个集合与给定集合的差集的元素.

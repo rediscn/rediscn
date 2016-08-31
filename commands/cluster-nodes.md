@@ -5,6 +5,7 @@ permalink: commands/cluster-nodes.html
 disqusIdentifier: command_cluster-nodes
 disqusUrl: http://redis.cn/commands/cluster-nodes.html
 commandsType: cluster
+discuzTid: 927
 ---
 
 Each node in a Redis Cluster has its view of the current cluster configuration,

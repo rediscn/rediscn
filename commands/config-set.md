@@ -5,6 +5,7 @@ permalink: commands/config-set.html
 disqusIdentifier: command_config-set
 disqusUrl: http://redis.cn/commands/config-set.html
 commandsType: server
+discuzTid: 942
 ---
 
 The `CONFIG SET` command is used in order to reconfigure the server at run time

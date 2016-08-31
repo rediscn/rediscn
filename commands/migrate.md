@@ -5,6 +5,7 @@ permalink: commands/migrate.html
 disqusIdentifier: command_migrate
 disqusUrl: http://redis.cn/commands/migrate.html
 commandsType: keys
+discuzTid: 1004
 ---
 
 将 key 原子性地从当前实例传送到目标实例的指定数据库上，一旦传送成功， key 保证会出现在目标实例上，而当前实例上的 key 会被删除。

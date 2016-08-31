@@ -5,6 +5,7 @@ permalink: commands/spop.html
 disqusIdentifier: command_spop
 disqusUrl: http://redis.cn/commands/spop.html
 commandsType: sets
+discuzTid: 1061
 ---
 
 Removes and returns one or more random elements from the set value store at `key`.

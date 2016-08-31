@@ -5,6 +5,7 @@ permalink: commands/geohash.html
 disqusIdentifier: command_geohash
 disqusUrl: http://redis.cn/commands/geohash.html
 commandsType: geo
+discuzTid: 964
 ---
 
 返回一个或多个位置元素的 [Geohash](https://en.wikipedia.org/wiki/Geohash) 表示。

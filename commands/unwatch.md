@@ -5,6 +5,7 @@ permalink: commands/unwatch.html
 disqusIdentifier: command_unwatch
 disqusUrl: http://redis.cn/commands/unwatch.html
 commandsType: transactions
+discuzTid: 1074
 ---
 
 刷新一个事务中已被监视的所有key。

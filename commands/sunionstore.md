@@ -5,6 +5,7 @@ permalink: commands/sunionstore.html
 disqusIdentifier: command_sunionstore
 disqusUrl: http://redis.cn/commands/sunionstore.html
 commandsType: sets
+discuzTid: 1068
 ---
 
 该命令作用类似于[SUNION](/commands/sunion.html)命令,不同的是它并不返回结果集,而是将结果存储在destination集合中.

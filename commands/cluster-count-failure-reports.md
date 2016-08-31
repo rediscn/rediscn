@@ -5,6 +5,7 @@ permalink: commands/cluster-count-failure-reports.html
 disqusIdentifier: command_cluster-count-failure-reports
 disqusUrl: http://redis.cn/commands/cluster-count-failure-reports.html
 commandsType: cluster
+discuzTid: 918
 ---
 
 The command returns the number of *failure reports* for the specified node.

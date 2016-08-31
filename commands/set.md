@@ -5,6 +5,7 @@ permalink: commands/set.html
 disqusIdentifier: command_set
 disqusUrl: http://redis.cn/commands/set.html
 commandsType: strings
+discuzTid: 1047
 ---
 
 Set `key` to hold the string `value`.

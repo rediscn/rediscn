@@ -5,6 +5,7 @@ permalink: commands/rename.html
 disqusIdentifier: command_rename
 disqusUrl: http://redis.cn/commands/rename.html
 commandsType: keys
+discuzTid: 1028
 ---
 
 将key重命名为newkey，如果key与newkey相同，将返回一个错误。如果newkey已经存在，则值将被覆盖。

@@ -5,6 +5,7 @@ permalink: commands/bitpos.html
 disqusIdentifier: command_bitpos
 disqusUrl: http://redis.cn/commands/bitpos.html
 commandsType: strings
+discuzTid: 908
 ---
 
 返回字符串里面第一个被设置为1或者0的bit位。

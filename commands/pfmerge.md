@@ -5,6 +5,7 @@ permalink: commands/pfmerge.html
 disqusIdentifier: command_pfmerge
 disqusUrl: http://redis.cn/commands/pfmerge.html
 commandsType: hyperloglog
+discuzTid: 1016
 ---
 
 将多个 HyperLogLog 合并（merge）为一个 HyperLogLog ， 合并后的 HyperLogLog 的基数接近于所有输入 HyperLogLog 的可见集合（observed set）的并集.

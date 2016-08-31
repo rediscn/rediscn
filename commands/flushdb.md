@@ -5,6 +5,7 @@ permalink: commands/flushdb.html
 disqusIdentifier: command_flushdb
 disqusUrl: http://redis.cn/commands/flushdb.html
 commandsType: server
+discuzTid: 959
 ---
 
 删除当前数据库里面的所有数据。

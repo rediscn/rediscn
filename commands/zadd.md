@@ -5,6 +5,7 @@ permalink: commands/zadd.html
 disqusIdentifier: command_zadd
 disqusUrl: http://redis.cn/commands/zadd.html
 commandsType: sortedsets
+discuzTid: 1077
 ---
 
 将所有指定成员添加到键为`key`有序集合（sorted set）里面。

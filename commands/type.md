@@ -5,6 +5,7 @@ permalink: commands/type.html
 disqusIdentifier: command_type
 disqusUrl: http://redis.cn/commands/type.html
 commandsType: keys
+discuzTid: 1072
 ---
 
 返回`key`所存储的`value`的数据结构类型，它可以返回`string`, `list`, `set`, `zset` 和 `hash`等不同的类型。

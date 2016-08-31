@@ -5,6 +5,7 @@ permalink: commands/randomkey.html
 disqusIdentifier: command_randomkey
 disqusUrl: http://redis.cn/commands/randomkey.html
 commandsType: keys
+discuzTid: 1025
 ---
 
 从当前数据库返回一个随机的key。

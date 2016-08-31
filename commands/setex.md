@@ -5,6 +5,7 @@ permalink: commands/setex.html
 disqusIdentifier: command_setex
 disqusUrl: http://redis.cn/commands/setex.html
 commandsType: strings
+discuzTid: 1049
 ---
 
 设置key对应字符串value，并且设置key在给定的seconds时间之后超时过期。这个命令等效于执行下面的命令：

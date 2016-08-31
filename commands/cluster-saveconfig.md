@@ -5,6 +5,7 @@ permalink: commands/cluster-saveconfig.html
 disqusIdentifier: command_cluster-saveconfig
 disqusUrl: http://redis.cn/commands/cluster-saveconfig.html
 commandsType: cluster
+discuzTid: 930
 ---
 
 Forces a node to save the `nodes.conf` configuration on disk. Before to return

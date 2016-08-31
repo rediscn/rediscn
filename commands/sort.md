@@ -5,6 +5,7 @@ permalink: commands/sort.html
 disqusIdentifier: command_sort
 disqusUrl: http://redis.cn/commands/sort.html
 commandsType: keys
+discuzTid: 1060
 ---
 
 Returns or stores the elements contained in the [list][tdtl], [set][tdts] or

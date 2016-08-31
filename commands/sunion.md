@@ -5,6 +5,7 @@ permalink: commands/sunion.html
 disqusIdentifier: command_sunion
 disqusUrl: http://redis.cn/commands/sunion.html
 commandsType: sets
+discuzTid: 1067
 ---
 
 返回给定的多个集合的并集中的所有成员.

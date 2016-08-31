@@ -5,6 +5,7 @@ permalink: commands/cluster-failover.html
 disqusIdentifier: command_cluster-failover
 disqusUrl: http://redis.cn/commands/cluster-failover.html
 commandsType: cluster
+discuzTid: 921
 ---
 
 This command, that can only be send to a Redis Cluster slave node, forces

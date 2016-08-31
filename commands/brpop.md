@@ -5,6 +5,7 @@ permalink: commands/brpop.html
 disqusIdentifier: command_brpop
 disqusUrl: http://redis.cn/commands/brpop.html
 commandsType: lists
+discuzTid: 910
 ---
 
 `BRPOP` 是一个阻塞的列表弹出原语。 它是 [RPOP](commands/rpop.html) 的阻塞版本，因为这个命令会在给定list无法弹出任何元素的时候阻塞连接。 该命令会按照给出的 key 顺序查看 list，并在找到的第一个非空 list 的尾部弹出一个元素。

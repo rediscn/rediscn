@@ -5,6 +5,7 @@ permalink: commands/zscore.html
 disqusIdentifier: command_zscore
 disqusUrl: http://redis.cn/commands/zscore.html
 commandsType: sortedsets
+discuzTid: 1096
 ---
 
 返回有序集key中，成员member的score值。

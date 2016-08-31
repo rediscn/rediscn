@@ -5,6 +5,7 @@ permalink: commands/sinter.html
 disqusIdentifier: command_sinter
 disqusUrl: http://redis.cn/commands/sinter.html
 commandsType: sets
+discuzTid: 1053
 ---
 
 返回指定所有的集合的成员的交集.

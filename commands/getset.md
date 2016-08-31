@@ -5,6 +5,7 @@ permalink: commands/getset.html
 disqusIdentifier: command_getset
 disqusUrl: http://redis.cn/commands/getset.html
 commandsType: strings
+discuzTid: 971
 ---
 
 自动将key对应到value并且返回原来key对应的value。如果key存在但是对应的value不是字符串，就返回错误。

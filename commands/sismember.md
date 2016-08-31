@@ -5,6 +5,7 @@ permalink: commands/sismember.html
 disqusIdentifier: command_sismember
 disqusUrl: http://redis.cn/commands/sismember.html
 commandsType: sets
+discuzTid: 1055
 ---
 
 返回成员 member 是否是存储的集合 key的成员.

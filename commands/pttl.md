@@ -5,6 +5,7 @@ permalink: commands/pttl.html
 disqusIdentifier: command_pttl
 disqusUrl: http://redis.cn/commands/pttl.html
 commandsType: keys
+discuzTid: 1020
 ---
 
 这个命令类似于[TTL](/commands/ttl.html)命令，但它以毫秒为单位返回 key 的剩余生存时间，而不是像[TTL](/commands/ttl.html)命令那样，以秒为单位。

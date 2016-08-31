@@ -5,6 +5,7 @@ permalink: commands/hkeys.html
 disqusIdentifier: command_hkeys
 disqusUrl: http://redis.cn/commands/hkeys.html
 commandsType: hashes
+discuzTid: 978
 ---
 
 返回 key 指定的哈希集中所有字段的名字。

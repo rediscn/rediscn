@@ -5,6 +5,7 @@ permalink: commands/geopos.html
 disqusIdentifier: command_geopos
 disqusUrl: http://redis.cn/commands/geopos.html
 commandsType: geo
+discuzTid: 965
 ---
 
 从`key`里返回所有给定位置元素的位置（经度和纬度）。

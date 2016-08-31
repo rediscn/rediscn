@@ -5,6 +5,7 @@ permalink: commands/cluster-meet.html
 disqusIdentifier: command_cluster-meet
 disqusUrl: http://redis.cn/commands/cluster-meet.html
 commandsType: cluster
+discuzTid: 926
 ---
 
 `CLUSTER MEET` is used in order to connect different Redis nodes with cluster

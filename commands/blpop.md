@@ -5,6 +5,7 @@ permalink: commands/blpop.html
 disqusIdentifier: command_blpop
 disqusUrl: http://redis.cn/commands/blpop.html
 commandsType: lists
+discuzTid: 909
 ---
 
 [BLPOP](/commands/blpop.html) 是阻塞式列表的弹出原语。 它是命令 [LPOP](/commands/lpop.html) 的阻塞版本，这是因为当给定列表内没有任何元素可供弹出的时候， 连接将被 [BLPOP](/commands/blpop.html) 命令阻塞。 当给定多个 key 参数时，按参数 key 的先后顺序依次检查各个列表，弹出第一个非空列表的头元素。

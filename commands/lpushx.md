@@ -5,6 +5,7 @@ permalink: commands/lpushx.html
 disqusIdentifier: command_lpushx
 disqusUrl: http://redis.cn/commands/lpushx.html
 commandsType: lists
+discuzTid: 998
 ---
 
 只有当 key 已经存在并且存着一个 list 的时候，在这个 key 下面的 list 的头部插入 value。 与 LPUSH 相反，当 key 不存在的时候不会进行任何操作。

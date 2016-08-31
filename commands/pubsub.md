@@ -5,6 +5,7 @@ permalink: commands/pubsub.html
 disqusIdentifier: command_pubsub
 disqusUrl: http://redis.cn/commands/pubsub.html
 commandsType: pubsub
+discuzTid: 1022
 ---
 
 The PUBSUB command is an introspection command that allows to inspect the
