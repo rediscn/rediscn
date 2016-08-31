@@ -4,6 +4,7 @@ title: REDIS memory-optimization
 permalink: topics/memory-optimization.html
 disqusIdentifier: topics_memory-optimization
 disqusUrl: http://redis.cn/topics/memory-optimization.html
+discuzTid: 858
 ---
 
 This page is a work in progress. Currently it is just a list of things you should check if you have problems with memory.

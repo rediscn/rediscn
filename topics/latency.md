@@ -4,6 +4,7 @@ title: REDIS latency
 permalink: topics/latency.html
 disqusIdentifier: topics_latency
 disqusUrl: http://redis.cn/topics/latency.html
+discuzTid: 891
 ---
 
 Redis latency problems troubleshooting

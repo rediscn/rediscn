@@ -4,6 +4,7 @@ title: Redis大量数据插入（redis mass-insert）
 permalink: topics/mass-insert.html
 disqusIdentifier: topics_mass-insert
 disqusUrl: http://redis.cn/topics/mass-insert.html
+discuzTid: 861
 ---
 
 Redis 大量数据插入

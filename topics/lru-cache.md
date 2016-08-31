@@ -4,6 +4,7 @@ title: REDIS lru-cache
 permalink: topics/lru-cache.html
 disqusIdentifier: topics_lru-cache
 disqusUrl: http://redis.cn/topics/lru-cache.html
+discuzTid: 859
 ---
 
 将redis当做使用LRU算法的缓存来使用

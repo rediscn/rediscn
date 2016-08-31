@@ -4,6 +4,7 @@ title: REDIS cluster-tutorial -- Redis中文资料站
 permalink: topics/cluster-tutorial.html
 disqusIdentifier: topics_cluster-tutorial
 disqusUrl: http://redis.cn/topics/cluster-tutorial.html
+discuzTid: 886
 ---
 
 Redis 集群教程

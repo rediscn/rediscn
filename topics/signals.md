@@ -4,6 +4,7 @@ title: REDIS signals
 permalink: topics/signals.html
 disqusIdentifier: signals
 disqusUrl: http://redis.cn/topics/signals.html
+discuzTid: 868
 ---
 
 Redis信号处理

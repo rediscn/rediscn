@@ -4,6 +4,7 @@ title: REDIS lru-cache
 permalink: topics/latency-monitor.html
 disqusIdentifier: topics_latency-monitor
 disqusUrl: http://redis.cn/topics/latency-monitor.html
+discuzTid: 892
 ---
 
 Redis latency monitoring framework

@@ -4,6 +4,7 @@ title: REDIS pipelining
 permalink: topics/pipelining.html
 disqusIdentifier: topics_pipelining
 disqusUrl: http://redis.cn/topics/pipelining.html
+discuzTid: 856
 ---
 
 请求/响应协议和RTT

@@ -4,6 +4,7 @@ title: REDIS protocol
 permalink: topics/protocol.html
 disqusIdentifier: topics_protocol
 disqusUrl: http://redis.cn/topics/protocol.html
+discuzTid: 874
 ---
 
 # 协议说明

@@ -4,6 +4,7 @@ title: REDIS sentinel-old
 permalink: topics/sentinel.html
 disqusIdentifier: topics_sentinel
 disqusUrl: http://redis.cn/topics/sentinel.html
+discuzTid: 870
 ---
 
 Redis 的 Sentinel 文档

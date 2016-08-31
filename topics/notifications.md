@@ -4,6 +4,7 @@ title: REDIS notifications
 permalink: topics/notifications.html
 disqusIdentifier: topics_notifications
 disqusUrl: http://redis.cn/topics/notifications.html
+discuzTid: 873
 ---
 
 Redis Keyspace Notifications

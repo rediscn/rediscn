@@ -4,6 +4,7 @@ title: Redis的赞助商
 permalink: topics/sponsors.html
 disqusIdentifier: sponsors
 disqusUrl: http://redis.cn/topics/sponsors.html
+discuzTid: 899
 ---
 
 Redis的赞助商

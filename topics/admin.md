@@ -4,6 +4,7 @@ title: REDIS 管理 -- Redis中文资料站
 permalink: topics/admin.html
 disqusIdentifier: admin
 disqusUrl: http://redis.cn/topics/admin.html
+discuzTid: 866
 ---
 
 ## Redis 的管理 ##

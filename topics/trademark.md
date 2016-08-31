@@ -4,6 +4,7 @@ title: redis商标指南
 permalink: topics/trademark.html
 disqusIdentifier: trademark
 disqusUrl: http://redis.cn/topics/trademark.html
+discuzTid: 900
 ---
 
 # redis商标指南

@@ -4,6 +4,7 @@ title: REDIS debugging
 permalink: topics/debugging.html
 disqusIdentifier: topics_debugging
 disqusUrl: http://redis.cn/topics/debugging.html
+discuzTid: 887
 ---
 
 Redis debugging guide

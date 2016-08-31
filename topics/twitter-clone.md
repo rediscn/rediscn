@@ -4,6 +4,7 @@ title: REDIS twitter-clone
 permalink: topics/twitter-clone.html
 disqusIdentifier: twitter-clone
 disqusUrl: http://redis.cn/topics/twitter-clone.html
+discuzTid: 883
 ---
 
 Tutorial: Design and implementation of a simple Twitter clone using PHP and the Redis key-value store

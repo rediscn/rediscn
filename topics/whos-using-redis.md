@@ -4,7 +4,9 @@ title: REDIS 的用户群
 permalink: topics/whos-using-redis.html
 disqusIdentifier: whos-using-redis
 disqusUrl: http://redis.cn/topics/whos-using-redis.html
+discuzTid: 884
 ---
+
 Who's using Redis?
 ===
 

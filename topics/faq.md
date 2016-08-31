@@ -4,6 +4,7 @@ title: REDIS faq
 permalink: topics/faq.html
 disqusIdentifier: topics_faq
 disqusUrl: http://redis.cn/topics/faq.html
+discuzTid: 880
 ---
 
 # FAQ

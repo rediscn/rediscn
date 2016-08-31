@@ -4,6 +4,7 @@ title: REDIS partitioning
 permalink: topics/partitioning.html
 disqusIdentifier: topics_partitioning
 disqusUrl: http://redis.cn/topics/partitioning.html
+discuzTid: 862
 ---
 
 Partitioning: how to split data among multiple Redis instances.

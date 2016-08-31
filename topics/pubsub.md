@@ -4,6 +4,7 @@ title: REDIS pubsub
 permalink: topics/pubsub.html
 disqusIdentifier: topics_pubsub
 disqusUrl: http://redis.cn/topics/pubsub.html
+discuzTid: 857
 ---
 
 Pub/Sub

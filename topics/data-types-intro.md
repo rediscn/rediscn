@@ -4,6 +4,7 @@ title: REDIS data-types-intro -- Redis中文资料站
 permalink: topics/data-types-intro.html
 disqusIdentifier: topics_data-types-intro
 disqusUrl: http://redis.cn/topics/data-types-intro.html
+discuzTid: 882
 ---
 
 Redis 数据类型介绍

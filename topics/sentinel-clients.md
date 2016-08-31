@@ -4,6 +4,7 @@ title: REDIS sentinel-old
 permalink: topics/sentinel-clients.html
 disqusIdentifier: topics_sentinel-clients
 disqusUrl: http://redis.cn/topics/sentinel-clients.html
+discuzTid: 897
 ---
 
 **WARNING:** This document is a draft and the guidelines that it contains may change in the future as the Sentinel project evolves.

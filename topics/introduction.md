@@ -5,6 +5,7 @@ excerpt: REDIS 详细介绍，Redis 是一个开源（BSD许可）的，内存�
 permalink: topics/introduction.html
 disqusIdentifier: topics_introduction
 disqusUrl: http://redis.cn/topics/introduction.html
+discuzTid: 890
 ---
 
 Redis 介绍

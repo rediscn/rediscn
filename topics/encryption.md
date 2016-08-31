@@ -4,6 +4,7 @@ title: REDIS encryption
 permalink: topics/encryption.html
 disqusIdentifier: topics_encryption
 disqusUrl: http://redis.cn/topics/encryption.html
+discuzTid: 889
 ---
 
 Redis Encryption

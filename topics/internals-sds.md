@@ -4,6 +4,7 @@ title: REDIS internals-sds
 permalink: topics/internals-sds.html
 disqusIdentifier: topics_internals-sds
 disqusUrl: http://redis.cn/topics/internals-sds.html
+discuzTid: 878
 ---
 
 Hacking Strings

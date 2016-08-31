@@ -4,6 +4,7 @@ title: REDIS problems
 permalink: topics/problems.html
 disqusIdentifier: topics_problems
 disqusUrl: http://redis.cn/topics/problems.html
+discuzTid: 872
 ---
 
 Redis的问题? 这是一个很好的起点。

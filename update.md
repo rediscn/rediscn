@@ -4,8 +4,13 @@ title: redis中文网更新日志
 permalink: update.html
 disqusIdentifier: update
 disqusUrl: http://redis.cn/update.html
+discuzTid: 855
 ---
 # redis中文网更新日志 #
+
+### 2016年8月31日
+
+1、更换使用[bbs.redis.cn](http://bbs.redis.cn)作为本站的社交化互动平台。
 
 ### 2016年8月25日
 

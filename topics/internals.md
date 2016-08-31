@@ -4,6 +4,7 @@ title: REDIS internals
 permalink: topics/internals.html
 disqusIdentifier: topics_internals
 disqusUrl: http://redis.cn/topics/internals.html
+discuzTid: 875
 ---
 
 # Redis内部机制

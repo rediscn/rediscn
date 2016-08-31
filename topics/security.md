@@ -4,6 +4,7 @@ title: Redis安全性
 permalink: topics/security.html
 disqusIdentifier: topics_security
 disqusUrl: http://redis.cn/topics/security.html
+discuzTid: 867
 ---
 
 Redis安全性

@@ -4,6 +4,7 @@ title: REDIS internals-rediseventlib
 permalink: topics/internals-rediseventlib.html
 disqusIdentifier: topics_internals-rediseventlib
 disqusUrl: http://redis.cn/topics/internals-rediseventlib.html
+discuzTid: 877
 ---
 
 Redis Event Library

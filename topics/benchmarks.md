@@ -4,6 +4,7 @@ title: REDIS benchmarks -- Redis中文资料站
 permalink: topics/benchmarks.html
 disqusIdentifier: topics_benchmarks
 disqusUrl: http://redis.cn/topics/benchmarks.html
+discuzTid: 871
 ---
 
 # Redis有多快?

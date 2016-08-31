@@ -4,6 +4,7 @@ title: REDIS 许可
 permalink: topics/license.html
 disqusIdentifier: license
 disqusUrl: http://redis.cn/topics/license.html
+discuzTid: 893
 ---
 # Redis license and trademark information
 

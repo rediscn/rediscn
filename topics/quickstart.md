@@ -4,6 +4,7 @@ title: REDIS quickstart
 permalink: topics/quickstart.html
 disqusIdentifier: topics_quickstart
 disqusUrl: http://redis.cn/topics/quickstart.html
+discuzTid: 894
 ---
 
 快速上手Redis

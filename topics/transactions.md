@@ -4,6 +4,7 @@ title: REDIS 事务处理
 permalink: topics/transactions.html
 disqusIdentifier: transactions
 disqusUrl: http://redis.cn/topics/transactions.html
+discuzTid: 860
 ---
 
 事务

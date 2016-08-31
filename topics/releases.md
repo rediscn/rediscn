@@ -4,6 +4,7 @@ title: REDIS sentinel-old
 permalink: topics/releases.html
 disqusIdentifier: topics_releases
 disqusUrl: http://redis.cn/topics/releases.html
+discuzTid: 896
 ---
 
 Redis release cycle

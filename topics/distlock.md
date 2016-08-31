@@ -4,6 +4,7 @@ title: REDIS distlock
 permalink: topics/distlock.html
 disqusIdentifier: topics_distlock
 disqusUrl: http://redis.cn/topics/distlock.html
+discuzTid: 888
 ---
 
 Distributed locks with Redis

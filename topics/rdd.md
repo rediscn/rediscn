@@ -4,6 +4,7 @@ title: REDIS rdd
 permalink: topics/rdd.html
 disqusIdentifier: topics_rdd
 disqusUrl: http://redis.cn/topics/rdd.html
+discuzTid: 895
 ---
 
 Redis Design Drafts

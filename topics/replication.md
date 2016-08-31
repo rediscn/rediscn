@@ -4,6 +4,7 @@ title: REDIS sentinel-old
 permalink: topics/replication.html
 disqusIdentifier: topics_replication
 disqusUrl: http://redis.cn/topics/replication.html
+discuzTid: 864
 ---
 
 复制
