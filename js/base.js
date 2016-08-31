@@ -30,3 +30,10 @@ function isMobileBrowser(){
     }
     return false;
 }
+
+function click_bbs_post_href(){
+		if($("#bbs_post_href").length){
+			window.open($("#bbs_post_href").attr('href'));
+		}
+}
+	

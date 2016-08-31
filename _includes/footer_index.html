@@ -1,3 +1,14 @@
+{% if page.discuzTid %}
+<div id='disqus_thread' style="border:1px solid #CDCDCD;background-color:#CDCDCD;"></div>
+      <script type='text/javascript'>
+      $(document).ready(function(){ 
+      		$.get("http://bbs.redis.cn/forum.php?mod=viewthread1&tid={{page.discuzTid}}", function(result){
+				    $("#disqus_thread").html(result);
+				  });
+      });
+      </script>
+</div>
+{% endif %}
 <footer class='site-footer'>
         <div class='container'>
           本站资源翻译自<a href="http://redis.io" target="_blank">redis.io</a>，
