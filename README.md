@@ -5,6 +5,15 @@
 
 ## 更新日志： ##
 
+### 2016年9月7日
+
+1、更新新的[下载](/download.html)页面
+2、新增[BITFIELD](http://redis.cn/commands/bitfield.html)命令。
+
+### 2016年8月31日
+
+1、更换使用[bbs.redis.cn](http://bbs.redis.cn)作为本站的社交化互动平台。
+
 ### 2016年8月25日
 
 1、更新[pubsub](http://www.redis.cn/topics/pubsub.html)翻译，感谢zhaoyang xu提供的翻译。

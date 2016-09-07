@@ -8,116 +8,86 @@ disqusUrl: http://redis.cn/download.html
 discuzTid: 854
 ---
 
+# 下载（Download） #
 
-<div class='text'>          
-   <div class="text">
-          <span id="download" class="anchor"></span><h1><a href="download.html#download" class="anchor-link">*</a>下载</h1>
-          <p>
-            Redis 版本号采用标准惯例：<strong>主版本号.副版本号.补丁级别</strong>,一个副版本号就标记为一个标准发行版本，例如 1.2，2.0，2.2，2.4，2.6，2.8，奇数的副版本号用来表示<strong>非标准</strong>版本,例如2.9.x发行版本是Redis 3.0标准版本的非标准发行版本。
-          </p>
-          <ul class="download-versions">
+Redis 版本号采用标准惯例：主版本号.副版本号.补丁级别,一个副版本号就标记为一个标准发行版本，例如 1.2，2.0，2.2，2.4，2.6，2.8，奇数的副版本号用来表示非标准版本,例如2.9.x发行版本是Redis 3.0标准版本的非标准发行版本。
+
+<div class='text'>
+          
+          <ul class='download-versions'>
             <li>
               <h2>
-                标准版本
-                <span class="download-version">(3.0)</span>
+                稳定版
+                <span class='download-version'>(3.2)</span>
               </h2>
-              Redis 3.0 包含了Redis集群，一个分布式特性的Redis，能够自动分片数据，错误容忍，并提升了在工作负载下的处理速度，改善了AOF重写等。
-              <div class="download-links">
-                <a class="download-link" href="https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES">
-                  <i class="fa fa-file-text-o"></i>
+              Redis 3.2 包含Redis API和实现的重大改变。添加了一组新的地理索引（Geo）命令(GEOADD, GEORADIUS 和相关命令)。新的BITFIELD命令能处理整数或任意位宽的计数器数组和字符串内连续偏移。内存优化，相同数据占用更少的内存。Lua脚本新的复制功能。可以用完整的远程Lua脚本调试器编写一个简单任务。快来查看发布日志了解全部新特性吧。
+              <div class='download-links'>
+                <a class='download-link' href='https://raw.githubusercontent.com/antirez/redis/3.2/00-RELEASENOTES'>
+                  <i class='fa fa-file-text-o'></i>
                   发布日志
                 </a>
-                <a class="download-link" href="http://download.redis.io/releases/redis-3.2.3.tar.gz">
-                  <i class="fa fa-arrow-circle-o-down"></i>
-                  下载 3.2.3
+                <a class='download-link' href='http://download.redis.io/releases/redis-3.2.3.tar.gz'>
+                  <i class='fa fa-arrow-circle-o-down'></i>
+                  下载
+                  3.2.3
                 </a>
               </div>
             </li>
             <li>
               <h2>
-                旧的
-                <span class="download-version">(2.8)</span>
+                最新版
               </h2>
-              Redis 2.8 是相对较旧的标准版本. 和2.6相比, 该版本更加完善，提供了部分再同步的复制机制，IPv6的支持，配置文件动态重写，通过Pub/Sub实现的键空间通知等诸多特性。
-              <div class="download-links">
-                <a class="download-link" href="https://raw.githubusercontent.com/antirez/redis/2.8/00-RELEASENOTES">
-                  <i class="fa fa-file-text-o"></i>
-                  发布日志
-                </a>
-                <a class="download-link" href="https://github.com/antirez/redis/archive/2.8.19.tar.gz">
-                  <i class="fa fa-arrow-circle-o-down"></i>
-                  下载 2.8.19
-                </a>
-              </div>
-            </li>
-            <li>
-              <h2>
-                非标准版本
-              </h2>
-              该版本为开发版本，如果你需要测试最新特性或者需要提升性能的话，可以下载使用。几个月以后会发布基于3.2的标准发行版本。
-              <div class="download-links">
-                <a class="download-link" href="https://github.com/antirez/redis/archive/unstable.tar.gz">
-                  <i class="fa fa-arrow-circle-o-down"></i>
-                  下载非标准版本
+              这是所有正在开发中的功能，仅供大家参考研究测试用。这些将是接下来几个月内发布的Redis新特性。
+              <div class='download-links'>
+                <a class='download-link' href='https://github.com/antirez/redis/archive/unstable.tar.gz'>
+                  <i class='fa fa-arrow-circle-o-down'></i>
+                  下载<br/>
+                  最新版
                 </a>
               </div>
             </li>
           </ul>
-          <span id="other-versions" class="anchor"></span><h2><a href="http://redis.cn/download.html#other-versions" class="anchor-link">*</a>其他版本</h2>
-          <h3>
-            比较旧的
-            <span class="download-version">(2.6)</span>
-          </h3>
-          非常旧的版本，不推荐使用，相对于2.4，该版本支持了lua脚本，毫秒级别的过期，改善了内存的使用，不限制客户端的数量，提升了AOF，更好的性能，一些新的命令和特性。
-          <br>
-           查看
-          <a href="https://raw.githubusercontent.com/antirez/redis/2.6/00-RELEASENOTES">
-            发布日志
-          </a>
-          or
-          <a href="http://download.redis.io/releases/redis-2.6.17.tar.gz">
-            下载 2.6.17.
-          </a>
-          <h3>
-            Windows
-          </h3>
-          非官方支持，微软开放技术小组针对win64开发的该版本。
-          <a href="https://github.com/MSOpenTech/redis">了解更多</a>
-          <span id="other" class="anchor"></span><h3><a href="http://redis.cn/download.html#other" class="anchor-link">*</a>其他</h3>
-          历史版本依然可以下载
-          <a href="https://code.google.com/p/redis/downloads/list?can=1">Google Code</a>.
-          <p>
-            <strong>脚本和其他自动化组件下载</strong>
-            最新Redis 标准发行版本tarball下载
-            <a href="http://download.redis.io/redis-stable.tar.gz">http://download.redis.io/redis-stable.tar.gz</a>.
-            最新Redis标准发行版本源代码<a href="http://download.redis.io/redis-stable">浏览这里</a>,
-            使用<strong>src/version.h</strong>文件来自动获得版本信息。
-          </p>
-          <span id="how-to-verify-files-for-integrity" class="anchor"></span><h2><a href="http://redis.cn/download.html#how-to-verify-files-for-integrity" class="anchor-link">*</a>如何检查文件的完整性</h2>
-          <p>
-            Github 镜像
-            <a href="https://github.com/antirez/redis-hashes/blob/master/README">redis-hashes</a>
-            包含了README文件,文件中有发行版本tarball的SHA1值。
-          </p>
-          <span id="installation" class="anchor"></span><h2><a href="http://redis.cn/download.html#installation" class="anchor-link">*</a>安装</h2>
-          <p>下载，解压，编译:</p>
-          <pre><code>$ wget http://download.redis.io/releases/redis-3.2.3.tar.gz
-$ tar xzf redis-3.2.3.tar.gz
-$ cd redis-3.2.3
-$ make</code></pre>
-          <p>
-            二进制文件是编译完成后在<code>src</code>目录下. 运行如下:
-          </p>
-          <pre><code>$ src/redis-server</code></pre>
-          <p>You can interact with Redis using the built-in client:</p>
-          <pre><code>$ src/redis-cli
-redis&gt; set foo bar
-OK
-redis&gt; get foo
-"bar"</code></pre>
-          <p>
-            你刚开始接触Redis? 试试我们的
-            <a href="http://try.redis-db.com/">在线交互教程</a>.
-          </p>
-        </div>
-        </div>
+</div>
+
+## 其他版本 ##
+
+### 老版本（3.0）###
+
+Redis 3.0 介绍了集群，一个分布式的Redis。能自动将数据进行分片和容错处理，另一方面明显提升了读写速度和AOF重写Dendi。您可以查看[版本发布日志](https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES)了解更多内容，也可以直接下载[Redis 3.0.7](http://download.redis.io/releases/redis-3.0.7.tar.gz)。
+
+### Windows 版本 ###
+
+Redis 没有官方的Windows版本，但是微软开源技术团队（Microsoft Open Tech group）开发和维护着这个 Win64 的版本。更多信息请参考[这里](https://github.com/MSOpenTech/redis)。
+
+### 其他版本 ###
+
+更多历史版本可以在[Google Code](https://code.google.com/p/redis/downloads/list?can=1)下载。
+
+Scripts and other automatic downloads can easily access the tarball of the latest Redis stable version at [http://download.redis.io/redis-stable.tar.gz](http://download.redis.io/redis-stable.tar.gz). The source code of the latest stable release is [always browsable here](http://download.redis.io/redis-stable), use the file src/version.h in order to extract the version in an automatic way.
+
+### 如何验证文件的完整性 ###
+
+GitHub [redis-hashes](https://github.com/antirez/redis-hashes/blob/master/README)包含了一个README文件，里面有历史发布版本的SHA1摘要。注意：一般redis-stable.tar.gz包不匹配任何hash是因为它是修改后的Redis稳定内容。
+
+### 安装 ###
+
+下载，解压，编译:
+	
+	$ wget http://download.redis.io/releases/redis-3.2.3.tar.gz
+	$ tar xzf redis-3.2.3.tar.gz
+	$ cd redis-3.2.3
+	$ make
+
+二进制文件是编译完成后在src目录下，通过下面的命令启动Redis服务：
+
+	$ src/redis-server
+
+你可以使用内置的客户端命令redis-cli进行使用：
+
+	$ src/redis-cli
+	redis> set foo bar
+	OK
+	redis> get foo
+	"bar"
+
+你刚开始接触Redis? 试试我们的[在线交互教程](http://try.redis.io/)。

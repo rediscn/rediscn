@@ -99,6 +99,21 @@ discuzTid: 850
                 <span class='summary'>统计字符串指定起始位置的字节数</span>
               </a>
             </li>
+             <li data-group='string' data-name='bitfield'>
+              <a href='/commands/bitfield.html'>
+                <span class='command'>
+                  BITFIELD
+                  <span class='args'>
+                    key
+                    [GET type offset]
+                    [SET type offset value]
+                    [INCRBY type offset increment]
+                    [OVERFLOW WRAP|SAT|FAIL]
+                  </span>
+                </span>
+                <span class='summary'>Perform arbitrary bitfield integer operations on strings</span>
+              </a>
+            </li>
             <li data-group='string' data-name='bitop'>
               <a href='/commands/bitop.html'>
                 <span class='command'>

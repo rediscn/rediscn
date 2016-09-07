@@ -53,6 +53,42 @@ var rediscn_commands={
     "since": "2.6.0",
     "group": "string"
   },
+  "BITFIELD": {
+    "summary": "Perform arbitrary bitfield integer operations on strings",
+    "complexity": "O(1) for each subcommand specified",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      },
+      {
+        "command": "GET",
+        "name": ["type", "offset"],
+        "type": ["type", "integer"],
+        "optional": true
+      },
+      {
+        "command": "SET",
+        "name": ["type", "offset", "value"],
+        "type": ["type", "integer", "integer"],
+        "optional": true
+      },
+      {
+        "command": "INCRBY",
+        "name": ["type", "offset", "increment"],
+        "type": ["type", "integer", "integer"],
+        "optional": true
+      },
+      {
+        "command": "OVERFLOW",
+        "type": "enum",
+        "enum": ["OVERFLOW WRAP", "SAT", "FAIL"],
+        "optional": true
+      }
+    ],
+    "since": "3.2.0",
+    "group": "string"
+  },
   "BITOP": {
     "summary": "在字符串上按位执行运算",
     "complexity": "O(N)",
