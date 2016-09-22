@@ -19,6 +19,7 @@ discuzTid: 853
 - redis两千人总群（已满） 
 - redis千人群1（已满） 
 - redis千人群2 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=182db3534b98018983c9e4ddd72ca767a54a8e9c4313c78288997f300100f60c"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="redis千人群2" title="redis千人群2"></a>
+- redis千人群3 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=8fa4844ee7df0b10e74a31dc73ec15e9ab28725b526d63faad5dd402571b88f2"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="redis千人群3" title="redis千人群3"></a>
 - redis 脚本群一（已满）
 - redis 脚本群二 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=e18f50bcb0e049f5fadb6c8193ee12315d2ed244fe5a944cd3c594eb82bbe9c7"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis 脚本群二" title="Redis 脚本群二"></a>
 - Redis c,c++,c#分群（已满）
