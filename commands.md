@@ -2070,7 +2070,7 @@ discuzTid: 850
                     max
                   </span>
                 </span>
-                <span class='summary'>给定值范围内的成员数与分数排序</span>
+                <span class='summary'>返回分数范围内的成员数量</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zincrby'>
@@ -2111,7 +2111,7 @@ discuzTid: 850
                     max
                   </span>
                 </span>
-                <span class='summary'>Count the number of members in a sorted set between a given lexicographical range</span>
+                <span class='summary'>返回成员之间的成员数量</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrange'>
@@ -2168,7 +2168,7 @@ discuzTid: 850
                     [LIMIT offset count]
                   </span>
                 </span>
-                <span class='summary'>根据指定的score返回，返回sorted set的成员列表</span>
+                <span class='summary'>根据分数正序返回成员列表。</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrank'>
@@ -2260,7 +2260,7 @@ discuzTid: 850
                     [LIMIT offset count]
                   </span>
                 </span>
-                <span class='summary'>返回的成员在排序设置的范围，由得分，下令从分数高到低</span>
+                <span class='summary'>根据分数倒序返回的成员列表。</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrevrank'>
