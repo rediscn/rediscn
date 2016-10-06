@@ -2168,7 +2168,7 @@ discuzTid: 850
                     [LIMIT offset count]
                   </span>
                 </span>
-                <span class='summary'>根据分数正序返回成员列表。</span>
+                <span class='summary'>返回有序集合中指定分数区间内的成员，分数由低到高排序。</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrank'>
@@ -2260,7 +2260,7 @@ discuzTid: 850
                     [LIMIT offset count]
                   </span>
                 </span>
-                <span class='summary'>根据分数倒序返回的成员列表。</span>
+                <span class='summary'>返回有序集合中指定分数区间内的成员，分数由高到低排序。</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrevrank'>
