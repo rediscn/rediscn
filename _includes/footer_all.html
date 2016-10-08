@@ -1,5 +1,9 @@
 <script type='text/javascript'>
+	function aliCallBack(json){
+		alert(json.msg);
+	}
 	function aliSuccessCallBack(json){
+		alert(json.msg);
 		if(json && json.success && json.data){
 			
 		}
@@ -12,8 +16,6 @@ $(document).ready(function(){
              async: false,
              url: "https://promotion.aliyun.com/promotion/adv/getAliyunAdv.htm?s=0df56e5827cb4947b8050f4ea282609d&p=page_1474882843539&pin=pos_1474882843539&cback=aliCallBack",
              dataType: "jsonp",
-             jsonp: "callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
-             jsonpCallback:"aliCallBack",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
              success:aliSuccessCallBack,
              error: function(){
                  alert('fail');
