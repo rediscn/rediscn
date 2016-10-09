@@ -2,12 +2,6 @@
 	function aliCallBack(json){
 		//alert(json.msg);
 	}
-	function aliSuccessCallBack(json){
-		//alert(json.msg);
-		if(json && json.success && json.data){
-			
-		}
-	}
 	
 $(document).ready(function(){ 
 		if($("#ali_nav").length){
@@ -15,11 +9,7 @@ $(document).ready(function(){
              type: "get",
              async: false,
              url: "https://promotion.aliyun.com/promotion/adv/getAliyunAdv.htm?s=0df56e5827cb4947b8050f4ea282609d&p=page_1474882843539&pin=pos_1474882843539&cback=aliCallBack",
-             dataType: "jsonp",
-             success:aliSuccessCallBack,
-             error: function(){
-                 alert('fail');
-             }
+             dataType: "jsonp"
          });
     }
 });
