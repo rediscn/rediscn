@@ -1,6 +1,11 @@
 <script type='text/javascript'>
 	function aliCallBack(json){
-		//alert(json.msg);
+		if(json && json.success && json.data){
+			var adjson = eval(json.data.content);
+			if(adjson){
+				$("#ali_nav").html('<a href="'+adjson[0].URL+'" target="_blank"><img src="'+adjson[0].img+'" style="width:100%;height:100%;" data-bd-imgshare-binded="1"></a>');
+			}
+		}
 	}
 	
 $(document).ready(function(){ 
