@@ -62,19 +62,19 @@ we can store the value of the element we are actually indexing.
 
 ##例子
 
-redis> ZADD myzset 0 a 0 b 0 c 0 d 0 e 0 f 0 g
-(integer) 7
-redis> ZRANGEBYLEX myzset - [c
-1) "a"
-2) "b"
-3) "c"
-redis> ZRANGEBYLEX myzset - (c
-1) "a"
-2) "b"
-redis> ZRANGEBYLEX myzset [aaa (g
-1) "b"
-2) "c"
-3) "d"
-4) "e"
-5) "f"
-redis> 
+    redis> ZADD myzset 0 a 0 b 0 c 0 d 0 e 0 f 0 g
+    (integer) 7
+    redis> ZRANGEBYLEX myzset - [c
+    1) "a"
+    2) "b"
+    3) "c"
+    redis> ZRANGEBYLEX myzset - (c
+    1) "a"
+    2) "b"
+    redis> ZRANGEBYLEX myzset [aaa (g
+    1) "b"
+    2) "c"
+    3) "d"
+    4) "e"
+    5) "f"
+    redis> 
