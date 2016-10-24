@@ -25,6 +25,7 @@ discuzTid: 852
 <li><a href="/topics/lru-cache.html">将Redis当做使用LRU算法的缓存来使用</a>：如何配置并且将Redis当做缓存来使用，通过限制内存及自动回收键。</li>
 <li><a href="/topics/transactions.html">Redis 事务</a>：将一组命令放在同一个事务中进行处理。</li>
 <li><a href="/topics/mass-insert.html">大量插入数据</a>：如何在短时间里向Redis写入大量数据。</li>
+<li><a href="/topics/batch-insert.html">从文件中批量插入数据</a>：将文件中的指令批量执行。</li>
 <li><a href="/topics/partitioning.html">分区（Partitioning）</a>：如何将你的数据分布在多个Redis里面。</li>
 </ul>
 
