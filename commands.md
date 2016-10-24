@@ -2139,7 +2139,7 @@ discuzTid: 850
                     [LIMIT offset count]
                   </span>
                 </span>
-                <span class='summary'>Return a range of members in a sorted set, by lexicographical range</span>
+                <span class='summary'>返回指定成员区间内的成员，按字典正序排列, 分数必须相同。</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrevrangebylex'>
@@ -2153,7 +2153,7 @@ discuzTid: 850
                     [LIMIT offset count]
                   </span>
                 </span>
-                <span class='summary'>Return a range of members in a sorted set, by lexicographical range, ordered from higher to lower strings.</span>
+                <span class='summary'>返回指定成员区间内的成员，按字典倒序排列, 分数必须相同</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrangebyscore'>
@@ -2205,7 +2205,7 @@ discuzTid: 850
                     max
                   </span>
                 </span>
-                <span class='summary'>Remove all members in a sorted set between the given lexicographical range</span>
+                <span class='summary'>删除名称按字典由低到高排序成员之间所有成员。</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zremrangebyrank'>

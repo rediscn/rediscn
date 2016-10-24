@@ -151,7 +151,22 @@ disqusUrl: http://redis.cn/aboutus.html
           </span>
           <span class='summary'>a pythoner</span>
           </a>
-        </li>
+        </li> 
+        <li data-group='string'>
+             <a href='https://hushuang.me' target="_blank">
+                 <span class='command'>
+                     大大的微笑
+                     <span class='args'>
+                         hushuang.me
+                     </span>
+                 </span>
+                 <span class='summary'>
+                     微信号：<font color="red">ikanxin</font>
+                 </span>
+                 <span class='summary'>用技术点亮生命，用产品温暖人心。</span>
+                 <span class='summary'>探讨coding真谛，感悟工匠精神!</span>
+           </a>
+       </li>
       </ul>
     </div>
 </section>

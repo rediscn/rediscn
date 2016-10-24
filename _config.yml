@@ -10,4 +10,4 @@ github_username:  geelou
 
 # Build settings
 markdown: kramdown
-exclude: doc,psd
+# exclude: ['doc/', 'psd/']
