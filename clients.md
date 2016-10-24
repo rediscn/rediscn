@@ -1641,6 +1641,32 @@ discuzTid: 851
               </tr>
               <tr>
                 <td>
+                  <a href="http://redisson.org/">Redisson</a>
+                </td>
+                <td>
+                  <i class='fa fa-smile-o icon'></i>
+                </td>
+                <td>
+                  <i class='fa fa-star icon icon-star'></i>
+                </td>
+                <td>
+                </td>
+                <td>
+                  <a class='icon' href='https://github.com/mrniko/redisson'>
+                    <i class='fa fa-code-fork'></i>
+                  </a>
+                </td>
+                <td class='description'>
+                  distributed and scalable Java data structures on top of Redis server
+                </td>
+                <td class='authors'>
+                  <a href='https://twitter.com/mrniko'>
+                    <img alt='mrniko' class='twitter-avatar' src='//twitter-avatars.herokuapp.com/avatar/mrniko' />
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <td>
                   aredis
                 </td>
                 <td>
@@ -1840,32 +1866,7 @@ discuzTid: 851
                 <td class='authors'>
                 </td>
               </tr>
-              <tr>
-                <td>
-                  Redisson
-                </td>
-                <td>
-                  <i class='fa fa-smile-o icon'></i>
-                </td>
-                <td>
-                  <i class='fa fa-star icon icon-star'></i>
-                </td>
-                <td>
-                </td>
-                <td>
-                  <a class='icon' href='https://github.com/mrniko/redisson'>
-                    <i class='fa fa-code-fork'></i>
-                  </a>
-                </td>
-                <td class='description'>
-                  distributed and scalable Java data structures on top of Redis server
-                </td>
-                <td class='authors'>
-                  <a href='https://twitter.com/mrniko'>
-                    <img alt='mrniko' class='twitter-avatar' src='//twitter-avatars.herokuapp.com/avatar/mrniko' />
-                  </a>
-                </td>
-              </tr>
+              
               <tr>
                 <td>
                   RJC
