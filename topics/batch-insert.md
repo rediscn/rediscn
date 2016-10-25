@@ -46,7 +46,7 @@ discuzTid: 861
 
 --------
 
-redis-cli中只支持doc格式的换行符 ```\r\n``` ，如果你在Linux下、Mac下或者Windows下创建的文件，最好都转个码。没有转码的文件,执行会失败。  
+redis-cli中只支持dos格式的换行符 ```\r\n``` ，如果你在Linux下、Mac下或者Windows下创建的文件，最好都转个码。没有转码的文件,执行会失败。  
 下面是转码指令, 只需要在命令后加入要转码的文件即可：
 
     server> unix2dos d1.txt 
