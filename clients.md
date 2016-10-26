@@ -1641,7 +1641,7 @@ discuzTid: 851
               </tr>
               <tr>
                 <td>
-                  <a href="http://redisson.org/">Redisson</a>
+                  <a href="https://github.com/redisson/redisson/wiki/%E7%9B%AE%E5%BD%95/" target="_blank">Redisson</a>
                 </td>
                 <td>
                   <i class='fa fa-smile-o icon'></i>
@@ -1650,6 +1650,9 @@ discuzTid: 851
                   <i class='fa fa-star icon icon-star'></i>
                 </td>
                 <td>
+					<a class='icon' href='http://redisson.org'>
+                    <i class='fa fa-home'></i>
+                  </a>
                 </td>
                 <td>
                   <a class='icon' href='https://github.com/mrniko/redisson'>
