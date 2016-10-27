@@ -10,25 +10,26 @@ discuzTid: 853
 
 # 欢迎加入Redis中国用户组（CRUG）大家庭 #
 
-大家在使用Redis中遇到的问题可以访问[Redis中文论坛](http://bbs.redis.cn)进行交流讨论，也可以通过下面的QQ群、微信群进行及时的交流沟通。
+Redis中国用户组官方微博：[redis2016](http://weibo.com/redis2016),大家在使用Redis中遇到的问题可以访问[Redis中文论坛](http://bbs.redis.cn)进行交流讨论，也可以通过下面的QQ群、微信群进行及时的交流沟通。
 
 ## Redis技术交流QQ群列表： ##
 
-- Redis中国用户组(CRUG) （已满）
-- Redis中国用户组(CRUG)2 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=65eea4d47c1ce55a3e2aa47abef174ca10dc11f277bdd940480e81493f60e433"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis中国用户组(CRUG)2群" title="Redis中国用户组(CRUG)2群"></a>
-- redis两千人总群（已满） 
-- redis千人群1（已满） 
-- redis千人群2 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=182db3534b98018983c9e4ddd72ca767a54a8e9c4313c78288997f300100f60c"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="redis千人群2" title="redis千人群2"></a>
-- redis千人群3 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=8fa4844ee7df0b10e74a31dc73ec15e9ab28725b526d63faad5dd402571b88f2"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="redis千人群3" title="redis千人群3"></a>
-- redis 脚本群一（已满）
-- redis 脚本群二 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=e18f50bcb0e049f5fadb6c8193ee12315d2ed244fe5a944cd3c594eb82bbe9c7"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis 脚本群二" title="Redis 脚本群二"></a>
-- Redis c,c++,c#分群（已满）
-- Redis c,c++,c#分群二 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=58349631baaeb2d902ad7dbc1cedcb39a570c7ea16a0124700e55ce31d03aacd"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis c,c++,c#分群二" title="Redis c,c++,c#分群二"></a>
-- redis java分群一（已满） 
-- redis java分群二（已满） 
-- redis java分群三 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=ca478975967851c74655fe4697c4e3804fd4424ba6549cfe046c233ac4b3d095"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis Java分群三" title="Redis Java分群三"></a>
-- Redis□PHP分群一（已满） 
-- Redis□PHP分群二 <a target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=bfd5c16e8972fe6e433a655cffc5e7111bc3213cc06e3d27c5896e06ea864f32"><img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="Redis PHP分群二" title="Redis PHP分群二"></a>
+- Redis中国用户组(CRUG)1群（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=45e1c96d744fb1bd1b8571a3434fc4a944a90c2bbae95e90c78001df2e3ba1ce") -->
+- Redis中国用户组(CRUG)2群（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=f3f59921d16c1f367859036e9c5edacff6b274499144ea5996fa4854afcf3f0e") -->
+- Redis中国用户组(CRUG)3群（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=bc72892f118e284d93ae34b0c410397086ba1a3e88b7bfbd8900301eac975889") -->
+- Redis中国用户组(CRUG)4群（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=261294a32e9cfdad8f36b3d6f58882b5f6b3253fe8fa98fbd5e2f7e5f7a9e7a9") -->
+- Redis中国用户组(CRUG)5群（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=1e14397057c78f611261acb354322304b8bb9b92abdfa6c844b316e4502be940") -->
+- Redis中国用户组(CRUG)6群[![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=d660a589d9c21f0f182a9a9132d30e321d9483385b84295e669fe0c927ac556a")
+- Redis java群1（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=8232e992cb4a15fd2f264b5831633f529bb419a6facf561d3bb3355db58bfae9") -->
+- Redis java群2（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=12d32e1171f2137d2a2292b9c8d434d2cba89845161280c623dbbb594f8b0c1c") -->
+- Redis java群3[![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=3010c8ca3bb52ddd735079558c7dc25eeae4235834dd631fd6da184485f0c81e")
+- Redis PHP群1（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=123da38a7bc4d95fb35a3617423d62eed5e183039fddca35385101f57ae26bf1") -->
+- Redis PHP群2[![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=901023563d628c5ff663a21408688a5ff468d98e7ba06ac3c2ba2a9a5498c433")
+- Redis c,c++,c#群1（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=28ef6a0e40d99424ae2d4437582a90000a886ba7c55a16fc3a6e41d856418a44") -->
+- Redis c,c++,c#群2[![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=a0340f94257c45bf8c5416a883cf0a81725e843456a258569569c359b36ee711")
+- Redis 脚本群1（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=fd29fe6366d4a390b7761a1f9f9080093d7a2caecf04956d299e310039ec59ea") -->
+- Redis 脚本群2[![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=348451c98ab537420492a230fc6018de52be859af3c0cfc29b9fa543c1c9d9cf")
+
 
 ## Redis技术交流微信群列表 ##
 
