@@ -15,17 +15,21 @@ permalink: yqm.html
 <div class='home-intro home-section'>
 	请选择要加入的群 ：
 	<select id="qunList">
-		<option value="112121693">redis千人群1 （已满）</option>
-		<option value="187095642">redis千人群2 187095642</option>
-		<option value="163264749">redis java分群一 （已满）</option>
-		<option value="209751645">redis java分群二 （已满）</option>
-		<option value="209751645">redis java分群二 197643943</option>
-		<option value="69287882">redis 脚本群一 （已满）</option>
-		<option value="69287882">redis 脚本群二 197102873</option>
-		<option value="163269313">Redis c,c++,c#分群（已满）</option>
-		<option value="163269313">Redis c,c++,c#分群二 196677856</option>
-		<option value="163265386">Redis□PHP分群一 （已满）</option>
-		<option value="163265386">Redis□PHP分群二 196677618</option>
+		<option value="521503946">Redis中国用户组(CRUG)1群（已满）</option>
+		<option value="374538650">Redis中国用户组(CRUG)2群（已满）</option>
+		<option value="46859267" >Redis中国用户组(CRUG)3群（已满）</option>
+		<option value="112121693">Redis中国用户组(CRUG)4群（已满）</option>
+		<option value="187095642">Redis中国用户组(CRUG)5群（已满）</option>
+		<option value="492022240">Redis中国用户组(CRUG)6群 492022240</option>
+		<option value="163264749">Redis java群1 （已满）</option>
+		<option value="209751645">Redis java群2 （已满）</option>
+		<option value="197643943">Redis java群3 197643943</option>
+		<option value="69287882" >Redis 脚本群1 （已满）</option>
+		<option value="197102873">Redis 脚本群2 197102873</option>
+		<option value="163269313">Redis c,c++,c#群1（已满）</option>
+		<option value="196677856">Redis c,c++,c#群2 196677856</option>
+		<option value="163265386">Redis PHP群1 （已满）</option>
+		<option value="196677618">Redis PHP群2 196677618</option>
 	</select>
 	<br/>
 	<br/>
