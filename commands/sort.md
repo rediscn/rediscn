@@ -8,11 +8,7 @@ commandsType: keys
 discuzTid: 1060
 ---
 
-Returns or stores the elements contained in the [list][tdtl], [set][tdts] or
-[sorted set][tdtss] at `key`.
-By default, sorting is numeric and elements are compared by their value
-interpreted as double precision floating point number.
-This is `SORT` in its simplest form:
+返回或存储`key`的[list][tdtl]、 [set][tdts] 或[sorted set][tdtss] 中的元素。默认是按照数值类型排序的，并且按照两个元素的双精度浮点数类型值进行比较。下面是`SORT`的最简形式：
 
 [tdtl]: /topics/data-types#lists
 [tdts]: /topics/data-types#set
@@ -22,128 +18,89 @@ This is `SORT` in its simplest form:
 SORT mylist
 ```
 
-Assuming `mylist` is a list of numbers, this command will return the same list
-with the elements sorted from small to large.
-In order to sort the numbers from large to small, use the `!DESC` modifier:
+假设`mylist`是一个数字列表，这条命令将返回一个元素从小到大排序的相同大小列表。如果想从大到小排序，可以使用 `!DESC` 修饰符。
 
 ```
 SORT mylist DESC
 ```
 
-When `mylist` contains string values and you want to sort them
-lexicographically, use the `!ALPHA` modifier:
+当 `mylist` 包含的是字符串值并且需要按照字典顺序排序，可以使用 `!ALPHA` 修饰符：
 
 ```
 SORT mylist ALPHA
 ```
 
-Redis is UTF-8 aware, assuming you correctly set the `!LC_COLLATE` environment
-variable.
+假设正确地设置了环境变量 `!LC_COLLATE` ，Redis可以感知UTF-8编码。
 
-The number of returned elements can be limited using the `!LIMIT` modifier.
-This modifier takes the `offset` argument, specifying the number of elements to
-skip and the `count` argument, specifying the number of elements to return from
-starting at `offset`.
-The following example will return 10 elements of the sorted version of `mylist`,
-starting at element 0 (`offset` is zero-based):
+返回元素的数量可以通过 `!LIMIT` 修饰符限制。此修饰符有一个 `offset` 参数，指定了跳过的元素数量；还带有一个 `count` 参数，指定了从 `offset` 开始返回的元素数量。下面的例子将会返回排序后的列表 `mylist` 从第0个元素（`offset` 是从0开始的）开始的10个元素： 
 
 ```
 SORT mylist LIMIT 0 10
 ```
 
-Almost all modifiers can be used together.
-The following example will return the first 5 elements, lexicographically sorted
-in descending order:
+几乎所有的修饰符可以一起使用。下述例子将返回按字典顺序降序排序后的前5个元素：
 
 ```
 SORT mylist LIMIT 0 5 ALPHA DESC
 ```
 
-## Sorting by external keys
+## 通过外部key排序
 
-Sometimes you want to sort elements using external keys as weights to compare
-instead of comparing the actual elements in the list, set or sorted set.
-Let's say the list `mylist` contains the elements `1`, `2` and `3` representing
-unique IDs of objects stored in `object_1`, `object_2` and `object_3`.
-When these objects have associated weights stored in `weight_1`, `weight_2` and
-`weight_3`, `SORT` can be instructed to use these weights to sort `mylist` with
-the following statement:
+有时我们需要使用外部的key作为权重来排序，而不是使用列表、集合或有序集合中实际的元素值。假设列表 `mylist`包含元素`1`、 `2` 和 `3`，分别代表了存储在`object_1`、`object_2` 和 `object_3`中的对象的唯一ID。当这些对象关联到存储在`weight_1`、 `weight_2` 和 `weight_3` 中的权重后， `SORT`  命令就能使用这些权重按照下述语句来对 `mylist` 排序：
 
 ```
 SORT mylist BY weight_*
 ```
 
-The `BY` option takes a pattern (equal to `weight_*` in this example) that is
-used to generate the keys that are used for sorting.
-These key names are obtained substituting the first occurrence of `*` with the
-actual value of the element in the list (`1`, `2` and `3` in this example).
+`BY` 选项带有一个模式（此例中的 `weight_*` ），用于生成用于排序的 Key 。这些key的名称指向首次与列表(本例中的`1`、 `2` 和 `3`)中元素的实际值出现 `*` 
 
-## Skip sorting the elements
+## 跳过排序的元素 
 
-The `!BY` option can also take a non-existent key, which causes `SORT` to skip
-the sorting operation.
-This is useful if you want to retrieve external keys (see the `!GET` option
-below) without the overhead of sorting.
+`!BY` 选项可以是一个并不存在的key，这会导致 `SORT` 命令跳过排序操作。这在我们获取未经排序的外部key(参考下文的 `!GET` 选项)时非常有用。
 
 ```
 SORT mylist BY nosort
 ```
 
-## Retrieving external keys
+## 获取外部key
 
-Our previous example returns just the sorted IDs.
-In some cases, it is more useful to get the actual objects instead of their IDs
-(`object_1`, `object_2` and `object_3`).
-Retrieving external keys based on the elements in a list, set or sorted set can
-be done with the following command:
+前面的例子仅仅是返回排序后的ID。在某些情况下，获取实际的对象而不是他们的ID更加重要(`object_1`、`object_2` 和 `object_3`)。获取存储在一个列表、集合或者有序集合中的key可以使用以下命令：
 
 ```
 SORT mylist BY weight_* GET object_*
 ```
 
-The `!GET` option can be used multiple times in order to get more keys for every
-element of the original list, set or sorted set.
+`!GET` 选项可多次使用，以便获取每一个原始列表、集合或有序集合中元素的key。
 
-It is also possible to `!GET` the element itself using the special pattern `#`:
+还可以通过使用特殊 `#` 模式获取 `!GET` 元素本身：
 
 ```
 SORT mylist BY weight_* GET object_* GET #
 ```
 
-## Storing the result of a SORT operation
+## 保存排序操作的结果
 
-By default, `SORT` returns the sorted elements to the client.
-With the `!STORE` option, the result will be stored as a list at the specified
-key instead of being returned to the client.
+默认的，`SORT`　命令返回排序后的元素给客户端。使用　`!STORE`　选项，可以将结果存储于一个特定的列表中，以代替返回到客户端。
 
 ```
 SORT mylist BY weight_* STORE resultkey
 ```
 
-An interesting pattern using `SORT ... STORE` consists in associating an
-`EXPIRE` timeout to the resulting key so that in applications where the result
-of a `SORT` operation can be cached for some time.
-Other clients will use the cached list instead of calling `SORT` for every
-request.
-When the key will timeout, an updated version of the cache can be created by
-calling `SORT ... STORE` again.
+`SORT ... STORE`的一种有趣应用模式，是联合　`EXPIRE`　超时命令返回key，以便在应用中可以缓存`SORT`操作的返回结果。
+其他客户端将会使用已缓存的列表，代替每个请求的 `SORT` 调用。当key即将过期时，一个更新版本的缓存将会通过 `SORT ... STORE` 再次创建。
 
-Note that for correctly implementing this pattern it is important to avoid
-multiple clients rebuilding the cache at the same time.
-Some kind of locking is needed here (for instance using `SETNX`).
+注意，为了正确实现这种模式，很重要的一点是防止多个客户端同时重建缓存。
+此时需要使用一些锁（具体的使用 `SETNX`）。
 
-## Using hashes in `!BY` and `!GET`
+## 在 `!BY` 和 `!GET`中使用hash
 
-It is possible to use `!BY` and `!GET` options against hash fields with the
-following syntax:
+可以在hash的属性上按下述语法使用 `!BY` 和 `!GET` 选项：
 
 ```
 SORT mylist BY weight_*->fieldname GET object_*->fieldname
 ```
 
-The string `->` is used to separate the key name from the hash field name.
-The key is substituted as documented above, and the hash stored at the resulting
-key is accessed to retrieve the specified hash field.
+字符串 `->` 用于区分key名称和哈希属性的名称。key被替换为上面所记录的，结果key中存储的hash用于获取特定hash的属性。
 
 @return
 
