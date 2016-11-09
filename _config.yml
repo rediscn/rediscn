@@ -11,4 +11,4 @@ github_username:  geelou
 # Build settings
 markdown: kramdown
 # exclude: ['doc/', 'psd/']
-port: 4001
+# port: 4001
