@@ -102,6 +102,6 @@ SORT mylist BY weight_*->fieldname GET object_*->fieldname
 
 字符串 `->` 用于区分key名称和哈希属性的名称。key被替换为上面所记录的，结果key中存储的hash用于获取特定hash的属性。
 
-@return
+## 返回值
 
-@array-reply: list of sorted elements.
+[array-reply](/topics/protocol.html#array-reply): 返回排序后的元素列表

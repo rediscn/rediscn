@@ -1,7 +1,7 @@
 ---
 layout: index
-title: Redis 3.2.3 下载
-excerpt: Redis下载中心(Redis download)，下载各种版本的redis，包括最新redis 3.2.3稳定版redis,3.2.3-Beta版本以及win32/64版本
+title: Redis 3.2.5 下载
+excerpt: Redis下载中心(Redis download)，下载各种版本的redis，包括最新redis 3.2.5稳定版redis,3.2.5-Beta版本以及win32/64版本
 permalink: download.html
 disqusIdentifier: download
 disqusUrl: http://redis.cn/download.html
@@ -26,10 +26,10 @@ Redis 版本号采用标准惯例：主版本号.副版本号.补丁级别,一�
                   <i class='fa fa-file-text-o'></i>
                   发布日志
                 </a>
-                <a class='download-link' href='http://download.redis.io/releases/redis-3.2.3.tar.gz'>
+                <a class='download-link' href='http://download.redis.io/releases/redis-3.2.5.tar.gz'>
                   <i class='fa fa-arrow-circle-o-down'></i>
                   下载
-                  3.2.3
+                  3.2.5
                 </a>
               </div>
             </li>
@@ -73,9 +73,9 @@ GitHub [redis-hashes](https://github.com/antirez/redis-hashes/blob/master/README
 
 下载，解压，编译:
 	
-	$ wget http://download.redis.io/releases/redis-3.2.3.tar.gz
-	$ tar xzf redis-3.2.3.tar.gz
-	$ cd redis-3.2.3
+	$ wget http://download.redis.io/releases/redis-3.2.5.tar.gz
+	$ tar xzf redis-3.2.5.tar.gz
+	$ cd redis-3.2.5
 	$ make
 
 二进制文件是编译完成后在src目录下，通过下面的命令启动Redis服务：
