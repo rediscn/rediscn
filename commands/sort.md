@@ -24,7 +24,7 @@ SORT mylist
 SORT mylist DESC
 ```
 
-当 `mylist` 包含的是字符串值并且需要按照字典顺序排序，可以使用 `!ALPHA` 修饰符：
+当 `mylist` 包含的是字符串值并且需要按照字典顺序排序，可以使用 `ALPHA` 修饰符：
 
 ```
 SORT mylist ALPHA
@@ -32,7 +32,7 @@ SORT mylist ALPHA
 
 假设正确地设置了环境变量 `!LC_COLLATE` ，Redis可以感知UTF-8编码。
 
-返回元素的数量可以通过 `!LIMIT` 修饰符限制。此修饰符有一个 `offset` 参数，指定了跳过的元素数量；还带有一个 `count` 参数，指定了从 `offset` 开始返回的元素数量。下面的例子将会返回排序后的列表 `mylist` 从第0个元素（`offset` 是从0开始的）开始的10个元素： 
+返回元素的数量可以通过 `LIMIT` 修饰符限制。此修饰符有一个 `offset` 参数，指定了跳过的元素数量；还带有一个 `count` 参数，指定了从 `offset` 开始返回的元素数量。下面的例子将会返回排序后的列表 `mylist` 从第0个元素（`offset` 是从0开始的）开始的10个元素： 
 
 ```
 SORT mylist LIMIT 0 10
@@ -56,7 +56,7 @@ SORT mylist BY weight_*
 
 ## 跳过排序的元素 
 
-`!BY` 选项可以是一个并不存在的key，这会导致 `SORT` 命令跳过排序操作。这在我们获取未经排序的外部key(参考下文的 `!GET` 选项)时非常有用。
+`BY` 选项可以是一个并不存在的key，这会导致 `SORT` 命令跳过排序操作。这在我们获取未经排序的外部key(参考下文的 `GET` 选项)时非常有用。
 
 ```
 SORT mylist BY nosort
@@ -70,9 +70,9 @@ SORT mylist BY nosort
 SORT mylist BY weight_* GET object_*
 ```
 
-`!GET` 选项可多次使用，以便获取每一个原始列表、集合或有序集合中元素的key。
+`GET` 选项可多次使用，以便获取每一个原始列表、集合或有序集合中元素的key。
 
-还可以通过使用特殊 `#` 模式获取 `!GET` 元素本身：
+还可以通过使用特殊 `#` 模式获取 `GET` 元素本身：
 
 ```
 SORT mylist BY weight_* GET object_* GET #
@@ -80,7 +80,7 @@ SORT mylist BY weight_* GET object_* GET #
 
 ## 保存排序操作的结果
 
-默认的，`SORT`　命令返回排序后的元素给客户端。使用　`!STORE`　选项，可以将结果存储于一个特定的列表中，以代替返回到客户端。
+默认的，`SORT`　命令返回排序后的元素给客户端。使用　`STORE`　选项，可以将结果存储于一个特定的列表中，以代替返回到客户端。
 
 ```
 SORT mylist BY weight_* STORE resultkey
@@ -92,9 +92,9 @@ SORT mylist BY weight_* STORE resultkey
 注意，为了正确实现这种模式，很重要的一点是防止多个客户端同时重建缓存。
 此时需要使用一些锁（具体的使用 `SETNX`）。
 
-## 在 `!BY` 和 `!GET`中使用hash
+## 在 `BY` 和 `GET`中使用hash
 
-可以在hash的属性上按下述语法使用 `!BY` 和 `!GET` 选项：
+可以在hash的属性上按下述语法使用 `BY` 和 `GET` 选项：
 
 ```
 SORT mylist BY weight_*->fieldname GET object_*->fieldname
