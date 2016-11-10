@@ -141,8 +141,8 @@ disqusUrl: http://redis.cn/aboutus.html
           <span class='summary'>关注内存数据库，nosql，异构计算</span>
           </a>
         </li>
-		<li data-group='string'>
-    <a href='#' target="_blank">
+	<li data-group='string'>
+    	  <a href='#' target="_blank">
           <span class='command'>
             A-wu
             <span class='args'>
@@ -151,7 +151,7 @@ disqusUrl: http://redis.cn/aboutus.html
           </span>
           <span class='summary'>a pythoner</span>
           </a>
-        </li> 
+        </li>
         <li data-group='string'>
              <a href='https://hushuang.me' target="_blank">
                  <span class='command'>
@@ -167,6 +167,21 @@ disqusUrl: http://redis.cn/aboutus.html
                  <span class='summary'>探讨coding真谛，感悟工匠精神!</span>
            </a>
        </li>
+       <li data-group='string'>
+             <a href='https://github.com/node' target="_blank">
+                 <span class='command'>
+                     node
+                     <span class='args'>
+                         nodexy@gmail
+                     </span>
+                 </span>
+                 <span class='summary'>
+                     微信号：<font color="red">nodexy</font>
+                 </span>
+                 <span class='summary'>Focus on java, python, redis, es... 发扬社区精神，学习、分享、交流！</span>
+           </a>
+       </li>
+       
       </ul>
     </div>
 </section>
