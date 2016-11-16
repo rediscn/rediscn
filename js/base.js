@@ -1,8 +1,8 @@
 
-var isShowAd = true; // 是否显示广告 总开关
-var isShowIndexAd = true; // 是否显示首页上的广告
-var isShowTopicAd = true; // 是否显示topic文章广告
-var isShowCommandAd = true; // 是否显示命令广告
+var isShowAd = false; // 是否显示广告 总开关
+var isShowIndexAd = false; // 是否显示首页上的广告
+var isShowTopicAd = false; // 是否显示topic文章广告
+var isShowCommandAd = false; // 是否显示命令广告
 
 $.getUrlParam = function (name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");

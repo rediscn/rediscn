@@ -63,8 +63,3 @@ permalink: yqm.html
 		$("#yqmcode").html("您的邀请码是："+yqm);
 	}
 </script>
-
-<script type="text/javascript">
-    var cpro_id = "u2582069";
-</script>
-<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
