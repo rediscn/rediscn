@@ -5,11 +5,6 @@ excerpt: 欢迎加入Redis技术交流群，入群需要邀请码，请输入您
 permalink: yqm.html
 ---
 
-<script type="text/javascript">
-    var cpro_id = "u2567475";
-</script>
-<script src="http://cpro.baidustatic.com/cpro/ui/c.js" type="text/javascript"></script>
-
 <h1>Redis入群邀请码生成器</h1>
 
 <div class='home-intro home-section'>
