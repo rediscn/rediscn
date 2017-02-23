@@ -30,7 +30,7 @@ Redis 内置了 [复制（replication）](/topics/replication.html)， [LUA脚�
 ， 或者 [追加到命令日志中](/topics/persistence.html#append-only-file). 
 您也可以关闭持久化功能，将Redis作为一个高效的网络的缓存数据功能使用.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Redis 同样支持 [主从复制](/topics/replication.html)（能自动重连和网络断开时自动重新同步），并且第一次同步是快速的非阻塞试的同步.
+&nbsp;&nbsp;&nbsp;&nbsp;Redis 同样支持 [主从复制](/topics/replication.html)（能自动重连和网络断开时自动重新同步），并且第一次同步是快速的非阻塞式的同步.
 
 其他功能包括:
 
