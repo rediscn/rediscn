@@ -8,72 +8,58 @@ commandsType: strings
 discuzTid: 1120
 ---
 
-The command treats a Redis string as a array of bits, and is capable of addressing specific integer fields of varying bit widths and arbitrary non (necessary) aligned offset. In practical terms using this command you can set, for example, a signed 5 bits integer at bit offset 1234 to a specific value, retrieve a 31 bit unsigned integer from offset 4567. Similarly the command handles increments and decrements of the specified integers, providing guaranteed and well specified overflow and underflow behavior that the user can configure.
+本命令会把Redis字符串当作位数组，并能对变长位宽和任意未字节对齐的指定整型位域进行寻址。在实践中，可以使用该命令对一个有符号的5位整型数的1234位设置指定值，也可以对一个31位无符号整型数的4567位进行取值。类似地，在对指定的整数进行自增和自减操作，本命令可以提供有保证的、可配置的上溢和下溢处理操作。
 
-`BITFIELD` is able to operate with multiple bit fields in the same command call. It takes a list of operations to perform, and returns an array of replies, where each array matches the corresponding operation in the list of arguments.
+`BITFIELD`命令能操作多字节位域，它会执行一系列操作，并返回一个响应数组，在参数列表中每个响应数组匹配相应的操作。
 
-For example the following command increments an 8 bit signed integer at bit offset 100, and gets the value of the 4 bit unsigned integer at bit offset 0:
+例如，下面的命令是对一个8位有符号整数偏移100位自增1，并获取4位无符号整数的值：
 
     > BITFIELD mykey INCRBY i5 100 1 GET u4 0
     1) (integer) 1
     2) (integer) 0
 
-Note that:
+提示：
 
-1. Addressing with `GET` bits outside the current string length (including the case the key does not exist at all), results in the operation to be performed like the missing part all consists of bits set to 0.
-2. Addressing with `SET` or `INCRBY` bits outside the current string length will enlarge the string, zero-padding it, as needed, for the minimal length needed, according to the most far bit touched.
+1. 用`GET`指令对超出当前字符串长度的位（含key不存在的情况）进行寻址，执行操作的结果会对缺失部分的位（bits）赋值为0。
+2. 用`SET`或`INCRBY`指令对超出当前字符串长度的位（含key不存在的情况）进行寻址，将会扩展字符串并对扩展部分进行补0，扩展方式包括：按需扩展、按最小长度扩展和按最大寻址能力扩展。
 
-## Supported subcommands and integer types
+## 支持子命令和整型
 
-The following is the list of supported commands.
+下面是已支持的命令列表：
 
-* **GET** `<type>` `<offset>` -- Returns the specified bit field.
-* **SET** `<type>` `<offset>` `<value>` -- Set the specified bit field and returns its old value.
-* **INCRBY** `<type>` `<offset>` `<increment>` -- Increments or decrements (if a negative increment is given) the specified bit field and returns the new value.
+* **GET** `<type>` `<offset>` -- 返回指定的位域
+* **SET** `<type>` `<offset>` `<value>` -- 设置指定位域的值并返回它的原值
+* **INCRBY** `<type>` `<offset>` `<increment>` -- 自增或自减（如果increment为负数）指定位域的值并返回它的新值
 
-There is another subcommand that only changes the behavior of successive
-`INCRBY` subcommand calls by setting the overflow behavior:
+还有一个命令通过设置溢出行为来改变调用`INCRBY`指令的后序操作：
 
 * **OVERFLOW** `[WRAP|SAT|FAIL]`
 
-Where an integer type is expected, it can be composed by prefixing with `i` for signed integers and `u` for unsigned integers with the number of bits of our integer type. So for example `u8` is an unsigned integer of 8 bits and `i16` is a
-signed integer of 16 bits.
+当需要一个整型时，有符号整型需在位数前加i，无符号在位数前加`u`。例如，`u8`是一个8位的无符号整型，`i16`是一个16位的有符号整型。
 
-The supported types are up to 64 bits for signed integers, and up to 63 bits for
-unsigned integers. This limitation with unsigned integers is due to the fact
-that currently the Redis protocol is unable to return 64 bit unsigned integers
-as replies.
+有符号整型最大支持64位，而无符号整型最大支持63位。对无符号整型的限制，是由于当前Redis协议不能在响应消息中返回64位无符号整数。
 
-## Bits and positional offsets
+## 位和位偏移
 
-There are two ways in order to specify offsets in the bitfield command.
-If a number without any prefix is specified, it is used just as a zero based
-bit offset inside the string.
+bitfield命令有两种方式来指定位偏移。如果未定带数字的前缀，将会以字符串的第0位作为起始位。
 
-However if the offset is prefixed with a `#` character, the specified offset
-is multiplied by the integer type width, so for example:
+不过，如果偏移量带有`#`前缀，那么指定的偏移量需要乘以整型宽度，例如：
 
     BITFIELD mystring SET i8 #0 100 i8 #1 200
 
-Will set the first i8 integer at offset 0 and the second at offset 8.
-This way you don't have to do the math yourself inside your client if what
-you want is a plain array of integers of a given size.
+将会在第1个i8整数的偏移0位和第2个整数的偏移8位进行设值。如果想得到一个给定长度的普通整型数组，则不一定要在客户端进行计算。
 
-## Overflow control
+## 溢出控制
 
-Using the `OVERFLOW` command the user is able to fine-tune the behavior of
-the increment or decrement overflow (or underflow) by specifying one of
-the following behaviors:
+使用`OVERFLOW`命令，用户可以通过指定下列其中一种行为来调整自增或自减操作溢出（或下溢）后的行为：
 
-* **WRAP**: wrap around, both with signed and unsigned integers. In the case of unsigned integers, wrapping is like performing the operation modulo the maximum value the integer can contain (the C standard behavior). With signed integers instead wrapping means that overflows restart towards the most negative value and underflows towards the most positive ones, so for example if an `i8` integer is set to the value 127, incrementing it by 1 will yield `-128`.
-* **SAT**: uses saturation arithmetic, that is, on underflows the value is set to the minimum integer value, and on overflows to the maximum integer value. For example incrementing an `i8` integer starting from value 120 with an increment of 10, will result into the value 127, and further increments will always keep the value at 127. The same happens on underflows, but towards the value is blocked at the most negative value.
-* **FAIL**: in this mode no operation is performed on overflows or underflows detected. The corresponding return value is set to NULL to signal the condition to the caller.
+* **WRAP**: 回环算法，适用于有符号和无符号整型两种类型。对于无符号整型，回环计数将对整型最大值进行取模操作（C语言的标准行为）。对于有符号整型，上溢从最负的负数开始取数，下溢则从最大的正数开始取数，例如，如果i8整型的值设为127，自加1后的值变为-128。
+* **SAT**: 饱和算法，下溢之后设为最小的整型值，上溢之后设为最大的整数值。例如，i8整型的值从120开始加10后，结果是127，继续增加，结果还是保持为127。下溢也是同理，但量结果值将会保持在最负的负数值。
+* **FAIL**: 失败算法，这种模式下，在检测到上溢或下溢时，不做任何操作。相应的返回值会设为NULL，并返回给调用者。
 
-Note that each `OVERFLOW` statement only affects the `INCRBY` commands
-that follow it in the list of subcommands, up to the next `OVERFLOW`
-statement.
+注意每种溢出（`OVERFLOW`）控制方法，仅影响紧跟在`INCRBY`命令后的子命令，直到重新指定溢出（`OVERFLOW`）控制方法。
 
-By default, **WRAP** is used if not otherwise specified.
+如果没有指定溢出控制方法，默认情况下，将使用**WRAP**算法。
 
     > BITFIELD mykey incrby u2 100 1 OVERFLOW SAT incrby u2 102 1
     1) (integer) 1
@@ -88,37 +74,29 @@ By default, **WRAP** is used if not otherwise specified.
     1) (integer) 0
     2) (integer) 3
 
-## Return value
+## 返回值
 
-The command returns an array with each entry being the corresponding result of
-the sub command given at the same position. `OVERFLOW` subcommands don't count
-as generating a reply.
+本命令返回一个针对子命令给定位置的处理结果组成的数组。`OVERFLOW`子命令在响应消息中，不会统计结果的条数。
 
-The following is an example of `OVERFLOW FAIL` returning NULL.
+下面是`OVERFLOW FAIL`返回NULL的样例：
 
     > BITFIELD mykey OVERFLOW FAIL incrby u2 102 1
     1) (nil)
 
-## Motivations
+## 动机（Motivations）
 
-The motivation for this command is that the ability to store many small integers
-as a single large bitmap (or segmented over a few keys to avoid having huge keys) is extremely memory efficient, and opens new use cases for Redis to be applied, especially in the field of real time analytics. This use cases are supported by the ability to specify the overflow in a controlled way.
+本命令的动机是为了能够在单个大位图（large bitmap）中高效地存储多个小整数（或对键分成多个key，避免出现超大键），同时开放Redis提供的新使用案例，尤其是在实时分析领域。这种使用案例可以通过指定的溢出控制方法来支持。
 
-## Performance considerations
+## 性能考虑（Performance considerations）
 
-Usually `BITFIELD` is a fast command, however note that addressing far bits of currently short strings will trigger an allocation that may be more costly than executing the command on bits already existing.
+通常，`BITFIELD`是一个非常快的命令，但是注意，对短字符串的远地址（fat bits）寻址，将会比在存在的位执行命令更加耗时。
 
-## Orders of bits
+## 字节序（Orders of bits）
 
-The representation used by `BITFIELD` considers the bitmap as having the
-bit number 0 to be the most significant bit of the first byte, and so forth, so
-for example setting a 5 bits unsigned integer to value 23 at offset 7 into a
-bitmap previously set to all zeroes, will produce the following representation:
+`BITFIELD`命令使用的位图表现形式，可看作是从0位开始的，例如：把一个5位的无符号整数23，对一个所有位事先置0的位图，从第7位开始赋值，其结果如下所示：
 
     +--------+--------+
     |00000001|01110000|
     +--------+--------+
 
-When offsets and integer sizes are aligned to bytes boundaries, this is the
-same as big endian, however when such alignment does not exist, its important
-to also understand how the bits inside a byte are ordered.
+当偏移量和整型大小是字节边界对齐时，此时与大端模式（big endian）相同，但是，当字节边界未对齐时，那么理解字节序将变得非常重要。
