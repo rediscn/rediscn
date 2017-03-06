@@ -12,6 +12,10 @@ discuzTid: 853
 
 Redis中国用户组官方微博：[redis2016](http://weibo.com/redis2016),大家在使用Redis中遇到的问题可以访问[Redis中文论坛](http://bbs.redis.cn)进行交流讨论，也可以通过下面的QQ群、微信群进行及时的交流沟通。
 
+CRUG官网订阅号：
+
+![](http://redis.cn/images/weixin/rediscn.jpg)
+
 ## Redis技术交流QQ群列表： ##
 
 - Redis中国用户组(CRUG)1群（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=45e1c96d744fb1bd1b8571a3434fc4a944a90c2bbae95e90c78001df2e3ba1ce") -->
