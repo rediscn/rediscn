@@ -8,6 +8,9 @@ discuzTid: 855
 ---
 # redis中文网更新日志 #
 
+### 2017年3月13日
+1、更新[latency-monitor](http://redis.cn/topics/latency-monitor.html)翻译，感谢liuzexi提供的翻译。
+
 ### 2017年3月6日
 1、更新[BITFIELD](http://redis.cn/commands/bitfield.html)翻译，感谢liuzexi提供的翻译。
 

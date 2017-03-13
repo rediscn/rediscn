@@ -89,13 +89,12 @@ LATENCY HISTORY `event-name`
 
 输出样例：
 
-```
-127.0.0.1:6379> latency history command
-1) 1) (integer) 1405067822
-   2) (integer) 251
-2) 1) (integer) 1405067941
-   2) (integer) 1001
-```
+	127.0.0.1:6379> latency history command
+	1) 1) (integer) 1405067822
+	   2) (integer) 251
+	2) 1) (integer) 1405067941
+	   2) (integer) 1001
+
 
 LATENCY RESET [`event-name` ... `event-name`]
 ---
