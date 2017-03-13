@@ -7,120 +7,87 @@ disqusUrl: http://redis.cn/topics/latency-monitor.html
 discuzTid: 892
 ---
 
-Redis latency monitoring framework
+Redis延迟监控框架
 ===
 
-Redis is often used in the context of demanding use cases, where it
-serves a big amount of queries per second per instance, and at the same
-time, there are very strict latency requirements both for the average response
-time and for the worst case latency.
+每个Redis实例经常被用于每时每刻都要提供大量查询服务的场景，同时，对平均响应时间和最大响应延迟的要求都非常严格。
 
-While Redis is an in memory system, it deals with the operating system in
-different ways, for example, in the context of persisting to disk.
-Moreover Redis implements a rich set of commands. Certain commands
-are fast and run in constant or logarithmic time, other commands are slower
-O(N) commands, that can cause latency spikes.
+当Redis用作内存系统时，它以不同的方式与操作系统进行交互，例如，持久化数据到磁盘上。再者，Redis实现了丰富的命令集。大部分命令执行都很快，能在确定时间内或对数时间内完成（译者注；对数时间是时间复杂度的一种），另外有些命令则是复杂度为O(N)的命令，会导致延迟毛刺（latency spikes）。
 
-Finally Redis is single threaded: this is usually an advantage
-from the point of view of the amount of work it can perform per core, and in
-the latency figures it is able to provide, but at the same time it poses
-a challenge from the point of view of latency, since the single
-thread must be able to perform certain tasks incrementally, like for
-example keys expiration, in a way that does not impact the other clients
-that are served.
+最后，Redis是单线程的：以查看单核处理量的观点来看，单线程通常被认为是优点，并且能够提供延迟的概况，但同时，从延迟本身的观点来看，单线程也会带来挑战，因为单线程只能逐个处理任务，例如，对key过期时间的处理，不会影响到其他客户端。
 
-For all this reasons, Redis 2.8.13 introduced a new feature called
-**Latency Monitoring**, that helps the user to check and troubleshoot possible
-latency problems. Latency monitoring is composed of the following conceptual
-parts:
+综上所虑，Redis 2.8.13引入**延迟监控（Latency Monitoring）**的新特性，帮助用户检查和排除可能的延迟问题。延迟监控由以下概念部分组成：
 
-* Latency hooks that sample different latency sensitive code paths.
-* Time series recording of latency spikes split by different event.
-* Reporting engine to fetch raw data from the time series.
-* Analysis engine to provide human readable reports and hints according to the measurements.
+* 延迟钩子（Latency hooks）：检测不同敏感度延迟的代码路径。
+* 以不同事件分隔的延迟毛刺的时间序列记录。
+* 报告引擎：从时间序列记录中提取原始数据。
+* 分析引擎：提供易懂的报表和按测量结果给出的提示。
 
-The remaining part of this document covers the latency monitoring subsystem
-details, however for more information about the general topic of Redis
-and latency, please read the [Redis latency problems troubleshooting](/topics/latency) page in this documentation.
+虽然本文档的余下部分涵盖了延迟监控子系统的很多细节，但更多有关Redis和延迟的主题内容，请阅读[Redis延迟问题诊断](/topics/latency.html)。
 
-Events and time series
+事件和时间序列
 ---
 
-Different monitored code paths have different names, and are called *events*.
-For example `command` is an event measuring latency spikes of possibly slow
-commands executions, while `fast-command` is the event name for the monitoring
-of the O(1) and O(log N) commands. Other events are less generic, and monitor
-a very specific operation performed by Redis. For example the `fork` event
-only monitors the time taken by Redis to execute the `fork(2)` system call.
+不同监控代码路径有不同的名称，并称之为*事件*。例如，`command`是测量可能很慢的命令的执行延迟毛刺的事件，而`fast-command`则是监控时间复杂度为O(1)和O(log N)的命令的事件名称。其他事件则不太通用，主要监控Redis执行的特殊操作。例如，`fork`事件仅仅监控Redis执行系统调用`fork(2)`所耗的时间。
 
-A latency spike is an event that runs in more time than the configured latency
-threshold. There is a separated time series associated with every monitored
-event. This is how the time series work:
+延迟毛刺是指运行时间比配置的延迟阀值更长的事件。每个监控事件会关联一个独立的时间序列。下面说明时间序列如何工作的：
 
-* Every time a latency spike happens, it is logged in the appropriate time series.
-* Every time series is composed of 160 elements.
-* Each element is a pair: an unix timestamp of the time the latency spike was measured, and the number of milliseconds the event took to executed.
-* Latency spikes for the same event happening in the same second are merged (by taking the maximum latency), so even if continuous latency spikes are measured for a given event, for example because the user set a very low threshold, at least 180 seconds of history are available.
-* For every element the all-time maximum latency is recorded.
+* 每次出现延迟毛刺，会记录合适的时间序列
+* 每个时间序列由160个元素组成
+* 每个元素是一个值对：包含检测到延迟毛刺出现时的unix时间戳和事件耗时的毫秒数
+* 相同事件在同一时刻出现多个延迟毛刺，将会被合并（取最大延迟），因此，即使给定事件被检测到出现连续延迟毛刺，例如，由于用户设定了非常低的延迟阀值，将只会保留180秒的历史记录。
+* 对于每一个元素记录最大的延迟时间。
 
-How to enable latency monitoring
+如何启用延迟监控
 ---
 
-What is high latency for an use case, is not high latency for another. There are applications where all the queries must be served in less than 1 millisecond and applications where from time to time a small percentage of clients experiencing a 2 seconds latency is acceptable.
+某种用例出现高延迟，对另外的用例可能不会出现高延迟。当一些应用的所有查询的响应延迟都必须少于1毫秒时，而另一些应用的客户端有很小比例出现2秒的延迟，这种情况是可以接受的。
 
-So the first step to enable the latency monitor is to set a **latency threshold** in milliseconds. Only events that will take more than the specified threshold will be logged as latency spikes. The user should set the threshold according to its needs. For example if for the requirements of the application based on Redis the maximum acceptable latency is 100 milliseconds, the threshold should be set to such a value in order to log all the events blocking the server for a time equal or greater to 100 milliseconds.
+因此，启动延迟监控的第一步是以毫秒为单位设置**延迟阀值（latency threshold）**。仅当事件耗时超过指定的延迟阀值才会记录延迟毛刺。用户可根据需要来设置延迟阀值。例如，如果基于Redis的应用能接受的最大延迟是100毫秒，则延迟阀值应当设置为大于或等于100毫秒，以便记录所有阻塞Redis服务器的事件。
 
-The latency monitor can easily be enabled at runtime in a production server
-with the following command:
+在生产服务器上，通过下面的命令可以在运行时启用延迟监控：
 
     CONFIG SET latency-monitor-threshold 100
 
-By default monitoring is disabled (threshold set to 0), even if the actual cost of latency monitoring is near zero. However while the memory requirements of latency monitoring are very small, there is no good reason to raise the baseline memory usage of a Redis instance that is working well.
+延迟监控默认是关闭状态，即使延迟监控处理几乎不耗时。然而，当延迟监控只需非常小的内存时，则没有必要为一个运行良好的Redis实例提高基线内存使用量（baseline memory usage）。
 
-Information reporting with the LATENCY command
+延迟命令（LATENCY）的信息报告
 ---
 
-The user interface to the latency monitoring subsystem is the `LATENCY` command.
-Like many other Redis commands, `LATENCY` accept subcommands that modify the
-behavior of the command. The next sections document each subcommand.
+延迟监控子系统的用户界面是`LATENCY`命令。像其他Redis命令一样，`LATENCY`可以接收子命令来改变命令的行为。接下来的章节对各个子命令进行说明。
 
 LATENCY LATEST
 ---
 
-The `LATENCY LATEST` command reports the latest latency events logged. Each event has the following fields:
+`LATENCY LATEST`命令会上报已记录事件的最后一次延迟。每个事件包含以下字段：
 
-* Event name.
-* Unix timestamp of the latest latency spike for the event.
-* Latest event latency in millisecond.
-* All time maximum latency for this event.
+* 事件名称
+* 事件出现延迟毛刺的Unix时间戳
+* 最后事件延迟（单位：毫秒）
+* 本事件的最大延迟（所有时间段）
 
-All time does not really mean the maximum latency since the Redis instance was
-started, because it is possible to reset events data using `LATENCY RESET` as we'll see later.
+最大事件延迟所指的所有时间段并不是指从Redis实例启动以来，因为事件数据有可能会用稍后看到的`LATENCY RESET`命令来重置。
 
-The following is an example output:
+下面是输出样例：
 
-```
-127.0.0.1:6379> debug sleep 1
-OK
-(1.00s)
-127.0.0.1:6379> debug sleep .25
-OK
-127.0.0.1:6379> latency latest
-1) 1) "command"
-   2) (integer) 1405067976
-   3) (integer) 251
-   4) (integer) 1001
-```
+	127.0.0.1:6379> debug sleep 1
+	OK
+	(1.00s)
+	127.0.0.1:6379> debug sleep .25
+	OK
+	127.0.0.1:6379> latency latest
+	1) 1) "command"
+	   2) (integer) 1405067976
+	   3) (integer) 251
+	   4) (integer) 1001
+
 
 LATENCY HISTORY `event-name`
 ---
 
-The `LATENCY HISTORY` command is useful in order to fetch raw data from the
-event time series, as timestamp-latency pairs. The command will return up
-to 160 elements for a given event. An application may want to fetch raw data
-in order to perform monitoring, display graphs, and so forth.
+`LATENCY HISTORY`命令从时间序列中提取原始数据时是非常有用的，数据是“时间戳-延迟”值对的形式。本命令会返回给定事件的160个元素。应用程序可用提取的原始数据来实现性能监控和展示图表等功能。
 
-Example output:
+输出样例：
 
 ```
 127.0.0.1:6379> latency history command
@@ -133,90 +100,66 @@ Example output:
 LATENCY RESET [`event-name` ... `event-name`]
 ---
 
-The `LATENCY RESET` command, if called without arguments, resets all the
-events, discarding the currently logged latency spike events, and resetting
-the maximum event time register.
+`LATENCY RESET`命令，若不带参数，则重置所有事件，丢弃当前记录的延迟毛刺事件并重置最大事件延迟的值。
 
-It is possible to reset only specific events by providing the event names
-as arguments. The command returns the number of events time series that were
-reset during the command execution.
+通过指定事件名称作为参数，可以重置指定的事件。该命令在执行期间，会返回已被重置的事件时间序列的序号。
 
 LATENCY GRAPH `event-name`
 ---
 
-Produces an ASCII-art style graph for the specified event:
+为指定事件生成字符画(ASCII-art style graph)：
 
-```
-127.0.0.1:6379> latency reset command
-(integer) 0
-127.0.0.1:6379> debug sleep .1
-OK
-127.0.0.1:6379> debug sleep .2
-OK
-127.0.0.1:6379> debug sleep .3
-OK
-127.0.0.1:6379> debug sleep .5
-OK
-127.0.0.1:6379> debug sleep .4
-OK
-127.0.0.1:6379> latency graph command
-command - high 500 ms, low 101 ms (all time high 500 ms)
---------------------------------------------------------------------------------
-   #_
-  _||
- _|||
-_||||
+	127.0.0.1:6379> latency reset command
+	(integer) 0
+	127.0.0.1:6379> debug sleep .1
+	OK
+	127.0.0.1:6379> debug sleep .2
+	OK
+	127.0.0.1:6379> debug sleep .3
+	OK
+	127.0.0.1:6379> debug sleep .5
+	OK
+	127.0.0.1:6379> debug sleep .4
+	OK
+	127.0.0.1:6379> latency graph command
+	command - high 500 ms, low 101 ms (all time high 500 ms)
+	--------------------------------------------------------------------------------
+	   #_
+	  _||
+	 _|||
+	_||||
+	
+	11186
+	542ss
+	sss
 
-11186
-542ss
-sss
-```
 
-The vertical labels under each graph column represent the amount of seconds,
-minutes, hours or days ago the event happened. For example "15s" means that the
-first graphed event happened 15 seconds ago.
+字符画每列下面的垂直标签表示事件是多久之前发生的，可用秒、分钟、小时或天来表示时间单位。例如，"15s"表示上图中第1个图形化的事件发生在15秒钟之前。
 
-The graph is normalized in the min-max scale so that the zero (the underscore
-in the lower row) is the minimum, and a # in the higher row is the maximum.
+图形对最小值和最大值的图例进行了规范化定义，即0表示最小值（即最低一行的下划线），最高一行的#表示最大值。
 
-The graph subcommand is useful in order to get a quick idea about the trend
-of a given latency event without using additional tooling, and without the
-need to interpret raw data as provided by `LATENCY HISTORY`.
+graph子命令非常有用，能快速判断指定事件的延迟趋势，不需要使用额外的工具，也不需要解析`LATENCY HISTORY`命令提供的原始数据。
 
 LATENCY DOCTOR
 ---
 
-The `LATENCY DOCTOR` command is the most powerful analysis tool in the latency
-monitoring, and is able to provide additional statistical data like the average
-period between latency spikes, the median deviation, and an human readable
-analysis of the event. For certain events, like `fork`, additional information
-is provided, like the rate at which the system forks processes.
+`LATENCY DOCTOR`命令是最强大的延迟监控分析工具，能提供更多统计数据，如延迟毛刺间的平均时间间隔，中值偏差和易懂的事件分析。对某些事件，如"fork"事件，会提供如系统创建进程的速率等更多的信息。
 
-This is the output you should post in the Redis mailing list if you are
-looking for help about Latency related issues.
+如果想寻求延迟相关问题的帮助，应当把本命令的输出内容发送到Redis邮件列表。
 
-Example output:
+输出样例：
 
     127.0.0.1:6379> latency doctor
 
-    Dave, I have observed latency spikes in this Redis instance.
-    You don't mind talking about it, do you Dave?
+    Dave，我在Redis实例中已发现延迟毛刺。
+    您不介意谈论一下，Dave，是吧？
 
-    1. command: 5 latency spikes (average 300ms, mean deviation 120ms,
-       period 73.40 sec). Worst all time event 500ms.
+    1. command: 5次延迟毛刺（平均 300毫秒，中位偏差 120毫秒，持续时间 73.40秒）。最大事件延迟500毫秒。
 
-    I have a few advices for you:
+    我给您如下几点建议：
 
-    - Your current Slow Log configuration only logs events that are
-      slower than your configured latency monitor threshold. Please
-      use 'CONFIG SET slowlog-log-slower-than 1000'.
-    - Check your Slow Log to understand what are the commands you are
-      running which are too slow to execute. Please check
-      http://redis.io/commands/slowlog for more information.
-    - Deleting, expiring or evicting (because of maxmemory policy)
-      large objects is a blocking operation. If you have very large
-      objects that are often deleted, expired, or evicted, try to
-      fragment those objects into multiple smaller objects.
+    - 当前配置仅记录比您配置的延迟监控阀值低的事件。请执行命令：'CONFIG SET slowlog-log-slower-than 1000'。
+    - 检查已记录的日志，以便了解哪些命令的执行特别慢。请访问http://redis.cn/commands/slowlog.html获取更多信息。
+    - 对大对象进行删除、过期和淘汰操作（由于最大内存策略导致）都属于阻塞操作。如果经常对大对象进行删除、过期和淘汰操作，可尝试把大对象拆分成多个小对象。
 
-The doctor has erratic psychological behaviors, so we recommend interacting with
-it carefully.
+`LATENCY DOCTOR`命令目前尚不完善（原意：有精神病行为），因此，我们建议谨慎使用该命令。
