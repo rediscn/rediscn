@@ -85,12 +85,11 @@ Redis Strings
 
 MGET 命令返回由值组成的数组。
 
-修改或查询值空间
+修改或查询键空间
 ---
 
-There are commands that are not defined on particular types, but are useful
-in order to interact with the space of keys, and thus, can be used with
-keys of any type.
+
+有些指令不是针对任何具体的类型定义的，而是用于和整个键空间交互的。因此，它们可被用于任何类型的键。
 
 使用EXISTS命令返回1或0标识给定key的值是否存在，使用[DEL](/commands/del.html)命令可以删除key对应的值，DEL命令返回1或0标识值是被删除(值存在)或者没被删除(key对应的值不存在)。
 
@@ -102,10 +101,6 @@ keys of any type.
     (integer) 1
     > exists mykey
     (integer) 0
-
-From the examples you can also see how `DEL` itself returns 1 or 0 depending on whether
-the key was removed (it existed) or not (there was no such key with that
-name).
 
 [TYPE](/commands/type.html)命令可以返回key对应的值的存储类型：
 
@@ -216,7 +211,7 @@ List的常用案例
 
 例如在评级系统中，比如社会化新闻网站 reddit.com，你可以把每个新提交的链接添加到一个list，用LRANGE可简单的对结果分页。
 
-在博客引擎实现中，你可为每篇日志设置一个list，在该list中推入进博客评论，等等。
+在博客引擎实现中，你可为每篇日志设置一个list，在该list中推入博客评论，等等。
 
 Capped lists
 ---
@@ -242,22 +237,17 @@ List上的阻塞操作
 
 如需了解详细信息请查看 [RPOPLPUSH](/commands/rpoplpush.html) 和 [BRPOPLPUSH](/commands/brpoplpush.html)。
 
-Automatic creation and removal of keys
+key 的自动创建和删除
 ---
 
-So far in our examples we never had to create empty lists before pushing
-elements, or removing empty lists when they no longer have elements inside.
-It is Redis' responsibility to delete keys when lists are left empty, or to create
-an empty list if the key does not exist and we are trying to add elements
-to it, for example, with `LPUSH`.
+目前为止，在我们的例子中，我们没有在推入元素之前创建空的 list，或者在 list 没有元素时删除它。在 list 为空时删除 key，并在用户试图添加元素（比如通过 `LPUSH`）而键不存在时创建空 list，是 Redis 的职责。
 
-This is not specific to lists, it applies to all the Redis data types
-composed of multiple elements -- Sets, Sorted Sets and Hashes.
+这不光适用于 lists，还适用于所有包括多个元素的 Redis 数据类型 -- Sets, Sorted Sets 和 Hashes。
 
-Basically we can summarize the behavior with three rules:
+基本上，我们可以用三条规则来概括它的行为：
 
-1. When we add an element to an aggregate data type, if the target key does not exist, an empty aggregate data type is created before adding the element.
-2. When we remove elements from an aggregate data type, if the value remains empty, the key is automatically destroyed.
+1. 当我们向一个聚合数据类型中添加元素时，如果目标键不存在，就在添加元素前创建空的聚合数据类型。
+2. 当我们从聚合数据类型中移除元素时，如果值仍然是空的，键自动被销毁。
 3. Calling a read-only command such as `LLEN` (which returns the length of the list), or a write command removing elements, with an empty key, always produces the same result as if the key is holding an empty aggregate type of the type the command expects to find.
 
 Examples of rule 1:
