@@ -248,25 +248,24 @@ key 的自动创建和删除
 
 1. 当我们向一个聚合数据类型中添加元素时，如果目标键不存在，就在添加元素前创建空的聚合数据类型。
 2. 当我们从聚合数据类型中移除元素时，如果值仍然是空的，键自动被销毁。
-3. Calling a read-only command such as `LLEN` (which returns the length of the list), or a write command removing elements, with an empty key, always produces the same result as if the key is holding an empty aggregate type of the type the command expects to find.
+3. 对一个空的 key 调用一个只读的命令，比如 `LLEN` （返回 list 的长度），或者一个删除元素的命令，将总是产生同样的结果。该结果和对一个空的聚合类型做同个操作的结果是一样的。
 
-Examples of rule 1:
+规则 1 示例：
 
     > del mylist
     (integer) 1
     > lpush mylist 1 2 3
     (integer) 3
 
-However we can't perform operations against the wrong type of the key exists:
-
-    > set foo bar
+但是，我们不能对存在但类型错误的 key 做操作：
+    > set foo bar
     OK
     > lpush foo 1 2 3
     (error) WRONGTYPE Operation against a key holding the wrong kind of value
     > type foo
     string
 
-Example of rule 2:
+规则 2 示例:
 
     > lpush mylist 1 2 3
     (integer) 3
@@ -281,9 +280,9 @@ Example of rule 2:
     > exists mylist
     (integer) 0
 
-The key no longer exists after all the elements are popped.
+所有的元素被弹出之后， key 不复存在。
 
-Example of rule 3:
+规则 3 示例:
 
     > del mylist
     (integer) 0
@@ -296,7 +295,7 @@ Example of rule 3:
 Redis Hashes
 ---
 
-Redis hashes look exactly how one might expect a "hash" to look, with field-value pairs:
+Redis hash 看起来就像一个 "hash" 的样子，由键值对组成：
 
     > hmset user:1000 username antirez birthyear 1977 verified 1
     OK
@@ -312,40 +311,31 @@ Redis hashes look exactly how one might expect a "hash" to look, with field-valu
     5) "verified"
     6) "1"
 
-While hashes are handy to represent *objects*, actually the number of fields you can
-put inside a hash has no practical limits (other than available memory), so you can use
-hashes in many different ways inside your application.
+Hash 便于表示 *objects*，实际上，你可以放入一个 hash 的域数量实际上没有限制（除了可用内存以外）。所以，你可以在你的应用中以不同的方式使用 hash。
 
-The command `HMSET` sets multiple fields of the hash, while `HGET` retrieves
-a single field. `HMGET` is similar to `HGET` but returns an array of values:
+`HMSET` 指令设置 hash 中的多个域，而 `HGET` 取回单个域。`HMGET` 和 `HGET` 类似，但返回一系列值：
 
     > hmget user:1000 username birthyear no-such-field
     1) "antirez"
     2) "1977"
     3) (nil)
 
-There are commands that are able to perform operations on individual fields
-as well, like `HINCRBY`:
+也有一些指令能够对单独的域执行操作，比如 `HINCRBY`：
 
     > hincrby user:1000 birthyear 10
     (integer) 1987
     > hincrby user:1000 birthyear 10
     (integer) 1997
 
-You can find the [full list of hash commands in the documentation](http://redis.io/commands#hash).
+你可以在文档中找到 [hash 指令的完整列表](http://redis.io/commands#hash)。
 
-It is worth noting that small hashes (i.e., a few elements with small values) are
-encoded in special way in memory that make them very memory efficient.
+值得注意的是，小的 hash 被用特殊方式编码，非常节约内存。
 
 <a name="sets"></a>
 Redis Sets
 ---
 
-Redis Sets are unordered collections of strings. The
-`SADD` command adds new elements to a set. It's also possible
-to do a number of other operations against sets like testing if a given element
-already exists, performing the intersection, union or difference between
-multiple sets, and so forth.
+Redis Set 是 String 的无序排列。`SADD` 指令把新的元素添加到 set 中。对 set 也可做一些其他的操作，比如测试一个给定的元素是否存在，对不同 set 取交集，并集或差，等等。
 
     > sadd myset 1 2 3
     (integer) 3
@@ -354,10 +344,7 @@ multiple sets, and so forth.
     2. 1
     3. 2
 
-Here I've added three elements to my set and told Redis to return all the
-elements. As you can see they are not sorted -- Redis is free to return the
-elements in any order at every call, since there is no contract with the
-user about element ordering.
+现在我已经把三个元素加到我的 set 中，并告诉 Redis 返回所有的元素。可以看到，它们没有被排序 —— Redis 在每次调用时可能按照任意顺序返回元素，因为对于元素的顺序并没有规定。
 
 Redis has commands to test for membership. Does a given element exist?
 
