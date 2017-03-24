@@ -17,20 +17,11 @@ Redis 数据类型介绍
 * Sets: 不重复且无序的字符串元素的集合。
 * Sorted sets,类似Sets,但是每个字符串元素都关联到一个叫*score*浮动数值（floating number value）。里面的元素总是通过score进行着排序，所以不同的是，它是可以检索的一系列元素。（例如你可能会问：给我前面10个或者后面10个元素）。 
 * Hashes,由field和关联的value组成的map。field和value都是字符串的。这和Ruby、Python的hashes很像。
-* Bit arrays (或者说 simply bitmaps): it is possible, using special commands, to
-  handle String values like an array of bits: you can set and clear individual
-  bits, count all the bits set to 1, find the first set or unset bit, and so
-  forth.
-* HyperLogLogs: this is a probabilistic data structure which is used in order
-  to estimate the cardinality of a set. Don't be scared, it is simpler than
-  it seems... See later in the HyperLogLog section of this tutorial.
+* Bit arrays (或者说 simply bitmaps): 通过特殊的命令，你可以将 String 值当作一系列 bits 处理：可以设置和清除单独的 bits，数出所有设为 1 的 bits 的数量，找到最前的被设为 1 或 0 的 bit，等等。
+* HyperLogLogs: 这是被用于估计一个 set 中元素数量的概率性的数据结构。别害怕，它比看起来的样子要简单...参见本教程的 HyperLogLog 部分。D
 
-It's not always trivial to grasp how these data types work and what to use in
-order to solve a given problem from the [command reference](/commands), so this
-document is a crash course to Redis data types and their most common patterns.
-
-For all the examples we'll use the `redis-cli` utility, that's a simple but
-handy command line utility to issue commands against the Redis server.
+学习这些数据类型的原理，以及如何使用它们解决 [command reference](/commands) 中的特定问题，并不总是不关紧要的。所以，本文档是一个关于 Redis 数据类型和它们最常见特性的导论。
+在所有的例子中，我们将使用 `redis-cli` 工具。它是一个简单而有用的命令行工具，用于向 Redis 服务器发出命令。
 
 Redis keys
 ---
