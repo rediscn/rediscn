@@ -404,20 +404,14 @@ Sets 适合用于表示对象间的关系。
 
 现在，我们想要给每个玩家 5 张牌。`SPOP` 命令删除一个随机元素，把它返回给客户端，因此它是完全合适的操作。
 
-但是，如果我们对我们的牌直接调用它，在下一盘我们就需要重新充满这副牌。However if we call it against our deck directly, in the next play of the
-game we'll need to populate the deck of cards again, which may not be
-ideal. So to start, we can make a copy of the set stored in the `deck` key
-into the `game:1:deck` key.
+但是，如果我们对我们的牌直接调用它，在下一盘我们就需要重新充满这副牌。开始，我们可以复制 `deck` 键中的内容，并放入 `game:1:deck` 键中。
 
-This is accomplished using `SUNIONSTORE`, which normally performs the
-union between multiple sets, and stores the result into another set.
-However, since the union of a single set is itself, I can copy my deck
-with:
+这是通过 `SUNIONSTORE` 实现的，它通常用于对多个集合取交集，并把结果存入另一个 set 中。但是，因为一个 set 的交集就是它本身，我可以这样复制我的牌：
 
     > sunionstore game:1:deck deck
     (integer) 52
 
-Now I'm ready to provide the first player with five cards:
+现在，我已经准备好给 1 号玩家发五张牌：
 
     > spop game:1:deck
     "C6"
