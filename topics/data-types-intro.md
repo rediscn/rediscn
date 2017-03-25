@@ -346,30 +346,27 @@ Redis Set 是 String 的无序排列。`SADD` 指令把新的元素添加到 set
 
 现在我已经把三个元素加到我的 set 中，并告诉 Redis 返回所有的元素。可以看到，它们没有被排序 —— Redis 在每次调用时可能按照任意顺序返回元素，因为对于元素的顺序并没有规定。
 
-Redis has commands to test for membership. Does a given element exist?
+Redis 有检测成员的指令。一个特定的元素是否存在？
 
     > sismember myset 3
     (integer) 1
     > sismember myset 30
     (integer) 0
 
-"3" is a member of the set, while "30" is not.
+"3" 是 set 的一个成员，而 "30" 不是。
 
-Sets are good for expressing relations between objects.
-For instance we can easily use sets in order to implement tags.
+Sets 适合用于表示对象间的关系。
+例如，我们可以轻易使用 set 来表示标记。
 
-A simple way to model this problem is to have a set for every object we
-want to tag. The set contains the IDs of the tags associated with the object.
+一个简单的建模方式是，对每一个希望标记的对象使用 set。这个 set 包含和对象相关联的标签的 ID。
 
-Imagine we want to tag news.
-If our news ID 1000 is tagged with tags 1, 2, 5 and 77, we can have one set
-associating our tag IDs with the news item:
+假设我们想要给新闻打上标签。
+假设新闻 ID 1000 被打上了 1,2,5 和 77 四个标签，我们可以使用一个 set 把 tag ID 和新闻条目关联起来：
 
     > sadd news:1000:tags 1 2 5 77
     (integer) 4
 
-However sometimes I may want to have the inverse relation as well: the list
-of all the news tagged with a given tag:
+但是，有时候我可能也会需要相反的关系：所有被打上相同标签的新闻列表：
 
     > sadd tag:1:news 1000
     (integer) 1
@@ -380,7 +377,7 @@ of all the news tagged with a given tag:
     > sadd tag:77:news 1000
     (integer) 1
 
-To get all the tags for a given object is trivial:
+获取一个对象的所有 tag 是很方便的：
 
     > smembers news:1000:tags
     1. 5
@@ -388,25 +385,16 @@ To get all the tags for a given object is trivial:
     3. 77
     4. 2
 
-Note: in the example we assume you have another data structure, for example
-a Redis hash, which maps tag IDs to tag names.
+注意：在这个例子中，我们假设你有另一个数据结构，比如一个 Redis hash，把标签 ID 对应到标签名称。
 
-There are other non trivial operations that are still easy to implement
-using the right Redis commands. For instance we may want a list of all the
-objects with the tags 1, 2, 10, and 27 together. We can do this using
-the `SINTER` command, which performs the intersection between different
-sets. We can use:
+使用 Redis 命令行，我们可以轻易实现其它一些有用的操作。比如，我们可能需要一个含有 1, 2, 10, 和 27 标签的对象的列表。我们可以用 `SINTER` 命令来完成这件事。它获取不同 set 的交集。我们可以用：
 
     > sinter tag:1:news tag:2:news tag:10:news tag:27:news
     ... results here ...
 
-Intersection is not the only operation performed, you can also perform
-unions, difference, extract a random element, and so forth.
+不光可以取交集，还可以取并集，差集，获取随机元素，等等。
 
-The command to extract an element is called `SPOP`, and is handy to model
-certain problems. For example in order to implement a web-based poker game,
-you may want to represent your deck with a set. Imagine we use a one-char
-prefix for (C)lubs, (D)iamonds, (H)earts, (S)pades:
+获取一个元素的命令是 `SPOP`，它很适合对特定问题建模。比如，要实现一个基于 web 的扑克游戏，你可能需要用 set 来表示一副牌。假设我们用一个字符的前缀来表示不同花色：
 
     >  sadd deck C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 CJ CQ CK
        D1 D2 D3 D4 D5 D6 D7 D8 D9 D10 DJ DQ DK H1 H2 H3
@@ -414,11 +402,9 @@ prefix for (C)lubs, (D)iamonds, (H)earts, (S)pades:
        S7 S8 S9 S10 SJ SQ SK
        (integer) 52
 
-Now we want to provide each player with 5 cards. The `SPOP` command
-removes a random element, returning it to the client, so it is the
-perfect operation in this case.
+现在，我们想要给每个玩家 5 张牌。`SPOP` 命令删除一个随机元素，把它返回给客户端，因此它是完全合适的操作。
 
-However if we call it against our deck directly, in the next play of the
+但是，如果我们对我们的牌直接调用它，在下一盘我们就需要重新充满这副牌。However if we call it against our deck directly, in the next play of the
 game we'll need to populate the deck of cards again, which may not be
 ideal. So to start, we can make a copy of the set stored in the `deck` key
 into the `game:1:deck` key.
