@@ -17,20 +17,11 @@ Redis 数据类型介绍
 * Sets: 不重复且无序的字符串元素的集合。
 * Sorted sets,类似Sets,但是每个字符串元素都关联到一个叫*score*浮动数值（floating number value）。里面的元素总是通过score进行着排序，所以不同的是，它是可以检索的一系列元素。（例如你可能会问：给我前面10个或者后面10个元素）。 
 * Hashes,由field和关联的value组成的map。field和value都是字符串的。这和Ruby、Python的hashes很像。
-* Bit arrays (或者说 simply bitmaps): it is possible, using special commands, to
-  handle String values like an array of bits: you can set and clear individual
-  bits, count all the bits set to 1, find the first set or unset bit, and so
-  forth.
-* HyperLogLogs: this is a probabilistic data structure which is used in order
-  to estimate the cardinality of a set. Don't be scared, it is simpler than
-  it seems... See later in the HyperLogLog section of this tutorial.
+* Bit arrays (或者说 simply bitmaps): 通过特殊的命令，你可以将 String 值当作一系列 bits 处理：可以设置和清除单独的 bits，数出所有设为 1 的 bits 的数量，找到最前的被设为 1 或 0 的 bit，等等。
+* HyperLogLogs: 这是被用于估计一个 set 中元素数量的概率性的数据结构。别害怕，它比看起来的样子要简单...参见本教程的 HyperLogLog 部分。D
 
-It's not always trivial to grasp how these data types work and what to use in
-order to solve a given problem from the [command reference](/commands), so this
-document is a crash course to Redis data types and their most common patterns.
-
-For all the examples we'll use the `redis-cli` utility, that's a simple but
-handy command line utility to issue commands against the Redis server.
+学习这些数据类型的原理，以及如何使用它们解决 [command reference](/commands) 中的特定问题，并不总是不关紧要的。所以，本文档是一个关于 Redis 数据类型和它们最常见特性的导论。
+在所有的例子中，我们将使用 `redis-cli` 工具。它是一个简单而有用的命令行工具，用于向 Redis 服务器发出命令。
 
 Redis keys
 ---
@@ -94,12 +85,11 @@ Redis Strings
 
 MGET 命令返回由值组成的数组。
 
-修改或查询值空间
+修改或查询键空间
 ---
 
-There are commands that are not defined on particular types, but are useful
-in order to interact with the space of keys, and thus, can be used with
-keys of any type.
+
+有些指令不是针对任何具体的类型定义的，而是用于和整个键空间交互的。因此，它们可被用于任何类型的键。
 
 使用EXISTS命令返回1或0标识给定key的值是否存在，使用[DEL](/commands/del.html)命令可以删除key对应的值，DEL命令返回1或0标识值是被删除(值存在)或者没被删除(key对应的值不存在)。
 
@@ -111,10 +101,6 @@ keys of any type.
     (integer) 1
     > exists mykey
     (integer) 0
-
-From the examples you can also see how `DEL` itself returns 1 or 0 depending on whether
-the key was removed (it existed) or not (there was no such key with that
-name).
 
 [TYPE](/commands/type.html)命令可以返回key对应的值的存储类型：
 
@@ -225,7 +211,7 @@ List的常用案例
 
 例如在评级系统中，比如社会化新闻网站 reddit.com，你可以把每个新提交的链接添加到一个list，用LRANGE可简单的对结果分页。
 
-在博客引擎实现中，你可为每篇日志设置一个list，在该list中推入进博客评论，等等。
+在博客引擎实现中，你可为每篇日志设置一个list，在该list中推入博客评论，等等。
 
 Capped lists
 ---
@@ -251,41 +237,35 @@ List上的阻塞操作
 
 如需了解详细信息请查看 [RPOPLPUSH](/commands/rpoplpush.html) 和 [BRPOPLPUSH](/commands/brpoplpush.html)。
 
-Automatic creation and removal of keys
+key 的自动创建和删除
 ---
 
-So far in our examples we never had to create empty lists before pushing
-elements, or removing empty lists when they no longer have elements inside.
-It is Redis' responsibility to delete keys when lists are left empty, or to create
-an empty list if the key does not exist and we are trying to add elements
-to it, for example, with `LPUSH`.
+目前为止，在我们的例子中，我们没有在推入元素之前创建空的 list，或者在 list 没有元素时删除它。在 list 为空时删除 key，并在用户试图添加元素（比如通过 `LPUSH`）而键不存在时创建空 list，是 Redis 的职责。
 
-This is not specific to lists, it applies to all the Redis data types
-composed of multiple elements -- Sets, Sorted Sets and Hashes.
+这不光适用于 lists，还适用于所有包括多个元素的 Redis 数据类型 -- Sets, Sorted Sets 和 Hashes。
 
-Basically we can summarize the behavior with three rules:
+基本上，我们可以用三条规则来概括它的行为：
 
-1. When we add an element to an aggregate data type, if the target key does not exist, an empty aggregate data type is created before adding the element.
-2. When we remove elements from an aggregate data type, if the value remains empty, the key is automatically destroyed.
-3. Calling a read-only command such as `LLEN` (which returns the length of the list), or a write command removing elements, with an empty key, always produces the same result as if the key is holding an empty aggregate type of the type the command expects to find.
+1. 当我们向一个聚合数据类型中添加元素时，如果目标键不存在，就在添加元素前创建空的聚合数据类型。
+2. 当我们从聚合数据类型中移除元素时，如果值仍然是空的，键自动被销毁。
+3. 对一个空的 key 调用一个只读的命令，比如 `LLEN` （返回 list 的长度），或者一个删除元素的命令，将总是产生同样的结果。该结果和对一个空的聚合类型做同个操作的结果是一样的。
 
-Examples of rule 1:
+规则 1 示例：
 
     > del mylist
     (integer) 1
     > lpush mylist 1 2 3
     (integer) 3
 
-However we can't perform operations against the wrong type of the key exists:
-
-    > set foo bar
+但是，我们不能对存在但类型错误的 key 做操作：
+    > set foo bar
     OK
     > lpush foo 1 2 3
     (error) WRONGTYPE Operation against a key holding the wrong kind of value
     > type foo
     string
 
-Example of rule 2:
+规则 2 示例:
 
     > lpush mylist 1 2 3
     (integer) 3
@@ -300,9 +280,9 @@ Example of rule 2:
     > exists mylist
     (integer) 0
 
-The key no longer exists after all the elements are popped.
+所有的元素被弹出之后， key 不复存在。
 
-Example of rule 3:
+规则 3 示例:
 
     > del mylist
     (integer) 0
@@ -315,7 +295,7 @@ Example of rule 3:
 Redis Hashes
 ---
 
-Redis hashes look exactly how one might expect a "hash" to look, with field-value pairs:
+Redis hash 看起来就像一个 "hash" 的样子，由键值对组成：
 
     > hmset user:1000 username antirez birthyear 1977 verified 1
     OK
@@ -331,40 +311,31 @@ Redis hashes look exactly how one might expect a "hash" to look, with field-valu
     5) "verified"
     6) "1"
 
-While hashes are handy to represent *objects*, actually the number of fields you can
-put inside a hash has no practical limits (other than available memory), so you can use
-hashes in many different ways inside your application.
+Hash 便于表示 *objects*，实际上，你可以放入一个 hash 的域数量实际上没有限制（除了可用内存以外）。所以，你可以在你的应用中以不同的方式使用 hash。
 
-The command `HMSET` sets multiple fields of the hash, while `HGET` retrieves
-a single field. `HMGET` is similar to `HGET` but returns an array of values:
+`HMSET` 指令设置 hash 中的多个域，而 `HGET` 取回单个域。`HMGET` 和 `HGET` 类似，但返回一系列值：
 
     > hmget user:1000 username birthyear no-such-field
     1) "antirez"
     2) "1977"
     3) (nil)
 
-There are commands that are able to perform operations on individual fields
-as well, like `HINCRBY`:
+也有一些指令能够对单独的域执行操作，比如 `HINCRBY`：
 
     > hincrby user:1000 birthyear 10
     (integer) 1987
     > hincrby user:1000 birthyear 10
     (integer) 1997
 
-You can find the [full list of hash commands in the documentation](http://redis.io/commands#hash).
+你可以在文档中找到 [hash 指令的完整列表](http://redis.io/commands#hash)。
 
-It is worth noting that small hashes (i.e., a few elements with small values) are
-encoded in special way in memory that make them very memory efficient.
+值得注意的是，小的 hash 被用特殊方式编码，非常节约内存。
 
 <a name="sets"></a>
 Redis Sets
 ---
 
-Redis Sets are unordered collections of strings. The
-`SADD` command adds new elements to a set. It's also possible
-to do a number of other operations against sets like testing if a given element
-already exists, performing the intersection, union or difference between
-multiple sets, and so forth.
+Redis Set 是 String 的无序排列。`SADD` 指令把新的元素添加到 set 中。对 set 也可做一些其他的操作，比如测试一个给定的元素是否存在，对不同 set 取交集，并集或差，等等。
 
     > sadd myset 1 2 3
     (integer) 3
@@ -373,35 +344,29 @@ multiple sets, and so forth.
     2. 1
     3. 2
 
-Here I've added three elements to my set and told Redis to return all the
-elements. As you can see they are not sorted -- Redis is free to return the
-elements in any order at every call, since there is no contract with the
-user about element ordering.
+现在我已经把三个元素加到我的 set 中，并告诉 Redis 返回所有的元素。可以看到，它们没有被排序 —— Redis 在每次调用时可能按照任意顺序返回元素，因为对于元素的顺序并没有规定。
 
-Redis has commands to test for membership. Does a given element exist?
+Redis 有检测成员的指令。一个特定的元素是否存在？
 
     > sismember myset 3
     (integer) 1
     > sismember myset 30
     (integer) 0
 
-"3" is a member of the set, while "30" is not.
+"3" 是 set 的一个成员，而 "30" 不是。
 
-Sets are good for expressing relations between objects.
-For instance we can easily use sets in order to implement tags.
+Sets 适合用于表示对象间的关系。
+例如，我们可以轻易使用 set 来表示标记。
 
-A simple way to model this problem is to have a set for every object we
-want to tag. The set contains the IDs of the tags associated with the object.
+一个简单的建模方式是，对每一个希望标记的对象使用 set。这个 set 包含和对象相关联的标签的 ID。
 
-Imagine we want to tag news.
-If our news ID 1000 is tagged with tags 1, 2, 5 and 77, we can have one set
-associating our tag IDs with the news item:
+假设我们想要给新闻打上标签。
+假设新闻 ID 1000 被打上了 1,2,5 和 77 四个标签，我们可以使用一个 set 把 tag ID 和新闻条目关联起来：
 
     > sadd news:1000:tags 1 2 5 77
     (integer) 4
 
-However sometimes I may want to have the inverse relation as well: the list
-of all the news tagged with a given tag:
+但是，有时候我可能也会需要相反的关系：所有被打上相同标签的新闻列表：
 
     > sadd tag:1:news 1000
     (integer) 1
@@ -412,7 +377,7 @@ of all the news tagged with a given tag:
     > sadd tag:77:news 1000
     (integer) 1
 
-To get all the tags for a given object is trivial:
+获取一个对象的所有 tag 是很方便的：
 
     > smembers news:1000:tags
     1. 5
@@ -420,25 +385,16 @@ To get all the tags for a given object is trivial:
     3. 77
     4. 2
 
-Note: in the example we assume you have another data structure, for example
-a Redis hash, which maps tag IDs to tag names.
+注意：在这个例子中，我们假设你有另一个数据结构，比如一个 Redis hash，把标签 ID 对应到标签名称。
 
-There are other non trivial operations that are still easy to implement
-using the right Redis commands. For instance we may want a list of all the
-objects with the tags 1, 2, 10, and 27 together. We can do this using
-the `SINTER` command, which performs the intersection between different
-sets. We can use:
+使用 Redis 命令行，我们可以轻易实现其它一些有用的操作。比如，我们可能需要一个含有 1, 2, 10, 和 27 标签的对象的列表。我们可以用 `SINTER` 命令来完成这件事。它获取不同 set 的交集。我们可以用：
 
     > sinter tag:1:news tag:2:news tag:10:news tag:27:news
     ... results here ...
 
-Intersection is not the only operation performed, you can also perform
-unions, difference, extract a random element, and so forth.
+不光可以取交集，还可以取并集，差集，获取随机元素，等等。
 
-The command to extract an element is called `SPOP`, and is handy to model
-certain problems. For example in order to implement a web-based poker game,
-you may want to represent your deck with a set. Imagine we use a one-char
-prefix for (C)lubs, (D)iamonds, (H)earts, (S)pades:
+获取一个元素的命令是 `SPOP`，它很适合对特定问题建模。比如，要实现一个基于 web 的扑克游戏，你可能需要用 set 来表示一副牌。假设我们用一个字符的前缀来表示不同花色：
 
     >  sadd deck C1 C2 C3 C4 C5 C6 C7 C8 C9 C10 CJ CQ CK
        D1 D2 D3 D4 D5 D6 D7 D8 D9 D10 DJ DQ DK H1 H2 H3
@@ -446,24 +402,16 @@ prefix for (C)lubs, (D)iamonds, (H)earts, (S)pades:
        S7 S8 S9 S10 SJ SQ SK
        (integer) 52
 
-Now we want to provide each player with 5 cards. The `SPOP` command
-removes a random element, returning it to the client, so it is the
-perfect operation in this case.
+现在，我们想要给每个玩家 5 张牌。`SPOP` 命令删除一个随机元素，把它返回给客户端，因此它是完全合适的操作。
 
-However if we call it against our deck directly, in the next play of the
-game we'll need to populate the deck of cards again, which may not be
-ideal. So to start, we can make a copy of the set stored in the `deck` key
-into the `game:1:deck` key.
+但是，如果我们对我们的牌直接调用它，在下一盘我们就需要重新充满这副牌。开始，我们可以复制 `deck` 键中的内容，并放入 `game:1:deck` 键中。
 
-This is accomplished using `SUNIONSTORE`, which normally performs the
-union between multiple sets, and stores the result into another set.
-However, since the union of a single set is itself, I can copy my deck
-with:
+这是通过 `SUNIONSTORE` 实现的，它通常用于对多个集合取交集，并把结果存入另一个 set 中。但是，因为一个 set 的交集就是它本身，我可以这样复制我的牌：
 
     > sunionstore game:1:deck deck
     (integer) 52
 
-Now I'm ready to provide the first player with five cards:
+现在，我已经准备好给 1 号玩家发五张牌：
 
     > spop game:1:deck
     "C6"
