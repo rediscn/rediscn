@@ -597,7 +597,7 @@ var rediscn_commands={
     "group": "string"
   },
   "DEL": {
-    "summary": "删除一个key",
+    "summary": "删除指定的key（一个或多个）",
     "complexity": "O(N) 将要被删除的key的数量，当删除的key是字符串以外的复杂数据类型时比如List,Set,Hash删除这个key的时间复杂度是O(1)。",
     "arguments": [
       {

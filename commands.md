@@ -579,7 +579,7 @@ discuzTid: 850
                     key [key ...]
                   </span>
                 </span>
-                <span class='summary'>删除一个key</span>
+                <span class='summary'>删除指定的key（一个或多个）</span>
               </a>
             </li>
             <li data-group='transactions' data-name='discard'>

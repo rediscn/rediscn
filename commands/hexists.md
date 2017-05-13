@@ -8,14 +8,14 @@ commandsType: hashes
 discuzTid: 973
 ---
 
-返回hash里面key是否存在的标志
+返回hash里面field是否存在
 
 ## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply), 含义如下：
 
-- 1 哈希集中含有该字段。
-- 0 哈希集中不含有该存在字段，或者key不存在。
+- 1 hash里面包含该field。
+- 0 hash里面不包含该field或者key不存在。
 
 ## 例子
 

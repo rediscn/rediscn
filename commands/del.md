@@ -8,7 +8,7 @@ commandsType: keys
 discuzTid: 948
 ---
 
-如果删除的key不存在，则直接忽略。
+删除指定的一批keys，如果删除中的某些key不存在，则直接忽略。
 
 ## 返回值
 
