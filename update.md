@@ -8,6 +8,9 @@ discuzTid: 855
 ---
 # redis中文网更新日志 #
 
+### 2017年5月22日
+1、更新首页和下载页里redis的最新版本3.2.9。<br/>
+
 ### 2017年3月13日
 1、修正[DEL](http://redis.cn/commands/del.html)翻译，感谢rhett.pang@qq.com反馈的问题。
 2、修正[HEXISTS](http://redis.cn/commands/hexists.html)翻译，感谢rhett.pang@qq.com反馈的问题。
