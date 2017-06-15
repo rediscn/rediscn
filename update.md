@@ -8,6 +8,9 @@ discuzTid: 855
 ---
 # redis中文网更新日志 #
 
+### 2017年6月15日
+1、修正lizhiyong2204在[论坛](http://bbs.redis.cn/forum.php?mod=viewthread&tid=882)中提出的[data-types-intro](http://redis.cn/topics/data-types-intro.html)的文字错误<br/>
+
 ### 2017年5月22日
 1、更新首页和下载页里redis的最新版本3.2.9。<br/>
 
