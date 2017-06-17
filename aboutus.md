@@ -181,7 +181,20 @@ disqusUrl: http://redis.cn/aboutus.html
                  <span class='summary'>Focus on java, python, redis, es... 发扬社区精神，学习、分享、交流！</span>
            </a>
        </li>
-       
+       <li data-group='string'>
+             <a href='https://github.com/donlianli' target="_blank">
+                 <span class='command'>
+                     邯郸人
+                     <span class='args'>
+                         donlianli@126.com
+                     </span>
+                 </span>
+                 <span class='summary'>
+                     微信号：<font color="red">donlianli</font>
+                 </span>
+                 <span class='summary'>Stay hungry Stay foolish</span>
+           </a>
+       </li>
       </ul>
     </div>
 </section>
