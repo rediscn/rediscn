@@ -30,7 +30,7 @@ Redis2.2版本及以后，存储集合数据的时候会采用内存压缩技术
 
 ## 位级别和字级别的操作
 
-Redis 2.2引入了位级别和字级别的操作: [GETRANGE](/commands/getrange.html), [SETRANGE](/commands/setrange.html), [GETBIT](/commands/getbit.html) 和 [SETBIT](/commands/setbit.html).使用这些命令，那你可以把redis的字符串当做一个随机读取的数组。例如你有一个应用，用来标志用户的ID是连续的整数，你可以使用一个位图标记用户的性别，使用1表示男性，0表示女性，或者其他的方式。这样的话，1亿个用户将仅使用12    M的内存。你可以使用同样的方法，使用 [GETRANGE](/commands/getrange.html) 和 [SETRANGE](/commands/setrange.html) 命令为每个用户存储一个字节的信息。这仅是一个例子，实际上你可以使用这些原始数据类型解决更多问题
+Redis 2.2引入了位级别和字级别的操作: [GETRANGE](/commands/getrange.html), [SETRANGE](/commands/setrange.html), [GETBIT](/commands/getbit.html) 和 [SETBIT](/commands/setbit.html).使用这些命令，你可以把redis的字符串当做一个随机读取的（字节）数组。例如你有一个应用，用来标志用户的ID是连续的整数，你可以使用一个位图标记用户的性别，使用1表示男性，0表示女性，或者其他的方式。这样的话，1亿个用户将仅使用12    M的内存。你可以使用同样的方法，使用 [GETRANGE](/commands/getrange.html) 和 [SETRANGE](/commands/setrange.html) 命令为每个用户存储一个字节的信息。这仅是一个例子，实际上你可以使用这些原始数据类型解决更多问题。
 
 ## 尽可能使用散列表（hashes）
 
@@ -40,7 +40,7 @@ Redis 2.2引入了位级别和字级别的操作: [GETRANGE](/commands/getrange.
 
 ## 使用散列结构高效存储抽象的键值对
 
-我知道这部分的标题很吓人，但是我将详细的解释这部分内容.
+我知道这部分的标题很吓人，但是我将详细解释这部分内容.
 
 一般而言，把一个模型（model）表示为key-value的形式存储在redis中非常容易，当然value必须为字符串，这样存储不仅比一般的key value存储高效，并且比memcached存储还高效.
 
