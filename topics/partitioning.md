@@ -5,6 +5,7 @@ permalink: topics/partitioning.html
 disqusIdentifier: topics_partitioning
 disqusUrl: http://redis.cn/topics/partitioning.html
 discuzTid: 862
+tranAuthor: lidongliang
 ---
 
 分区：怎样将数据分布到多个redis实例

@@ -5,6 +5,7 @@ permalink: topics/memory-optimization.html
 disqusIdentifier: topics_memory-optimization
 disqusUrl: http://redis.cn/topics/memory-optimization.html
 discuzTid: 858
+tranAuthor: lidongliang
 ---
 
 这个页面仍然在维护中。当你在使用redis的过程中遇到一些与内存相关的问题时，你需要关注下面的事情。

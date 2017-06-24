@@ -10,12 +10,15 @@
             <div class='article-main'>
               <div class='metadata'>
               </div>
-              
               {{ content }}
-              
             </div>
 {% include commands/{{ page.commandsType}}.html %}
             </article>
+            {% if page.tranAuthor %}
+						<article id='tranAuthor'>
+							{% include author/{{ page.tranAuthor}}.html %}
+						</article>
+						{% endif %}
         </div>
 
 {% include footer.html %}
