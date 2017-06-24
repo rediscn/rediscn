@@ -8,6 +8,9 @@ discuzTid: 855
 ---
 # redis中文网更新日志 #
 
+### 2017年6月24日
+1、更新[partitioning](http://redis.cn/topics/partitioning.html)翻译，感谢dongliang.li提供的翻译。
+
 ### 2017年6月17日
 1、更新[memory-optimization](http://redis.cn/topics/memory-optimization.html)翻译，感谢dongliang.li提供的翻译。
 
