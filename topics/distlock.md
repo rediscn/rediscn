@@ -7,84 +7,71 @@ disqusUrl: http://redis.cn/topics/distlock.html
 discuzTid: 888
 ---
 
-Distributed locks with Redis
-===
+## Redis分布式锁
 
-Distributed locks are a very useful primitive in many environments where
-different processes must operate with shared resources in a mutually
-exclusive way.
+分布式锁在很多场景中是非常有用的原语，
+不同的进程必须以独占资源的方式实现资源共享就是一个典型的例子。
 
-There are a number of libraries and blog posts describing how to implement
-a DLM (Distributed Lock Manager) with Redis, but every library uses a different
-approach, and many use a simple approach with lower guarantees compared to
-what can be achieved with slightly more complex designs.
+有很多分布式锁的库和描述怎么实现分布式锁管理器（DLM)的博客,但是每个库的实现方式都不太一样，很多库的实现方式为了简单降低了可靠性，而有的使用了稍微复杂的设计。
 
-This page is an attempt to provide a more canonical algorithm to implement
-distributed locks with Redis. We propose an algorithm, called **Redlock**,
-which implements a DLM which we believe to be safer than the vanilla single
-instance approach. We hope that the community will analyze it, provide
-feedback, and use it as a starting point for the implementations or more
-complex or alternative designs.
+这个页面试图提供一个使用Redis实现分布式锁的规范算法。我们提出一种算法，叫**Redlock**,我们认为这种实现比普通的单实例实现更安全,我们希望redis社区能帮助分析一下这种实现方法，并给我们提供反馈。
 
-Implementations
----
+## 实现细节
 
-Before describing the algorithm, here are a few links to implementations
-already available that can be used for reference.
+在我们开始描述算法之前，我们已经有一些可供参考的实现库.
 
-* [Redlock-rb](https://github.com/antirez/redlock-rb) (Ruby implementation). There is also a [fork of Redlock-rb](https://github.com/leandromoreira/redlock-rb) that adds a gem for easy distribution and perhaps more.
-* [Redlock-py](https://github.com/SPSCommerce/redlock-py) (Python implementation).
-* [Redlock-php](https://github.com/ronnylt/redlock-php) (PHP implementation).
-* [PHPRedisMutex](https://github.com/malkusch/lock#phpredismutex) (further PHP implementation)
-* [Redsync.go](https://github.com/hjr265/redsync.go) (Go implementation).
-* [Redisson](https://github.com/mrniko/redisson) (Java implementation).
-* [Redis::DistLock](https://github.com/sbertrang/redis-distlock) (Perl implementation).
-* [Redlock-cpp](https://github.com/jacket-code/redlock-cpp) (C++ implementation).
-* [Redlock-cs](https://github.com/kidfashion/redlock-cs) (C#/.NET implementation).
-* [node-redlock](https://github.com/mike-marcacci/node-redlock) (NodeJS implementation). Includes support for lock extension.
+* [Redlock-rb](https://github.com/antirez/redlock-rb) (Ruby 版). There is also a [fork of Redlock-rb](https://github.com/leandromoreira/redlock-rb) that adds a gem for easy distribution and perhaps more.
+* [Redlock-py](https://github.com/SPSCommerce/redlock-py) (Python 版).
+* [Aioredlock](https://github.com/joanvila/aioredlock) (Asyncio Python 版).
+* [Redlock-php](https://github.com/ronnylt/redlock-php) (PHP 版).
+* [PHPRedisMutex](https://github.com/malkusch/lock#phpredismutex) (further PHP 版)
+* [cheprasov/php-redis-lock](https://github.com/cheprasov/php-redis-lock) (PHP library for locks)
+* [Redsync.go](https://github.com/hjr265/redsync.go) (Go 版).
+* [Redisson](https://github.com/mrniko/redisson) (Java 版).
+* [Redis-DistLock](https://github.com/sbertrang/redis-distlock) (Perl 版).
+* [Redlock-cpp](https://github.com/jacket-code/redlock-cpp) (C++ 版).
+* [Redlock-cs](https://github.com/kidfashion/redlock-cs) (C#/.NET 版).
+* [RedLock.net](https://github.com/samcook/RedLock.net) (C#/.NET 版). Includes async and lock extension support.
+* [ScarletLock](https://github.com/psibernetic/scarletlock) (C# .NET 版 with configurable datastore)
+* [node-redlock](https://github.com/mike-marcacci/node-redlock) (NodeJS 版). Includes support for lock extension.
 
-Safety and Liveness guarantees
----
+## 安全和活性失效保障
 
-We are going to model our design with just three properties that, from our point of view, are the minimum guarantees needed to use distributed locks in an effective way.
 
-1. Safety property: Mutual exclusion. At any given moment, only one client can hold a lock.
-2. Liveness property A: Deadlock free. Eventually it is always possible to acquire a lock, even if the client that locked a resource crashed or gets partitioned.
-3. Liveness property B: Fault tolerance. As long as the majority of Redis nodes are up, clients are able to acquire and release locks.
+按照我们的思路和设计方案，算法只需具备3个特性就可以实现一个最低保障的分布式锁。
 
-Why failover-based implementations are not enough
----
+1. 安全属性（Safety property）: 独享（相互排斥）。在任意一个时刻，只有一个客户端持有锁。
+2. 活性A(Liveness property A):  无死锁。即便持有锁的客户端崩溃（crashed)或者网络被分裂（gets partitioned)，锁仍然可以被获取。
+3. 活性B(Liveness property B): 容错。 只要大部分Redis节点都活着，客户端就可以获取和释放锁.
 
-To understand what we want to improve, let’s analyze the current state of affairs with most Redis-based distributed lock libraries.
+## 为什么基于故障转移的实现还不够
 
-The simplest way to use Redis to lock a resource is to create a key in an instance. The key is usually created with a limited time to live, using the Redis expires feature, so that eventually it will get released (property 2 in our list). When the client needs to release the resource, it deletes the key.
+为了更好的理解我们想要改进的方面，我们先分析一下当前大多数基于Redis的分布式锁现状和实现方法.
 
-Superficially this works well, but there is a problem: this is a single point of failure in our architecture. What happens if the Redis master goes down?
-Well, let’s add a slave! And use it if the master is unavailable. This is unfortunately not viable. By doing so we can’t implement our safety property of mutual exclusion, because Redis replication is asynchronous.
+实现Redis分布式锁的最简单的方法就是在Redis中创建一个key，这个key有一个失效时间（TTL)，以保证锁最终会被自动释放掉（这个对应特性2）。当客户端释放资源(解锁）的时候，会删除掉这个key。
 
-There is an obvious race condition with this model:
+从表面上看，似乎效果还不错，但是这里有一个问题：这个架构中存在一个严重的单点失败问题。如果Redis挂了怎么办？你可能会说，可以通过增加一个slave节点解决这个问题。但这通常是行不通的。这样做，我们不能实现资源的独享,因为Redis的主从同步通常是异步的。
 
-1. Client A acquires the lock in the master.
-2. The master crashes before the write to the key is transmitted to the slave.
-3. The slave gets promoted to master.
-4. Client B acquires the lock to the same resource A already holds a lock for. **SAFETY VIOLATION!**
+在这种场景（主从结构）中存在明显的竞态:
 
-Sometimes it is perfectly fine that under special circumstances, like during a failure, multiple clients can hold the lock at the same time.
-If this is the case, you can use your replication based solution. Otherwise we suggest to implement the solution described in this document.
+1. 客户端A从master获取到锁
+2. 在master将锁同步到slave之前，master宕掉了。
+3. slave节点被晋级为master节点
+4. 客户端B取得了同一个资源被客户端A已经获取到的另外一个锁。**安全失效！**
 
-Correct implementation with a single instance
----
+有时候程序就是这么巧，比如说正好一个节点挂掉的时候，多个客户端同时取到了锁。如果你可以接受这种小概率错误，那用这个基于复制的方案就完全没有问题。否则的话，我们建议你实现下面描述的解决方案。
 
-Before trying to overcome the limitation of the single instance setup described above, let’s check how to do it correctly in this simple case, since this is actually a viable solution in applications where a race condition from time to time is acceptable, and because locking into a single instance is the foundation we’ll use for the distributed algorithm described here.
+## 单Redis实例实现分布式锁的正确方法
 
-To acquire the lock, the way to go is the following:
+在尝试克服上述单实例设置的限制之前，让我们先讨论一下在这种简单情况下实现分布式锁的正确做法，实际上这是一种可行的方案，尽管存在竞态，结果仍然是可接受的，另外，这里讨论的单实例加锁方法也是分布式加锁算法的基础。
+
+获取锁使用命令:
 
         SET resource_name my_random_value NX PX 30000
 
-The command will set the key only if it does not already exist (NX option), with an expire of 30000 milliseconds (PX option).
-The key is set to a value “my_random_value”. This value must be unique across all clients and all lock requests.
+这个命令仅在不存在key的时候才能被执行成功（NX选项），并且这个key有一个30秒的自动失效时间（PX属性）。这个key的值是“my_random_value"(一个随机值），这个值在所有的客户端必须是唯一的，所有同一key的获取者（竞争者）这个值都不能一样。
 
-Basically the random value is used in order to release the lock in a safe way, with a script that tells Redis: remove the key only if it exists and the value stored at the key is exactly the one I expect to be. This is accomplished by the following Lua script:
+value的值必须是随机数主要是为了更安全的释放锁，释放锁的时候使用脚本告诉Redis:只有key存在并且存储的值和我指定的值一样才能告诉我删除成功。可以通过以下Lua脚本实现：
 
     if redis.call("get",KEYS[1]) == ARGV[1] then
         return redis.call("del",KEYS[1])
@@ -92,132 +79,103 @@ Basically the random value is used in order to release the lock in a safe way, w
         return 0
     end
 
-This is important in order to avoid removing a lock that was created by another client. For example a client may acquire the lock, get blocked in some operation for longer than the lock validity time (the time at which the key will expire), and later remove the lock, that was already acquired by some other client.
-Using just DEL is not safe as a client may remove the lock of another client. With the above script instead every lock is “signed” with a random string, so the lock will be removed only if it is still the one that was set by the client trying to remove it.
+使用这种方式释放锁可以避免删除别的客户端获取成功的锁。举个例子：客户端A取得资源锁，但是紧接着被一个其他操作阻塞了，当客户端A运行完毕其他操作后要释放锁时，原来的锁早已超时并且被Redis自动释放，并且在这期间资源锁又被客户端B再次获取到。如果仅使用DEL命令将key删除，那么这种情况就会把客户端B的锁给删除掉。使用Lua脚本就不会存在这种情况，因为脚本仅会删除value等于客户端A的value的key（value相当于客户端的一个签名）。
 
-What should this random string be? I assume it’s 20 bytes from /dev/urandom, but you can find cheaper ways to make it unique enough for your tasks.
-For example a safe pick is to seed RC4 with /dev/urandom, and generate a pseudo random stream from that.
-A simpler solution is to use a combination of unix time with microseconds resolution, concatenating it with a client ID, it is not as safe, but probably up to the task in most environments.
+这个随机字符串应该怎么设置？我认为它应该是从/dev/urandom产生的一个20字节随机数，但是我想你可以找到比这种方法代价更小的方法，只要这个数在你的任务中是唯一的就行。例如一种安全可行的方法是使用/dev/urandom作为RC4的种子和源产生一个伪随机流;一种更简单的方法是把以毫秒为单位的unix时间和客户端ID拼接起来，理论上不是完全安全，但是在多数情况下可以满足需求.
 
-The time we use as the key time to live, is called the “lock validity time”. It is both the auto release time, and the time the client has in order to perform the operation required before another client may be able to acquire the lock again, without technically violating the mutual exclusion guarantee, which is only limited to a given window of time from the moment the lock is acquired.
+key的失效时间，被称作“锁定有效期”。它不仅是key自动失效时间，而且还是一个客户端持有锁多长时间后可以被另外一个客户端重新获得。
 
-So now we have a good way to acquire and release the lock. The system, reasoning about a non-distributed system composed of a single, always available, instance, is safe. Let’s extend the concept to a distributed system where we don’t have such guarantees.
+截至到目前，我们已经有较好的方法获取锁和释放锁。基于Redis单实例，假设这个单实例总是可用，这种方法已经足够安全。现在让我们扩展一下，假设Redis没有总是可用的保障。
 
-The Redlock algorithm
----
+## Redlock算法
 
-In the distributed version of the algorithm we assume we have N Redis masters. Those nodes are totally independent, so we don’t use replication or any other implicit coordination system. We already described how to acquire and release the lock safely in a single instance. We take for granted that the algorithm will use this method to acquire and release the lock in a single instance. In our examples we set N=5, which is a reasonable value, so we need to run 5 Redis masters on different computers or virtual machines in order to ensure that they’ll fail in a mostly independent way.
+在Redis的分布式环境中，我们假设有N个Redis master。这些节点完全互相独立，不存在主从复制或者其他集群协调机制。之前我们已经描述了在Redis单实例下怎么安全地获取和释放锁。我们确保将在每（N)个实例上使用此方法获取和释放锁。在这个样例中，我们假设有5个Redis  master节点，这是一个比较合理的设置，所以我们需要在5台机器上面或者5台虚拟机上面运行这些实例，这样保证他们不会同时都宕掉。
 
-In order to acquire the lock, the client performs the following operations:
+为了取到锁，客户端应该执行以下操作:
 
-1. It gets the current time in milliseconds.
-2. It tries to acquire the lock in all the N instances sequentially, using the same key name and random value in all the instances. During step 2, when setting the lock in each instance, the client uses a timeout which is small compared to the total lock auto-release time in order to acquire it. For example if the auto-release time is 10 seconds, the timeout could be in the ~ 5-50 milliseconds range. This prevents the client from remaining blocked for a long time trying to talk with a Redis node which is down: if an instance is not available, we should try to talk with the next instance ASAP.
-3. The client computes how much time elapsed in order to acquire the lock, by subtracting from the current time the timestamp obtained in step 1. If and only if the client was able to acquire the lock in the majority of the instances (at least 3), and the total time elapsed to acquire the lock is less than lock validity time, the lock is considered to be acquired.
-4. If the lock was acquired, its validity time is considered to be the initial validity time minus the time elapsed, as computed in step 3.
-5. If the client failed to acquire the lock for some reason (either it was not able to lock N/2+1 instances or the validity time is negative), it will try to unlock all the instances (even the instances it believed it was not able to lock).
+1. 获取当前Unix时间，以毫秒为单位。
+2. 依次尝试从N个实例，使用相同的key和随机值获取锁。在步骤2，当向Redis设置锁时,客户端应该设置一个网络连接和响应超时时间，这个超时时间应该小于锁的失效时间。例如你的锁自动失效时间为10秒，则超时时间应该在5-50毫秒之间。这样可以避免服务器端Redis已经挂掉的情况下，客户端还在死死地等待响应结果。如果服务器端没有在规定时间内响应，客户端应该尽快尝试另外一个Redis实例。
+3. 客户端使用当前时间减去开始获取锁时间（步骤1记录的时间）就得到获取锁使用的时间。当且仅当从大多数（这里是3个节点）的Redis节点都取到锁，并且使用的时间小于锁失效时间时，锁才算获取成功。
+4. 如果取到了锁，key的真正有效时间等于有效时间减去获取锁所使用的时间（步骤3计算的结果）。
+5. 如果因为某些原因，获取锁失败（*没有*在至少N/2+1个Redis实例取到锁或者取锁时间已经超过了有效时间），客户端应该在所有的Redis实例上进行解锁（即便某些Redis实例根本就没有加锁成功）。
 
-Is the algorithm asynchronous?
----
+## 这个算法是异步的么?
 
-The algorithm relies on the assumption that while there is no synchronized clock across the processes, still the local time in every process flows approximately at the same rate, with an error which is small compared to the auto-release time of the lock. This assumption closely resembles a real-world computer: every computer has a local clock and we can usually rely on different computers to have a clock drift which is small.
+算法基于这样一个假设：虽然多个进程之间没有时钟同步，但每个进程都以相同的时钟频率前进，时间差相对于失效时间来说几乎可以忽略不计。这种假设和我们的真实世界非常接近：每个计算机都有一个本地时钟，我们可以容忍多个计算机之间有较小的时钟漂移。
 
-At this point we need to better specify our mutual exclusion rule: it is guaranteed only as long as the client holding the lock will terminate its work within the lock validity time (as obtained in step 3), minus some time (just a few milliseconds in order to compensate for clock drift between processes).
+从这点来说，我们必须再次强调我们的互相排斥规则：只有在锁的有效时间（在步骤3计算的结果）范围内客户端能够做完它的工作，锁的安全性才能得到保证（锁的实际有效时间通常要比设置的短，因为计算机之间有时钟漂移的现象）。.
 
-For more information about similar systems requiring a bound *clock drift*, this paper is an interesting reference: [Leases: an efficient fault-tolerant mechanism for distributed file cache consistency](http://dl.acm.org/citation.cfm?id=74870).
+想要了解更多关于需要*时钟漂移*间隙的相似系统, 这里有一个非常有趣的参考: [Leases: an efficient fault-tolerant mechanism for distributed file cache consistency](http://dl.acm.org/citation.cfm?id=74870).
 
-Retry on failure
----
+## 失败时重试
 
-When a client is unable to acquire the lock, it should try again after a random delay in order to try to desynchronize multiple clients trying to acquire the lock for the same resource at the same time (this may result in a split brain condition where nobody wins). Also the faster a client tries to acquire the lock in the majority of Redis instances, the smaller the window for a split brain condition (and the need for a retry), so ideally the client should try to send the SET commands to the N instances at the same time using multiplexing.
+当客户端无法取到锁时，应该在一个*随机*延迟后重试,防止多个客户端在*同时*抢夺同一资源的锁（这样会导致脑裂，没有人会取到锁）。同样，客户端取得大部分Redis实例锁所花费的时间越短，脑裂出现的概率就会越低（必要的重试），所以，理想情况一下，客户端应该同时（并发地）向所有Redis发送SET命令。
 
-It is worth stressing how important it is for clients that fail to acquire the majority of locks, to release the (partially) acquired locks ASAP, so that there is no need to wait for key expiry in order for the lock to be acquired again (however if a network partition happens and the client is no longer able to communicate with the Redis instances, there is an availability penalty to pay as it waits for key expiration).
+需要强调，当客户端从大多数Redis实例获取锁失败时，应该尽快地释放（部分）已经成功取到的锁，这样其他的客户端就不必非得等到锁过完“有效时间”才能取到（然而，如果已经存在网络分裂，客户端已经无法和Redis实例通信，此时就只能等待key的自动释放了，等于被惩罚了）。
 
-Releasing the lock
----
+## 释放锁
 
-Releasing the lock is simple and involves just releasing the lock in all instances, whether or not the client believes it was able to successfully lock a given instance.
+释放锁比较简单，向所有的Redis实例发送释放锁命令即可，不用关心之前有没有从Redis实例成功获取到锁.
 
-Safety arguments
----
+## 安全争议
 
-Is the algorithm safe? We can try to understand what happens in different scenarios.
+这个算法安全么？我们可以从不同的场景讨论一下。
 
-To start let’s assume that a client is able to acquire the lock in the majority of instances. All the instances will contain a key with the same time to live. However, the key was set at different times, so the keys will also expire at different times. But if the first key was set at worst at time T1 (the time we sample before contacting the first server) and the last key was set at worst at time T2 (the time we obtained the reply from the last server), we are sure that the first key to expire in the set will exist for at least `MIN_VALIDITY=TTL-(T2-T1)-CLOCK_DRIFT`. All the other keys will expire later, so we are sure that the keys will be simultaneously set for at least this time.
+让我们假设客户端从大多数Redis实例取到了锁。所有的实例都包含同样的key，并且key的有效时间也一样。然而，key肯定是在不同的时间被设置上的，所以key的失效时间也不是精确的相同。我们假设第一个设置的key时间是T1(开始向第一个server发送命令前时间），最后一个设置的key时间是T2(得到最后一台server的答复后的时间），我们可以确认，第一个server的key至少会存活 `MIN_VALIDITY=TTL-(T2-T1)-CLOCK_DRIFT`。所有其他的key的存活时间，都会比这个key时间晚，所以可以肯定，所有key的失效时间至少是MIN_VALIDITY。
 
-During the time that the majority of keys are set, another client will not be able to acquire the lock, since N/2+1 SET NX operations can’t succeed if N/2+1 keys already exist. So if a lock was acquired, it is not possible to re-acquire it at the same time (violating the mutual exclusion property).
+当大部分实例的key被设置后，其他的客户端将不能再取到锁，因为至少N/2+1个实例已经存在key。所以，如果一个锁被（客户端）获取后，客户端自己也不能再次申请到锁(违反互相排斥属性）。
 
-However we want to also make sure that multiple clients trying to acquire the lock at the same time can’t simultaneously succeed.
+然而我们也想确保，当多个客户端同时抢夺一个锁时不能两个都成功。
 
-If a client locked the majority of instances using a time near, or greater, than the lock maximum validity time (the TTL we use for SET basically), it will consider the lock invalid and will unlock the instances, so we only need to consider the case where a client was able to lock the majority of instances in a time which is less than the validity time. In this case for the argument already expressed above, for `MIN_VALIDITY` no client should be able to re-acquire the lock. So multiple clients will be able to lock N/2+1 instances at the same time (with "time" being the end of Step 2) only when the time to lock the majority was greater than the TTL time, making the lock invalid.
+如果客户端在获取到大多数redis实例锁，使用的时间接近或者已经大于失效时间，客户端将认为锁是失效的锁，并且将释放掉已经获取到的锁，所以我们只需要在有效时间范围内获取到大部分锁这种情况。在上面已经讨论过有争议的地方，在`MIN_VALIDITY`时间内，将没有客户端再次取得锁。所以只有一种情况，多个客户端会在相同时间取得N/2+1实例的锁，那就是取得锁的时间大于失效时间（TTL time)，这样取到的锁也是无效的.
 
-Are you able to provide a formal proof of safety, point to existing algorithms that are similar, or find a bug? That would be greatly appreciated.
+如果你能提供关于现有的类似算法的一个正式证明（指出正确性），或者是发现这个算法的bug？ 我们将非常感激.
 
-Liveness arguments
----
+## 活性争议
 
-The system liveness is based on three main features:
+系统的活性安全基于三个主要特性:
 
-1. The auto release of the lock (since keys expire): eventually keys are available again to be locked.
-2. The fact that clients, usually, will cooperate removing the locks when the lock was not acquired, or when the lock was acquired and the work terminated, making it likely that we don’t have to wait for keys to expire to re-acquire the lock.
-3. The fact that when a client needs to retry a lock, it waits a time which is comparably greater than the time needed to acquire the majority of locks, in order to probabilistically make split brain conditions during resource contention unlikely.
+1. 锁的自动释放（因为key失效了）：最终锁可以再次被使用.
+2. 客户端通常会将没有获取到的锁删除，或者锁被取到后，使用完后，客户端会主动（提前）释放锁，而不是等到锁失效另外的客户端才能取到锁。.
+3. 当客户端重试获取锁时，需要等待一段时间，这个时间必须大于从大多数Redis实例成功获取锁使用的时间，以最大限度地避免脑裂。.
 
-However, we pay an availability penalty equal to `TTL` time on network partitions, so if there are continuous partitions, we can pay this penalty indefinitely.
-This happens every time a client acquires a lock and gets partitioned away before being able to remove the lock.
+然而，当网络出现问题时系统在`失效时间(TTL)`内就无法服务，这种情况下我们的程序就会为此付出代价。如果网络持续的有问题，可能就会出现死循环了。
+这种情况发生在当客户端刚取到一个锁还没有来得及释放锁就被网络隔离.
 
-Basically if there are infinite continuous network partitions, the system may become not available for an infinite amount of time.
+如果网络一直没有恢复，这个算法会导致系统不可用.
 
-Performance, crash-recovery and fsync
----
+## 性能，崩溃恢复和Redis同步
 
-Many users using Redis as a lock server need high performance in terms of both latency to acquire and release a lock, and number of acquire / release operations that it is possible to perform per second. In order to meet this requirement, the strategy to talk with the N Redis servers to reduce latency is definitely multiplexing (or poor man's multiplexing, which is, putting the socket in non-blocking mode, send all the commands, and read all the commands later, assuming that the RTT between the client and each instance is similar).
+很多用户把Redis当做分布式锁服务器，使用获取锁和释放锁的响应时间，每秒钟可用执行多少次 acquire / release 操作作为性能指标。为了达到这一要求，增加Redis实例当然可用降低响应延迟（没有钱买硬件的"穷人",也可以在网络方面做优化，使用非阻塞模型，一次发送所有的命令，然后异步的读取响应结果，假设客户端和redis服务器之间的RTT都差不多。
 
-However there is another consideration to do about persistence if we want to target a crash-recovery system model.
+然而，如果我们想使用可以从备份中恢复的redis模式，有另外一种持久化情况你需要考虑，.
 
-Basically to see the problem here, let’s assume we configure Redis without persistence at all. A client acquires the lock in 3 of 5 instances. One of the instances where the client was able to acquire the lock is restarted, at this point there are again 3 instances that we can lock for the same resource, and another client can lock it again, violating the safety property of exclusivity of lock.
+我们考虑这样一种场景，假设我们的redis没用使用备份。一个客户端获取到了3个实例的锁。此时，其中一个已经被客户端取到锁的redis实例被重启，在这个时间点，就可能出现3个节点没有设置锁，此时如果有另外一个客户端来设置锁，锁就可能被再次获取到，这样锁的互相排斥的特性就被破坏掉了。
 
-If we enable AOF persistence, things will improve quite a bit. For example we can upgrade a server by sending SHUTDOWN and restarting it. Because Redis expires are semantically implemented so that virtually the time still elapses when the server is off, all our requirements are fine.
-However everything is fine as long as it is a clean shutdown. What about a power outage? If Redis is configured, as by default, to fsync on disk every second, it is possible that after a restart our key is missing. In theory, if we want to guarantee the lock safety in the face of any kind of instance restart, we need to enable fsync=always in the persistence setting. This in turn will totally ruin performances to the same level of CP systems that are traditionally used to implement distributed locks in a safe way.
+如果我们启用了AOF持久化，情况会好很多。我们可用使用SHUTDOWN命令关闭然后再次重启。因为Redis到期是语义上实现的，所以当服务器关闭时，实际上还是经过了时间，所有（保持锁）需要的条件都没有受到影响.
+没有受到影响的前提是redis优雅的关闭。停电了怎么办？如果redis是每秒执行一次fsync，那么很有可能在redis重启之后，key已经丢弃。理论上，如果我们想在Redis重启地任何情况下都保证锁的安全，我们必须开启fsync=always的配置。这反过来将完全破坏与传统上用于以安全的方式实现分布式锁的同一级别的CP系统的性能.
 
-However things are better than what they look like at a first glance. Basically
-the algorithm safety is retained as long as when an instance restarts after a
-crash, it no longer participates to any **currently active** lock, so that the
-set of currently active locks when the instance restarts, were all obtained
-by locking instances other than the one which is rejoining the system.
+然而情况总比一开始想象的好一些。当一个redis节点重启后，只要它不参与到任意**当前活动**的锁，没有被当做“当前存活”节点被客户端重新获取到,算法的安全性仍然是有保障的。
 
-To guarantee this we just need to make an instance, after a crash, unavailable
-for at least a bit more than the max `TTL` we use, which is, the time needed
-for all the keys about the locks that existed when the instance crashed, to
-become invalid and be automatically released.
+为了达到这种效果，我们只需要将新的redis实例，在一个`TTL`时间内，对客户端不可用即可，在这个时间内，所有客户端锁将被失效或者自动释放.
 
-Using *delayed restarts* it is basically possible to achieve safety even
-without any kind of Redis persistence available, however note that this may
-translate into an availability penalty. For example if a majority of instances
-crash, the system will become globally unavailable for `TTL` (here globally means
-that no resource at all will be lockable during this time).
+使用*延迟重启*可以在不采用持久化策略的情况下达到同样的安全，然而这样做有时会让系统转化为彻底不可用。比如大部分的redis实例都崩溃了，系统在`TTL`时间内任何锁都将无法加锁成功。
 
-Making the algorithm more reliable: Extending the lock
----
+## 使算法更加可靠：锁的扩展
 
-If the work performed by clients is composed of small steps, it is possible to
-use smaller lock validity times by default, and extend the algorithm implementing
-a lock extension mechanism. Basically the client, if in the middle of the
-computation while the lock validity is approaching a low value, may extend the
-lock by sending a Lua script to all the instances that extends the TTL of the key
-if the key exists and its value is still the random value the client assigned
-when the lock was acquired.
+如果你的工作可以拆分为许多小步骤，可以将有效时间设置的小一些，使用锁的一些扩展机制。在工作进行的过程中，当发现锁剩下的有效时间很短时，可以再次向redis的所有实例发送一个Lua脚本，让key的有效时间延长一点（前提还是key存在并且value是之前设置的value)。
 
-The client should only consider the lock re-acquired if it was able to extend
-the lock into the majority of instances, and within the validity time
-(basically the algorithm to use is very similar to the one used when acquiring
-the lock).
+客户端扩展TTL时必须像首次取得锁一样在大多数实例上扩展成功才算再次取到锁，并且是在有效时间内再次取到锁（算法和获取锁是非常相似的）。
 
-However this does not technically change the algorithm, so the maximum number
-of lock reacquisition attempts should be limited, otherwise one of the liveness
-properties is violated.
+这样做从技术上将并不会改变算法的正确性，所以扩展锁的过程中仍然需要达到获取到N/2+1个实例这个要求，否则活性特性之一就会失效。
 
-Want to help?
----
+## 想要得到帮助?
 
-If you are into distributed systems, it would be great to have your opinion / analysis. Also reference implementations in other languages could be great.
+如果你正在做分布式系统，你的意见和分析非常重要。其他语言实现分布式锁的算法同样非常宝贵。
 
-Thanks in advance!
+提前感谢各位!
+
+## Redlock 分析
+
+1. Martin Kleppmann [在这儿分析了Redlock](http://martin.kleppmann.com/2016/02/08/how-to-do-distributed-locking.html). 我不赞同他的说法，并且对他做出了回复 [我的回复在这儿](http://antirez.com/news/101).
+
