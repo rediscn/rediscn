@@ -5,6 +5,9 @@
 
 ## 更新日志： ##
 
+### 2017年6月29日
+1、更新[Redis分布式锁（distlock）](http://redis.cn/topics/distlock.html)翻译，感谢dongliang.li提供的翻译。
+
 ### 2017年6月24日
 1、更新[partitioning](http://redis.cn/topics/partitioning.html)翻译，感谢dongliang.li提供的翻译。
 

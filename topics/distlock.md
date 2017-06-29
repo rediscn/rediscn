@@ -5,6 +5,7 @@ permalink: topics/distlock.html
 disqusIdentifier: topics_distlock
 disqusUrl: http://redis.cn/topics/distlock.html
 discuzTid: 888
+tranAuthor: lidongliang
 ---
 
 ## Redis分布式锁
