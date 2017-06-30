@@ -1,10 +1,10 @@
 ---
 layout: topics
-title: REDIS rdd
+title: REDIS idb
 permalink: topics/ldb.html
 disqusIdentifier: topics_rdd
 disqusUrl: http://redis.cn/topics/rdd.html
-discuzTid: 895
+discuzTid: 1459
 ---
 
 # Redis Lua scripts debugger

@@ -1,10 +1,10 @@
 ---
 layout: topics
-title: REDIS faq
+title: REDIS index
 permalink: topics/indexes.html
 disqusIdentifier: topics_faq
 disqusUrl: http://redis.cn/topics/faq.html
-discuzTid: 880
+discuzTid: 1460
 ---
 
 # FAQ

@@ -1,10 +1,10 @@
 ---
 layout: topics
-title: REDIS rdd
+title: REDIS rediscli
 permalink: topics/rediscli.html
 disqusIdentifier: topics_rdd
 disqusUrl: http://redis.cn/topics/rdd.html
-discuzTid: 895
+discuzTid: 1461
 ---
 
 redis-cli, the Redis command line interface
