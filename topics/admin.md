@@ -21,7 +21,7 @@ discuzTid: 866
 - 确保禁用Linux内核特性transparent huge pages，它对内存使用和延迟有非常大的负面影响。通过命令echo never > sys/kernel/mm/transparent_hugepage/enabled来完成。
 
 
-- 确保你的系统设置了一些swap（我们建议和内存一样大）。如果linux没有swap并且你的redis实例突然消耗了太多内存，或者Redis由于内存溢出会当掉，或者Linux内核OOM Killer会杀掉Redis进程。
+- 确保你的系统设置了一些swap（我们建议和内存一样大）。如果linux没有swap并且你的redis实例突然消耗了太多内存，或者Redis由于内存溢出会宕掉，或者Linux内核OOM Killer会杀掉Redis进程。
 
 
 - 设置一个明确的maxmemory参数来限制你的实例，以便确保实例会报告错误而不是当接近系统内存限制时失败
