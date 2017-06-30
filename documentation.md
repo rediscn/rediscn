@@ -51,8 +51,8 @@ discuzTid: 852
 <h2>Redis Cluster</h2>
 
 <ul>
-<li><a href="/topics/cluster-tutorial.html">cluster-tutorial</a>:a gentle introduction and setup guide to Redis Cluster.</li>
-<li><a href="/topics/topics/cluster-spec.html">Redis Cluster Specification</a>:a gentle introduction and setup guide to Redis Cluster.</li>
+<li><a href="/topics/cluster-tutorial.html">Redis 集群教程</a>：a gentle introduction and setup guide to Redis Cluster.</li>
+<li><a href="/topics/cluster-spec.html">Redis 集群规范</a>：a gentle introduction and setup guide to Redis Cluster.</li>
 </ul>
 
 <h2>故障排除</h2>
