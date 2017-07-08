@@ -6,11 +6,10 @@ disqusIdentifier: command_cluster-info
 disqusUrl: http://redis.cn/commands/cluster-info.html
 commandsType: cluster
 discuzTid: 924
+tranAuthor: lidongliang
 ---
 
-`CLUSTER INFO` provides `INFO` style information about Redis Cluster
-vital parameters. The following is a sample output, followed by the
-description of each field reported.
+`CLUSTER INFO` 命令使用 `INFO` 风格的形式展现了关于Redis集群的重要参数。下面是该命令的典型输出，后面是对每个输出项的说明。
 
 ```
 cluster_state:ok
@@ -26,20 +25,20 @@ cluster_stats_messages_sent:1483972
 cluster_stats_messages_received:1483968
 ```
 
-* `cluster_state`: State is `ok` if the node is able to receive queries. `fail` if there is at least one hash slot which is unbound (no node associated), in error state (node serving it is flagged with FAIL flag), or if the majority of masters can't be reached by this node.
-* `cluster_slots_assigned`: Number of slots which are associated to some node (not unbound). This number should be 16384 for the node to work properly, which means that each hash slot should be mapped to a node.
-* `cluster_slots_ok`: Number of hash slots mapping to a node not in `FAIL` or `PFAIL` state.
-* `cluster_slots_pfail`: Number of hash slots mapping to a node in `PFAIL` state. Note that those hash slots still work correctly, as long as the `PFAIL` state is not promoted to `FAIL` by the failure detection algorithm. `PFAIL` only means that we are currently not able to talk with the node, but may be just a transient error.
-* `cluster_slots_fail`: Number of hash slots mapping to a node in `FAIL` state. If this number is not zero the node is not able to serve queries unless `cluster-require-full-coverage` is set to `no` in the configuration.
-* `cluster_known_nodes`: The total number of known nodes in the cluster, including nodes in `HANDSHAKE` state that may not currently be proper members of the cluster.
-* `cluster_size`: The number of master nodes serving at least one hash slot in the cluster.
-* `cluster_current_epoch`: The local `Current Epoch` variable. This is used in order to create unique increasing version numbers during fail overs.
-* `cluster_my_epoch`: The `Config Epoch` of the node we are talking with. This is the current configuration version assigned to this node.
-* `cluster_stats_messages_sent`: Number of messages sent via the cluster node-to-node binary bus.
-* `cluster_stats_messages_received`: Number of messages received via the cluster node-to-node binary bus.
+* `cluster_state`:  `ok`状态表示集群可以正常接受查询请求。`fail` 状态表示，至少有一个哈希槽没有被绑定（说明有哈希槽没有被绑定到任意一个节点），或者在错误的状态（节点服务但是带有FAIL 标记），或者当前节点无法联系到多数master节点。.
+* `cluster_slots_assigned`: 已分配到集群节点的哈希槽数量（不是没有被绑定的数量）。16384个哈希槽全部被分配到集群节点是集群正常运行的必要条件.
+* `cluster_slots_ok`: 哈希槽状态不是`FAIL` 和 `PFAIL` 的数量.
+* `cluster_slots_pfail`: 哈希槽状态是 `PFAIL`的数量。只要哈希槽状态没有被升级到`FAIL`状态，这些哈希槽仍然可以被正常处理。`PFAIL`状态表示我们当前不能和节点进行交互，但这种状态只是临时的错误状态。
+* `cluster_slots_fail`: 哈希槽状态是`FAIL`的数量。如果值不是0，那么集群节点将无法提供查询服务，除非`cluster-require-full-coverage`被设置为`no` .
+* `cluster_known_nodes`: 集群中节点数量，包括处于`握手`状态还没有成为集群正式成员的节点.
+* `cluster_size`: 至少包含一个哈希槽且能够提供服务的master节点数量.
+* `cluster_current_epoch`: 节点本地`Current Epoch`变量的值。这个值在节点失败过程时创建一个带版本的递增变量时有用。
+* `cluster_my_epoch`: 当前正在使用的节点的`Config Epoch`值. 这个是关联在本节点的版本值.
+* `cluster_stats_messages_sent`: 通过node-to-node二进制总线发送的消息数量.
+* `cluster_stats_messages_received`: 通过node-to-node二进制总线接收的消息数量.
 
-More information about the Current Epoch and Config Epoch variables are available in the Redis Cluster specification document.
+更多关于`Current Epoch` 和 `Config Epoch`变量的说明，请参考Redis集群规范文档.
 
 @return
 
-@bulk-string-reply: A map between named fields and values in the form of `<field>:<value>` lines separated by newlines composed by the two bytes `CRLF`.
+@bulk-string-reply: 行的格式如 `<field>:<value>` ,行后面跟着一个 `CRLF`。
