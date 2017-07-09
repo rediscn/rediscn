@@ -6,29 +6,19 @@ disqusIdentifier: command_cluster-nodes
 disqusUrl: http://redis.cn/commands/cluster-nodes.html
 commandsType: cluster
 discuzTid: 927
+tranAuthor: lidongliang
+
 ---
 
-Each node in a Redis Cluster has its view of the current cluster configuration,
-given by the set of known nodes, the state of the connection we have with such
-nodes, their flags, properties and assigned slots, and so forth.
+集群中的每个节点都有当前集群配置的一个视图（快照），视图的信息由该节点所有已知节点提供，包括与每个节点的连接状态，每个节点的标记位（flags)，属性和已经分配的哈希槽等等。
 
-`CLUSTER NODES` provides all this information, that is, the current cluster
-configuration of the node we are contacting, in a serialization format which
-happens to be exactly the same as the one used by Redis Cluster itself in
-order to store on disk the cluster state (however the on disk cluster state
-has a few additional info appended at the end).
+`CLUSTER NODES`提供了当前连接节点所属集群的配置信息，信息格式和Redis集群在磁盘上存储使用的序列化格式完全一样（在磁盘存储信息的结尾还存储了一些额外信息）.
 
-Note that normally clients willing to fetch the map between Cluster
-hash slots and node addresses should use `CLUSTER SLOTS` instead.
-`CLUSTER NODES`, that provides more information, should be used for
-administrative tasks, debugging, and configuration inspections.
-It is also used by `redis-trib` in order to manage a cluster.
+通常，如果你想知道哈希槽与节点的关联关系，你应该使用`CLUSTER SLOTS` 命令。`CLUSTER NODES`主要是用于管理任务，调试和配置监控。`redis-trib`也会使用该命令管理集群.
 
-## Serialization format
+## 序列化格式
 
-The output of the command is just a space-separated CSV string, where
-each line represents a node in the cluster. The following is an example
-of output:
+（该命令的）输出是空格分割的CSV字符串，每行代表集群中的一个节点。下面是一个示例:
 
 ```
 07c37dfeb235213a872192d90877d0cd55635b91 127.0.0.1:30004 slave e7d1eecce10fd6bb5eb35b9f99a514335d9ba9ca 0 1426238317239 4 connected
@@ -39,79 +29,72 @@ of output:
 e7d1eecce10fd6bb5eb35b9f99a514335d9ba9ca 127.0.0.1:30001 myself,master - 0 0 1 connected 0-5460
 ```
 
-Each line is composed of the following fields:
+每行的组成结构如下:
 
 ```
 <id> <ip:port> <flags> <master> <ping-sent> <pong-recv> <config-epoch> <link-state> <slot> <slot> ... <slot>
 ```
 
-The meaning of each filed is the following:
+每项的含义如下:
 
-1. `id`: The node ID, a 40 characters random string generated when a node is created and never changed again (unless `CLUSTER RESET HARD` is used).
-2. `ip:port`: The node address where clients should contact the node to run queries.
-3. `flags`: A list of comma separated flags: `myself`, `master`, `slave`, `fail?`, `fail`, `handshake`, `noaddr`, `noflags`. Flags are explained in detail in the next section.
-4. `master`: If the node is a slave, and the master is known, the master node ID, otherwise the "-" character.
-5. `ping-sent`: Milliseconds unix time at which the currently active ping was sent, or zero if there are no pending pings.
-6. `pong-recv`: Milliseconds unix time the last pong was received.
-7. `config-epoch`: The configuration epoch (or version) of the current node (or of the current master if the node is a slave). Each time there is a failover, a new, unique, monotonically increasing configuration epoch is created. If multiple nodes claim to serve the same hash slots, the one with higher configuration epoch wins.
-8. `link-state`: The state of the link used for the node-to-node cluster bus. We use this link to communicate with the node. Can be `connected` or `disconnected`.
-9. `slot`: An hash slot number or range. Starting from argument number 9, but there may be up to 16384 entries in total (limit never reached). This is the list of hash slots served by this node. If the entry is just a number, is parsed as such. If it is a range, it is in the form `start-end`, and means that the node is responsible for all the hash slots from `start` to `end` including the start and end values.
+1. `id`: 节点ID,是一个40字节的随机字符串，这个值在节点启动的时候创建，并且永远不会改变（除非使用`CLUSTER RESET HARD`命令）。
+2. `ip:port`: 客户端与节点通信使用的地址.
+3. `flags`: 逗号分割的标记位，可能的值有: `myself`, `master`, `slave`, `fail?`, `fail`, `handshake`, `noaddr`, `noflags`. 下一部分将详细介绍这些标记.
+4. `master`: 如果节点是slave，并且已知master节点，则这里列出master节点ID,否则的话这里列出"-"。
+5. `ping-sent`: 最近一次发送ping的时间，这个时间是一个unix毫秒时间戳，0代表没有发送过.
+6. `pong-recv`: 最近一次收到pong的时间，使用unix时间戳表示.
+7. `config-epoch`: 节点的epoch值（or of the current master if the node is a slave）。每当节点发生失败切换时，都会创建一个新的，独特的，递增的epoch。如果多个节点竞争同一个哈希槽时，epoch值更高的节点会抢夺到。
+8. `link-state`:  node-to-node集群总线使用的链接的状态，我们使用这个链接与集群中其他节点进行通信.值可以是 `connected` 和 `disconnected`.
+9. `slot`: 哈希槽值或者一个哈希槽范围. 从第9个参数开始，后面最多可能有16384个 数(limit never reached)。代表当前节点可以提供服务的所有哈希槽值。如果只是一个值,那就是只有一个槽会被使用。如果是一个范围，这个值表示为`起始槽-结束槽`，节点将处理包括起始槽和结束槽在内的所有哈希槽。
 
-Meaning of the flags (field number 3):
+各flags的含义 (上面所说数据项3):
 
-* `myself`: The node you are contacting.
-* `master`: Node is a master.
-* `slave`: Node is a slave.
-* `fail?`: Node is in `PFAIL` state. Not reachable for the node you are contacting, but still logically reachable (not in `FAIL` state).
-* `fail`: Node is in `FAIL` state. It was not reachable for multiple nodes that promoted the `PFAIL` state to `FAIL`.
-* `handshake`: Untrusted node, we are handshaking.
-* `noaddr`: No address known for this node.
-* `noflags`: No flags at all.
+* `myself`: 当前连接的节点.
+* `master`: 节点是master.
+* `slave`: 节点是slave.
+* `fail?`: 节点处于`PFAIL` 状态。 当前节点无法联系，但逻辑上是可达的 (非 `FAIL` 状态).
+* `fail`: 节点处于`FAIL` 状态. 大部分节点都无法与其取得联系将会将改节点由 `PFAIL` 状态升级至`FAIL`状态。
+* `handshake`: 还未取得信任的节点，当前正在与其进行握手.
+* `noaddr`: 没有地址的节点（No address known for this node）.
+* `noflags`: 连个标记都没有（No flags at all）.
 
-## Notes on published config epochs
+## 发布的config epochs的说明
 
-Slaves broadcast their master's config epochs (in order to get an `UPDATE`
-message if they are found to be stale), so the real config epoch of the
-slave (which is meaningless more or less, since they don't serve hash slots)
-can be only obtained checking the node flagged as `myself`, which is the entry
-of the node we are asking to generate `CLUSTER NODES` output. The other slaves
-epochs reflect what they publish in heartbeat packets, which is, the
-configuration epoch of the masters they are currently replicating.
+ slave节点在广播时，总是使用其所属master节点的config epochs值（主要是让master节点判断一下，其所持有的数据是否已经过期），所以如果你想知道slave节点本身真实的config epochs值（虽然没有什么意义，因为slave节点本身不处理哈希槽），你必须直连到该slave节点，然后执行`CLUSTER NODE`命令。除了直连的节点之前，命令打印出的epochs值仅仅是其他节点在心跳包中发出的值，这个值是其所属master节点的config epochs值。
 
-## Special slot entries
+## 特殊的哈希槽条目格式
 
-Normally hash slots associated to a given node are in one of the following formats,
-as already explained above:
+通常情况下每个节点分配的哈希槽形式如下:
 
-1. Single number: 3894
-2. Range: 3900-4000
+1. 单哈希槽，如: 3894
+2. 范围，如: 3900-4000
 
-However node hash slots can be in a special state, used in order to communicate errors after a node restart (mismatch between the keys in the AOF/RDB file, and the node hash slots configuration), or when there is a resharding operation in progress. This two states are **importing** and **migrating**.
+但是还有两个特殊状态，是在节点被重启后，需要与其他节点确认错误的信息时（从AOF/RDB文件恢复时，发现keys的分布与节点哈希槽配置不匹配），或者当前节点正在重新分片时的需要的状态，分别是**迁入（importing）**和**迁出（migrating）**。
 
-The meaning of the two states is explained in the Redis Specification, however the gist of the two states is the following:
+这两个状态的含义在Redis集群规范中也有解释，下面再详细介绍一下:
 
-* **Importing** slots are yet not part of the nodes hash slot, there is a migration in progress. The node will accept queries about these slots only if the `ASK` command is used.
-* **Migrating** slots are assigned to the node, but are being migrated to some other node. The node will accept queries if all the keys in the command exist already, otherwise it will emit what is called an **ASK redirection**, to force new keys creation directly in the importing node.
+* **Importing**  槽位还没有被分配给该节点,但是正在被迁入至当前节点。只有使用`ASK`命令时，才能查询这些正在迁入的槽位。
+* **Migrating** 槽位属于当前节点，但是正在被迁移至其他节点。只有当请求的所有key都在当前节点时，请求才会被正确响应，否则的话将使用**ASK redirection**强制客户端重定向至迁入节点。
 
-Importing and migrating slots are emitted in the `CLUSTER NODES` output as follows:
+状态为importing和migrating的节点在收到`CLUSTER NODES`命令后，输出如下:
 
-* **Importing slot:** `[slot_number-<-importing_from_node_id]`
-* **Migrating slot:** `[slot_number->-migrating_to_node_id]`
+* **迁入节点输出:** `[slot_number-<-importing_from_node_id]`
+* **迁出节点输出:** `[slot_number->-migrating_to_node_id]`
 
-The following are a few examples of importing and migrating slots:
+下面是一个简单示例:
 
 * `[93-<-292f8b365bb7edb5e285caf0b7e6ddc7265d2f4f]`
 * `[1002-<-67ed2db8d677e59ec4a4cefb06858cf2a1a89fa1]`
 * `[77->-e7d1eecce10fd6bb5eb35b9f99a514335d9ba9ca]`
 * `[16311->-292f8b365bb7edb5e285caf0b7e6ddc7265d2f4f]`
 
-Note that the format does not have any space, so `CLUSTER NODES` output format is plain CSV with space as separator even when this special slots are emitted. However a complete parser for the format should be able to handle them.
+请注意，输出的字符串不包含任何空格，所以`CLUSTER NODES`的输出仅仅是一个空格分割的CSV，即便是特殊状态的节点也遵循这个规律。.
 
-Note that:
+备注:
 
-1. Migration and importing slots are only added to the node flagged as `myself`. This information is local to a node, for its own slots.
-2. Importing and migrating slots are provided as **additional info**. If the node has a given hash slot assigned, it will be also a plain number in the list of hash slots, so clients that don't have a clue about hash slots migrations can just skip this special fields.
+1. 只有节点为`myself`的节点才会才会被迁出和迁入，相对于节点的哈希槽，这是哈希槽所属节点的本地局部变量(Migration and importing slots are only added to the node flagged as `myself`. This information is local to a node, for its own slots)。
+2.  如果一个节点正在迁出或者迁入哈希槽，则这些信息只会在**额外信息**有所反映。如果哈希槽被分配到一个节点，并且正在迁出时，哈希槽的状态跟没有发生迁移时的状态一样，不会有什么特殊提示给客户端。
 
 @return
 
-@bulk-string-reply: The serialized cluster configuration.
+@bulk-string-reply: 序列化的集群配置信息.
