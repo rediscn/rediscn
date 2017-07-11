@@ -193,6 +193,7 @@ disqusUrl: http://redis.cn/aboutus.html
                      微信号：<font color="red">donlianli</font>
                  </span>
                  <span class='summary'>Stay hungry Stay foolish</span>
+             </a>
         </li>
        <li data-group='string'>
              <a href='https://github.com/menwengit' target="_blank">
