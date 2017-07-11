@@ -8,6 +8,11 @@ discuzTid: 855
 ---
 # redis中文网更新日志 #
 
+### 2017年7月11日
+1、更新[CLUSTER INFO](http://www.redis.cn/commands/cluster-info.html)翻译，感谢dongliang.li提供的翻译。<br/>
+2、更新[CLUSTER NODES](http://www.redis.cn/commands/cluster-nodes.html)翻译，感谢dongliang.li提供的翻译。<br/>
+3、更新[SETNX](http://www.redis.cn/commands/setnx.html)翻译，感谢menwengit提供的翻译。
+
 ### 2017年6月29日
 1、更新[Redis分布式锁（distlock）](http://redis.cn/topics/distlock.html)翻译，感谢dongliang.li提供的翻译。
 
@@ -50,7 +55,7 @@ discuzTid: 855
 
 ### 2016年9月7日
 
-1、更新新的[下载](/download.html)页面
+1、更新新的[下载](/download.html)页面<br/>
 2、新增[BITFIELD](http://redis.cn/commands/bitfield.html)命令。
 
 ### 2016年8月31日
