@@ -7,6 +7,9 @@
 
 ### 2017年7月15日
 1、更新首页和下载页里redis的最新版本4.0.0。<br/>
+2、更新[CLUSTER COUNT-FAILURE-REPORTS](http://www.redis.cn/commands/cluster-count-failure-reports.html)翻译，感谢menwengit提供的翻译。<br/>
+3、更新[CLUSTER DELSLOTS](http://www.redis.cn/commands/cluster-delslots.html)翻译，感谢menwengit提供的翻译。<br/>
+4、更新[CLUSTER KEYSLOT](http://www.redis.cn/commands/cluster-keyslot.html)翻译，感谢menwengit提供的翻译。<br/>
 
 ### 2017年7月11日
 1、更新[CLUSTER INFO](http://www.redis.cn/commands/cluster-info.html)翻译，感谢dongliang.li提供的翻译。<br/>
