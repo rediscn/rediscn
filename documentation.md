@@ -53,7 +53,7 @@ discuzTid: 852
 <li><a href="/topics/signals.html">信号处理（Signals Handling）</a>：如何处理Redis信号。</li>
 <li><a href="/topics/clients.html">连接处理（Connections Handling）</a>：如何处理Redis客户端连接。</li>
 <li><a href="/topics/sentinel.html">高可用性（High Availability）</a>：Redis Sentinel是Redis官方的高可用性解决方案。目前工作进展情况（beta阶段，积极发展），已经可用。</li>
-<li><a href="/topics/latency-monitor.html">延迟监控（Latency monitoring）</a>：使用集成的延迟监测和报告功能，有助于调整实例的低延迟的工作负载。</li>
+<li><a href="/topics/latency-monitor.html">延迟监控（Latency monitoring）</a>：redis集成的延迟监控和报告功能对于为低延迟应用场景优化redis很有帮助。</li>
 <li><a href="/topics/benchmarks.html">基准（Benchmarks）</a>：看看Redis在不同平台上跑得有多快。</li>
 <li><a href="/topics/releases.html">Redis Releases</a>：Redis的开发周期和版本编号。</li>
 </ul>
