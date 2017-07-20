@@ -139,5 +139,3 @@ discuzTid: 852
 <h2>保荐人</h2>
 
 <p> <a href="http://antirez.com">Salvatore Sanfilippo</a> 和 <a href="http://twitter.com/pnoordhuis">Pieter Noordhuis</a> 发展redis的工作是由 <a href="http://vmware.com">VMware</a>发起的。在过去Redis接受过的捐赠中，将在<a href="/topics/sponsors.html">赞助商的页面</a>中列出的其他公司。 </p>
-
-https://cachecloud.github.io/2016/10/24/Redis3%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-%E7%9B%AE%E5%BD%95/
