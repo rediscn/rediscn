@@ -5,6 +5,11 @@
 
 ## 更新日志： ##
 
+### 2017年7月20日
+1、更新[CLUSTER MEET](http://www.redis.cn/commands/cluster-meet.html)翻译，感谢menwengit提供的翻译。<br/>
+2、更新[READONLY](http://www.redis.cn/commands/readonly.html)翻译，感谢menwengit提供的翻译。<br/>
+3、更新[READWRITE](http://www.redis.cn/commands/readwrite.html)翻译，感谢menwengit提供的翻译。<br/>
+
 ### 2017年7月15日
 1、更新首页和下载页里redis的最新版本4.0.0。<br/>
 2、更新[CLUSTER COUNT-FAILURE-REPORTS](http://www.redis.cn/commands/cluster-count-failure-reports.html)翻译，感谢menwengit提供的翻译。<br/>
