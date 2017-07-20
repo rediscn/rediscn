@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS index
+title: modules-intro
 permalink: topics/modules-intro.html
 disqusIdentifier: topics/modules-intro
 disqusUrl: http://redis.cn/topics/topics/modules-intro.html

@@ -1,6 +1,6 @@
 ---
 layout: topics
-title: REDIS index
+title: Redis topic ARM
 permalink: topics/ARM.html
 disqusIdentifier: topics/ARM
 disqusUrl: http://redis.cn/topics/ARM.html

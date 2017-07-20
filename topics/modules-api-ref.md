@@ -1,10 +1,10 @@
 ---
 layout: topics
-title: REDIS index
-permalink: topics/modules-native-types.html
-disqusIdentifier: topics/modules-native-types
-disqusUrl: http://redis.cn/topics/modules-native-types.html
-discuzTid: 2014
+title: modules-api-ref
+permalink: topics/modules-api-ref.html
+disqusIdentifier: topics/modules-api-ref
+disqusUrl: http://redis.cn/topics/modules-api-ref.html
+discuzTid: 2017
 ---
 
 # Modules API reference

@@ -1,10 +1,10 @@
 ---
 layout: topics
-title: REDIS index
+title: modules-native-types
 permalink: topics/modules-native-types.html
 disqusIdentifier: topics/modules-native-types
 disqusUrl: http://redis.cn/topics/topics/modules-native-types.html
-discuzTid: 2017
+discuzTid: 2014
 ---
 
 Native types in Redis modules
