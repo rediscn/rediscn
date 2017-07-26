@@ -145,7 +145,6 @@ Redis 模块不依赖于 Redis 或一些其他的库，也不需要使用特定�
 将一个整数转换为一个新的字符串是非常常见的操作，因此有一个函数这样做：
 
     RedisModuleString *mystr = RedisModule_CreateStringFromLongLong(ctx,10);
-	Similarly in order to parse a string as a number:
 
 同样地将一个字符串解析成数字：
 
