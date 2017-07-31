@@ -6,7 +6,7 @@ disqusIdentifier: command_cluster-slots
 disqusUrl: http://redis.cn/commands/cluster-slots.html
 commandsType: cluster
 discuzTid: 934
-transAuthor: dongliang.li
+transAuthor: lidongliang
 ---
 
 `CLUSTER SLOTS`命令返回哈希槽和Redis实例映射关系。这个命令对客户端实现集群功能非常有用，使用这个命令可以获得*哈希槽*与节点（由IP和端口组成）的映射关系，这样，当客户端收到（用户的）调用命令时，可以根据（这个命令）返回的信息将命令发送到正确的Redis实例.
@@ -27,9 +27,9 @@ transAuthor: dongliang.li
 
 如果一个集群实例中的哈希槽不是连续的（例如1-400,900,1800-6000），那么哈希槽对应的master和replica副本在这些不同的哈希槽范围会出现多次。
 
-返回值
+## 返回值
 
-@array-reply: 描述每个哈希槽范围的包含嵌套对象的列表，嵌套对象包含 IP/Port
+[array-reply](http://www.redis.cn/topics/protocol.html#array-reply): 描述每个哈希槽范围的包含嵌套对象的列表，嵌套对象包含 IP/Port
 
 ### 输出示例
 

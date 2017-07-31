@@ -8,6 +8,9 @@ discuzTid: 855
 ---
 # redis中文网更新日志 #
 
+### 2017年7月31日
+1、更新[CLUSTER SLOTS](http://www.redis.cn/commands/cluster-slots)翻译，感谢dongliang.li提供的翻译。<br/>
+
 ### 2017年7月26日
 1、更新首页和下载页里redis的最新版本4.0.1。<br/>
 2、更新[modules-intro](http://redis.cn/topics/modules-intro.html)翻译，感谢menwengit提供的翻译。
