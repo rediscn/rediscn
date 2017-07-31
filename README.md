@@ -5,6 +5,22 @@
 
 ## 更新日志： ##
 
+### 2017年7月26日
+1、更新首页和下载页里redis的最新版本4.0.1。<br/>
+2、更新[modules-intro](http://redis.cn/topics/modules-intro.html)翻译，感谢menwengit提供的翻译。
+
+### 2017年7月20日
+1、更新[CLUSTER MEET](http://www.redis.cn/commands/cluster-meet.html)翻译，感谢menwengit提供的翻译。<br/>
+2、更新[READONLY](http://www.redis.cn/commands/readonly.html)翻译，感谢menwengit提供的翻译。<br/>
+3、更新[READWRITE](http://www.redis.cn/commands/readwrite.html)翻译，感谢menwengit提供的翻译。<br/>
+4、更新[ARM](http://www.redis.cn/topics/ARM.html)翻译，感谢menwengit提供的翻译。<br/>
+
+### 2017年7月15日
+1、更新首页和下载页里redis的最新版本4.0.0。<br/>
+2、更新[CLUSTER COUNT-FAILURE-REPORTS](http://www.redis.cn/commands/cluster-count-failure-reports.html)翻译，感谢menwengit提供的翻译。<br/>
+3、更新[CLUSTER DELSLOTS](http://www.redis.cn/commands/cluster-delslots.html)翻译，感谢menwengit提供的翻译。<br/>
+4、更新[CLUSTER KEYSLOT](http://www.redis.cn/commands/cluster-keyslot.html)翻译，感谢menwengit提供的翻译。<br/>
+
 ### 2017年7月11日
 1、更新[CLUSTER INFO](http://www.redis.cn/commands/cluster-info.html)翻译，感谢dongliang.li提供的翻译。<br/>
 2、更新[CLUSTER NODES](http://www.redis.cn/commands/cluster-nodes.html)翻译，感谢dongliang.li提供的翻译。<br/>

@@ -1,7 +1,7 @@
 ---
 layout: index
-title: Redis 3.2.9 下载
-excerpt: Redis下载中心(Redis download)，下载各种版本的redis，包括最新redis 3.2.9稳定版redis,3.2.9-Beta版本以及win32/64版本
+title: Redis 4.0.1 下载
+excerpt: Redis下载中心(Redis download)，下载各种版本的redis，包括最新redis 4.0.1稳定版redis,4.0.1-Beta版本以及win32/64版本
 permalink: download.html
 disqusIdentifier: download
 disqusUrl: http://redis.cn/download.html
@@ -18,18 +18,18 @@ Redis 版本号采用标准惯例：主版本号.副版本号.补丁级别,一�
             <li>
               <h2>
                 稳定版
-                <span class='download-version'>(3.2)</span>
+                <span class='download-version'>(4.0)</span>
               </h2>
-              Redis 3.2 包含Redis API和实现的重大改变。添加了一组新的地理索引（Geo）命令(GEOADD, GEORADIUS 和相关命令)。新的BITFIELD命令能处理整数或任意位宽的计数器数组和字符串内连续偏移。内存优化，相同数据占用更少的内存。Lua脚本新的复制功能。可以用完整的远程Lua脚本调试器编写一个简单任务。快来查看发布日志了解全部新特性吧。
+              Redis 4.0 was released as GA in July 2017. Contains several big improvements: a modules system, much better replication (PSYNC2), improvements to eviction policies, threaded DEL/FLUSH, mixed RDB+AOF format, Raspberry Pi support as primary platform, the new MEMORY command, Redis Cluster support for Nat/Docker, active memory defragmentation, memory usage and performance improvements, much faster Redis Cluster key creation, many other smaller features and a number of behavior fixed.
               <div class='download-links'>
                 <a class='download-link' href='https://raw.githubusercontent.com/antirez/redis/3.2/00-RELEASENOTES'>
                   <i class='fa fa-file-text-o'></i>
                   发布日志
                 </a>
-                <a class='download-link' href='http://download.redis.io/releases/redis-3.2.9.tar.gz'>
+                <a class='download-link' href='http://download.redis.io/releases/redis-4.0.1.tar.gz'>
                   <i class='fa fa-arrow-circle-o-down'></i>
                   下载
-                  3.2.9
+                  4.0.1
                 </a>
               </div>
             </li>
@@ -51,9 +51,10 @@ Redis 版本号采用标准惯例：主版本号.副版本号.补丁级别,一�
 
 ## 其他版本 ##
 
-### 老版本（3.0）###
+### 老版本（3.2）###
 
-Redis 3.0 介绍了集群，一个分布式的Redis。能自动将数据进行分片和容错处理，另一方面明显提升了读写速度和AOF重写Dendi。您可以查看[版本发布日志](https://raw.githubusercontent.com/antirez/redis/3.0/00-RELEASENOTES)了解更多内容，也可以直接下载[Redis 3.0.7](http://download.redis.io/releases/redis-3.0.7.tar.gz)。
+Redis 3.2 is the previous stable release. Does not include all the improvements in Redis 4.0 but is a very battle tested release, probably a good pick for critical applications while 4.0 matures more in the next months. 
+See the [release notes](https://raw.githubusercontent.com/antirez/redis/3.2/00-RELEASENOTES) or [download 3.2.9](http://download.redis.io/releases/redis-3.2.9.tar.gz).
 
 ### Windows 版本 ###
 
@@ -73,9 +74,9 @@ GitHub [redis-hashes](https://github.com/antirez/redis-hashes/blob/master/README
 
 下载，解压，编译:
 	
-	$ wget http://download.redis.io/releases/redis-3.2.9.tar.gz
-	$ tar xzf redis-3.2.9.tar.gz
-	$ cd redis-3.2.9
+	$ wget http://download.redis.io/releases/redis-4.0.1.tar.gz
+	$ tar xzf redis-4.0.1.tar.gz
+	$ cd redis-4.0.1
 	$ make
 
 二进制文件是编译完成后在src目录下，通过下面的命令启动Redis服务：

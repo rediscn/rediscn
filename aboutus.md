@@ -110,12 +110,12 @@ disqusUrl: http://redis.cn/aboutus.html
         <li data-group='string'>
         <a href='#' target="_blank">
       <span class='command'>
-            北京-java-阿昊
+            Geely
             <span class='args'>
               QQ：815849
             </span>
           </span>
-          <span class='summary'>不止步，求进步。</span>
+          <span class='summary'>有阴影的地方必定有光</span>
           </a>
         </li>
 

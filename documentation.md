@@ -33,6 +33,13 @@ discuzTid: 852
 <li><a href="/topics/indexes.html">创建二级索引（Creating secondary indexes with Redis）</a>：使用redis的数据结构创建二级索引。</li>
 </ul>
 
+## Redis modules API
+* [Introduction to Redis modules](/topics/modules-intro.html). A good place to start learing about Redis 4.0 modules programming.
+* [Implementing native data types](/topics/modules-native-types.html). Modules scan implement new data types (data structures and more) that look like built-in data types. This documentation covers the API to do so.
+* [Blocking operations](topics/modules-blocking-ops.html)  with modules. This is still an experimental API, but a very powerful one to write commands that can block the client (without blocking Redis) and can execute tasks in other threads.
+* [Redis modules API reference](topics/modules-api-ref.html). Directly generated from the top comments in the source code inside `src/module.c`. Contains many low level details about API usage.
+
+
 <h2>Redis 管理</h2>
 
 <ul>
@@ -42,10 +49,19 @@ discuzTid: 852
 <li><a href="/topics/persistence.html">持久化（Persistence）</a>：了解如何配置redis的持久化。</li>
 <li><a href="/topics/admin.html">Redis 管理（Redis Administration）</a>：学习redis管理方面的知识。</li>
 <li><a href="/topics/security.html">安全性（Security）</a>：概述Redis的安全。</li>
+<li><a href="/topics/encryption.html">加密（encryption）</a>：如何加密redis的客户端与服务端通信。。</li>
 <li><a href="/topics/signals.html">信号处理（Signals Handling）</a>：如何处理Redis信号。</li>
 <li><a href="/topics/clients.html">连接处理（Connections Handling）</a>：如何处理Redis客户端连接。</li>
 <li><a href="/topics/sentinel.html">高可用性（High Availability）</a>：Redis Sentinel是Redis官方的高可用性解决方案。目前工作进展情况（beta阶段，积极发展），已经可用。</li>
+<li><a href="/topics/latency-monitor.html">延迟监控（Latency monitoring）</a>：redis集成的延迟监控和报告功能对于为低延迟应用场景优化redis很有帮助。</li>
 <li><a href="/topics/benchmarks.html">基准（Benchmarks）</a>：看看Redis在不同平台上跑得有多快。</li>
+<li><a href="/topics/releases.html">Redis Releases</a>：Redis的开发周期和版本编号。</li>
+</ul>
+
+<h2>Embedded and IoT</h2>
+
+<ul>
+<li><a href="/topics/ARM.html">Redis on ARM and Raspberry Pi</a>：Starting with Redis 4.0 ARM and the Raspberry Pi are officially supported platforms. This page contains general information and benchmarks.</li>
 </ul>
 
 <h2>Redis Cluster</h2>
@@ -105,6 +121,8 @@ discuzTid: 852
 <p>以下是已经发布的Redis书籍的列表：</p>
 
 <ul>
+<li>由付磊、张益军编著的<a href="https://cachecloud.github.io/2016/10/24/Redis3%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-%E7%9B%AE%E5%BD%95/" target="_blank">《Redis开发与运维》</a>  是一本从开发、运维两个角度总结了Redis实战经验，深入浅出地剖析底层实现，包含大规模集群开发与运维的实际案例与应用技巧的书籍。</li>
+
 <li>由 <a href="http://twitter.com/karlseguin">Karl Seguin</a> 编写的 <a href="http://openmymind.net/2012/1/23/The-Little-Redis-Book/">《The Little Redis Book》</a>  是一本非常简洁和开放的Reids入门书籍。</li>
 <li><a href="http://twitter.com/dr_josiah">Josiah L. Carlson</a> 编写的 <a href="http://www.manning.com/carlson/">《Redis in Action》</a> 是早期的阅读版本。</li>
 <li>还有 <a href="http://shop.oreilly.com/product/0636920020127.do">Redis Cookbook (O&#39;Reilly Media, 2011)</a></li>
@@ -121,4 +139,3 @@ discuzTid: 852
 <h2>保荐人</h2>
 
 <p> <a href="http://antirez.com">Salvatore Sanfilippo</a> 和 <a href="http://twitter.com/pnoordhuis">Pieter Noordhuis</a> 发展redis的工作是由 <a href="http://vmware.com">VMware</a>发起的。在过去Redis接受过的捐赠中，将在<a href="/topics/sponsors.html">赞助商的页面</a>中列出的其他公司。 </p>
-      
