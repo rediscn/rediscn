@@ -6,7 +6,7 @@ disqusIdentifier: command_cluster-slots
 disqusUrl: http://redis.cn/commands/cluster-slots.html
 commandsType: cluster
 discuzTid: 934
-transAuthor: lidongliang
+tranAuthor: lidongliang
 ---
 
 `CLUSTER SLOTS`命令返回哈希槽和Redis实例映射关系。这个命令对客户端实现集群功能非常有用，使用这个命令可以获得*哈希槽*与节点（由IP和端口组成）的映射关系，这样，当客户端收到（用户的）调用命令时，可以根据（这个命令）返回的信息将命令发送到正确的Redis实例.
