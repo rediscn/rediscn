@@ -15,7 +15,7 @@ Redis Modules: an introduction to the API
 
 模块功能的文档由以下文件组成：
 
-* [INTRO](/topics/modules-intro.html)（这个文件）。关于 Redis 模块系统和 API 的概述。最好从这个文件开始阅读。
+* [INTRO](/topics/modules-intro.html)关于 Redis 模块系统和 API 的概述。最好从这个文件开始阅读。
 * [API](/topics/modules-api-ref.html)是从 moudule.c 的 RedisModule 函数顶部的注释创建的。这是一个非常好的参考去了解每个函数如何工作。
 * [TYPES](/topics/modules-native-types.html)涵盖了涉及模块功能中的所有原生数据类型的实现。
 * [BLOCK](/topics/modules-blocking-ops.html)展示了如何写一个不会立刻回复的阻塞命令，该命令会阻塞客户端但不会阻塞 Redis 服务器，并且在可能的情况下进行回复。
