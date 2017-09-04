@@ -1,12 +1,32 @@
 ---
 layout: home
-title: Redis中文官方网站
-excerpt: Redis中文官方网站，下载安装redis 4.0.1最新版，Redis客户端方式、Redis常用命令（commands）都在帮助手册里，阅读Redis官方文档、教程、教材，社区里了解更多redis信息，如： 数据类型、持久化、主从配置、集群配置、性能测试等等。
+title:  我的Redis - Redis中文网
+excerpt: CRUG 2017上海活动、深圳活动火爆报名中。Redis中文官方网站，下载安装redis 4.0.1最新版，Redis客户端方式、Redis常用命令（commands）都在帮助手册里，阅读Redis官方文档、教程、教材，社区里了解更多redis信息，如： 数据类型、持久化、主从配置、集群配置、性能测试等等。
 disqusIdentifier: index
 disqusUrl: http://redis.cn
 discuzTid: 849
 ---
 
+<link rel="stylesheet" href="/css/swiper.min.css">
+
+<style>
+    .swiper-slide {
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+    </style>
+    
 <section class='home-callout home-section'>
 	  <div class='title'>
   	<p>
@@ -35,8 +55,15 @@ discuzTid: 849
 	<a class='learn-more' href='/topics/introduction.html'>更多介绍 →</a>
   </div>
 </section>
-<div class='home-intro home-section'>
-	<a href="http://odf.acmug.net" target="_blank"><img style="width:900px;" src="/images/bn/img20170607090650.jpg"></a>
+<div id="index_banner" class='home-intro home-section' style="display:none;">
+		<!-- Swiper -->
+    <div class="swiper-container" >
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><a href="https://www.bagevent.com/event/775182" target="_blank" ><img style="width:900px;" src="/images/bn/sh1.jpg" alt="CRUG2017上海活动"></a></div>
+            <div class="swiper-slide"><a href="https://www.bagevent.com/event/798527" target="_blank" ><img style="width:900px;" src="/images/bn/sz1.jpg" alt="CRUG2017深圳活动"></a></div>            
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
 </div>
 <div class='home-intro home-section'>
   <section>
@@ -101,3 +128,24 @@ discuzTid: 849
 	</div>
 </div>
  
+<!-- Swiper JS -->
+<script src="/js/swiper.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+	$(document).ready(function(){
+		if(!isMobileBrowser()){
+			$('#index_banner').show();
+			var swiper = new Swiper('.swiper-container', {
+	        pagination: '.swiper-pagination',
+	        nextButton: '.swiper-button-next',
+	        prevButton: '.swiper-button-prev',
+	        paginationClickable: true,
+	        loop:true,
+	        centeredSlides: true,
+	        autoplay: 5000,
+	        autoplayDisableOnInteraction: false
+	    });
+  	}
+  });
+</script>
