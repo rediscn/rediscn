@@ -105,39 +105,6 @@ function searchCommandReference() {
   })
 }
 
-function buzz() {
-  var $buzz = $("#buzz");
-
-  if ($buzz.length == 0) return;
-
-  var $ul = $buzz.find("ul");
-  var count = 0;
-  var limit = parseInt($buzz.attr("data-limit"));
-  var users = {};
-
-  $.getJSON("http://redis-buzz.herokuapp.com/?callback=?", function(response) {
-    $.each(response, function() {
-
-      if (count++ == limit) { return false; }
-
-      if (this.retweeted_status) {
-        var status = this.retweeted_status;
-      } else {
-        var status = this;
-      }
-
-      $ul.append(
-        "<li>" +
-        "<a href='http://twitter.com/" + status.user.screen_name + "/statuses/" + status.id_str + "' title='" + status.user.screen_name + "'>" +
-        "<img src='" + status.user.profile_image_url + "' alt='" + status.user.screen_name + "' />" +
-        "</a> " +
-        massageTweet(status.text) +
-        "</li>"
-      );
-    });
-  });
-}
-
 // Easily set caret position in input field
 $.fn.setSelection = function(start, end) {
   var i, size = this.size();
@@ -263,8 +230,6 @@ $(document).ready(function() {
     filterCommandReference();
     searchCommandReference()
   }
-
-  buzz()
 
   examples()
 })

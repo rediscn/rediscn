@@ -36,4 +36,9 @@ function click_bbs_post_href(){
 			window.open($("#bbs_post_href").attr('href'));
 		}
 }
-	
+
+function clog(msg){
+	if(!isMobileBrowser()){
+		console.log(msg);
+	}
+}	
