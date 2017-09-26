@@ -8,6 +8,9 @@ discuzTid: 855
 ---
 # redis中文网更新日志 #
 
+### 2017年9月26日
+1、更新[modules-native-types](http://redis.cn/topics/modules-native-types.html)翻译，感谢menwengit提供的翻译。<br/>
+
 ### 2017年7月31日
 1、更新[CLUSTER SLOTS](http://www.redis.cn/commands/cluster-slots.html)翻译，感谢dongliang.li提供的翻译。<br/>
 
