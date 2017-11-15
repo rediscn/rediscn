@@ -18,7 +18,7 @@ permalink: yqm.html
 		<option value="492022240">Redis中国用户组(CRUG)6群（已满）</option>
 		<option value="163264749">Redis java群1 （已满）</option>
 		<option value="209751645">Redis java群2 （已满）</option>
-		<option value="197643943">Redis java群3 197643943</option>
+		<option value="197643943">Redis java群3 580167620</option>
 		<option value="69287882" >Redis 脚本群1 （已满）</option>
 		<option value="197102873">Redis 脚本群2 197102873</option>
 		<option value="163269313">Redis c,c++,c#群1（已满）</option>
