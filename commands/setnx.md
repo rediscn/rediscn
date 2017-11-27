@@ -71,7 +71,7 @@ tranAuthor: menwengit
 *   C4 发送`SETNX lock.foo`为了获得该锁
 *   已经崩溃的客户端 C3 仍然持有该锁，所以Redis将会返回`0`给 C4
 *   C4 发送`GET lock.foo`检查该锁是否已经过期。如果没有过期，C4 客户端将会睡眠一会，并且从一开始进行重试操作
-*   另一种情况，如果因为 `lock.foo`键的Unix时间大于当前的Unix时间而导致该锁已经过期，C4 会尝试执行以下的操作：
+*   另一种情况，如果因为 `lock.foo`键的Unix时间小于当前的Unix时间而导致该锁已经过期，C4 会尝试执行以下的操作：
 
 
     	GETSET lock.foo <current Unix timestamp + lock timeout + 1>
