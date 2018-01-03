@@ -8,6 +8,9 @@ discuzTid: 855
 ---
 # redis中文网更新日志 #
 
+### 2018年1月3日
+1、更新首页和下载页里redis的最新版本4.0.6。<br/>
+
 ### 2017年9月26日
 1、更新[modules-native-types](http://redis.cn/topics/modules-native-types.html)翻译，感谢menwengit提供的翻译。<br/>
 
