@@ -1,7 +1,7 @@
 ---
 layout: home
 title:  redis.cn
-excerpt: CRUG祝大家国庆节快乐，中秋节快乐！Redis中文官方网站，下载安装redis 4.0.6最新版，Redis客户端方式、Redis常用命令（commands）都在帮助手册里，阅读Redis官方文档、教程、教材，社区里了解更多redis信息，如： 数据类型、持久化、主从配置、集群配置、性能测试等等。
+excerpt: CRUG祝大家新年大吉，万事如意！Redis中文官方网站，下载安装redis 4.0.8最新版，Redis客户端方式、Redis常用命令（commands）都在帮助手册里，阅读Redis官方文档、教程、教材，社区里了解更多redis信息，如： 数据类型、持久化、主从配置、集群配置、性能测试等等。
 disqusIdentifier: index
 disqusUrl: http://redis.cn
 discuzTid: 849
@@ -26,7 +26,10 @@ discuzTid: 849
         align-items: center;
     }
     </style>
-    
+
+<div id="full_img_div" style="width:100%;" data-expire-time="2018/3/3 0:0:0" data-img-url="http://d.yymoban.com/uploads/allimg/1712/1-1G22621262QC.jpg">
+</div>
+   
 <section class='home-callout home-section'>
 	  <div class='title'>
   	<p>
@@ -67,7 +70,7 @@ discuzTid: 849
   <section>
     <h2>下载（Download it）</h2>
     <p>
-      <a href='http://download.redis.io/releases/redis-4.0.6.tar.gz'>最新稳定版本是Redis 4.0.6</a>
+      <a href='http://download.redis.io/releases/redis-4.0.8.tar.gz'>最新稳定版本是Redis 4.0.8</a>
       想了解更多候选版本或者测试版本？
       <a href='/download.html'>点击这里查看更多。</a>
     </p>
@@ -138,6 +141,18 @@ discuzTid: 849
 	        autoplay: 5000,
 	        autoplayDisableOnInteraction: false
 	    });
+  	}
+  	
+  	var fullImgDiv = $("#full_img_div");
+  	if(fullImgDiv.length>0){
+  		var expireDateStr = fullImgDiv.attr('data-expire-time');
+  		if(expireDateStr){
+  			var expireDate = new Date(expireDateStr);
+  			var now = new Date();
+  			if(now.getTime()<expireDate.getTime()){
+  				fullImgDiv.append('<img src="'+fullImgDiv.attr('data-img-url')+'" style="width:100%;"/>');
+  			}
+  		}  
   	}
   	
   	diary_log();
