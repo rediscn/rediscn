@@ -209,6 +209,17 @@ disqusUrl: http://redis.cn/aboutus.html
                  <span class='summary'>独立思想，自由精神</span>
            </a>
        </li>
+       <li data-group='string'>
+             <a href='https://blog.alswl.com' target="_blank">
+                 <span class='command'>
+                     alswl
+                     <span class='args'>
+                        blog.alswl.com
+                     </span>
+                 </span>
+                 <span class='summary'>☑ Coding ☑ SRE ☑ Mac/Arch Linux ☑ IDEA/Vim ☑ Java/Python ☑ ErgoDox ☑ alswl.com ☑ 使用正版软件 ☑ 明骚 ☑ 冬笋/小笼包/油爆小草虾</span>
+           </a>
+       </li>
       </ul>
     </div>
 </section>
