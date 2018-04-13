@@ -1834,7 +1834,7 @@ discuzTid: 850
                     key
                   </span>
                 </span>
-                <span class='summary'>获取集合里面的所有key</span>
+                <span class='summary'>获取集合里面的所有元素</span>
               </a>
             </li>
             <li data-group='set' data-name='smove'>
@@ -1847,7 +1847,7 @@ discuzTid: 850
                     member
                   </span>
                 </span>
-                <span class='summary'>移动集合里面的一个key到另一个集合</span>
+                <span class='summary'>移动集合里面的一个元素到另一个集合</span>
               </a>
             </li>
             <li data-group='generic' data-name='sort'>
@@ -1888,7 +1888,7 @@ discuzTid: 850
                     [count]
                   </span>
                 </span>
-                <span class='summary'>从集合里面随机获取一个key</span>
+                <span class='summary'>从集合里面随机获取一个元素</span>
               </a>
             </li>
             <li data-group='set' data-name='srem'>
@@ -1900,7 +1900,7 @@ discuzTid: 850
                     member [member ...]
                   </span>
                 </span>
-                <span class='summary'>从集合里删除一个或多个key</span>
+                <span class='summary'>从集合里删除一个或多个元素</span>
               </a>
             </li>
             <li data-group='string' data-name='strlen'>
