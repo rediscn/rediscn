@@ -24,7 +24,7 @@ CRUG官网订阅号：
 - Redis中国用户组(CRUG)4群（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=261294a32e9cfdad8f36b3d6f58882b5f6b3253fe8fa98fbd5e2f7e5f7a9e7a9")--> 
 - Redis中国用户组(CRUG)5群（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=1e14397057c78f611261acb354322304b8bb9b92abdfa6c844b316e4502be940") -->
 - Redis中国用户组(CRUG)6群（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=d660a589d9c21f0f182a9a9132d30e321d9483385b84295e669fe0c927ac556a") -->
-- Redis中国用户组(CRUG)7群（已满 [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=b3c58d53fbdd066167a749a877b454c9cec835150157b56519f423d303fa8b91") 
+- Redis中国用户组(CRUG)7群 [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=b3c58d53fbdd066167a749a877b454c9cec835150157b56519f423d303fa8b91") 
 - Redis java群1（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=8232e992cb4a15fd2f264b5831633f529bb419a6facf561d3bb3355db58bfae9") -->
 - Redis java群2（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=12d32e1171f2137d2a2292b9c8d434d2cba89845161280c623dbbb594f8b0c1c") -->
 - Redis java群3[![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=e5595344a41ddcd15ebe2e50fe7f498b36b7d5691bc6bdea95e3793d06153cac")
