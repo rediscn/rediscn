@@ -8,7 +8,9 @@ disqusUrl: http://redis.cn/community.html
 discuzTid: 853
 ---
 
-# 欢迎加入Redis中国用户组（CRUG）大家庭 #
+## CRUG 简介 ##
+Redis中国用户组简称CRUG，成立于2016年5月20日。CRUG核心成员有张冬洪（主席）、强昌金（副主席）、王义成（秘书长）、蔡松露（校长）、李强（副校长)、许瑞（副校长)。
+
 
 Redis中国用户组官方微博：[redis2016](http://weibo.com/redis2016),大家在使用Redis中遇到的问题可以访问[Redis中文论坛](http://bbs.redis.cn)进行交流讨论，也可以通过下面的QQ群、微信群进行及时的交流沟通。
 
