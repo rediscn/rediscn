@@ -8,10 +8,13 @@ discuzTid: 855
 ---
 # redis中文网更新日志 #
 
+### 2018年6月20日
+1、更新首页和下载页里redis的最新版本4.0.10。<br/>
+2、填充[Redis月刊20180620期](/monthly/index.html)
+
 ### 2018年6月1日
 1、新增[Redis月刊](/monthly/index.html)<br/>
 2、新增[Redis捐赠清单](/donation.html)
-
 
 ### 2018年4月12日
 1、更新首页和下载页里redis的最新版本4.0.9。<br/>
