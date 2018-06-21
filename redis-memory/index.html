@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redis容量预估-极数云舟</title>
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="js/jquery.min.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+<div class="content">
+    <div class="mainTitle">
+        Redis容量预估
+    </div>
+    <table cellspacing="0">
+        <tr>
+            <td>Key类型</td>
+            <td>Key个数</td>
+            <td>Key长度</td>
+            <td>元素/字段数</td>
+            <td>元素/字段长度</td>
+            <td>Value长度</td>
+        </tr>
+        <tr>
+            <td>
+                <lable id="string" value="string">string</lable>
+                <!--<span value="string" style="background: none;border: none;height: 30px;">string</span>-->
+                <!--<select name="">-->
+                <!--<option value="string">string</option>-->
+                <!--</select>-->
+            </td>
+            <td><input type="text" placeholder="Key数量"></td>
+            <td><input type="text" placeholder="Key长度"></td>
+            <td><input type="text" placeholder="元素/字段数"></td>
+            <td><input type="text" placeholder="元素/字段长度"></td>
+            <td><input type="text" placeholder="Value长度"></td>
+        </tr>
+        <tr>
+            <td>
+                <lable value="list">list</lable>
+                <!--<span value="list">list</span>-->
+                <!--<select name="">-->
+                <!--<option value="list">list</option>-->
+                <!--</select>-->
+            </td>
+            <td><input type="text" placeholder="Key数量"></td>
+            <td><input type="text" placeholder="Key长度"></td>
+            <td><input type="text" placeholder="元素/字段数"></td>
+            <td><input type="text" placeholder="元素/字段长度"></td>
+            <td><input type="text" placeholder="Value长度"></td>
+        </tr>
+        <tr>
+            <td>
+                <lable value="hash">hash</lable>
+                <!--<select name="">-->
+                <!--<option value="hash">hash</option>-->
+                <!--</select>-->
+                <!--<span value="hash">hash</span>-->
+            </td>
+            <td><input type="text" placeholder="Key数量"></td>
+            <td><input type="text" placeholder="Key长度"></td>
+            <td><input type="text" placeholder="元素/字段数"></td>
+            <td><input type="text" placeholder="元素/字段长度"></td>
+            <td><input type="text" placeholder="Value长度"></td>
+        </tr>
+        <tr>
+            <td>
+                <lable value="set">set</lable>
+                <!--<select name="">-->
+                    <!--<option value="set">set</option>-->
+                <!--</select>-->
+                <!--<span value="set">set</span>-->
+            </td>
+            <td><input type="text" placeholder="Key数量"></td>
+            <td><input type="text" placeholder="Key长度"></td>
+            <td><input type="text" placeholder="元素/字段数"></td>
+            <td><input type="text" placeholder="元素/字段长度"></td>
+            <td><input type="text" placeholder="Value长度"></td>
+        </tr>
+        <tr>
+            <td>
+                <lable value="zset">zset</lable>
+                <!--<select name="">-->
+                    <!--<option value="zset">zset</option>-->
+                <!--</select>-->
+                <!--<span value="zset">-->
+                    <!--zset-->
+                <!--</span>-->
+            </td>
+            <td><input type="text" placeholder="Key数量"></td>
+            <td><input type="text" placeholder="Key长度"></td>
+            <td><input type="text" placeholder="元素/字段数"></td>
+            <td><input type="text" placeholder="元素/字段长度"></td>
+            <td><input type="text" placeholder="Value长度"></td>
+        </tr>
+    </table>
+    <div class="con">
+        <button id="btnClick">开始计算</button>
+    </div>
+    <div class="conPie">
+        <div id="calSize" style="font-weight: bold"></div>
+        <div id="conMain" style="width: 600px;height: 400px;"></div>
+    </div>
+</div>
+
+</body>
+</html>

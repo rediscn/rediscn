@@ -1,0 +1,76 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "微软雅黑";
+}
+
+.content {
+    width: 70%;
+    margin: 0 auto;
+}
+
+.content .mainTitle {
+    height: 30px;
+    padding: 10px;
+    background: #3A434C;
+    color: white;
+
+}
+
+table {
+    width: 100%;
+}
+
+table tr:nth-child(odd) {
+    background: #F9F9F9;
+}
+
+table tr {
+    height: 50px;
+    border: 1px solid #EFEFEF;
+}
+
+table tr td {
+    width: 15%;
+}
+
+table tr td input {
+    width: 50%;
+    height: 30px;
+    text-align: center;
+}
+table tr td lable {
+    display: inline-block;
+    width: 50%;
+    height: 30px;
+    text-align: center;
+    border: 1px solid #A9A9A9;
+}
+.content .con {
+    height: 50px;
+    margin-top: 30px;
+    border-bottom: 1px solid darkgrey;
+}
+
+.content .con button {
+    text-align: center;
+    width: 15%;
+    height: 36px;
+    background: #6999E5;
+    border: #6999E5;
+    color: white;
+    float: right;
+}
+
+.content .conPie{
+    margin-top: 30px;
+}
+.content #calSize {
+    margin-top: 30px;
+    /*height: 50px;*/
+    /*border: 1px solid black;*/
+}
+.content #conMain{
+    margin-left: 20%;
+    margin-top: 30px;
+}
