@@ -43,6 +43,7 @@ table tr td lable {
     display: inline-block;
     width: 50%;
     height: 30px;
+    line-height: 30px;
     text-align: center;
     border: 1px solid #A9A9A9;
 }
