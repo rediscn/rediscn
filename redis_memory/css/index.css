@@ -5,8 +5,9 @@
 }
 
 .content {
-    width: 70%;
+    width: 100%;
     margin: 0 auto;
+	max-width:1100px;
 }
 
 .content .mainTitle {
@@ -19,6 +20,7 @@
 
 table {
     width: 100%;
+	text-align:center;
 }
 
 table tr:nth-child(odd) {
@@ -51,6 +53,7 @@ table tr td lable {
     height: 50px;
     margin-top: 30px;
     border-bottom: 1px solid darkgrey;
+	text-align:center;
 }
 
 .content .con button {
@@ -60,7 +63,6 @@ table tr td lable {
     background: #6999E5;
     border: #6999E5;
     color: white;
-    float: right;
 }
 
 .content .conPie{
