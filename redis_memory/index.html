@@ -14,7 +14,7 @@
         Redis容量预估
     </div>
     <table cellspacing="0">
-        <tr>
+        <tr style="font-weight:bold;">
             <td>Key类型</td>
             <td>Key个数</td>
             <td>Key长度</td>
@@ -30,11 +30,11 @@
                 <!--<option value="string">string</option>-->
                 <!--</select>-->
             </td>
-            <td><input type="text" placeholder="Key数量"></td>
-            <td><input type="text" placeholder="Key长度"></td>
-            <td><input type="text" placeholder="元素/字段数"></td>
-            <td><input type="text" placeholder="元素/字段长度"></td>
-            <td><input type="text" placeholder="Value长度"></td>
+            <td><input type="number" placeholder="Key数量"></td>
+            <td><input type="number" placeholder="Key长度"></td>
+            <td><input type="number" placeholder="元素/字段数"></td>
+            <td><input type="number" placeholder="元素/字段长度"></td>
+            <td><input type="number" placeholder="Value长度"></td>
         </tr>
         <tr>
             <td>
@@ -44,11 +44,11 @@
                 <!--<option value="list">list</option>-->
                 <!--</select>-->
             </td>
-            <td><input type="text" placeholder="Key数量"></td>
-            <td><input type="text" placeholder="Key长度"></td>
-            <td><input type="text" placeholder="元素/字段数"></td>
-            <td><input type="text" placeholder="元素/字段长度"></td>
-            <td><input type="text" placeholder="Value长度"></td>
+            <td><input type="number" placeholder="Key数量"></td>
+            <td><input type="number" placeholder="Key长度"></td>
+            <td><input type="number" placeholder="元素/字段数"></td>
+            <td><input type="number" placeholder="元素/字段长度"></td>
+            <td><input type="number" placeholder="Value长度"></td>
         </tr>
         <tr>
             <td>
@@ -58,11 +58,11 @@
                 <!--</select>-->
                 <!--<span value="hash">hash</span>-->
             </td>
-            <td><input type="text" placeholder="Key数量"></td>
-            <td><input type="text" placeholder="Key长度"></td>
-            <td><input type="text" placeholder="元素/字段数"></td>
-            <td><input type="text" placeholder="元素/字段长度"></td>
-            <td><input type="text" placeholder="Value长度"></td>
+            <td><input type="number" placeholder="Key数量"></td>
+            <td><input type="number" placeholder="Key长度"></td>
+            <td><input type="number" placeholder="元素/字段数"></td>
+            <td><input type="number" placeholder="元素/字段长度"></td>
+            <td><input type="number" placeholder="Value长度"></td>
         </tr>
         <tr>
             <td>
@@ -72,11 +72,11 @@
                 <!--</select>-->
                 <!--<span value="set">set</span>-->
             </td>
-            <td><input type="text" placeholder="Key数量"></td>
-            <td><input type="text" placeholder="Key长度"></td>
-            <td><input type="text" placeholder="元素/字段数"></td>
-            <td><input type="text" placeholder="元素/字段长度"></td>
-            <td><input type="text" placeholder="Value长度"></td>
+            <td><input type="number" placeholder="Key数量"></td>
+            <td><input type="number" placeholder="Key长度"></td>
+            <td><input type="number" placeholder="元素/字段数"></td>
+            <td><input type="number" placeholder="元素/字段长度"></td>
+            <td><input type="number" placeholder="Value长度"></td>
         </tr>
         <tr>
             <td>
@@ -88,19 +88,19 @@
                     <!--zset-->
                 <!--</span>-->
             </td>
-            <td><input type="text" placeholder="Key数量"></td>
-            <td><input type="text" placeholder="Key长度"></td>
-            <td><input type="text" placeholder="元素/字段数"></td>
-            <td><input type="text" placeholder="元素/字段长度"></td>
-            <td><input type="text" placeholder="Value长度"></td>
+            <td><input type="number" placeholder="Key数量"></td>
+            <td><input type="number" placeholder="Key长度"></td>
+            <td><input type="number" placeholder="元素/字段数"></td>
+            <td><input type="number" placeholder="元素/字段长度"></td>
+            <td><input type="number" placeholder="Value长度"></td>
         </tr>
     </table>
     <div class="con">
         <button id="btnClick">开始计算</button>
     </div>
     <div class="conPie">
-        <div id="calSize" style="font-weight: bold"></div>
-        <div id="conMain" style="width: 600px;height: 400px;"></div>
+        <div id="calSize"></div>
+        <div id="conMain"></div>
     </div>
 </div>
 
