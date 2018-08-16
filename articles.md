@@ -1007,3 +1007,17 @@ disqusUrl: http://redis.cn/articles.html
 * 2016-07-30  [优酷蓝鲸近千节点的Redis集群运维经验总结](https://mp.weixin.qq.com/s?__biz=MzA5NzkxMzg1Nw==&mid=2653160253&idx=1&sn=52576dd6e5acfd7ba140efe67bc0fa6e&scene=1&srcid=0730MWmZSIgzaEhuJjt2ZJn2&pass_ticket=4nMfla%2BECFYqmXGvENtmJG9l7dThjwOasoT8r2q8h8tbHJgiyxfMA6v1jHqXAr7A#rd)
 
 * 2016-07-31  [【干货】Docker化高可用redis集群](https://mp.weixin.qq.com/s?__biz=MzI0NTE4NjA0OQ==&mid=2658351573&idx=2&sn=fb194491852b84b793233b2bebc456dc&scene=1&srcid=0731HDDs6lEuh8q2wMpmViy3&pass_ticket=JiiNCOOLwCNJRHCGqmKYIgl9nnA0YZMert1gbyFdNh5ojmB5oqvqi0LgW0GSOSY%2F#rd)
+
+
+
+<div  style="text-align:left;color:#C00000;font-size:12px;padding:5px;line-height:150%;">
+	特别强调：
+<br/>
+1、内容说明：上述内容由tao12345666333同学收集并更新
+<br/>
+2、投稿&咨询：欢迎参与并提交新的优质内容反馈给社区，参与社区知识库共创，请联系微信号：zhangdh1113 或 rjgcs123
+<br/>
+3、免责申明：以上内容均从网上收集整理，需要强调的是我们尊重原创、尊重作者、尊重知识产权，所有内容版权均属于原作者或平台，如有不妥，请联系我们。
+<br/>
+感谢您的支持与帮助，期待您的参与！
+</div>	
