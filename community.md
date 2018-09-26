@@ -30,7 +30,7 @@ CRUG官网订阅号：
 - Redis java群1（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=8232e992cb4a15fd2f264b5831633f529bb419a6facf561d3bb3355db58bfae9") -->
 - Redis java群2（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=12d32e1171f2137d2a2292b9c8d434d2cba89845161280c623dbbb594f8b0c1c") -->
 - Redis java群3（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=e5595344a41ddcd15ebe2e50fe7f498b36b7d5691bc6bdea95e3793d06153cac") -->
-- Redis java群4[![](shang.qq.com/wpa/qunwpa?idkey=e1c9857cabe275cf51d5e7a00cf45beb116d4ff3d652345df93a03345e255bee")
+- Redis java群4 [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=e1c9857cabe275cf51d5e7a00cf45beb116d4ff3d652345df93a03345e255bee")
 - Redis PHP群1（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=123da38a7bc4d95fb35a3617423d62eed5e183039fddca35385101f57ae26bf1") -->
 - Redis PHP群2（已满）<!-- [![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=901023563d628c5ff663a21408688a5ff468d98e7ba06ac3c2ba2a9a5498c433")-->
 - Redis PHP群3[![](http://pub.idqqimg.com/wpa/images/group.png)](http://shang.qq.com/wpa/qunwpa?idkey=a2bc0517bf59576f814c6318175f5f2c4b2a9b93789c78a57cb4c1fce352fff8")
