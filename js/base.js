@@ -51,3 +51,17 @@ function debugLog(msg){
 		console.log(msg);
 	}
 }	
+
+function isRediscnPc(){
+	if(isMobileBrowser()){
+		return false;
+	}
+	
+	if(window.location.href.indexOf('//redis.cn')>0){			return true;	}
+	
+	if(window.location.href.indexOf('//www.redis.cn')>0){		return true;	}
+	
+	// if(window.location.href.indexOf('//127.0.0.1')>0){			return true;	}
+	
+	return false;
+}

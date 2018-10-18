@@ -12,15 +12,27 @@
               </div>
               {{ content }}
             </div>
-{% include commands/{{ page.commandsType}}.html %}
+			{% include commands/{{ page.commandsType}}.html %}
             </article>
             {% if page.tranAuthor %}
-						<article id='tranAuthor'>
-							{% include author/{{ page.tranAuthor}}.html %}
-						</article>
-						{% endif %}
-        </div>
-
+			<article id='tranAuthor'>
+				{% include author/{{ page.tranAuthor}}.html %}
+			</article>
+			{% endif %}
+</div>
+<script>
+		if(isRediscnPc()){
+			var s = "_" + Math.random().toString(36).slice(2);
+			document.write('<div style="margin-bottom:10px;" id="' + s + '"></div>');
+			(window.slotbydup = window.slotbydup || []).push({
+				id: "u3556359",
+				container:  s
+			});
+			document.write('<scr'+'ipt type="text/javascr'+'ipt" src="//cpro.baidustatic.com/cpro/ui/c.js" async="async" defer="defer" ></scr'+'ipt>');
+		}
+	
+</script>
+	
 {% include footer.html %}
 {% include footer_all.html %}
-<script src='/js/commands.js?1426205831'></script>
+<script src='/js/commands.js?1426205833'></script>
