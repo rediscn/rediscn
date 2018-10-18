@@ -10,7 +10,7 @@ discuzTid: 855
 
 ### 2018年10月18日
 1、更新首页和下载页里redis的最新版本5.0.0。<br/>
-2、新增[Redis Stream](http://www.redis.cn/topics/streams-intro.html)介绍。
+2、新增[Redis Stream](http://www.redis.cn/topics/streams-intro.html)介绍。<br/>
 3、新增
 [BZPOPMAX](http://www.redis.cn/commands/bzpopmax.html)、
 [BZPOPMIN](http://www.redis.cn/commands/bzpopmin.html)、
