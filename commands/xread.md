@@ -207,9 +207,10 @@ are not removed from the stream when clients are served, so every
 client waiting will be served as soon as an `XADD` command provides
 data to the stream.
 
-@return
+## 返回值
 
-@array-reply, specifically:
+[array-reply](/topics/protocol.html#array-reply)：
+
 
 The command returns an array of results: each element of the returned
 array is an array composed of a two element containing the key name and

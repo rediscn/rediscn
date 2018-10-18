@@ -11,6 +11,6 @@ discuzTid: 13906
 The `MEMORY HELP` command returns a helpful text describing the different
 subcommands.
 
-@return
+## 返回值
 
-@array-reply: a list of subcommands and their descriptions
+[array-reply](/topics/protocol.html#array-reply)

@@ -29,7 +29,8 @@ is active and retains all changes to the data set once it ends.
 * `SYNC`. Enable blocking synchronous debugging of Lua scripts (saves changes to data).
 * `NO`. Disables scripts debug mode.
 
-@return
+## 返回值
 
-@simple-string-reply: `OK`.
+
+[simple-string-reply](/topics/protocol.html#simple-string-reply): `OK`.
 

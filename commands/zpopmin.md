@@ -16,15 +16,19 @@ value that is higher than the sorted set's cardinality will not produce an
 error. When returning multiple elements, the one with the lowest score will
 be the first, followed by the elements with greater scores.
 
-@return
+## 返回值
 
-@array-reply: list of popped elements and scores.
+[array-reply](/topics/protocol.html#array-reply): list of popped elements and scores.
 
-@examples
+## 例子
 
-```cli
-ZADD myzset 1 "one"
-ZADD myzset 2 "two"
-ZADD myzset 3 "three"
-ZPOPMIN myzset
-```
+	redis> ZADD myzset 1 "one"
+	(integer) 1
+	redis> ZADD myzset 2 "two"
+	(integer) 1
+	redis> ZADD myzset 3 "three"
+	(integer) 1
+	redis> ZPOPMIN myzset
+	1) "1"
+	2) "one"
+	redis> 

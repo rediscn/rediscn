@@ -36,9 +36,10 @@ collection in case a given macro-node reaches a given amount of deleted
 entries. Currently with the usage we anticipate for this data structure, it is
 not a good idea to add such complexity.
 
-@return
+## 返回值
 
-@integer-reply: the number of entries actually deleted.
+[integer-reply](/topics/protocol.html#integer-reply)：
+
 
 @examples
 

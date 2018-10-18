@@ -19,6 +19,6 @@ introduced also in Redis 5 together with `CLIETN ID`. Check the `CLIENT UNBLOCK`
 
 ## 例子
 
-```cli
-CLIENT ID
-```
+	redis> CLIENT ID
+	ERR Unknown or disabled command 'CLIENT'
+	redis> 

@@ -11,6 +11,6 @@ discuzTid: 13905
 The `MEMORY DOCTOR` command reports about different memory-related issues that
 the Redis server experiences, and advises about possible remedies.
 
-@return
+## 返回值
 
-@bulk-string-reply 
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply)

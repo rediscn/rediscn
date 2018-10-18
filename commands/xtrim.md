@@ -34,14 +34,24 @@ items. When this option modifier is used, the trimming is performed only when
 Redis is able to remove a whole macro node. This makes it much more efficient,
 and it is usually what you want.
 
-@return
+## 返回值
 
-@integer-reply, specifically:
+[integer-reply](/topics/protocol.html#integer-reply)：
 
 The command returns the number of entries deleted from the stream.
 
-```cli
-XADD mystream * field1 A field2 B field3 C field4 D
-XTRIM mystream MAXLEN 2
-XRANGE mystream - +
-```
+	redis> XADD mystream * field1 A field2 B field3 C field4 D
+	"1539863719429-0"
+	redis> XTRIM mystream MAXLEN 2
+	ERR Unknown or disabled command 'XTRIM'
+	redis> XRANGE mystream - +
+	1) 1) "1539863719429-0"
+	   2) 1) "field1"
+		  2) "A"
+		  3) "field2"
+		  4) "B"
+		  5) "field3"
+		  6) "C"
+		  7) "field4"
+		  8) "D"
+	redis> 

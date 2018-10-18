@@ -18,15 +18,18 @@ Streams are not auto-deleted once they have no entries inside (for instance
 after an `XDEL` call), because the stream may have consumer groups
 associated with it.
 
-@return
+## 返回值
 
-@integer-reply: the number of entries of the stream at `key`.
+[integer-reply](/topics/protocol.html#integer-reply)：
 
-@examples
+## 例子
 
-```cli
-XADD mystream * item 1
-XADD mystream * item 2
-XADD mystream * item 3
-XLEN mystream
-```
+	redis> XADD mystream * item 1
+	"1539863829481-0"
+	redis> XADD mystream * item 2
+	"1539863829482-0"
+	redis> XADD mystream * item 3
+	"1539863829482-1"
+	redis> XLEN mystream
+	(integer) 3
+	redis> 

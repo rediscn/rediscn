@@ -23,18 +23,18 @@ See the [BZPOPMIN documentation][cb] for the exact semantics, since `BZPOPMAX`
 is identical to `BZPOPMIN` with the only difference being that it pops members
 with the highest scores instead of popping the ones with the lowest scores.
 
-[cb]: /commands/bzpopmin
+[cb]: [/commands/bzpopmin.html](/commands/bzpopmin.html)
 
-@return
+## 返回值
 
-@array-reply: specifically:
+[array-reply](/topics/protocol.html#array-reply): specifically:
 
 * A `nil` multi-bulk when no element could be popped and the timeout expired.
 * A three-element multi-bulk with the first element being the name of the key
   where a member was popped, the second element being the score of the popped
   member, and the third element being the popped member itself.
 
-@examples
+## 例子
 
 ```
 redis> DEL zset1 zset2

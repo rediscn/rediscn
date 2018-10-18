@@ -173,23 +173,40 @@ of XRANGE:
 For further information about Redis streams please check our
 [introduction to Redis Streams document](/topics/streams-intro).
 
-@return
+## 返回值
 
-@array-reply, specifically:
+[array-reply](/topics/protocol.html#array-reply)：
 
 The command returns the entries with IDs matching the specified range.
 The returned entries are complete, that means that the ID and all the fields
 they are composed are returned. Moreover, the entries are returned with
 their fields and values in the exact same order as `XADD` added them.
 
-@examples
+## 例子
 
-```cli
-XADD writers * name Virginia surname Woolf
-XADD writers * name Jane surname Austen
-XADD writers * name Toni surname Morris
-XADD writers * name Agatha surname Christie
-XADD writers * name Ngozi surname Adichie
-XLEN writers
-XRANGE writers - + COUNT 2
-```
+
+	redis> XADD writers * name Virginia surname Woolf
+	"1539863591459-0"
+	redis> XADD writers * name Jane surname Austen
+	"1539863591460-0"
+	redis> XADD writers * name Toni surname Morris
+	"1539863591460-1"
+	redis> XADD writers * name Agatha surname Christie
+	"1539863591461-0"
+	redis> XADD writers * name Ngozi surname Adichie
+	"1539863591462-0"
+	redis> XLEN writers
+	(integer) 5
+	redis> XRANGE writers - + COUNT 2
+	1) 1) "1539863591459-0"
+	   2) 1) "name"
+		  2) "Virginia"
+		  3) "surname"
+		  4) "Woolf"
+	2) 1) "1539863591460-0"
+	   2) 1) "name"
+		  2) "Jane"
+		  3) "surname"
+		  4) "Austen"
+	redis> 
+

@@ -14,6 +14,6 @@ reclaimed by the allocator.
 This command is currently implemented only when using **jemalloc** as an
 allocator, and evaluates to a benign NOOP for all others.
 
-@return
+## 返回值
 
-@simple-string-reply
+[simple-string-reply](/topics/protocol.html#simple-string-reply)

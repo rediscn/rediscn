@@ -18,7 +18,7 @@ This will swap database 0 with database 1. All the clients connected with databa
 
 ##返回值
 
-@simple-string-reply: `OK` if `SWAPDB` was executed correctly.
+[simple-string-reply](/topics/protocol.html#simple-string-reply): `OK` if `SWAPDB` was executed correctly.
 
 ## 例子
 

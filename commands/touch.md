@@ -13,12 +13,14 @@ A key is ignored if it does not exist.
 
 ## 返回值
 
-@integer-reply: The number of keys that were touched.
+[integer-reply](/topics/protocol.html#integer-reply): The number of keys that were touched.
 
 ## 例子
 
-```cli
-SET key1 "Hello"
-SET key2 "World"
-TOUCH key1 key2
-```
+	redis> SET key1 "Hello"
+	"OK"
+	redis> SET key2 "World"
+	"OK"
+	redis> TOUCH key1 key2
+	(integer) 2
+	redis> 

@@ -80,19 +80,33 @@ and it is usually what you want.
 For further information about Redis streams please check our
 [introduction to Redis Streams document](/topics/streams-intro).
 
-@return
+## 返回值
 
-@bulk-string-reply, specifically:
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply)：
 
 The command returns the ID of the added entry. The ID is the one auto-generated
 if `*` is passed as ID argument, otherwise the command just returns the same ID
 specified by the user during insertion.
 
-@examples
+## 例子
 
-```cli
-XADD mystream * name Sara surname OConnor
-XADD mystream * field1 value1 field2 value2 field3 value3
-XLEN mystream
-XRANGE mystream - +
-```
+	redis> XADD mystream * name Sara surname OConnor
+	"1539863454486-0"
+	redis> XADD mystream * field1 value1 field2 value2 field3 value3
+	"1539863454486-1"
+	redis> XLEN mystream
+	(integer) 2
+	redis> XRANGE mystream - +
+	1) 1) "1539863454486-0"
+	   2) 1) "name"
+		  2) "Sara"
+		  3) "surname"
+		  4) "OConnor"
+	2) 1) "1539863454486-1"
+	   2) 1) "field1"
+		  2) "value1"
+		  3) "field2"
+		  4) "value2"
+		  5) "field3"
+		  6) "value3"
+	redis> 

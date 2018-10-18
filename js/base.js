@@ -41,4 +41,13 @@ function clog(msg){
 	if(!isMobileBrowser()){
 		console.log(msg);
 	}
+}
+
+function debugLog(msg){
+	var printLog = false;
+	// printLog = true;
+	
+	if(printLog){
+		console.log(msg);
+	}
 }	

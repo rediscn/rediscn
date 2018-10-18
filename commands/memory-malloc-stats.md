@@ -14,6 +14,6 @@ the memory allocator.
 This command is currently implemented only when using **jemalloc** as an
 allocator, and evaluates to a benign NOOP for all others.
 
-@return
+## 返回值
 
-@bulk-string-reply: the memory allocator's internal statistics report
+[bulk-string-reply](/topics/protocol.html#bulk-string-reply): the memory allocator's internal statistics report

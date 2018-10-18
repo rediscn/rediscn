@@ -72,9 +72,10 @@ be `1526985712946-18446744073709551615`, or just `18446744073709551615`:
 And so for until the iteration is complete and no result is returned.
 See the `XRANGE` page about iterating for more information.
 
-@return
+## 返回值
 
-@array-reply, specifically:
+[array-reply](/topics/protocol.html#array-reply)：
+
 
 The command returns the entries with IDs matching the specified range,
 from the higher ID to the lower ID matching.
@@ -82,14 +83,24 @@ The returned entries are complete, that means that the ID and all the fields
 they are composed are returned. Moreover the entries are returned with
 their fields and values in the exact same order as `XADD` added them.
 
-@examples
+## 例子
 
-```cli
-XADD writers * name Virginia surname Woolf
-XADD writers * name Jane surname Austen
-XADD writers * name Toni surname Morris
-XADD writers * name Agatha surname Christie
-XADD writers * name Ngozi surname Adichie
-XLEN writers
-XREVRANGE writers + - COUNT 1
-```
+	redis> XADD writers * name Virginia surname Woolf
+	"1539863673862-0"
+	redis> XADD writers * name Jane surname Austen
+	"1539863673863-0"
+	redis> XADD writers * name Toni surname Morris
+	"1539863673865-0"
+	redis> XADD writers * name Agatha surname Christie
+	"1539863673866-0"
+	redis> XADD writers * name Ngozi surname Adichie
+	"1539863673867-0"
+	redis> XLEN writers
+	(integer) 5
+	redis> XREVRANGE writers + - COUNT 1
+	1) 1) "1539863673867-0"
+	   2) 1) "name"
+		  2) "Ngozi"
+		  3) "surname"
+		  4) "Adichie"
+	redis> 

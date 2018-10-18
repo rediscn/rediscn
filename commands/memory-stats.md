@@ -48,8 +48,8 @@ values. The following metrics are reported:
      `total.allocated`
 *   `fragmentation`: See `INFO`'s `mem_fragmentation_ratio`
 
-@return
+## 返回值
 
-@array-reply: nested list of memory usage metrics and their values
+[array-reply](/topics/protocol.html#array-reply): nested list of memory usage metrics and their values
 
 **A note about the word slave used in this man page**: Starting with Redis 5, if not for backward compatibility, the Redis project no longer uses the word slave. Unfortunately in this command the word slave is part of the protocol, so we'll be able to remove such occurrences only when this API will be naturally deprecated.

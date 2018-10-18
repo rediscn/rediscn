@@ -24,15 +24,15 @@ so that such message does not get processed again, and as a side effect,
 the PEL entry about this message is also purged, releasing memory from the
 Redis server.
 
-@return
+## 返回值
 
-@integer-reply, specifically:
+[integer-reply](/topics/protocol.html#integer-reply)：
 
 The command returns the number of messages successfully acknowledged.
 Certain message IDs may no longer be part of the PEL (for example because
 they have been already acknowledge), and XACK will not count them as
 successfully acknowledged.
 
-```cli
-XACK mystream mygroup 1526569495631-0
-```
+	redis> XACK mystream mygroup 1526569495631-0
+	ERR Unknown or disabled command 'XACK'
+	redis> 

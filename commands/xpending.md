@@ -113,9 +113,10 @@ we have a pending entries list data structure both globally, and for
 every consumer, so we can very efficiently show just messages pending for
 a single consumer.
 
-@return
 
-@array-reply, specifically:
+## 返回值
+
+[array-reply](/topics/protocol.html#array-reply)：
 
 The command returns data in different format depending on the way it is
 called, as previously explained in this page. However the reply is always

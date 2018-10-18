@@ -20,4 +20,5 @@ The `CLIENT REPLY` command controls whether the server will reply the client's c
 
 When called with either `OFF` or `SKIP` subcommands, no reply is made. When called with `ON`:
 
-@simple-string-reply: `OK`.
+[simple-string-reply](/topics/protocol.html#simple-string-reply): `OK`.
+

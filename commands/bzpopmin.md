@@ -25,16 +25,16 @@ popped from.
 
 [cl]: /commands/blpop
 
-@return
+## 返回值
 
-@array-reply: specifically:
+[array-reply](/topics/protocol.html#array-reply)
 
 * A `nil` multi-bulk when no element could be popped and the timeout expired.
 * A three-element multi-bulk with the first element being the name of the key
   where a member was popped, the second element being the score of the popped
   member, and the third element being the popped member itself.
 
-@examples
+## 例子
 
 ```
 redis> DEL zset1 zset2

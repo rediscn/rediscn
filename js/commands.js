@@ -3816,3 +3816,27 @@ function getMetadata(command)
 	
 	return metaDataHtml;
 }
+
+// 标记当前命令加粗
+function markBold(){
+	var curUrl = document.location.href;
+	var lastIndex = curUrl.lastIndexOf("/");
+	var commandFix = curUrl.substr(lastIndex);
+	debugLog('commandFix:'+commandFix);
+	
+	$('.article-aside a').each(function(){
+		var hrefTag = $(this).attr('href');
+		var commandIndex = hrefTag.indexOf(commandFix);
+		//debugLog('hrefTag:'+hrefTag+',commandIndex='+commandIndex);
+		
+		if(commandIndex>0){
+			$(this).css('font-weight','bold');
+		}
+	});
+}
+
+$(document).ready(function(){ 
+	if($('.article-aside').length){
+		markBold();
+	}
+});
