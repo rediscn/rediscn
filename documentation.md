@@ -96,6 +96,7 @@ discuzTid: 852
 <ul>
 <li><a href="/topics/faq.html">FAQ</a>：关于Redis的一些常见问题。</li>
 <li><a href="/topics/data-types.html">数据类型（Data types）</a>：Redis支持不同类型值的摘要。</li>
+<li><a href="/topics/streams-intro.html">Redis Stream（streams）介绍</a>：详细介绍Redis5的一种新的数据类型stream。</li>
 <li><a href="/topics/data-types-intro.html">15分钟快速了解Redis的数据结构</a></li>
 <li><a href="/topics/twitter-clone.html">用PHP+Redis编写一个简单的Twitter</a></li>
 <li><a href="http://antirez.com/post/autocomplete-with-redis.html">用Redis实现自动完成</a></li>

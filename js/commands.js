@@ -190,6 +190,46 @@ var rediscn_commands={
     "since": "2.2.0",
     "group": "list"
   },
+  "BZPOPMIN": {
+    "summary": "Remove and return the member with the lowest score from one or more sorted sets, or block until one is available",
+    "complexity": "O(log(N)) with N being the number of elements in the sorted set.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key",
+        "multiple": true
+      },
+      {
+        "name": "timeout",
+        "type": "integer"
+      }
+    ],
+    "since": "5.0.0",
+    "group": "sorted_set"
+  },
+  "BZPOPMAX": {
+    "summary": "Remove and return the member with the highest score from one or more sorted sets, or block until one is available",
+    "complexity": "O(log(N)) with N being the number of elements in the sorted set.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key",
+        "multiple": true
+      },
+      {
+        "name": "timeout",
+        "type": "integer"
+      }
+    ],
+    "since": "5.0.0",
+    "group": "sorted_set"
+  },
+  "CLIENT ID": {
+    "summary": "Returns the client ID for the current connection",
+    "complexity": "O(1)",
+    "since": "5.0.0",
+    "group": "server"
+  },
   "CLIENT KILL": {
     "summary": "关闭客户端连接",
     "complexity": "O(N) N是客户端连接数量",
@@ -251,6 +291,19 @@ var rediscn_commands={
     "since": "2.9.50",
     "group": "server"
   },
+  "CLIENT REPLY": {
+    "summary": "Instruct the server whether to reply to commands",
+    "complexity": "O(1)",
+    "arguments": [
+      {
+        "name": "reply-mode",
+        "type": "enum",
+        "enum": ["ON", "OFF", "SKIP"]
+      }
+    ],
+    "since": "3.2",
+    "group": "server"
+  },
   "CLIENT SETNAME": {
     "summary": "设置当前连接的名字",
     "complexity": "O(1)",
@@ -261,6 +314,24 @@ var rediscn_commands={
         "type": "string"
       }
     ],
+    "group": "server"
+  },
+  "CLIENT UNBLOCK": {
+    "summary": "Unblock a client blocked in a blocking command from a different connection",
+    "complexity": "O(log N) where N is the number of client connections",
+    "arguments": [
+      {
+        "name": "client-id",
+        "type": "string"
+      },
+      {
+        "name": "unblock-type",
+        "type": "enum",
+        "enum": ["TIMEOUT", "ERROR"],
+        "optional": true
+      }
+    ],
+    "since": "5.0.0",
     "group": "server"
   },
   "CLUSTER ADDSLOTS": {
@@ -471,6 +542,18 @@ var rediscn_commands={
       }
     ],
     "since": "3.0.0",
+    "group": "cluster"
+  },
+  "CLUSTER REPLICAS": {
+    "summary": "List replica nodes of the specified master node",
+    "complexity": "O(1)",
+    "arguments": [
+      {
+        "name": "node-id",
+        "type": "string"
+      }
+    ],
+    "since": "5.0.0",
     "group": "cluster"
   },
   "CLUSTER SLOTS": {
@@ -1463,6 +1546,50 @@ var rediscn_commands={
     "since": "1.0.0",
     "group": "list"
   },
+  "MEMORY DOCTOR": {
+    "summary": "Outputs memory problems report",
+    "since": "4.0.0",
+    "group": "server"
+  },
+  "MEMORY HELP": {
+    "summary": "Show helpful text about the different subcommands",
+    "since": "4.0.0",
+    "group": "server"
+
+  },
+  "MEMORY MALLOC-STATS": {
+    "summary": "Show allocator internal stats",
+    "since": "4.0.0",
+    "group": "server"
+  },
+  "MEMORY PURGE": {
+    "summary": "Ask the allocator to release memory",
+    "since": "4.0.0",
+    "group": "server"
+  },
+  "MEMORY STATS": {
+    "summary": "Show memory usage details",
+    "since": "4.0.0",
+    "group": "server"
+  },
+  "MEMORY USAGE": {
+    "summary": "Estimate the memory usage of a key",
+    "complexity": "O(N) where N is the number of samples.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      },
+      {
+        "command": "SAMPLES",
+        "name": "count",
+        "type": "integer",
+        "optional": true
+      }
+    ],
+    "since": "4.0.0",
+    "group": "server"
+  },
   "MGET": {
     "summary": "获得所有key的值",
     "complexity": "O(N) where N is the number of keys to retrieve.",
@@ -1957,6 +2084,19 @@ var rediscn_commands={
     "since": "1.0.0",
     "group": "set"
   },
+  "SCRIPT DEBUG": {
+    "summary": "Set the debug mode for executed scripts.",
+    "complexity": "O(1)",
+    "arguments": [
+      {
+        "name": "mode",
+        "type": "enum",
+        "enum": ["YES", "SYNC", "NO"]
+      }
+    ],
+    "since": "3.2.0",
+    "group": "scripting"
+  },
   "SCRIPT EXISTS": {
     "summary": "Check existence of scripts in the script cache.",
     "complexity": "O(N) with N being the number of scripts to check (so checking a single script is an O(1) operation).",
@@ -2225,6 +2365,21 @@ var rediscn_commands={
     "since": "1.0.0",
     "group": "server"
   },
+  "REPLICAOF": {
+    "summary": "Make the server a replica of another instance, or promote it as master.",
+    "arguments": [
+      {
+        "name": "host",
+        "type": "string"
+      },
+      {
+        "name": "port",
+        "type": "string"
+      }
+    ],
+    "since": "5.0.0",
+    "group": "server"
+  },
   "SLOWLOG": {
     "summary": "管理再分配的慢查询日志",
     "arguments": [
@@ -2428,6 +2583,21 @@ var rediscn_commands={
     "since": "1.0.0",
     "group": "set"
   },
+  "SWAPDB": {
+    "summary": "Swaps two Redis databases",
+    "arguments": [
+      {
+        "name": "index",
+        "type": "integer"
+      },
+      {
+        "name": "index",
+        "type": "integer"
+      }
+    ],
+    "since": "4.0.0",
+    "group": "connection"
+  },
   "SYNC": {
     "summary": "用于复制的内部命令",
     "since": "1.0.0",
@@ -2438,6 +2608,19 @@ var rediscn_commands={
     "complexity": "O(1)",
     "since": "2.6.0",
     "group": "server"
+  },
+  "TOUCH": {
+    "summary": "Alters the last access time of a key(s). Returns the number of existing keys specified.",
+    "complexity": "O(N) where N is the number of keys that will be touched.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key",
+        "multiple": true
+      }
+    ],
+    "since": "3.2.1",
+    "group": "generic"
   },
   "TTL": {
     "summary": "获取key的有效时间（单位：秒）",
@@ -2476,6 +2659,19 @@ var rediscn_commands={
     ],
     "since": "2.0.0",
     "group": "pubsub"
+  },
+  "UNLINK": {
+    "summary": "Delete a key asynchronously in another thread. Otherwise it is just as DEL, but non blocking.",
+    "complexity": "O(1) for each key removed regardless of its size. Then the command does O(N) work in a different thread in order to reclaim memory, where N is the number of allocations the deleted objects where composed of.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key",
+        "multiple": true
+      }
+    ],
+    "since": "4.0.0",
+    "group": "generic"
   },
   "UNWATCH": {
     "summary": "取消事务",
@@ -2652,6 +2848,40 @@ var rediscn_commands={
       }
     ],
     "since": "2.8.9",
+    "group": "sorted_set"
+  },
+  "ZPOPMAX": {
+    "summary": "Remove and return members with the highest scores in a sorted set",
+    "complexity": "O(log(N)*M) with N being the number of elements in the sorted set, and M being the number of elements popped.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      },
+      {
+        "name": "count",
+        "type": "integer",
+        "optional": true
+      }
+    ],
+    "since": "5.0.0",
+    "group": "sorted_set"
+  },
+  "ZPOPMIN": {
+    "summary": "Remove and return members with the lowest scores in a sorted set",
+    "complexity": "O(log(N)*M) with N being the number of elements in the sorted set, and M being the number of elements popped.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      },
+      {
+        "name": "count",
+        "type": "integer",
+        "optional": true
+      }
+    ],
+    "since": "5.0.0",
     "group": "sorted_set"
   },
   "ZRANGE": {
@@ -3089,6 +3319,378 @@ var rediscn_commands={
     ],
     "since": "2.8.0",
     "group": "sorted_set"
+  },
+  "XINFO": {
+    "summary": "Get information on streams and consumer groups",
+    "complexity": "O(N) with N being the number of returned items for the subcommands CONSUMERS and GROUPS. The STREAM subcommand is O(log N) with N being the number of items in the stream.",
+    "arguments": [
+      {
+        "command": "CONSUMERS",
+        "name": ["key", "groupname"],
+        "type": ["key", "string"],
+        "optional": true
+      },
+      {
+        "command": "GROUPS",
+        "name": "key",
+        "type": "key",
+        "optional": true
+      },
+      {
+        "command": "STREAM",
+        "name": "key",
+        "type": "key",
+        "optional": true
+      },
+      {
+        "name": "help",
+        "type": "enum",
+        "enum": ["HELP"],
+        "optional": true
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
+  },
+  "XADD": {
+    "summary": "Appends a new entry to a stream",
+    "complexity": "O(log(N)) with N being the number of items already into the stream.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      },
+      {
+        "name": "ID",
+        "type": "string"
+      },
+      {
+        "name": ["field", "string"],
+        "type": ["value", "string"],
+        "multiple": true
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
+  },
+  "XTRIM": {
+    "summary": "Trims the stream to (approximately if '~' is passed) a certain size",
+    "complexity": "O(log(N)) + M, with N being the number of entries in the stream prior to trim, and M being the number of evicted entries. M constant times are very small however, since entries are organized in macro nodes containing multiple entries that can be released with a single deallocation.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      },
+      {
+        "name": "strategy",
+        "type": "enum",
+        "enum": ["MAXLEN"]
+      },
+      {
+        "name": "approx",
+        "type": "enum",
+        "enum": ["~"],
+        "optional": true
+      },
+      {
+        "name": "count",
+        "type": "integer"
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
+  },
+  "XDEL": {
+    "summary": "Removes the specified entries from the stream. Returns the number of items actually deleted, that may be different from the number of IDs passed in case certain IDs do not exist.",
+    "complexity": "O(log(N)) with N being the number of items in the stream.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      },
+      {
+        "name": "ID",
+        "type": "string",
+        "multiple": "true"
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
+  },
+  "XRANGE": {
+    "summary": "Return a range of elements in a stream, with IDs matching the specified IDs interval",
+    "complexity": "O(log(N)+M) with N being the number of elements in the stream and M the number of elements being returned. If M is constant (e.g. always asking for the first 10 elements with COUNT), you can consider it O(log(N)).",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      },
+      {
+        "name": "start",
+        "type": "string"
+      },
+      {
+        "name": "end",
+        "type": "string"
+      },
+      {
+        "command": "COUNT",
+        "name": "count",
+        "type": "integer",
+        "optional": true
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
+  },
+  "XREVRANGE": {
+    "summary": "Return a range of elements in a stream, with IDs matching the specified IDs interval, in reverse order (from greater to smaller IDs) compared to XRANGE",
+    "complexity": "O(log(N)+M) with N being the number of elements in the stream and M the number of elements being returned. If M is constant (e.g. always asking for the first 10 elements with COUNT), you can consider it O(log(N)).",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      },
+      {
+        "name": "end",
+        "type": "string"
+      },
+      {
+        "name": "start",
+        "type": "string"
+      },
+      {
+        "command": "COUNT",
+        "name": "count",
+        "type": "integer",
+        "optional": true
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
+  },
+  "XLEN": {
+    "summary": "Return the number of entires in a stream",
+    "complexity": "O(1)",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
+  },
+  "XREAD": {
+    "summary": "Return never seen elements in multiple streams, with IDs greater than the ones reported by the caller for each stream. Can block.",
+    "complexity": "For each stream mentioned: O(log(N)+M) with N being the number of elements in the stream and M the number of elements being returned. If M is constant (e.g. always asking for the first 10 elements with COUNT), you can consider it O(log(N)). On the other side, XADD will pay the O(N) time in order to serve the N clients blocked on the stream getting new data.",
+    "arguments": [
+      {
+        "command": "COUNT",
+        "name": "count",
+        "type": "integer",
+        "optional": true
+      },
+      {
+        "command": "BLOCK",
+        "name": "milliseconds",
+        "type": "integer",
+        "optional": true
+      },
+      {
+        "name": "streams",
+        "type": "enum",
+        "enum": ["STREAMS"]
+      },
+      {
+        "name": "key",
+        "type": "key",
+        "multiple": true
+      },
+      {
+        "name": "ID",
+        "type": "string",
+        "multiple": true
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
+  },
+  "XGROUP": {
+    "summary": "Create, destroy, and manage consumer groups.",
+    "complexity": "O(log N) for all the subcommands, with N being the number of consumer groups registered in the stream, with the exception of the DESTROY subcommand which takes an additional O(M) time in order to delete the M entries inside the consumer group pending entries list (PEL).",
+    "arguments": [
+      {
+        "command": "CREATE",
+        "name": ["key", "groupname", "id-or-$"],
+        "type": ["key", "string", "string"],
+        "optional": true
+      },
+      {
+        "command": "SETID",
+        "name": ["key", "id-or-$"],
+        "type": ["key", "string"],
+        "optional": true
+      },
+      {
+        "command": "DESTROY",
+        "name": ["key", "groupname"],
+        "type": ["key", "string"],
+        "optional": true
+      },
+      {
+        "command": "DELCONSUMER",
+        "name": ["key", "groupname", "consumername"],
+        "type": ["key", "string", "string"],
+        "optional": true
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
+  },
+  "XREADGROUP": {
+    "summary": "Return new entries from a stream using a consumer group, or access the history of the pending entries for a given consumer. Can block.",
+    "complexity": "For each stream mentioned: O(log(N)+M) with N being the number of elements in the stream and M the number of elements being returned. If M is constant (e.g. always asking for the first 10 elements with COUNT), you can consider it O(log(N)). On the other side, XADD will pay the O(N) time in order to serve the N clients blocked on the stream getting new data.",
+    "arguments": [
+      {
+        "command": "GROUP",
+        "name": ["group", "consumer"],
+        "type": ["string", "string"]
+      },
+      {
+        "command": "COUNT",
+        "name": "count",
+        "type": "integer",
+        "optional": true
+      },
+      {
+        "command": "BLOCK",
+        "name": "milliseconds",
+        "type": "integer",
+        "optional": true
+      },
+      {
+        "name": "streams",
+        "type": "enum",
+        "enum": ["STREAMS"]
+      },
+      {
+        "name": "key",
+        "type": "key",
+        "multiple": true
+      },
+      {
+        "name": "ID",
+        "type": "string",
+        "multiple": true
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
+  },
+  "XACK": {
+    "summary": "Marks a pending message as correctly processed, effectively removing it from the pending entries list of the consumer group. Return value of the command is the number of messages successfully acknowledged, that is, the IDs we were actually able to resolve in the PEL.",
+    "complexity": "O(log N) for each message ID processed.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      },
+      {
+        "name": "group",
+        "type": "string"
+      },
+      {
+        "name": "ID",
+        "type": "string",
+        "multiple": true
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
+  },
+  "XCLAIM": {
+    "summary": "Changes (or acquires) ownership of a message in a consumer group, as if the message was delivered to the specified consumer.",
+    "complexity": "O(log N) with N being the number of messages in the PEL of the consumer group.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      },
+      {
+        "name": "group",
+        "type": "string"
+      },
+      {
+        "name": "consumer",
+        "type": "string"
+      },
+      {
+        "name": "min-idle-time",
+        "type": "string"
+      },
+      {
+        "name": "ID",
+        "type": "string",
+        "multiple": true
+      },
+      {
+        "command": "IDLE",
+        "name": "ms",
+        "type": "integer",
+        "optional": true
+      },
+      {
+        "command": "TIME",
+        "name": "ms-unix-time",
+        "type": "integer",
+        "optional": true
+      },
+      {
+        "command": "RETRYCOUNT",
+        "name": "count",
+        "type": "integer",
+        "optional": true
+      },
+      {
+        "name": "force",
+        "enum": ["FORCE"],
+        "optional": true
+      },
+      {
+        "name": "justid",
+        "enum": ["JUSTID"],
+        "optional": true
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
+  },
+  "XPENDING": {
+    "summary": "Return information and entries from a stream consumer group pending entries list, that are messages fetched but never acknowledged.",
+    "complexity": "O(log(N)+M) with N being the number of elements in the consumer group pending entries list, and M the number of elements being returned. When the command returns just the summary it runs in O(1) time assuming the list of consumers is small, otherwise there is additional O(N) time needed to iterate every consumer.",
+    "arguments": [
+      {
+        "name": "key",
+        "type": "key"
+      },
+      {
+        "name": "group",
+        "type": "string"
+      },
+      {
+        "name": ["start", "end", "count"],
+        "type": ["string", "string", "integer"],
+        "optional": true
+      },
+      {
+        "name": "consumer",
+        "type": "string",
+        "optional": true
+      }
+    ],
+    "since": "5.0.0",
+    "group": "stream"
   }
 };
 

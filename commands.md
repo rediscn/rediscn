@@ -31,8 +31,10 @@ discuzTid: 850
                 <option value='server'>Server</option>
                 <option value='set'>Sets</option>
                 <option value='sorted_set'>Sorted Sets</option>
+				<option value='streams'>Streams</option>
                 <option value='string'>Strings</option>
                 <option value='transactions'>Transactions</option>
+				
               </select>
             </label>
             或者
@@ -178,6 +180,28 @@ discuzTid: 850
                 <span class='summary'>弹出一个列表的值，将它推到另一个列表，并返回它;或阻塞，直到有一个可用</span>
               </a>
             </li>
+			<li data-group='sortedsets' data-name='bzpopmax'>
+              <a href='/commands/bzpopmax.html'>
+                <span class='command'>
+                  BZPOPMAX
+                  <span class='args'>
+                    key [key ...] timeout
+                  </span>
+                </span>
+                <span class='summary'>Remove and return the member with the highest score from one or more sorted sets, or block until one is available</span>
+              </a>
+            </li>
+			<li data-group='sortedsets' data-name='bzpopmin'>
+              <a href='/commands/bzpopmin.html'>
+                <span class='command'>
+                  BZPOPMIN
+                  <span class='args'>
+                    key [key ...] timeout
+                  </span>
+                </span>
+                <span class='summary'>Remove and return the member with the lowest score from one or more sorted sets, or block until one is available</span>
+              </a>
+            </li>
             <li data-group='server' data-name='client kill'>
               <a href='/commands/client-kill.html'>
                 <span class='command'>
@@ -213,6 +237,16 @@ discuzTid: 850
                 <span class='summary'>获得当前连接名称</span>
               </a>
             </li>
+			<li data-group='server' data-name='client id'>
+              <a href='/commands/client-id.html'>
+                <span class='command'>
+                  CLIENT ID
+                  <span class='args'>
+                  </span>
+                </span>
+                <span class='summary'>Returns the client ID for the current connection</span>
+              </a>
+            </li>
             <li data-group='server' data-name='client pause'>
               <a href='/commands/client-pause.html'>
                 <span class='command'>
@@ -224,6 +258,17 @@ discuzTid: 850
                 <span class='summary'>暂停处理客户端命令</span>
               </a>
             </li>
+			<li data-group='server' data-name='client reply'>
+              <a href='/commands/client-reply.html'>
+                <span class='command'>
+                  CLIENT REPLY
+                  <span class='args'>
+					ON|OFF|SKIP
+                  </span>
+                </span>
+                <span class='summary'>Instruct the server whether to reply to commands</span>
+              </a>
+            </li>
             <li data-group='server' data-name='client setname'>
               <a href='/commands/client-setname.html'>
                 <span class='command'>
@@ -233,6 +278,17 @@ discuzTid: 850
                   </span>
                 </span>
                 <span class='summary'>设置当前连接的名字</span>
+              </a>
+            </li>
+			<li data-group='server' data-name='client unblock'>
+              <a href='/commands/client-unblock.html'>
+                <span class='command'>
+                  CLIENT UNBLOCK
+                  <span class='args'>
+                    client-id [TIMEOUT|ERROR]
+                  </span>
+                </span>
+                <span class='summary'>Unblock a client blocked in a blocking command from a different connection</span>
               </a>
             </li>
             <li data-group='cluster' data-name='cluster addslots'>
@@ -354,6 +410,17 @@ discuzTid: 850
                   </span>
                 </span>
                 <span class='summary'>Get Cluster config for the node</span>
+              </a>
+            </li>
+			<li data-group='cluster' data-name='cluster replicas'>
+              <a href='/commands/cluster-replicas.html'>
+                <span class='command'>
+                  CLUSTER REPLICAS
+                  <span class='args'>
+					node-id
+                  </span>
+                </span>
+                <span class='summary'>List replica nodes of the specified master node</span>
               </a>
             </li>
             <li data-group='cluster' data-name='cluster replicate'>
@@ -1201,6 +1268,67 @@ discuzTid: 850
                 <span class='summary'>修剪到指定范围内的清单</span>
               </a>
             </li>
+			<li data-group='server' data-name='memory doctor'>
+              <a href='/commands/memory-doctor.html'>
+                <span class='command'>
+                  MEMORY DOCTOR
+                  <span class='args'>
+                  </span>
+                </span>
+                <span class='summary'>Outputs memory problems report</span>
+              </a>
+            </li>
+			<li data-group='server' data-name='memory help'>
+              <a href='/commands/memory-help.html'>
+                <span class='command'>
+                  MEMORY HELP
+                  <span class='args'>
+                  </span>
+                </span>
+                <span class='summary'>Show helpful text about the different subcommands</span>
+              </a>
+            </li>
+			<li data-group='server' data-name='memory malloc stats'>
+              <a href='/commands/memory-malloc-stats.html'>
+                <span class='command'>
+                  MEMORY-MALLOC-STATS
+                  <span class='args'>
+                  </span>
+                </span>
+                <span class='summary'>Show allocator internal stats</span>
+              </a>
+            </li>
+			<li data-group='server' data-name='memory purge'>
+              <a href='/commands/memory-purge.html'>
+                <span class='command'>
+                  MEMORY-PURGE
+                  <span class='args'>
+                  </span>
+                </span>
+                <span class='summary'>Ask the allocator to release memory</span>
+              </a>
+            </li>
+			<li data-group='server' data-name='memory stats'>
+              <a href='/commands/memory-stats.html'>
+                <span class='command'>
+                  MEMORY-STATS
+                  <span class='args'>
+                  </span>
+                </span>
+                <span class='summary'>Show memory usage details</span>
+              </a>
+            </li>
+			<li data-group='server' data-name='memory usage'>
+              <a href='/commands/memory-usage.html'>
+                <span class='command'>
+                  MEMORY-USAGE
+                  <span class='args'>
+					key [SAMPLES count]
+                  </span>
+                </span>
+                <span class='summary'>Estimate the memory usage of a key</span>
+              </a>
+            </li>
             <li data-group='string' data-name='mget'>
               <a href='/commands/mget.html'>
                 <span class='command'>
@@ -1509,6 +1637,17 @@ discuzTid: 850
                 <span class='summary'>重命名一个key,新的key必须是不存在的key</span>
               </a>
             </li>
+			<li data-group='server' data-name='replicaof'>
+              <a href='/commands/replicaof.html'>
+                <span class='command'>
+                  REPLICAOF
+                  <span class='args'>
+                    host port
+                  </span>
+                </span>
+                <span class='summary'>Make the server a replica of another instance, or promote it as master.</span>
+              </a>
+            </li>
             <li data-group='generic' data-name='restore'>
               <a href='/commands/restore.html'>
                 <span class='command'>
@@ -1611,6 +1750,17 @@ discuzTid: 850
                   </span>
                 </span>
                 <span class='summary'>获取集合里面的元素数量</span>
+              </a>
+            </li>
+			<li data-group='scripting' data-name='script debug'>
+              <a href='/commands/script-debug.html'>
+                <span class='command'>
+                  SCRIPT DEBUG
+                  <span class='args'>
+                    YES|SYNC|NO
+                  </span>
+                </span>
+                <span class='summary'>Set the debug mode for executed scripts.</span>
               </a>
             </li>
             <li data-group='scripting' data-name='script exists'>
@@ -1948,6 +2098,17 @@ discuzTid: 850
                 <span class='summary'>合并set元素，并将结果存入新的set里面</span>
               </a>
             </li>
+			<li data-group='connection' data-name='swapdb'>
+              <a href='/commands/swapdb.html'>
+                <span class='command'>
+                  SWAPDB
+                  <span class='args'>
+                    index index
+                  </span>
+                </span>
+                <span class='summary'>Swaps two Redis databases</span>
+              </a>
+            </li>
             <li data-group='server' data-name='sync'>
               <a href='/commands/sync.html'>
                 <span class='command'>
@@ -1966,6 +2127,17 @@ discuzTid: 850
                   </span>
                 </span>
                 <span class='summary'>返回当前服务器时间</span>
+              </a>
+            </li>
+			<li data-group='keys' data-name='touch'>
+              <a href='/commands/touch.html'>
+                <span class='command'>
+                  TOUCH
+                  <span class='args'>
+					key [key ...]
+                  </span>
+                </span>
+                <span class='summary'>Alters the last access time of a key(s). Returns the number of existing keys specified.</span>
               </a>
             </li>
             <li data-group='generic' data-name='ttl'>
@@ -1988,6 +2160,17 @@ discuzTid: 850
                   </span>
                 </span>
                 <span class='summary'>获取key的存储类型</span>
+              </a>
+            </li>
+			<li data-group='keys' data-name='unlink'>
+              <a href='/commands/unlink.html'>
+                <span class='command'>
+                  UNLINK
+                  <span class='args'>
+                    key [key ...]
+                  </span>
+                </span>
+                <span class='summary'>Delete a key asynchronously in another thread. Otherwise it is just as DEL, but non blocking.</span>
               </a>
             </li>
             <li data-group='pubsub' data-name='unsubscribe'>
@@ -2032,6 +2215,149 @@ discuzTid: 850
                   </span>
                 </span>
                 <span class='summary'>锁定key直到执行了 MULTI/EXEC 命令</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xack'>
+              <a href='/commands/xack.html'>
+                <span class='command'>
+                  XACK
+                  <span class='args'>
+                    key group ID [ID ...]
+                  </span>
+                </span>
+                <span class='summary'>Marks a pending message as correctly processed, effectively removing it from the pending entries list of the consumer group. Return value of the command is the number of messages successfully acknowledged, that is, the IDs we were actually able to resolve in the PEL.</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xadd'>
+              <a href='/commands/xadd.html'>
+                <span class='command'>
+                  XADD
+                  <span class='args'>
+                    key ID field string [field string ...]
+                  </span>
+                </span>
+                <span class='summary'>Appends a new entry to a stream</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xclaim'>
+              <a href='/commands/xclaim.html'>
+                <span class='command'>
+                  XCLAIM
+                  <span class='args'>
+                    key group consumer min-idle-time ID [ID ...] [IDLE ms] [TIME ms-unix-time] [RETRYCOUNT count] [FORCE] [JUSTID]
+                  </span>
+                </span>
+                <span class='summary'>Changes (or acquires) ownership of a message in a consumer group, as if the message was delivered to the specified consumer.</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xdel'>
+              <a href='/commands/xdel.html'>
+                <span class='command'>
+                  XDEL
+                  <span class='args'>
+                    key ID [ID ...]
+                  </span>
+                </span>
+                <span class='summary'>Removes the specified entries from the stream. Returns the number of items actually deleted, that may be different from the number of IDs passed in case certain IDs do not exist.</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xgroup'>
+              <a href='/commands/xgroup.html'>
+                <span class='command'>
+                  XGROUP
+                  <span class='args'>
+                    [CREATE key groupname id-or-$] [SETID key id-or-$] [DESTROY key groupname] [DELCONSUMER key groupname consumername]
+                  </span>
+                </span>
+                <span class='summary'>Create, destroy, and manage consumer groups.</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xinfo'>
+              <a href='/commands/xinfo.html'>
+                <span class='command'>
+                  XINFO
+                  <span class='args'>
+                    [CONSUMERS key groupname] [GROUPS key] [STREAM key] [HELP]
+                  </span>
+                </span>
+                <span class='summary'>Get information on streams and consumer groups</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xlen'>
+              <a href='/commands/xlen.html'>
+                <span class='command'>
+                  XLEN
+                  <span class='args'>
+                    key
+                  </span>
+                </span>
+                <span class='summary'>Return the number of entires in a stream</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xpending'>
+              <a href='/commands/xpending.html'>
+                <span class='command'>
+                  XPENDING
+                  <span class='args'>
+                    key group [start end count] [consumer]
+                  </span>
+                </span>
+                <span class='summary'>Return information and entries from a stream consumer group pending entries list, that are messages fetched but never acknowledged.</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xrange'>
+              <a href='/commands/xrange.html'>
+                <span class='command'>
+                  XRANGE
+                  <span class='args'>
+                    key start end [COUNT count]
+                  </span>
+                </span>
+                <span class='summary'>Return a range of elements in a stream, with IDs matching the specified IDs interval</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xread'>
+              <a href='/commands/xread.html'>
+                <span class='command'>
+                  XREAD
+                  <span class='args'>
+                    [COUNT count] [BLOCK milliseconds] STREAMS key [key ...] ID [ID ...]
+                  </span>
+                </span>
+                <span class='summary'>Return never seen elements in multiple streams, with IDs greater than the ones reported by the caller for each stream. Can block.</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xreadgroup'>
+              <a href='/commands/xreadgroup.html'>
+                <span class='command'>
+                  XREADGROUP
+                  <span class='args'>
+                    GROUP group consumer [COUNT count] [BLOCK milliseconds] STREAMS key [key ...] ID [ID ...]
+                  </span>
+                </span>
+                <span class='summary'>Return new entries from a stream using a consumer group, or access the history of the pending entries for a given consumer. Can block.</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xrevrange'>
+              <a href='/commands/xrevrange.html'>
+                <span class='command'>
+                  XREVRANGE
+                  <span class='args'>
+                    key end start [COUNT count]
+                  </span>
+                </span>
+                <span class='summary'>Return a range of elements in a stream, with IDs matching the specified IDs interval, in reverse order (from greater to smaller IDs) compared to XRANGE</span>
+              </a>
+            </li>
+			<li data-group='streams' data-name='xtrim'>
+              <a href='/commands/xtrim.html'>
+                <span class='command'>
+                  XTRIM
+                  <span class='args'>
+                    key MAXLEN [~] count
+                  </span>
+                </span>
+                <span class='summary'>Trims the stream to (approximately if '~' is passed) a certain size</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zadd'>
@@ -2112,6 +2438,28 @@ discuzTid: 850
                   </span>
                 </span>
                 <span class='summary'>返回成员之间的成员数量</span>
+              </a>
+            </li>
+			<li data-group='sorted_set' data-name='zpopmax'>
+              <a href='/commands/zpopmax.html'>
+                <span class='command'>
+                  ZPOPMAX
+                  <span class='args'>
+                    key [count]
+                  </span>
+                </span>
+                <span class='summary'>Remove and return members with the highest scores in a sorted set</span>
+              </a>
+            </li>
+			<li data-group='sorted_set' data-name='zpopmin'>
+              <a href='/commands/zpopmin.html'>
+                <span class='command'>
+                  ZPOPMIN
+                  <span class='args'>
+                    key [count]
+                  </span>
+                </span>
+                <span class='summary'>Remove and return members with the lowest scores in a sorted set</span>
               </a>
             </li>
             <li data-group='sorted_set' data-name='zrange'>
