@@ -12,14 +12,14 @@ discuzTid: 1008
 
 `MSETNX`是原子的，所以所有给定的keys是一次性set的。客户端不可能看到这种一部分keys被更新而另外的没有改变的情况。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply)，只有以下两种值：
 
 - 1 如果所有的key被set
 - 0 如果没有key被set(至少其中有一个key是存在的)
 
-##例子
+## 例子
 
 	redis> MSETNX key1 "Hello" key2 "there"
 	(integer) 1

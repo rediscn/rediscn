@@ -19,7 +19,7 @@ tranAuthor: menwengit
 * `1` 如果key被设置了
 * `0` 如果key没有被设置
 
-##例子
+## 例子
 
 	redis> SETNX mykey "Hello"
 	(integer) 1

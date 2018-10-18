@@ -10,11 +10,11 @@ discuzTid: 1035
 
 将值 value 插入到列表 key 的表尾, 当且仅当 key 存在并且是一个列表。 和 [RPUSH](/commands/rpush.html) 命令相反, 当 key 不存在时，RPUSHX 命令什么也不做。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply): RPUSHX 命令执行之后，表的长度。
 
-##例子
+## 例子
 
 	redis> RPUSH mylist "Hello"
 	(integer) 1

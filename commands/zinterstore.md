@@ -16,11 +16,11 @@ discuzTid: 1081
 
 如果destination存在，就把它覆盖。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol#integer-reply): 结果有序集合destination中元素个数。
 
-##例子
+## 例子
 
 	redis> ZADD zset1 1 "one"
 	(integer) 1

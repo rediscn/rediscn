@@ -27,6 +27,6 @@ A few more details:
 当Redis Cluster的故障检测器不能正常工作时，这个命令主要用来调试。
 
 
-##返回值
+## 返回值
 
 [Integer reply](http://www.redis.cn/topics/protocol.html#integer-reply)：这个节点有效的故障报告个数。

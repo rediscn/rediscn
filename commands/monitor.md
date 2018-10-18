@@ -62,6 +62,6 @@ discuzTid: 1005
 
 在这种特定的情况下，运行一个[MONITOR](/commands/monitor.html)命令能够降低50%的吞吐量，运行多个[MONITOR](/commands/monitor.html)命令 降低的吞吐量更多.
 
-##返回值
+## 返回值
 
 **没有统一标准的返回值**, 无限的返回服务器端处理的命令流.

@@ -12,6 +12,6 @@ discuzTid: 1074
 
 如果执行[EXEC](/commands/exec.html) 或者[DISCARD](/commands/discard.html)， 则不需要手动执行[UNWATCH](/commands/unwatch.html) 。
 
-##返回值
+## 返回值
 
 [simple-string-reply](/topics/protocol#simple-string-reply): 总是 OK。

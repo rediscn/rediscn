@@ -12,7 +12,7 @@ discuzTid: 1058
 
 该命令的作用与使用一个参数的[SINTER](/commands/sinter.html) 命令作用相同.
 
-##返回值
+## 返回值
 
 [array-reply](/topics/protocol.html#array-reply):集合中的所有元素.
 

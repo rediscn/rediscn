@@ -12,7 +12,7 @@ discuzTid: 997
 
 可以使用一个命令把多个元素 push 进入列表，只需在命令末尾加上多个指定的参数。元素是从最左端的到最右端的、一个接一个被插入到 list 的头部。 所以对于这个命令例子 `LPUSH mylist a b c`，返回的列表是 c 为第一个元素， b 为第二个元素， a 为第三个元素。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply): 在 push 操作后的 list 长度。
 
@@ -21,7 +21,7 @@ discuzTid: 997
 
 - >= 2.4: 接受多个 value 参数。版本老于 2.4 的 Redis 只能每条命令 push 一个值。
 
-##例子
+## 例子
 
 	redis> LPUSH mylist "world"
 	(integer) 1

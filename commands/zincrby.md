@@ -14,11 +14,11 @@ discuzTid: 1080
 
 score值必须是字符串表示的整数值或双精度浮点数，并且能接受double精度的浮点数。也有可能给一个负数来减少score的值。
 
-##返回值
+## 返回值
 
 [Bulk string reply](/topics/protocol#Bulk string reply): member成员的新score值，以字符串形式表示。
 
-##例子
+## 例子
 
 	redis> ZADD myzset 1 "one"
 	(integer) 1

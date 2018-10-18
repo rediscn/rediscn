@@ -10,12 +10,12 @@ discuzTid: 1032
 
 移除并返回存于 key 的 list 的最后一个元素。
 
-##返回值
+## 返回值
 
 [bulk-string-reply](/topics/protocol.html#bulk-string-reply): 
 最后一个元素的值，或者当 key 不存在的时候返回 nil。
 
-##例子
+## 例子
 	
 	redis> RPUSH mylist "one"
 	(integer) 1

@@ -12,6 +12,6 @@ discuzTid: 903
 
 **注意:** 因为redis的高性能能在短时间接受非常多的尝试性密码，所以请务必设置一个足够复杂的密码以防止可能的攻击。
 
-##返回值
+## 返回值
 
 [simple-string-reply](/topics/protocol.html#simple-string-reply)

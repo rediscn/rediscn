@@ -14,14 +14,14 @@ discuzTid: 983
 
 如果字段在哈希集中存在，它将被重写。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply)：含义如下
 
 - 1如果field是一个新的字段
 - 0如果field原来在map里面已经存在
 
-##例子
+## 例子
 
 	redis> HSET myhash field1 "Hello"
 	(integer) 1

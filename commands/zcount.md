@@ -12,11 +12,11 @@ discuzTid: 1079
 
 Note: the command has a complexity of just O(log(N)) because it uses elements ranks (see `ZRANK`) to get an idea of the range. Because of this there is no need to do a work proportional to the size of the range.
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol#integer-reply): 指定分数范围的元素个数。
 
-##例子
+## 例子
 
 	redis> ZADD myzset 1 "one"
 	(integer) 1

@@ -18,11 +18,11 @@ discuzTid: 1000
 
 需要注意的是，如果list里没有存在key就会被当作空list处理，所以当 key 不存在的时候，这个命令会返回 0。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply): 被移除的元素个数。
 
-##例子
+## 例子
 
 	redis> RPUSH mylist "hello"
 	(integer) 1

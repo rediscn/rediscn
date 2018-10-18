@@ -12,11 +12,11 @@ discuzTid: 1054
 
 如果destination 集合存在, 则会被重写.
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply): 结果集中成员的个数.
 
-##例子
+## 例子
 
 	redis> SADD key1 "a"
 	(integer) 1

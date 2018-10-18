@@ -10,7 +10,7 @@ discuzTid: 1039
 
 返回集合存储的key的基数 (集合元素的数量).
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply): 集合的基数(元素的数量),如果key不存在,则返回 0.
 

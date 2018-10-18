@@ -15,7 +15,7 @@ discuzTid: 902
 
 [Integer reply](/topics/protocol.html#integer-reply)：返回append后字符串值（value）的长度。
 
-##例子
+## 例子
 
 	redis> EXISTS mykey
 	(integer) 0

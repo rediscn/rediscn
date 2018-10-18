@@ -17,11 +17,11 @@ discuzTid: 1020
 * 如果key不存在返回`-2`
 * 如果key存在且无过期时间返回`-1`
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply): [TTL](/commands/ttl.html)以毫秒为单位,或者返回一个错误值 (参考上面的描述).
 
-##例子
+## 例子
 
 	redis> SET mykey "Hello"
 	OK

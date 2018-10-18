@@ -24,7 +24,7 @@ discuzTid: 1071
 
 [Integer reply](/topics/protocol.html#integer-reply)： key有效的秒数（TTL in seconds）,或者一个负值的错误 (参考上文)。
 
-##例子
+## 例子
 	
 	redis> SET mykey "Hello"
 	OK

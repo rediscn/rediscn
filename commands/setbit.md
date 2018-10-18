@@ -14,11 +14,11 @@ discuzTid: 1048
 
 警告：当set最后一个bit(offset等于2<sup>32</sup>-1)并且key还没有一个字符串value或者其value是个比较小的字符串时，Redis需要立即分配所有内存，这有可能会导致服务阻塞一会。在一台2010MacBook Pro上，offset为2<sup>32</sup>-1（分配512MB）需要～300ms，offset为2<sup>30</sup>-1(分配128MB)需要～80ms，offset为2<sup>28</sup>-1（分配32MB）需要～30ms，offset为2<sup>26</sup>-1（分配8MB）需要8ms。注意，一旦第一次内存分配完，后面对同一个key调用[SETBIT](/commands/setbit.html)就不会预先得到内存分配。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply)：在offset处原来的bit值
 
-##例子
+## 例子
 
 	redis> SETBIT mykey 7 1
 	(integer) 0

@@ -23,6 +23,6 @@ Redis `BGREWRITEAOF` 命令用于异步执行一个 AOF（AppendOnly File）文�
 
 请参考[Redis 持久化](/topics/persistence.html)了解更多详细信息。
 
-##返回值
+## 返回值
 
 [simple-string-reply](/topics/protocol.html#simple-string-reply): 总是返回 `OK`。

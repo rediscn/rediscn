@@ -12,11 +12,11 @@ discuzTid: 1016
 
 合并得出的 HyperLogLog 会被储存在目标变量（第一个参数）里面， 如果该键并不存在， 那么命令在执行之前， 会先为该键创建一个空的.
 
-##返回值
+## 返回值
 
 [simple-string-reply](/topics/protocol.html#simple-string-reply): 这个命令只会返回 OK.
 
-##例子
+## 例子
 
 	redis> PFADD hll1 foo bar zap a
 	(integer) 1

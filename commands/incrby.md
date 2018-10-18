@@ -12,12 +12,12 @@ discuzTid: 988
 
 查看命令[INCR](/commands/incr.html)了解关于增减操作的额外信息。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply)：
 增加之后的value值。
 
-##例子
+## 例子
 
 	redis> SET mykey "10"
 	OK

@@ -16,6 +16,6 @@ Redis `SLAVEOF` 命令可以将当前服务器转变为指定服务器的从属�
 
 利用『 SLAVEOF NO ONE 不会丢弃同步所得数据集』这个特性，可以在主服务器失败的时候，将从属服务器用作新的主服务器，从而实现无间断运行。
 
-##返回值
+## 返回值
 
 [simple-string-reply](/topics/protocol.html#simple-string-reply)

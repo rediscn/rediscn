@@ -12,12 +12,12 @@ discuzTid: 1086
 
 使用ZREVRANK命令可以获得成员按score值递减(从大到小)排列的排名。
 
-##返回值
+## 返回值
 
 - 如果member是有序集key的成员，返回[integer-reply](/topics/protocol#integer-reply)：member的排名。
 - 如果member不是有序集key的成员，返回[bulk-string-reply](/topics/protocol#bulk-string-reply): `nil`。
 
-##例子
+## 例子
 
 	redis> ZADD myzset 1 "one"
 	(integer) 1

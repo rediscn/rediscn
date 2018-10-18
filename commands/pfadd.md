@@ -18,13 +18,13 @@ discuzTid: 1014
 
 了解更多HyperLogLog数据结构，请查阅[PFCOUNT](/commands/pfcount.html)命令页面.
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply)
 
 - 如果 HyperLogLog 的内部被修改了,那么返回 1,否则返回 0 .
 
-##例子
+## 例子
 
 	redis> PFADD hll a b c d e f g
 	(integer) 1

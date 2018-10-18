@@ -18,11 +18,11 @@ discuzTid: 1051
 
 正因为有了[SETRANGE](/commands/setrange.html)和类似功能的[GETRANGE](/commands/getrange.html)命令，你可以把Redis的字符串当成线性数组，随机访问只要O(1)复杂度。这在很多真实场景应用里非常快和高效。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply)：该命令修改后的字符串长度
 
-##例子
+## 例子
 
 基本使用方法:
 

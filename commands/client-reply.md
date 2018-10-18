@@ -16,7 +16,7 @@ The `CLIENT REPLY` command controls whether the server will reply the client's c
 * `OFF`. In this mode the server will not reply to client commands.
 * `SKIP`. This mode skips the reply of command immediately after it.
 
-##返回值
+## 返回值
 
 When called with either `OFF` or `SKIP` subcommands, no reply is made. When called with `ON`:
 

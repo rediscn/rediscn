@@ -34,11 +34,11 @@ min和max可以是-inf和+inf，这样一来，你就可以在不知道有序集
 
 返回所有符合条件5 < score < 10 的成员。
 
-##返回值
+## 返回值
 
 [array-reply](/topics/protocol#array-reply): 指定分数范围的元素列表(也可以返回他们的分数)。
 
-##例子
+## 例子
 
 	redis> ZADD myzset 1 "one"
 	(integer) 1

@@ -14,11 +14,11 @@ discuzTid: 1033
 
 如果 source 不存在，那么会返回 nil 值，并且不会执行任何操作。 如果 source 和 destination 是同样的，那么这个操作等同于移除列表最后一个元素并且把该元素放在列表头部， 所以这个命令也可以当作是一个旋转列表的命令。
 
-##返回值
+## 返回值
 
 [bulk-string-reply](/topics/protocol.html#bulk-string-reply): 被移除和放入的元素
 
-##例子
+## 例子
 	
 	redis> RPUSH mylist "one"
 	(integer) 1

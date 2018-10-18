@@ -10,7 +10,7 @@ discuzTid: 1087
 
 当key存在，但是其不是有序集合类型，就返回一个错误。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol#integer-reply), 如下的整数:
 
@@ -22,7 +22,7 @@ discuzTid: 1087
 
 - >= 2.4: 接受多个元素。在2.4之前的版本中，每次只能删除一个成员。
 
-##例子
+## 例子
 
 	redis> ZADD myzset 1 "one"
 	(integer) 1

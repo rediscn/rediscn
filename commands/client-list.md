@@ -10,7 +10,7 @@ discuzTid: 914
 
 Redis `CLIENT LIST`命令用于返回所有连接到服务器的客户端信息和统计数据。
 
-##返回值
+## 返回值
 
 [bulk-string-reply](/topics/protocol.html#bulk-string-reply): 一个独特的字符串，格式如下：
 

@@ -11,11 +11,11 @@ discuzTid: 1090
 移除有序集key中，所有score值介于min和max之间(包括等于min或max)的成员。
 自版本2.1.6开始，score值等于min或max的成员也可以不包括在内，语法请参见[ZRANGEBYSCORE](/commands/zrangebyscore.html)命令。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol#integer-reply): 删除的元素的个数。
 
-##例子
+## 例子
 
 	redis> ZADD myzset 1 "one"
 	(integer) 1

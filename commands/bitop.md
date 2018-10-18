@@ -35,7 +35,7 @@ discuzTid: 907
 
 保存到 destkey 的字符串的长度，和输入 key 中最长的字符串长度相等。
 
-##例子
+## 例子
 
 	redis> SET key1 "foobar"
 	OK

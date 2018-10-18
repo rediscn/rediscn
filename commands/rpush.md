@@ -12,7 +12,7 @@ discuzTid: 1034
 
 可以使用一个命令把多个元素打入队列，只需要在命令后面指定多个参数。元素是从左到右一个接一个从列表尾部插入。 比如命令 RPUSH mylist a b c 会返回一个列表，其第一个元素是 a ，第二个元素是 b ，第三个元素是 c。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply): 在 push 操作后的列表长度。
 
@@ -20,7 +20,7 @@ discuzTid: 1034
 
 >= 2.4: 接受多个 value 参数。 在老于 2.4 的 Redis 版本中，一条命令只能 push 单一个值。
 
-##例子
+## 例子
 	
 	redis> RPUSH mylist "hello"
 	(integer) 1

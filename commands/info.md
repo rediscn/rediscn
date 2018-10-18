@@ -30,14 +30,14 @@ discuzTid: 990
 
 如果没有使用任何参数时，默认为`default`。
 
-##返回值
+## 返回值
 
 [bulk-string-reply](/topics/protocol.html#bulk-string-reply): 文本行的合集
 
 每一行包含了包含一种信息或者属性（从#字符开始）。
 所有的属性都是以字段:值（`field:value`）的形式，已`\r\n`结尾。
 
-##例子
+## 例子
 
 	redis> INFO
 	# Server

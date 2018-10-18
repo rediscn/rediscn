@@ -10,11 +10,11 @@ discuzTid: 1078
 
 返回key的有序集元素个数。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol#integer-reply): key存在的时候，返回有序集的元素个数，否则返回0。
 
-##例子
+## 例子
 
 	redis> ZADD myzset 1 "one"
 	(integer) 1

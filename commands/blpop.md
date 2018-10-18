@@ -67,7 +67,7 @@ Redis 2.4的这种行为会在复制或者持续把数据存入AOF文件的时�
 
 如果你喜欢科幻小说，那么想象一下时间是以无限的速度在 MULTI / EXEC 块中流逝......
 
-##返回值
+## 返回值
 
 [多批量回复(multi-bulk-reply)](/topics/protocol.html#multi-bulk-reply): 具体来说:
 

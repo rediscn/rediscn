@@ -12,11 +12,11 @@ discuzTid: 1007
 
 `MSET`是原子的，所以所有给定的keys是一次性set的。客户端不可能看到这种一部分keys被更新而另外的没有改变的情况。
 
-##返回值
+## 返回值
 
 [simple-string-reply](/topics/protocol.html#simple-string-reply)：总是OK，因为MSET不会失败。
 
-##例子
+## 例子
 
 	redis> MSET key1 "Hello" key2 "World"
 	OK

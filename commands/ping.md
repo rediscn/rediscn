@@ -14,11 +14,11 @@ discuzTid: 1017
 
 如果客户端处于频道订阅模式下，它将是一个multi-bulk返回，第一次时返回"pong"，之后返回空（empty bulk），除非命令后面更随了参数。
 
-##返回值
+## 返回值
 
 [simple-string-reply](/topics/protocol.html#simple-string-reply)
 
-##例子
+## 例子
 
 	redis> PING
 	PONG

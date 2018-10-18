@@ -27,6 +27,6 @@ tranAuthor: menwengit
 
 注意该命令实现了完整的哈希算法，包括支持 **hash tags**，这是Redis Cluster键一个特殊的哈希算法，如果键名中存在左右大括号的模式，只会散列在 `{` 和 `}` 之间的字符串，为了去强制将多个键由一个节点来处理。
 
-##返回值
+## 返回值
 
 [Integer reply](http://www.redis.cn/topics/protocol.html#integer-reply)：哈希槽的值。

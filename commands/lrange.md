@@ -20,11 +20,11 @@ discuzTid: 999
 
 当下标超过list范围的时候不会产生error。 如果start比list的尾部下标大的时候，会返回一个空列表。 如果stop比list的实际尾部大的时候，Redis会当它是最后一个元素的下标。
 
-##返回值
+## 返回值
 
 [array-reply](/topics/protocol.html#array-reply): 指定范围里的列表元素。
 
-##例子
+## 例子
 
 	redis> RPUSH mylist "one"
 	(integer) 1

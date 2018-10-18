@@ -23,7 +23,7 @@ string中已存的值或者相加参数可以任意选用指数符号,但相加�
 
 [Bulk-string-reply](/topics/protocol.html#bulk-string-reply): 当前`key`增加increment后的值。
 
-##例子
+## 例子
 
 	redis> SET mykey 10.50
 	OK

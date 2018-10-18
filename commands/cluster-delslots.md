@@ -36,6 +36,6 @@ tranAuthor: menwengit
 
 命令只在集群模式下工作，并且对调试非常有用，并且当创建新的集群时，为了可以手动的协调集群配置。当前没有被`redis-trib`使用，并且主要为了API的完整性存在。
 
-##返回值
+## 返回值
 
 [simple-string-reply](http://www.redis.cn/topics/protocol.html#simple-string-reply)：如果命令成功执行返回`OK`，否则返回一个错误。

@@ -10,6 +10,6 @@ discuzTid: 1046
 
 选择一个数据库，下标值从0开始，一个新连接默认连接的数据库是DB0。
 
-##返回值
+## 返回值
 
 [simple-string-reply](/topics/protocol.html#simple-string-reply)

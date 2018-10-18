@@ -12,11 +12,11 @@ discuzTid: 1001
 
 当index超出范围时会返回一个error。
 
-##返回值
+## 返回值
 
 [simple-string-reply](/topics/protocol.html#simple-string-reply)
 
-##例子
+## 例子
 
 	redis> RPUSH mylist "one"
 	(integer) 1

@@ -10,7 +10,7 @@ discuzTid: 1055
 
 返回成员 member 是否是存储的集合 key的成员.
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply),详细说明:
 

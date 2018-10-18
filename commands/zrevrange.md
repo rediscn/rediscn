@@ -10,7 +10,7 @@ discuzTid: 1091
 
 返回有序集key中，指定区间内的成员。其中成员的位置按score值递减(从大到小)来排列。具有相同score值的成员按字典序的反序排列。 除了成员按score值递减的次序排列这一点外，[ZREVRANGE](/commands/zrevrange.html)命令的其他方面和[ZRANGE](/commands/zrange.html)命令一样。
 
-##返回值
+## 返回值
 
 [array-reply](/topics/protocol#array-reply): 
 指定范围的元素列表(可选是否含有分数)。

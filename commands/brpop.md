@@ -12,7 +12,7 @@ discuzTid: 910
 
 请在 [BLPOP](commands/blpop.html) 文档 中查看该命令的准确语义，因为 `BRPOP` 和 [BLPOP](commands/blpop.html) 基本是完全一样的，除了它们一个是从尾部弹出元素，而另一个是从头部弹出元素。
 
-##返回值
+## 返回值
 
 [多批量回复(multi-bulk-reply)](/topics/protocol.html#multi-bulk-reply): 具体来说:
 

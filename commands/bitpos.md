@@ -36,7 +36,7 @@ discuzTid: 908
 
 然而，如果你用指定start和end范围进行查找指定值时，如果该范围内没有对应值，结果将返回-1。
 
-##例子
+## 例子
 
 	redis> SET mykey "\xff\xf0\x00"
 	OK

@@ -65,7 +65,7 @@ Sorted sets 101
 * `>= 2.4`: 接受多个成员。
   在Redis 2.4以前，命令只能添加或者更新一个成员。
 
-##例子
+## 例子
 
 	redis> ZADD myzset 1 "one"
 	(integer) 1

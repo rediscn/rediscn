@@ -94,6 +94,6 @@ tranAuthor: lidongliang
 1. 只有节点为`myself`的节点才会才会被迁出和迁入，相对于节点的哈希槽，这是哈希槽所属节点的本地局部变量(Migration and importing slots are only added to the node flagged as `myself`. This information is local to a node, for its own slots)。
 2.  如果一个节点正在迁出或者迁入哈希槽，则这些信息只会在**额外信息**有所反映。如果哈希槽被分配到一个节点，并且正在迁出时，哈希槽的状态跟没有发生迁移时的状态一样，不会有什么特殊提示给客户端。
 
-##返回值
+## 返回值
 
 [bulk-string-reply](http://www.redis.cn/topics/protocol.html#bulk-string-reply): 序列化的集群配置信息.

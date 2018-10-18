@@ -19,11 +19,11 @@ discuzTid: 1053
 
 如果key不存在则被认为是一个空的集合,当给定的集合为空的时候,结果也为空.(一个集合为空，结果一直为空).
 
-##返回值
+## 返回值
 
 [array-reply](/topics/protocol.html#array-reply): 结果集成员的列表.
 
-##例子
+## 例子
 	
 	redis> SADD key1 "a"
 	(integer) 1

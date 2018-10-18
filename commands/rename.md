@@ -10,11 +10,11 @@ discuzTid: 1028
 
 将key重命名为newkey，如果key与newkey相同，将返回一个错误。如果newkey已经存在，则值将被覆盖。
 
-##返回值
+## 返回值
 
 [simple-string-reply](/topics/protocol.html#simple-string-reply)
 
-##例子
+## 例子
 
 	redis> SET mykey "Hello"
 	OK

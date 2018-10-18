@@ -12,14 +12,14 @@ discuzTid: 1029
 
 当 key 不存在时，返回一个错误。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply)：
 
 - 修改成功时，返回 1 。
 - 如果 newkey 已经存在，返回 0 。
 
-##例子
+## 例子
 
 	redis> SET mykey "Hello"
 	OK

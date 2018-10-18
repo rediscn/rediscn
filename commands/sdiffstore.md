@@ -12,11 +12,11 @@ discuzTid: 1045
 
 如果`destination`已经存在, 则将其覆盖重写.
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply): 结果集元素的个数.
 
-##例子
+## 例子
 
 	redis> SADD key1 "a"
 	(integer) 1

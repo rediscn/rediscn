@@ -12,7 +12,7 @@ discuzTid: 1036
 
 如果key 的类型不是集合则返回错误.
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply):返回新成功添加到集合里元素的数量，不包括已经存在于集合中的元素.
 
@@ -20,7 +20,7 @@ discuzTid: 1036
 
 >= 2.4: 接受多个member 参数. Redis 2.4 以前的版本每次只能添加一个member元素.
 
-##例子
+## 例子
 
 	redis> SADD myset "Hello"
 	(integer) 1

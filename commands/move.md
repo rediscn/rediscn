@@ -14,7 +14,7 @@ discuzTid: 1006
 
 因此，也可以利用这一特性，将 `MOVE` 当作锁(locking)原语(primitive)。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply):
 

@@ -20,13 +20,13 @@ HyperLogLog可以使用固定且很少的内存（每个HyperLogLog结构需要1
 
 注意: 这个命令的一个副作用是可能会导致HyperLogLog内部被更改，出于缓存的目的,它会用8字节的来记录最近一次计算得到基数,所以[PFCOUNT](/commands/pfcount.html)命令在技术上是个写命令.
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply):
 
 [PFADD](/commands/pfadd.html)添加的唯一元素的近似数量.
 
-##例子
+## 例子
 
 	redis> PFADD hll foo bar zap
 	(integer) 1

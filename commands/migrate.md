@@ -27,7 +27,7 @@ timeout 参数以毫秒为格式，指定当前实例和目标实例进行沟通
 
 如果有其他错误发生，那么 [MIGRATE](/commands/migrate.html) 保证 `key` 只会出现在当前实例中。（当然，目标实例的给定数据库上可能有和 `key` 同名的键，不过这和 [MIGRATE](/commands/migrate.html) 命令没有关系）。
 
-##返回值
+## 返回值
 
 [simple-string-reply](/topics/protocol.html#simple-string-reply): 迁移成功时返回 OK ，否则返回相应的错误。
 

@@ -10,11 +10,11 @@ discuzTid: 1065
 
 返回key的string类型value的长度。如果key对应的非string类型，就返回错误。
 
-##返回值
+## 返回值
 
 [integer-reply](/topics/protocol#integer-reply)：key对应的字符串value的长度，或者0（key不存在）
 
-##例子
+## 例子
 
 	redis> SET mykey "Hello world"
 	OK
