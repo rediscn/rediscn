@@ -10,8 +10,8 @@ discuzTid:
 
 ## 2018年月报 ##
 
-* [【Redis月报】CRUG-20180620期](/monthly/m20180620.html)
-* [【Redis月报】CRUG-20180720期](/monthly/m20180720.html)
-* [【Redis月报】CRUG-20180820期](/monthly/m20180820.html)
-* [【Redis月报】CRUG-20180920期](/monthly/m20180920.html)
-* [【Redis月报】CRUG-20181020期](/monthly/m20181020.html)
+* [【Redis月报】第一期](/monthly/m20180620.html)
+* [【Redis月报】第二期](/monthly/m20180720.html)
+* [【Redis月报】第三期](/monthly/m20180820.html)
+* [【Redis月报】第四期](/monthly/m20180920.html)
+* [【Redis月报】第五期](/monthly/m20181020.html)
