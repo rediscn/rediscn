@@ -14,3 +14,4 @@ discuzTid:
 * [【Redis月报】CRUG-20180720期](/monthly/m20180720.html)
 * [【Redis月报】CRUG-20180820期](/monthly/m20180820.html)
 * [【Redis月报】CRUG-20180920期](/monthly/m20180920.html)
+* [【Redis月报】CRUG-20181020期](/monthly/m20181020.html)
