@@ -6,6 +6,7 @@ disqusIdentifier: command_set
 disqusUrl: http://redis.cn/commands/set.html
 commandsType: strings
 discuzTid: 1047
+tranAuthor: geelou
 ---
 
 Set `key` to hold the string `value`.
