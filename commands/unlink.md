@@ -5,7 +5,7 @@ permalink: commands/unlink.html
 disqusIdentifier: command_unlink
 disqusUrl: http://redis.cn/commands/unlink.html
 commandsType: keys
-discuzTid: 948
+discuzTid: 13937
 ---
 
 This command is very similar to `DEL`: it removes the specified keys.
