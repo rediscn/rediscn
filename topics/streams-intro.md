@@ -7,47 +7,47 @@ disqusUrl: http://redis.cn/topics/streams-intro.html
 discuzTid: 13930
 ---
 
-# Introduction to Redis Streams
+# Redis Streams 介绍
 
-The Stream is a new data type introduced with Redis 5.0, which models a *log data structure* in a more abstract way, however the essence of the log is still intact: like a log file, often implemented as a file open in append only mode, Redis streams are primarily an append only data structure. At least conceptually, because being Redis Streams an abstract data type represented in memory, they implement more powerful operations, to overcome the limits of the log file itself.
+Stream是Redis 5.0版本引入的一个新的数据类型，它以更抽象的方式模拟*日志数据结构*，但日志仍然是完整的：就像一个日志文件，通常实现为以只附加模式打开的文件，Redis流主要是一个仅附加数据结构。至少从概念上来讲，因为Redis流是一种在内存表示的抽象数据类型，他们实现了更加强大的操作，以此来克服日志文件本身的限制。
 
-What makes Redis streams the most complex type of Redis, despite the data structure itself being quite simple, is the fact that it implements additional, non mandatory features: a set of blocking operations allowing consumers to wait for new data added to a stream by producers, and in addition to that a concept called **Consumer Groups**.
+Stream是Redis的数据类型中最复杂的，尽管数据类型本身非常简单，它实现了额外的非强制性的特性：提供了一组允许消费者以阻塞的方式等待生产者向Stream中发送的新消息，此外还有一个名为**Consumer Groups**的概念。
 
-Consumer groups were initially introduced by the popular messaging system called Kafka (TM). Redis reimplements a similar idea in completely different terms, but the goal is the same: to allow a group of clients to cooperate consuming a different portion of the same stream of messages.
+Consumer Groups最早是由名为Kafka（TM）的流行消息系统引入的。Redis用完全不同的术语重新实现了一个相似的概念，但目标是相同的：允许一组客户端相互配合来消费同一个Stream的不同部分的消息。
 
-## Streams basics
+## Streams 基础知识
 
-For the goal of understanding what Redis streams are and how to use them, we will ignore all the advanced features, and instead focus on the data structure itself, in terms of commands used to manipulate and access it. This is, basically, the part which is common to most of the other Redis data types, like Lists, Sets, Sorted Sets and so forth. However, note that lists also have an optional more complex blocking API, exported by commands like **BLPOP** and similar. So streams are not much different than lists in this regard, it's just that the additional API is more complex and more powerful.
+为了理解Redis Stream是什么以及如何使用他们，我们将忽略所有的高级特性，从用于操纵和访问它的命令方面来专注于数据结构本身。这基本上是大多数其他Redis数据类型共有的部分，比如Lists，Sets，Sorted Sets等等。然而，需要注意的是Lists还有一个可选的更加复杂的阻塞API，由**BLPOP**等相似的命令导出。所以从这方面来说，Streams跟Lists并没有太大的不同，只是附加的API更复杂、更强大。
 
-Because streams are an append only data structure, the fundamental write command, called **XADD**, appends a new entry into the specified stream. A stream entry is not just a string, but is instead composed of one or multiple field-value pairs. This way, each entry of a stream is already structured, like an append only file written in CSV format where multiple separated fields are present in each line.
+因为Streams是只附加数据结构，基本的写命令，叫**XADD**，向指定的Stream追加一个新的条目。一个Stream条目不是简单的字符串，而是由一个或多个键值对组成的。这样一来，Stream的每一个条目就已经是结构化的，就像以CSV格式写的只附加文件一样，每一行由多个逗号割开的字段组成。
 
 ```
 > XADD mystream * sensor-id 1234 temperature 19.8
 1518951480106-0
 ```
 
-The above call to the **XADD** command adds an entry `sensor-id: 123, temperature: 19.8` to the stream at key `mystream`, using an auto-generated entry ID, which is the one returned by the command, specifically `1518951480106-0`. It gets as first argument the key name `mystream`, the second argument is the entry ID that identifies every entry inside a stream. However, in this case, we passed `*` because we want the server to generate a new ID for us. Every new ID will be monotonically increasing, so in more simple terms, every new entry added will have a higher ID compared to all the past entries. Auto-generation of IDs by the server is almost always what you want, and the reasons for specifying an ID explicitly are very rare. We'll talk more about this later. The fact that each Stream entry has an ID is another similarity with log files, where line numbers, or the byte offset inside the file, can be used in order to identify a given entry. Returning back at our **XADD** example, after the key name and ID, the next arguments are the field-value pairs composing our stream entry.
+上面的例子中，调用了**XADD**命令往名为`mystream`的Stream中添加了一个条目`sensor-id: 123, temperature: 19.8`，使用了自动生成的条目ID，也就是命令返回的值，具体在这里是`1518951480106-0`。命令的第一个参数是key的名称`mystream`，第二个参数是用于唯一确认Stream中每个条目的条目ID。然而，在这个例子中，我们传入的参数值是`*`，因为我们希望由Redis服务器为我们自动生成一个新的ID。每一个新的ID都会单调增长，简单来讲就是，每次新添加的条目都会拥有一个比其它所有条目更大的ID。由服务器自动生成ID几乎总是我们所想要的，需要显式指定ID的情况非常少见。我们稍后会更深入地讨论这个问题。实际上每个Stream条目拥有一个ID与日志文件具有另一种相似性，即使用行号或者文件中的字节偏移量来识别一个给定的条目。回到我们的**XADD**例子中，跟在key和ID后面的参数是组成我们的Stream条目的键值对。
 
-It is possible to get the number of items inside a Stream just using the **XLEN** command:
+使用**XLEN**命令来获取一个Stream的条目数量：
 
 ```
 > XLEN mystream
 (integer) 1
 ```
 
-### Entry IDs
+### 条目 ID
 
-The entry ID returned by the **XADD** command, and identifying univocally each entry inside a given stream, is composed of two parts:
+条目ID由**XADD**命令返回，并且可以唯一的标识给定Stream中的每一个条目，由两部分组成：
 
 ```
 <millisecondsTime>-<sequenceNumber>
 ```
 
-The milliseconds time part is actually the local time in the local Redis node generating the stream ID, however if the current milliseconds time happens to be smaller than the previous entry time, then the previous entry time is used instead, so if a clock jumps backward the monotonically incrementing ID property still holds. The sequence number is used for entries created in the same millisecond. Since the sequence number is 64 bit wide, in practical terms there are no limits in the number of entries that can be generated within the same millisecond.
+毫秒时间部分实际是生成Stream ID的Redis节点的服务器本地时间，但是如果当前毫秒时间戳比以前的条目时间戳小的话，那么会使用以前的条目时间，所以即便是服务器时钟向后跳，单调增长ID的特性仍然会保持不变。序列号用于以相同毫秒创建的条目。由于序列号是64位的，所以实际上对于在同一毫秒内生成的条目数量是没有限制的。
 
-The format of such IDs may look strange at first, and the gentle reader may wonder why the time is part of the ID. The reason is that Redis streams support range queries by ID. Because the ID is related to the time the entry is generated, this gives the ability to query for ranges of time basically for free. We will see this soon while covering the **XRANGE** command.
+这样的ID格式也许最初看起来有点奇怪，也许温柔的读者会好奇为什么时间会是ID的一部分。其实是因为Redis Streams支持按ID进行范围查询。由于ID与生成条目的时间相关，因此可以很容易地按时间范围进行查询。我们在后面讲到**XRANGE**命令时，很快就能明白这一点。
 
-If for some reason the user needs incremental IDs that are not related to time but are actually associated to another external system ID, as previously already observed, the **XADD** command can take an explicit ID instead of the `*` wildcard ID that triggers auto-generation, like in the following examples:
+如果由于某些原因，用户需要与时间无关但实际上与另一个外部系统ID关联的增量ID，就像前面所说的，**XADD**命令可以带上一个显式的ID，而不是使用通配符`*`来自动生成，如下所示：
 
 ```
 > XADD somestream 0-1 field value
@@ -56,26 +56,26 @@ If for some reason the user needs incremental IDs that are not related to time b
 0-2
 ```
 
-Note that in this case, the minimum ID is 0-1 and that the command will not accept an ID equal or smaller than a previous one:
+请注意，在这种情况下，最小ID为0-1，并且命令不接受等于或小于前一个ID的ID：
 
 ```
 > XADD somestream 0-1 foo bar
 (error) ERR The ID specified in XADD is equal or smaller than the target stream top item
 ```
 
-## Getting data from Streams
+## 从Streams中获取数据
 
-Now we are finally able to append entries in our stream via **XADD**. However, while appending data to a stream is quite obvious, the way streams can be queried in order to extract data is not so obvious. If we continue with the analogy of the log file, one obvious way is to mimic what we normally do with the Unix command `tail -f`, that is, we may start to listen in order to get the new messages that are appended to the stream. Note that unlike the blocking list operations of Redis, where a given element will reach a single client which is blocking in a *pop style* operation like **BLPOP**, with streams we want that multiple consumers can see the new messages appended to the Stream, like many `tail -f` processes can see what is added to a log. Using the traditional terminology we want the streams to be able to *fan out* messages to multiple clients.
+现在我们终于能够通过**XADD**命令向我们的Stream中追加条目了。然而，虽然往Stream中追加数据非常明显，但是为了提取数据而查询Stream的方式并不是那么明显，如果我们继续使用日志文件进行类比，一种显而易见的方式是模拟我们通常使用Unix命令`tail -f`来做的事情，也就是，我们可以开始监听以获取追加到Stream的新消息。需要注意的是，不像Redis的阻塞列表，一个给定的元素只能到达某一个使用了*冒泡风格*的阻塞客户端，比如使用类似**BLPOP**的命令，在Streams中我们希望看到的是多个消费者都能看到追加到Stream中的新消息，就像许多的`tail -f`进程能同时看到追加到日志文件的内容一样。用传统术语来讲就是我们希望Streams可以*扇形分发*消息到多个客户端。
 
-However, this is just one potential access mode. We could also see a stream in quite a different way: not as a messaging system, but as a *time series store*. In this case, maybe it's also useful to get the new messages appended, but another natural query mode is to get messages by ranges of time, or alternatively to iterate the messages using a cursor to incrementally check all the history. This is definitely another useful access mode.
+然而，这只是其中一种可能的访问模式。我们还可以使用一种完全不同的方式来看待一个Stream：不是作为一个消息传递系统，而是作为一个*时间序列存储*。在这种情况下，也许使附加新消息也非常有用，但是另一种自然查询模式是通过时间范围来获取消息，或者使用一个游标来增量遍历所有的历史消息。这绝对是另一种有用的访问模式。
 
-Finally, if we see a stream from the point of view of consumers, we may want to access the stream in yet another way, that is, as a stream of messages that can be partitioned to multiple consumers that are processing such messages, so that groups of consumers can only see a subset of the messages arriving in a single stream. In this way, it is possible to scale the message processing across different consumers, without single consumers having to process all the messages: each consumer will just get different messages to process. This is basically what Kafka (TM) does with consumer groups. Reading messages via consumer groups is yet another interesting mode to read from a Redis stream.
+最后，如果我们从消费者的角度来观察一个Stream，我们也许想要以另外一种方式来访问它，那就是，作为一个可以分区到多个处理此类消息的多个消费者的消息流，以便消费者群体只能看到到达单个流的消息的子集。
 
-Redis streams support all the three query modes described above via different commands. The next sections will show all them, starting from the simplest and more direct to use: range queries.
+Redis Streams通过不同的命令支持所有上面提到的三种访问模式。接下来的部分将展示所有这些模式，从最简单和更直接的使用：范围查询开始。
 
-### Querying by range: XRANGE and XREVRANGE
+### 按范围查询: XRANGE 和 XREVRANGE
 
-To query the stream by range we are only required to specify two IDs, *start* end *end*. The range returned will include the elements having start or end as ID, so the range is inclusive. The two special IDs `-` and `+` respectively means the smallest and the greatest ID possible.
+要根据范围查询Stream，我们只需要提供两个ID，即*start* 和 *end*。返回的区间数据将会包括ID是start和end的元素，因此区间是完全包含的。两个特殊的ID`-` 和 `+`分别表示可能的最小ID和最大ID。
 
 ```
 > XRANGE mystream - +
@@ -91,7 +91,7 @@ To query the stream by range we are only required to specify two IDs, *start* en
       4) "18.2"
 ```
 
-Each entry returned is an array of two items: the ID and the list of field-value pairs. We already said that the entry IDs have a relation with the time, because the part at the left of the `-` character is the Unix time in milliseconds of the local node that created the stream entry, in the moment the entry was created (however note that Streams are replicated with fully specified **XADD** commands, so the slaves will have identical IDs to the master). This means that I could query a range of time using **XRANGE**. In order to do so, however, I may want to omit the sequence part of the ID: if omitted, in the start of the range it will be assumed to be 0, while in the end part it will be assumed to be the maximum sequence number available. This way, querying using just two milliseconds Unix times, we get all the entries that were generated in that range of time, in an inclusive way. For instance, I may want to query a two milliseconds period I could use:
+返回的每个条目都是有两个元素的数组：ID和键值对列表。我们已经说过条目ID与时间有关系，因为在字符`-`左边的部分是创建Stream条目的本地节点上的Unix毫秒时间，即条目创建的那一刻（请注意：Streams的复制使用的是完全详尽的**XADD**命令，因此从节点将具有与主节点相同的ID）。这意味着我可以使用**XRANGE**查询一个时间范围。然而为了做到这一点，我可能想要省略ID的序列号部分：如果省略，区间范围的开始序列号将默认为0，结束部分的序列号默认是有效的最大序列号。这样一来，仅使用两个Unix毫秒时间去查询，我们就可以得到在那段时间内产生的所有条目（包含开始和结束）。例如，我可能想要查询两毫秒时间，可以这样使用：
 
 ```
 > XRANGE mystream 1518951480106 1518951480107
@@ -102,7 +102,7 @@ Each entry returned is an array of two items: the ID and the list of field-value
       4) "19.8"
 ```
 
-I have only a single entry in this range, however in real data sets, I could query for ranges of hours, or there could be many items in just two milliseconds, and the result returned could be huge. For this reason, **XRANGE** supports an optional **COUNT** option at the end. By specifying a count, I can just get the first *N* items. If I want more, I can get the last ID returned, increment the sequence part by one, and query again. Let's see this in the following example. We start adding 10 items with **XADD** (I'll not show that, already assume that the stream `mystream` was populated with 10 items). To start my iteration, getting 2 items per command, I start with the full range, but with a count of 2.
+我在这个范围内只有一个条目，然而在实际数据集中，我可以查询数小时的范围，或者两毫秒之间包含了许多的项目，返回的结果集很大。因此，**XRANGE**命令支持在最后放一个可选的**COUNT**选项。通过指定一个count，我可以只获取前面*N*个项目。如果我想要更多，我可以拿返回的最后一个ID，在序列号部分加1，然后再次查询。我们在下面的例子中看到这一点。我们开始使用**XADD**添加10个项目（我这里不具体展示，假设流`mystream`已经填充了10个项目）。要开始我的迭代，每个命令只获取2个项目，我从全范围开始，但count是2。
 
 ```
 > XRANGE mystream - + COUNT 2
@@ -114,7 +114,7 @@ I have only a single entry in this range, however in real data sets, I could que
       2) "value_2"
 ```
 
-In order to continue the iteration with the next two items, I have to pick the last ID returned, that is `1519073279157-0` and add 1 to the sequence number part of the ID. Note that the sequence number is 64 bit so there is no need to check for overflows. The resulting ID, that is `1519073279157-1` in this case, can now be used as the new *start* argument for the next **XRANGE** call:
+为了继续下两个项目的迭代，我必须选择返回的最后一个ID，即`1519073279157-0`，并且在ID序列号部分加1。请注意，序列号是64位的，因此无需检查溢出。在这个例子中，我们得到的结果ID是`1519073279157-1`，现在可以用作下一次**XRANGE**调用的新的*start*参数：
 
 ```
 > XRANGE mystream 1519073279157-1 + COUNT 2
@@ -126,9 +126,9 @@ In order to continue the iteration with the next two items, I have to pick the l
       2) "value_4"
 ```
 
-And so forth. Since **XRANGE** complexity is *O(log(N))* to seek, and then *O(M)* to return M elements, with a small count the command has a logarithmic time complexity, which means that each step of the iteration is fast. So **XRANGE** is also the de facto *streams iterator* and does not require an **XSCAN** command.
+依此类推。由于**XRANGE**的查找复杂度是*O(log(N))*，因此*O(M)*返回M个元素，这个命令在小的count时，具有对数时间复杂度，这意味着每一步迭代速度都很快。所以**XRANGE**也是事实上的*流迭代器*并且不需要**XSCAN**命令。
 
-The command **XREVRANGE** is the equivalent of **XRANGE** but returning the elements in inverted order, so a practical use for **XREVRANGE** is to check what is the last item in a Stream:
+**XREVRANGE**命令与**XRANGE**相同，但是以相反的顺序返回元素，因此**XREVRANGE**的实际用途是检查一个Stream中的最后一项是什么：
 
 ```
 > XREVRANGE mystream + - COUNT 1
@@ -137,17 +137,17 @@ The command **XREVRANGE** is the equivalent of **XRANGE** but returning the elem
       2) "value_10"
 ```
 
-Note that the **XREVRANGE** command takes the *start* and *stop* arguments in reverse order.
+请注意：**XREVRANGE**命令以相反的顺序获取*start* 和 *stop*参数。
 
-## Listening for new items with XREAD
+## 使用XREAD监听新项目
 
-When we do not want to access items by a range in a stream, usually what we want instead is to *subscribe* to new items arriving to the stream. This concept may appear related to Redis Pub/Sub, where you subscribe to a channel, or to Redis blocking lists, where you wait for a key to get new elements to fetch, but there are fundamental differences in the way you consume a stream:
+当我们不想按照Stream中的某个范围访问项目时，我们通常想要的是*订阅*到达Stream的新项目。这个概念可能与Redis中你订阅频道的Pub/Sub或者Redis的阻塞列表有关，在这里等待某一个key去获取新的元素，但是这跟你消费Stream有着根本的不同：
 
-1. A stream can have multiple clients (consumers) waiting for data. Every new item, by default, will be delivered to *every consumer* that is waiting for data in a given stream. This behavior is different than blocking lists, where each consumer will get a different element. However, the ability to *fan out* to multiple consumers is similar to Pub/Sub.
-2. While in Pub/Sub messages are *fire and forget* and are never stored anyway, and while when using blocking lists, when a message is received by the client it is *popped* (effectively removed) form the list, streams work in a fundamentally different way. All the messages are appended in the stream indefinitely (unless the user explicitly asks to delete entries): different consumers will know what is a new message from its point of view by remembering the ID of the last message received.
-3. Streams Consumer Groups provide a level of control that Pub/Sub or blocking lists cannot achieve, with different groups for the same stream, explicit acknowledge of processed items, ability to inspect the pending items, claiming of unprocessed messages, and coherent history visibility for each single client, that is only able to see its private past history of messages.
+1. 一个Stream可以拥有多个客户端（消费者）在等待数据。默认情况下，对于每一个新项目，都会被分发到等待给定Stream的数据的*每一个消费者*。这个行为与阻塞列表不同，每个消费者都会获取到不同的元素。但是，*扇形分发*到多个消费者的能力与Pub/Sub相似。
+2. 虽然在Pub/Sub中的消息是*fire and forget*并且从不存储，以及使用阻塞列表时，当一个客户端收到消息时，它会从列表中*弹出*（有效删除），Stream从跟本上以一种不同的方式工作。所有的消息都被无限期地附加到Stream中（除非用户明确地要求删除这些条目）：不同的消费者通过记住收到的最后一条消息的ID，从其角度知道什么是新消息。
+3. Streams Consumer Groups提供了一种Pub/Sub或者阻塞列表都不能实现的控制级别，同一个Stream不同的群组，显式地确认已经处理的项目，检查待处理的项目的能力，申明未处理的消息，以及每个消费者拥有连贯历史可见性，单个客户端只能查看自己过去的消息历史记录。
 
-The command that provides the ability to listen for new messages arriving into a stream is called **XREAD**. It's a bit more complex than **XRANGE**, so we'll start showing simple forms, and later the whole command layout will be provided.
+提供监听到达Stream的新消息的能力的命令称为**XREAD**。比**XRANGE**要更复杂一点，所以我们将从简单的形式开始，稍后将提供整个命令布局。
 
 ```
 > XREAD COUNT 2 STREAMS mystream 0
@@ -160,31 +160,31 @@ The command that provides the ability to listen for new messages arriving into a
             2) "value_2"
 ```
 
-The above is the non-blocking form of **XREAD**. Note that the **COUNT** option is not mandatory, in fact the only mandatory option of the command is the **STREAMS** option, that specifies a list of keys together with the corresponding maximum ID already seen for each stream by the calling consumer, so that the command will provide the client only with messages with an ID greater than the one we specified.
+以上是**XREAD**的非阻塞形式。注意**COUNT**选项并不是必需的，实际上这个命令唯一强制的选项是**STREAMS**，指定了一组key以及调用者已经看到的每个Stream相应的最大ID，以便该命令仅向客户端提供ID大于我们指定ID的消息。
 
-In the above command we wrote `STREAMS mystream 0` so we want all the messages in the Stream `mystream` having an ID greater than `0-0`. As you can see in the example above, the command returns the key name, because actually it is possible to call this command with more than one key to read from different streams at the same time. I could write, for instance: `STREAMS mystream otherstream 0 0`. Note how after the **STREAMS** option we need to provide the keys names, and later the IDs. For this reason, the **STREAMS** option must always be the last one.
+在上面的命令中，我们写了`STREAMS mystream 0`，所以我们想要流 `mystream`中所有ID大于`0-0`的消息。正如你在上面的例子中所看到的，命令返回了键名，因为实际上可以通过传入多个key来同时从不同的Stream中读取数据。我可以写一下，例如：`STREAMS mystream otherstream 0 0`。注意在**STREAMS**选项后面，我们需要提供键名称，以及之后的ID。因此，**STREAMS**选项必须始终是最后一个。
 
-Apart from the fact that **XREAD** can access multiple streams at once, and that we are able to specify the last ID we own to just get newer messages, in this simple form the command is not doing something so different compared to **XRANGE**. However, the interesting part is that we can turn **XREAD** in a *blocking command* easily, by specifying the **BLOCK** argument:
+除了**XREAD**可以同时访问多个Stream这一事实，以及我们能够指定我们拥有的最后一个ID来获取之后的新消息，在个简单的形式中，这个命令并没有做什么跟**XRANGE**有太大区别的事情。然而，有趣的部分是我们可以通过指定**BLOCK**参数，轻松地将**XREAD** 变成一个 *阻塞命令*：
 
 ```
 > XREAD BLOCK 0 STREAMS mystream $
 ```
 
-Note that in the example above, other than removing **COUNT**, I specified the new **BLOCK** option with a timeout of 0 milliseconds (that means to never timeout). Moreover, instead of passing a normal ID for the stream `mystream` I passed the special ID `$`. This special ID means that **XREAD** should use as last ID the maximum ID already stored in the stream `mystream`, so that we will receive only *new* messages, starting from the time we started listening. This is similar to the `tail -f` Unix command in some way.
+请注意，在上面的例子中，除了移除**COUNT**以外，我指定了新的**BLOCK**选项，超时时间为0毫秒（意味着永不超时）。此外，我并没有给流 `mystream`传入一个常规的ID，而是传入了一个特殊的ID`$`。这个特殊的ID意思是**XREAD**应该使用流 `mystream`已经存储的最大ID作为最后一个ID。以便我们仅接收从我们开始监听时间以后的*新*消息。这在某种程度上相似于Unix命令`tail -f`。
 
-Note that when the **BLOCK** option is used, we do not have to use the special ID `$`. We can use any valid ID. If the command is able to serve our request immediately without blocking, it will do so, otherwise it will block. Normally if we want to consume the stream starting from new entries, we start with the ID `$`, and after that we continue using the ID of the last message received to make the next call, and so forth.
+请注意当使用**BLOCK**选项时，我们不必使用特殊ID`$`。我们可以使用任意有效的ID。如果命令能够立即处理我们的请求而不会阻塞，它将执行此操作，否则它将阻止。通常如果我们想要从新的条目开始消费Stream，我们以`$`开始，接着继续使用接收到的最后一条消息的ID来发起下一次请求，依此类推。
 
-The blocking form of **XREAD** is also able to listen to multiple Streams, just by specifying multiple key names. If the request can be served synchronously because there is at least one stream with elements greater than the corresponding ID we specified, it returns with the results. Otherwise, the command will block and will return the items of the first stream getting new data (according to the specified ID).
+**XREAD**的阻塞形式同样可以监听多个Stream，只需要指定多个键名即可。如果请求可以同步提供，因为至少有一个流的元素大于我们指定的相应ID，则返回结果。否则，该命令将阻塞并将返回获取新数据的第一个流的项目（根据提供的ID）。
 
-Similarly to blocking list operations, blocking stream reads are *fair* from the point of view of clients waiting for data, since the semantics is FIFO style. The first client that blocked for a given stream is the first that will be unblocked as new items are available.
+跟阻塞列表的操作类似，从等待数据的客户端角度来看，阻塞流读取是*公正*的，由于语义是FIFO样式。阻塞给定Stream的第一个客户端是第一个在新项目可用时将被解除阻塞的客户端。
 
-**XREAD** has no other options than **COUNT** and **BLOCK**, so it's a pretty basic command with a specific purpose to attack consumers to one or multiple streams. More powerful features to consume streams are available using the consumer groups API, however reading via consumer groups is implemented by a different command called **XREADGROUP**, covered in the next section of this guide.
+**XREAD**命令没有除了**COUNT** 和 **BLOCK**以外的其他选项，因此它是一个非常基本的命令，具有特定目的来攻击消费者一个或多个流。使用消费者组API可以用更强大的功能来消费Stream，但是通过消费者组读取是通过另外一个不同的命令来实现的，称为**XREADGROUP**。本指南的下一节将介绍。
 
 ## Consumer groups
 
-When the task at hand is to consume the same stream from different clients, then **XREAD** already offers a way to  *fan-out* to N clients, potentially also using slaves in order to provide more read scalability. However in certain problems what we want to do is not to provide the same stream of messages to many clients, but to provide a *different subset* of messages from the same stream to many clients. An obvious case where this is useful is the case of slow to process messages: the ability to have N different workers that will receive different parts of the stream allow to scale message processing, by routing different messages to different workers that are ready to do more work.
+当手头的任务是从不同的客户端消费同一个Stream，那么**XREAD**已经提供了一种方式可以*扇形分发*到N个客户端，还可以使用从节点来提供更多的读取可伸缩性。然而，在某些问题中，我们想要做的不是向许多客户端提供相同的消息流，而是从同一流向许多客户端提供*不同的消息子集*。这很有用的一个明显的例子是处理消息的速度很慢：能够让N个不同的客户端接收流的不同部分，通过将不同的消息路由到准备做更多工作的不同客户端来扩展消息处理工作。
 
-In practical terms, if we imagine having three consumers C1, C2, C3, and a stream that contains the messages 1, 2, 3, 4, 5, 6, 7 then what we want is to serve the messages like in the following diagram:
+实际上，假如我们想象有三个消费者C1，C2，C3，以及一个包含了消息1, 2, 3, 4, 5, 6, 7的Stream，我们想要按如下图表的方式处理消息：
 
 ```
 1 -> C1
@@ -196,20 +196,20 @@ In practical terms, if we imagine having three consumers C1, C2, C3, and a strea
 7 -> C1
 ```
 
-In order to obtain this effect, Redis uses a concept called *consumer groups*. It is very important to understand that Redis consumer groups have nothing to do from the point of view of the implementation with Kafka (TM) consumer groups, but they are only similar from the point of view of the concept they implement, so I decided to do not change terminology compared to the software product that initially popularized such idea.
+为了获得这个效果，Redis使用了一个名为*consumer groups*的概念。非常重要的一点是，从实现的角度来看，Redis的消费者组与Kafka (TM) 消费者组没有任何关系，它们只是从实施的概念上来看比较相似，所以我决定不改变最初普及这种想法的软件产品已有的术语。
 
-A consumer group is like a *pseudo consumer* that gets data from a stream, and actually serves multiple consumers, providing certain guarantees:
+消费者群体就像一个*伪消费者*，从流中获取数据，实际上为多个消费者提供服务，提供某些保证：
 
-1. Each message is served to a different consumer so that it is not possible that the same message is delivered to multiple consumers.
-2. Consumers are identified, within a consumer group, by a name, which is a case-sensitive string that the clients implementing consumers must choose. This means that even after a disconnect, the stream consumer group retains all the state, since the client will claim again to be the same consumer. However, this also means that it is up to the client to provide a unique identifier.
-3. Each consumer group has the concept of the *first ID never consumed* so that, when a consumer asks for new messages, it can provide just messages that were never delivered previously.
-4. Consuming a message however requires explicit acknowledge using a specific command, to say: this message was correctly processed, so can be evicted from the consumer group.
-5. A consumer group tracks all the messages that are currently pending, that is, messages that were delivered to some consumer of the consumer group, but are yet to be acknowledged as processed. Thanks to this feature, when accessing the history of messages of a stream, each consumer *will only see messages that were delivered to it*.
+1. 每条消息都提供给不同的消费者，因此不可能将相同的消息传递给多个消费者。
+2. 消费者在消费者组中通过名称来识别，该名称是实施消费者的客户必须选择的区分大小写的字符串。这意味着即便断开连接过后，消费者组仍然保留了所有的状态，因为客户端会重新申请成为相同的消费者。
+然而，这也意味着由客户端提供唯一的标识符。
+3. 每一个消费者组都有一个*第一个ID永远不会被消费*的概念，这样一来，当消费者请求新消息时，它能提供以前从未传递过的消息。
+4. 消费消息需要使用特定的命令进行显式确认，表示：这条消息已经被正确处理了，所以可以从消费者组中逐出。
+5. 消费者组跟踪所有当前所有待处理的消息，也就是，消息被传递到消费者组的一些消费者，但是还没有被确认为已处理。由于这个特性，当访问一个Stream的历史消息的时候，每个消费者*将只能看到传递给它的消息*。
 
-In some way a consumer group can be imagined as some *amount of state* about a stream:
+在某种程度上，消费者群体可以被想象为关于流的一些*状态*：
 
 ```
-+----------------------------------------+
 | consumer_group_name: mygroup           |
 | consumer_group_stream: somekey         |
 | last_delivered_id: 1292309234234-92    |
@@ -220,35 +220,34 @@ In some way a consumer group can be imagined as some *amount of state* about a s
 |       1292309234232-8                  |
 |    "consumer-42" with pending messages |
 |       ... (and so forth)               |
-+----------------------------------------+
 ```
 
-If you see this from this point of view, it is very simple to understand what a consumer group can do, how it is able to just provide consumers with their history of pending messages, and how consumers asking for new messages will just be served with message IDs greater than `last_delivered_id`. At the same time, if you look at the consumer group as an auxiliary data structure for Redis streams, it is obvious that a single stream can have multiple consumer groups, that have a different set of consumers. Actually, it is even possible for the same stream to have clients reading without consumer groups via **XREAD**, and clients reading via **XREADGROUP** in different consumer groups.
+如果你从这个视角来看，很容易理解一个消费者组能做什么，如何做到向给消费者提供他们的历史待处理消息，以及当消费者请求新消息的时候，是如何做到只发送ID大于`last_delivered_id`的消息的。同时，如果你把消费者组看成Redis Stream的辅助数据结构，很明显单个Stream可以拥有多个消费者组，每个消费者组都有一组消费者。实际上，同一个Stream甚至可以通过**XREAD**让客户端在没有消费者群体的情况下读取，同时有客户端通过**XREADGROUP**在不同的消费者组中读取。
 
-Now it's time to zoom in to see the fundamental consumer group commands, that are the following:
+现在是时候放大来查看基本的消费者组命令了，具体如下：
 
-* **XGROUP** is used in order to create, destroy and manage consumer groups.
-* **XREADGROUP** is used to read from a stream via a consumer group.
-* **XACK** is the command that allows a consumer to mark a pending message as correctly processed.
+* **XGROUP** 用于创建，摧毁或者管理消费者组。
+* **XREADGROUP** 用于通过消费者组从一个Stream中读取。
+* **XACK** 是允许消费者将待处理消息标记为已正确处理的命令。
 
-## Creating a consumer group
+## 创建一个消费者组
 
-Assuming I have a key `mystream` of type stream already existing, in order to create a consumer group I need to do just the following:
+假设我已经存在类型流的 `mystream`，为了创建消费者组，我只需要做：
 
 ```
 > XGROUP CREATE mystream mygroup $
 OK
 ```
 
-Note: *Currently it is not possible to create consumer groups for non-existing streams, however it is possible that in the short future we'll add an option to the **XGROUP** command in order to create an empty stream in such cases.*
+请注意：*目前还不能为不存在的流创建消费者组，但有可能在不久的将来我们会给**XGROUP**命令增加一个选项，以便在这种场景下可以创建一个空的Stream。*
 
-As you can see in the command above when creating the consumer group we have to specify an ID, which in the example is just `$`. This is needed because the consumer group, among the other states, must have an idea about what message to serve next at the first consumer connecting, that is, what is the current *last message ID* when the group was just created? If we provide `$` as we did, then only new messages arriving in the stream from now on will be provided to the consumers in the group. If we specify `0` instead the consumer group will consume *all* the messages in the stream history to start with. Of course, you can specify any other valid ID. What you know is that the consumer group will start delivering messages that are greater than the ID you specify. Because `$` means the current greatest ID in the stream, specifying `$` will have the effect of consuming only new messages.
+如你所看到的上面这个命令，当创建一个消费者组的时候，我们必须指定一个ID，在这个例子中ID是`$`。这是必要的，因为消费者组在其他状态中必须知道在第一个消费者连接时接下来要服务的消息，即消费者组创建完成时的*最后消息ID*是什么？如果我们就像上面例子一样，提供一个`$`，那么只有从现在开始到达Stream的新消息才会被传递到消费者组中的消费者。如果我们指定的消息ID是`0`，那么消费者组将会开始消费这个Stream中的*所有*历史消息。当然，你也可以指定任意其他有效的ID。你所知道的是，消费者组将开始传递ID大于你所指定的ID的消息。因为`$`表示Stream中当前最大ID的意思，指定`$`会有只消费新消息的效果。
 
-Now that the consumer group is created we can immediately start trying to read messages via the consumer group, by using the **XREADGROUP** command. We'll read from the consumers, that we will call Alice and Bob, to see how the system will return different messages to Alice and Bob.
+现在消费者组创建好了，我们可以使用**XREADGROUP**命令立即开始尝试通过消费者组读取消息。我们会从消费者那里读到，假设指定消费者分别是Alice和Bob，来看看系统会怎样返回不同消息给Alice和Bob。
 
-**XREADGROUP** is very similar yo **XREAD** and provides the same **BLOCK** option, otherwise it is a synchronous command. However there is a *mandatory* option that must be always specified, which is **GROUP** and has two arguments: the name of the consumer group, and the name of the consumer that is attempting to read. The option **COUNT** is also supported and is identical to the one in **XREAD**.
+**XREADGROUP**和**XREAD**非常相似，并且提供了相同的**BLOCK**选项，除此以外还是一个同步命令。但是有一个*强制的*选项必须始终指定，那就是**GROUP**，并且有两个参数：消费者组的名字，以及尝试读取的消费者的名字。选项**COUNT**仍然是支持的，并且与**XREAD**命令中的用法相同。
 
-Before reading from the stream, let's put some messages inside:
+在开始从Stream中读取之前，让我们往里面放一些消息：
 
 ```
 > XADD mystream * message apple
@@ -263,9 +262,9 @@ Before reading from the stream, let's put some messages inside:
 1526569544280-0
 ```
 
-Note: *here message is the field name, and the fruit is the associated value, remember that stream items are small dictionaries.*
+请注意：*在这里消息是字段名称，水果是关联的值，记住Stream中的每一项都是小字典。*
 
-It is time to try reading something using the consumer group:
+现在是时候尝试使用消费者组读取了：
 
 ```
 > XREADGROUP GROUP mygroup Alice COUNT 1 STREAMS mystream >
@@ -275,16 +274,16 @@ It is time to try reading something using the consumer group:
             2) "apple"
 ```
 
-**XREADGROUP** replies are just like **XREAD** replies. Note however the `GROUP <group-name> <consumer-name>` provided above, it states that I want to read from the stream using the consumer group `mygroup` and I'm the consumer `Alice`. Every time a consumer performs an operation with a consumer group, it must specify its name uniquely identifying this consumer inside the group.
+**XREADGROUP**的响应内容就像**XREAD**一样。但是请注意上面提供的`GROUP <group-name> <consumer-name>`，这表示我想要使用消费者组`mygroup`从Stream中读取，我是消费者`Alice`。每次消费者使用消费者组中执行操作时，都必须要指定可以这个消费者组中唯一标识它的名字。
 
-There is another very important detail in the command line above, after the mandatory **STREAMS** option the ID requested for the key `mystream` is the special ID `>`. This special ID is only valid in the context of consumer groups, and it means: **messages never delivered to other consumers so far**.
+在以上命令行中还有另外一个非常重要的细节，在强制选项**STREAMS**之后，键`mystream`请求的ID是特殊的ID `>`。这个特殊的ID只在消费者组的上下文中有效，其意思是：**消息到目前为止从未传递给其他消费者**。
 
-This is almost always what you want, however it is also possible to specify a real ID, such as `0` or any other valid ID, in this case however what happens is that we request to **XREADGROUP** to just provide us with the **history of pending messages**, and in such case, will never see new messages in the group. So basically **XREADGROUP** has the following behavior based on the ID we specify:
+这几乎总是你想要的，但是也可以指定一个真实的ID，比如`0`或者任何其他有效的ID，在这个例子中，我们请求**XREADGROUP**只提供给我们**历史待处理的消息**，在这种情况下，将永远不会在组中看到新消息。所以基本上**XREADGROUP**可以根据我们提供的ID有以下行为：
 
-* If the ID is the special ID `>` then the command will return only new messages never delivered to other consumers so far, and as a side effect, will update the consumer group *last ID*.
-* If the ID is any other valid numerical ID, then the command will let us access our *history of pending messages*. That is, the set of messages that were delivered to this specified consumer (identified by the provided name), and never acknowledged so var with **XACK**.
+如果ID是特殊ID`>`，那么命令将会返回到目前为止从未传递给其他消费者的新消息，这有一个副作用，就是会更新消费者组的*最后ID*。
+如果ID是任意其他有效的数字ID，那么命令将会让我们访问我们的*历史待处理消息*。即传递给这个指定消费者（由提供的名称标识）的消息集，并且到目前为止从未使用**XACK**进行确认。
 
-We can test this behavior immediately specifying an ID of 0, without any **COUNT** option: we'll just see the only pending message, that is, the one about apples:
+我们可以立即测试此行为，指定ID为0，不带任何**COUNT**选项：我们只会看到唯一的待处理消息，即关于apples的消息：
 
 ```
 > XREADGROUP GROUP mygroup Alice STREAMS mystream 0
@@ -294,7 +293,7 @@ We can test this behavior immediately specifying an ID of 0, without any **COUNT
             2) "apple"
 ```
 
-However, if we acknowledge the message as processed, it will no longer be part of the pending messages history, so the system will no longer report anything:
+但是，如果我们确认这个消息已经处理，它将不再是历史待处理消息的一部分，因此系统将不再报告任何消息：
 
 ```
 > XACK mystream mygroup 1526569495631-0
@@ -304,9 +303,9 @@ However, if we acknowledge the message as processed, it will no longer be part o
    2) (empty list or set)
 ```
 
-Don't worry if you yet don't know how **XACK** works, the concept is just that processed messages are no longer part of the history that we can access.
+如果你还不清楚**XACK**是如何工作的，请不用担心，这个概念只是已处理的消息不再是我们可以访问的历史记录的一部分。
 
-Now it's the turn of Bob to read something:
+现在轮到Bob来读取一些东西了：
 
 ```
 > XREADGROUP GROUP mygroup Bob COUNT 2 STREAMS mystream >
@@ -319,17 +318,17 @@ Now it's the turn of Bob to read something:
             2) "strawberry"
 ```
 
-Bob asked for a maximum of two messages and is reading via the same group `mygroup`. So what happens is that Redis reports just *new* messages. As you can see the "apple" message is not delivered, since it was already delivered to Alice, so Bob gets orange and strawberry, and so forth.
+Bob要求最多两条消息，并通过同一消费者组`mygroup`读取。所以发生的是Redis仅报告*新*消息。正如你所看到的，消息"apple"未被传递，因为它已经被传递给Alice，所以Bob获取到了orange和strawberry，以此类推。
 
-This way Alice, Bob, and any other consumer in the group, are able to read different messages from the same stream, to read their history of yet to process messages, or to mark messages as processed. This allows creating different topologies and semantics to consume messages from a stream.
+这样，Alice，Bob以及这个消费者组中的任何其他消费者，都可以从相同的Stream中读取到不同的消息，读取他们尚未处理的历史消息，或者标记消息为已处理。这允许创建不同的拓扑和语义来从Stream中消费消息。
 
-There are a few things to keep in mind:
+有几件事需要记住：
 
-* Consumers are auto-created the first time they are mentioned, no need for explicit creation.
-* Even with **XREADGROUP** you can read from multiple keys at the same time, however for this to work, you need to create a consumer group with the same name in every stream. This is not a common need, but it is worth to mention that the feature is technically available.
-* **XREADGROUP** is a *write command* because even if it reads from the stream, the consumer group is modified as a side effect of reading, so it can be only called in master instances.
+* 消费者是在他们第一次被提及的时候自动创建的，不需要显式创建。
+* 即使使用**XREADGROUP**，你也可以同时从多个key中读取，但是要让其工作，你需要给每一个Stream创建一个名称相同的消费者组。这并不是一个常见的需求，但是需要说明的是，这个功能在技术上是可以实现的。
+* **XREADGROUP**命令是一个*写命令*，因为当它从Stream中读取消息时，消费者组被修改了，所以这个命令只能在master节点调用。
 
-An example of consumer implementation, using consumer groups, written in the Ruby language could be the following. The Ruby code is written in a way to be readable from virtually any experienced programmer programming in some other language and not knowing Ruby:
+使用Ruby语言编写的使用用户组的消费者实现示例如下。 Ruby代码的编写方式，几乎对使用任何其他语言编程的程序员或者不懂Ruby的人来说，都是清晰可读的：
 
 ```ruby
 require 'redis'
@@ -386,9 +385,9 @@ while true
 end
 ```
 
-As you can see the idea here is to start consuming the history, that is, our list of pending messages. This is useful because the consumer may have crashed before, so in the event of a restart, we want to read again messages that were delivered to us without getting acknowledged. This way we can process a message multiple times or one time (at least in the case of consumers failures, but there are also the limits of Redis persistence and replication involved, see the specific section about this topic).
+正如你所看到的，这里的想法是开始消费历史消息，即我们的待处理消息列表。这很有用，因为消费者可能已经崩溃，因此在重新启动时，我们想要重新读取那些已经传递给我们但还没有确认的消息。通过这种方式，我们可以多次或者一次处理消息（至少在消费者失败的场景中是这样，但是这也受到Redis持久化和复制的限制，请参阅有关此主题的特定部分）。
 
-Once the history was consumed, and we get an empty list of messages, we can switch to use the `>` special ID in order to consume new messages.
+消耗历史消息后，我们将得到一个空的消息列表，我们可以切换到 `>` ，使用特殊ID来消费新消息。
 
 ## Recovering from permanent failures
 
