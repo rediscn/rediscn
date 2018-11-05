@@ -126,7 +126,7 @@ Redis Streams通过不同的命令支持所有上面提到的三种访问模式�
       2) "value_4"
 ```
 
-依此类推。由于**XRANGE**的查找复杂度是*O(log(N))*，因此*O(M)*返回M个元素，这个命令在小的count时，具有对数时间复杂度，这意味着每一步迭代速度都很快。所以**XRANGE**也是事实上的*流迭代器*并且不需要**XSCAN**命令。
+依此类推。由于**XRANGE**的查找复杂度是*O(log(N))*，因此*O(M)*返回M个元素，这个命令在count较小时，具有对数时间复杂度，这意味着每一步迭代速度都很快。所以**XRANGE**也是事实上的*流迭代器*并且不需要**XSCAN**命令。
 
 **XREVRANGE**命令与**XRANGE**相同，但是以相反的顺序返回元素，因此**XREVRANGE**的实际用途是检查一个Stream中的最后一项是什么：
 
@@ -196,7 +196,7 @@ Redis Streams通过不同的命令支持所有上面提到的三种访问模式�
 7 -> C1
 ```
 
-为了获得这个效果，Redis使用了一个名为*consumer groups*的概念。非常重要的一点是，从实现的角度来看，Redis的消费者组与Kafka (TM) 消费者组没有任何关系，它们只是从实施的概念上来看比较相似，所以我决定不改变最初普及这种想法的软件产品已有的术语。
+为了获得这个效果，Redis使用了一个名为*消费者组*的概念。非常重要的一点是，从实现的角度来看，Redis的消费者组与Kafka (TM) 消费者组没有任何关系，它们只是从实施的概念上来看比较相似，所以我决定不改变最初普及这种想法的软件产品已有的术语。
 
 消费者群体就像一个*伪消费者*，从流中获取数据，实际上为多个消费者提供服务，提供某些保证：
 
@@ -389,13 +389,13 @@ end
 
 消耗历史消息后，我们将得到一个空的消息列表，我们可以切换到 `>` ，使用特殊ID来消费新消息。
 
-## Recovering from permanent failures
+## 从永久性失败中恢复
 
-The example above allows us to write consumers that participate to the same consumer group, taking each a subset of messages to process, and recovering from failures re-reading the pending messages that were delivered just to them. However in the real world consumers may permanently fail and never recover. What happens to the pending messages of the consumer that never recovers after stopping for any reason?
+上面的例子允许我们编写多个消费者参与同一个消费者组，每个消费者获取消息的一个子集进行处理，并且在故障恢复时重新读取各自的待处理消息。然而在现实世界中，消费者有可能永久地失败并且永远无法恢复。由于任何原因停止后，消费者的待处理消息会发生什么呢？
 
-Redis consumer groups offer a feature that is used exactly in this situations in order to *claim* the pending messages of a given consumer so that such messages will change ownership and will be re-assigned to a different consumer. The feature is very explicit, a consumer has to inspect the list of pending messages, and will have to claim specific messages using a special command, otherwise the server will take the messages pending forever assigned to the old consumer, in this way different applications can choose if to use such a feature or not, and exactly the way to use it.
+Redis的消费者组提供了一个专门针对这种场景的特性，用以*认领*给定消费者的待处理消息，这样一来，这些消息就会改变他们的所有者，并且被重新分配给其他消费者。这个特性是非常明确的，消费者必须检查待处理消息列表，并且必须使用特殊命令来认领特定的消息，否则服务器将把待处理的消息永久分配给旧消费者，这样不同的应用程序就可以选择是否使用这样的特性，以及使用它的方式。
 
-The first step of this process is just a command that provides observability of pending entries in the consumer group and is called **XPENDING**. This is just a read-only command which is always safe to call and will not change ownership of any message. In its simplest form, the command is just called with two arguments, which are the name of the stream and the name of the consumer group.
+这个过程的第一步是使用一个叫做**XPENDING**的命令，这个命令提供消费者组中待处理条目的可观察性。这是一个只读命令，它总是可以安全地调用，不会改变任何消息的所有者。在最简单的形式中，调用这个命令只需要两个参数，即Stream的名称和消费者组的名称。
 
 ```
 > XPENDING mystream mygroup
@@ -406,9 +406,9 @@ The first step of this process is just a command that provides observability of 
       2) "2"
 ```
 
-When called in this way the command just outputs the total number of pending messages in the consumer group, just two messages in this case, the lower and higher message ID among the pending messages, and finally a list of consumers and the number of pending messages they have. We have just Bob with two pending messages because the only message that Alice requested was acknowledged using **XACK**.
+当以这种方式调用的时候，命令只会输出给定消费者组的待处理消息总数（在本例中是两条消息），所有待处理消息中的最小和最大的ID，最后是消费者列表和每个消费者的待处理消息数量。我们只有Bob有两条待处理消息，因为Alice请求的唯一一条消息已使用**XACK**确认了。
 
-We can ask for more info by giving more arguments to **XPENDING**, because the full command signature is the following:
+我们可以通过给**XPENDING**命令传递更多的参数来获取更多信息，完整的命令签名如下：
 
 ```
 XPENDING <key> <groupname> [<start-id> <end-id> <count> [<conusmer-name>]]
