@@ -414,7 +414,7 @@ Redis的消费者组提供了一个专门针对这种场景的特性，用以*�
 XPENDING <key> <groupname> [<start-id> <end-id> <count> [<conusmer-name>]]
 ```
 
-By providing a start and end ID (that can be just `-` and `+` as in **XRANGE**) and a count to control the amount of information returned by the command, we are able to know more about the pending messages. The optional final argument, the consumer group name, is used if we want to limit the output to just messages pending for a given consumer group, but we'll not use this feature in the following example.
+通过提供一个开始和结束ID（可以只是`-`和`+`，就像**XRANGE**一样），以及一个控制命令返回的信息量的数字，我们可以了解有关待处理消息的更多信息。如果我们想要将输出限制为仅针对给定使用者组的待处理消息，可以使用最后一个可选参数，即消费者组的名称，但我们不会在以下示例中使用此功能。
 
 ```
 > XPENDING mystream mygroup - + 10
@@ -428,9 +428,9 @@ By providing a start and end ID (that can be just `-` and `+` as in **XRANGE**) 
    4) (integer) 1
 ```
 
-Now we have the detail for each message: the ID, the consumer name, the *idle time* in milliseconds, which is how much milliseconds have passed since the last time the message was delivered to some consumer, and finally the number of times that a given message was delivered. We have two messages from Bob, and they are idle for 74170458 milliseconds, about 20 hours.
+现在我们有了每一条消息的详细信息：消息ID，消费者名称，*空闲时间*（单位是毫秒，意思是：自上次将消息传递给某个消费者以来经过了多少毫秒），以及每一条给定的消息被传递了多少次。我们有来自Bob的两条消息，它们空闲了74170458毫秒，大概20个小时。
 
-Note that nobody prevents us from checking what the first message content was, just using **XRANGE**.
+请注意，没有人阻止我们检查第一条消息内容是什么，使用**XRANGE**即可。
 
 ```
 > XRANGE mystream 1526569498055-0 1526569498055-0
@@ -439,24 +439,24 @@ Note that nobody prevents us from checking what the first message content was, j
       2) "orange"
 ```
 
-We have just to repeat the same ID twice in the arguments. Now that we have some idea, Alice may decide that after 20 hours of not processing messages, Bob will probably not recover in time, and it's time to *claim* such messages and resume the processing in place of Bob. To do so, we use the **XCLAIM** command.
+我们只需要在参数中重复两次相同的ID。现在我们有了一些想法，Alice可能会根据过了20个小时仍然没有处理这些消息，来判断Bob可能无法及时恢复，所以现在是时候*认领*这些消息，并继续代替Bob处理了。为了做到这一点，我们使用**XCLAIM**命令。
 
-This command is very complex and full of options in its full form, since it is used for replication of consumer groups changes, but we'll use just the arguments that we need normally. In this case it is as simple as calling it like that:
+这个命令非常的复杂，并且在其完整形式中有很多选项，因为它用于复制消费者组的更改，但我们只使用我们通常需要的参数。在这种情况下，它就像调用它一样简单：
 
 ```
 XCLAIM <key> <group> <consumer> <min-idle-time> <ID-1> <ID-2> ... <ID-N>
 ```
 
-Basically we say, for this specific key and group, I want that the message IDs specified will change ownership, and will be assigned to the specified consumer name `<consumer>`. However, we also provide a minimum idle time, so that the operation will only work if the idle time of the mentioned messages is greater than the specified idle time. This is useful because maybe two clients are retrying to claim a message at the same time:
+基本上我们说，对于这个特定的Stream和消费者组，我希望指定的ID的这些消息可以改变他们的所有者，并将被分配到指定的消费者`<consumer>`。但是，我们还提供了最小空闲时间，因此只有在上述消息的空闲时间大于指定的空闲时间时，操作才会起作用。这很有用，因为有可能两个客户端会同时尝试认领一条消息：
 
 ```
 Client 1: XCLAIM mystream mygroup Alice 3600000 1526569498055-0
 Clinet 2: XCLAIM mystream mygroup Lora 3600000 1526569498055-0
 ```
 
-However claiming a message, as a side effect will reset its idle time! And will increment its number of deliveries counter, so the second client will fail claiming it. In this way we avoid trivial re-processing of messages (even if in the general case you cannot obtain exactly once processing).
+然而认领一条消息的副作用是会重置它的闲置时间！并将增加其传递次数的计数器，所以上面第二个客户端的认领会失败。通过这种方式，我们可以避免对消息进行简单的重新处理（即使是在一般情况下，你仍然不能获得准确的一次处理）。
 
-This is the result of the command execution:
+下面是命令执行的结果：
 
 ```
 > XCLAIM mystream mygroup Alice 3600000 1526569498055-0
@@ -465,11 +465,11 @@ This is the result of the command execution:
       2) "orange"
 ```
 
-The message was successfully claimed by Alice, that can now process the message and acknowledge it, and move things forward even if the original consumer is not recovering.
+Alice成功声明了该消息，现在可以处理并确认消息，尽管原来的消费者还没有恢复，也能往前推动。
 
-It is clear from the example above that as a side effect of successfully claiming a given message, the **XCLAIM** command also returns it. However this is not mandatory. The **JUSTID** option can be used in order to return just the IDs of the message successfully claimed. This is useful if you want to reduce the bandwidth used between the client and the server, but also the performance of the command, and you are not interested in the message because later your consumer is implemented in a way that will rescan the history of pending messages from time to time.
+从上面的例子很明显能看到，作为成功认领了指定消息的副作用，**XCLAIM**命令也返回了消息数据本身。但这不是强制性的。可以使用**JUSTID**选项，以便仅返回成功认领的消息的ID。如果你想减少客户端和服务器之间的带宽使用量的话，以及考虑命令的性能，这会很有用，并且你不会对消息感兴趣，因为稍后你的消费者的实现方式将不时地重新扫描历史待处理消息。
 
-Claiming may also be implemented by a separated process: one that just checks the list of pending messages, and assigns idle messages to consumers that appear to be active. Active consumers can be obtained using one of the observability features of Redis streams. This is the topic of the next section.
+认领也可以通过一个独立的进程来实现：这个进程只负责检查待处理消息列表，并将空闲的消息分配给看似活跃的消费者。可以通过Redis Stream的可观察特性获得活跃的消费者。这是下一个章节的主题。
 
 ## Claiming and the delivery counter
 
