@@ -14,5 +14,4 @@ discuzTid: 13907
 
 ## 返回值
 
-[bulk-string-reply](/topics/protocol.html#bulk-string-reply): the memory allocator's internal statistics report
 [bulk-string-reply](/topics/protocol.html#bulk-string-reply): 内存分配器的内部统计报表

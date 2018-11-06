@@ -17,5 +17,5 @@ discuzTid: 13901
 ## 例子
 
 	redis> CLIENT ID
-	ERR Unknown or disabled command 'CLIENT'
+	(integer) 3
 	redis> 

@@ -14,8 +14,9 @@ discuzTid: 13902
 * `ON`. 默认选项，回复客户端每条命令
 * `OFF`. 不回复客户端命令
 * `SKIP`. 跳过该设置命令后紧跟的一条命令
-## 返回值
 
-当执行命令设置为`OFF`或`SKIP`，设置命令收不到任何回复，当设置为 `ON`时，设置命令收到`OK`
+## 返回值
+   当执行命令设置为`OFF`或`SKIP`，设置命令收不到任何回复，当设置为 `ON`时，设置命令收到`OK`
+   
 [simple-string-reply](/topics/protocol.html#simple-string-reply): `OK`.
 

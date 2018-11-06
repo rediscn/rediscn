@@ -14,5 +14,4 @@ discuzTid: 13908
    
 ## 返回值
 
-[simple-string-reply](/topics/protocol.html#simple-string-reply)
 [simple-string-reply](/topics/protocol.html#字符串)

@@ -19,7 +19,7 @@ discuzTid: 13899
 
 ## 返回值
 
-[array-reply](/topics/protocol.html#array-reply): specifically:
+[array-reply](/topics/protocol.html#array-reply):
 
 当有序集合无结果返回且超时设置过期时返回 `nil`
 
