@@ -8,9 +8,7 @@ commandsType: server
 discuzTid: 13905
 ---
 
-The `MEMORY DOCTOR` command reports about different memory-related issues that
-the Redis server experiences, and advises about possible remedies.
-命令`MEMORY DOCTOR` 返回Redis 服务器遇到的不同类型的内存相关问题，并提供相应的解决建议
+命令`MEMORY DOCTOR` 会列出 Redis 服务器遇到的不同类型的内存相关问题，并提供相应的解决建议
 
 ## 返回值
 

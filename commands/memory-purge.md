@@ -8,12 +8,10 @@ commandsType: server
 discuzTid: 13908
 ---
 
-The `MEMORY PURGE` command attempts to purge dirty pages so these can be
-reclaimed by the allocator.
 命令`MEMORY PURGE` 尝试清除脏页以便内存分配器回收使用
-This command is currently implemented only when using **jemalloc** as an
-allocator, and evaluates to a benign NOOP for all others.
-该命令目前仅实现了**jemalloc**作为内存分配器的内存统计，    
+
+该命令目前仅实现了**jemalloc**作为内存分配器的内存统计，对其他服务器暂不支持哈。 
+   
 ## 返回值
 
 [simple-string-reply](/topics/protocol.html#simple-string-reply)

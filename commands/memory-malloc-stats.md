@@ -8,12 +8,9 @@ commandsType: server
 discuzTid: 13907
 ---
 
-The `MEMORY MALLOC-STATS` command provides an internal statistics report from
-the memory allocator.
 命令`MEMORY MALLOC-STATS` 提供内存分配情况的内部统计报表
-This command is currently implemented only when using **jemalloc** as an
-allocator, and evaluates to a benign NOOP for all others.
-该命令目前仅实现了**jemalloc**作为内存分配器的内存统计，
+
+该命令目前仅实现了**jemalloc**作为内存分配器的内存统计，对其他分配器暂不支持哈
 
 ## 返回值
 
