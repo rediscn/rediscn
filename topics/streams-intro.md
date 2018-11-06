@@ -596,45 +596,44 @@ Redis Stream的消费者组可能类似于基于Kafka（TM）分区的消费者�
 
 如果使用**MAXLEN**选项，当Stream的达到指定长度后，老的条目会自动被驱逐，因此Stream的大小是恒定的。目前还没有选项让Stream只保留给定数量的条目，因为为了一致地运行，这样的命令必须为了驱逐条目而潜在地阻塞很长时间。比如可以想象一下如果存在插入尖峰，然后是长暂停，以及另一次插入，全都具有相同的最大时间。Stream会阻塞来驱逐在暂停期间变得太旧的数据。因此，用户需要进行一些规划并了解所需的最大流长度。此外，虽然Stream的长度与内存使用是成正比的，但是按时间来缩减不太容易控制和预测：这取决于插入速率，该变量通常随时间变化（当它不变化时，那么按尺寸缩减是微不足道的）。
 
-However trimming with **MAXLEN** can be expensive: streams are represented by macro nodes into a radix tree, in order to be very memory efficient. Altering the single macro node, consisting of a few tens of elements, is not optimal. So it is possible to give the command in the following special form:
+然而使用**MAXLEN**进行修整可能很昂贵：Stream由宏节点表示为基数树，以便非常节省内存。改变由几十个元素组成的单个宏节点不是最佳的。因此可以使用以下特殊形式提供命令：
 
 ```
 XADD mystream MAXLEN ~ 1000 * ... entry fields here ...
 ```
 
-The `~` argument between the **MAXLEN** option and the actual count means, I don't really need this to be exactly 1000 items. It can be 1000 or 1010 or 1030, just make sure to save at least 1000 items. With this argument, the trimming is performed only when we can remove a whole node. This makes it much more efficient, and it is usually what you want.
+在选项**MAXLEN**和实际计数中间的参数`~`的意思是，我不是真的需要精确的1000个项目。它可以是1000或者1010或者1030，只要保证至少保存1000个项目就行。通过使用这个参数，仅当我们移除整个节点的时候才执行修整。这使得命令更高效，而且这也是我们通常想要的。
 
-There is also the **XTRIM** command available, which performs something very similar to what the **MAXLEN** option does above, but this command does not need to add anything, can be run against any stream in a standalone way.
+还有**XTRIM**命令可用，它做的事情与上面讲到的**MAXLEN**选项非常相似，但是这个命令不需要添加任何其他参数，可以以独立的方式与Stream一起使用。
 
 ```
 > XTRIM mystream MAXLEN 10
 ```
 
-Or, as for the **XADD** option:
+或者，对于**XADD**选项：
 
 ```
 > XTRIM mystream MAXLEN ~ 10
 ```
 
-However, **XTRIM** is designed to accept different trimming strategies, even if currently only **MAXLEN** is implemented. Given that this is an explicit command, it is possible that in the future it will allow to specify trimming by time, because the user calling this command in a stand-alone way is supposed to know what she or he is doing.
+但是，**XTRIM**旨在接受不同的修整策略，虽然现在只实现了**MAXLEN**。鉴于这是一个明确的命令，将来有可能允许按时间来进行修整，因为以独立的方式调用这个命令的用户应该知道她或者他正在做什么。
 
-One useful eviction strategy that **XTRIM** should have is probably the ability to remove by a range of IDs. This is currently not possible, but will be likely implemented in the future in order to more easily use **XRANGE** and **XTRIM** together to move data from Redis to other storage systems if needed.
+一个有用的驱逐策略是，**XTRIM**应该具有通过一系列ID删除的能力。目前这是不可能的，但在将来可能会实现，以便更方便地使用**XRANGE** 和 **XTRIM**来将Redis中的数据移到其他存储系统中（如果需要）。
 
-## Persistence, replication and message safety
+## 持久化，复制和消息安全性
 
-A Stream, like any other Redis data structure, is asynchronously replicated to slaves and persisted into AOF and RDB files. However what may not be so obvious is that also consumer groups full state is propagated to AOF, RDB and slaves, so if a message is pending in the master, also the slave will have the same information. Similarly, after a restart, the AOF will restore the consumer groups state.
+与任何其他Redis数据结构一样，Stream会异步复制到从节点，并持久化到AOF和RDB文件中。但可能不那么明显的是，消费者组的完整状态也会传输到AOF，RDB和从节点，因此如果消息在主节点是待处理的状态，在从节点也会是相同的信息。同样，节点重启后，AOF文件会恢复消费者组的状态。
 
-However note that Redis streams and consumer groups are persisted and replicated using the Redis default replication, so:
+但是请注意，Redis Stream和消费者组使用Redis默认复制来进行持久化和复制，所以：
 
-* AOF must be used with a strong fsync policy if persistence of messages is important in your application.
-* By default the asynchronous replication will not guarantee that **XADD** commands or consumer groups state changes are replicated: after a failover something can be missing depending on the ability of slaves to receive the data from the master.
-* The **WAIT** command may be used in order to force the propagation of the changes to a set of slaves. However note that while this makes very unlikely that data is lost, the Redis failover process as operated by Sentinel or Redis Cluster performs only a *best effort* check to failover to the slave which is the most updated, and under certain specific failures may promote a slave that lacks some data.
+* 如果消息的持久性在您的应用程序中很重要，则AOF必须与强大的fsync策略一起使用。
+* 默认情况下，异步复制不能保证复制**XADD**命令或者消费者组的状态更改：在故障转移后，可能会丢失某些内容，具体取决于从节点从主节点接收数据的能力。
+* **WAIT**命令可以用于强制将更改传输到一组从节点上。但请注意，虽然这使得数据不太可能丢失，但由Sentinel或Redis群集运行的Redis故障转移过程仅执行*尽力*检查以故障转移到最新的从节点，并且在某些特定故障下可能会选举出缺少一些数据的从节点。
+因此，在使用Redis Stream和消费者组设计应用程序时，确保了解你的应用程序在故障期间应具有的语义属性，并进行相应地配置，评估它是否足够安全地用于您的用例。
 
-So when designing application using Redis streams and consumer groups, make sure to understand the semantical properties your application should have during failures, and configure things accordingly, evaluating if it is safe enough for your use case.
+## 从Stream中删除单个项目
 
-## Removing single items from a stream
-
-Streams also have a special command to remove items from the middle of a stream, just by ID. Normally for an append only data structure this may look like an odd feature, but it is actually useful for applications involving, for instance, privacy regulations. The command is called **XDEL**, and will just get the name of the stream followed by the IDs to delete:
+Stream还有一个特殊的命令可以通过ID从中间移除项目。一般来讲，对于一个只附加的数据结构来说，这也许看起来是一个奇怪的特征，但实际上它对于涉及例如隐私法规的应用程序是有用的。这个命令称为**XDEL**，调用的时候只需要传递Stream的名称，在后面跟着需要删除的ID即可：
 
 ```
 > XRANGE mystream - + COUNT 2
@@ -652,10 +651,10 @@ Streams also have a special command to remove items from the middle of a stream,
       2) "3"
 ```
 
-However in the current implementation, memory is not really reclaimed until a macro node is completely empty, so you should not abuse this feature.
+但是在当前的实现中，在宏节点完全为空之前，内存并没有真正回收，所以你不应该滥用这个特性。
 
-## Zero length streams
+## 零长度Stream
 
-A difference between streams and other Redis data structures is that when the other data structures have no longer elements, as a side effect of calling commands that remove elements, the key itself will be removed. So for instance, a sorted set will be completely removed when a call to **ZREM** will remove the last element in the sorted set. Streams instead are allowed to stay at zero elements, both as a result of using a **MAXLEN** option with a count of zero (**XADD** and **XTRIM** commands), or because **XDEL** was called.
+Stream与其他Redis数据结构有一个不同的地方在于，当其他数据结构没有元素的时候，调用删除元素的命令会把key本身删掉。举例来说就是，当调用**ZREM**命令将有序集合中的最后一个元素删除时，这个有序集合会被彻底删除。但Stream允许在没有元素的时候仍然存在，不管是因为使用**MAXLEN**选项的时候指定了count为零（在**XADD**和**XTRIM**命令中），或者因为调用了**XDEL**命令。
 
-The reason why such an asymmetry exists is because Streams may have associated consumer groups, and we do not want to lose the state that the consumer groups define just because there are no longer items inside the stream. Currently the stream is not deleted even when it has no associated consumer groups, but this may change in the future.
+存在这种不对称性的原因是因为，Stream可能具有相关联的消费者组，以及我们不希望因为Stream中没有项目而丢失消费者组定义的状态。当前，即使没有相关联的消费者组，Stream也不会被删除，但这在将来有可能会发生变化。
