@@ -14,9 +14,7 @@ discuzTid: 13900
 
 参数 `timeout` 可以理解为客户端被阻塞的最大秒数值，0 表示永久阻塞。
 
-详细说明请参照[BLPOP 说明文档][cb]，`BZPOPMIN`适用有序集合类型的key，BLPOP适用列表类型的key，除此之外，两条命令无其他差别。 
-
-[cl]: /commands/blpop
+详细说明请参照[BLPOP 说明文档](/commands/blpop.html)，`BZPOPMIN`适用有序集合类型的key，BLPOP适用列表类型的key，除此之外，两条命令无其他差别。 
 
 ## 返回值
 

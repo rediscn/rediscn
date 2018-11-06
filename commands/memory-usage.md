@@ -38,6 +38,7 @@ OK
 (integer) 153
 ```
 
-@return
+## 返回值
 
-@integer-reply: the memory usage in bytes 
+[integer-reply](/topics/protocol.html#integer-reply): 使用的内存的字节数
+

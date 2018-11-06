@@ -49,8 +49,6 @@ discuzTid: 13909
 *	`fragmentation`：同 `INFO`的 `mem_fragmentation_ratio`
 ## 返回值
 
-[array-reply](/topics/protocol.html#array-reply): nested list of memory usage metrics and their values
-
 [array-reply](/topics/protocol.html#array-reply): 包含内存使用指标名称和对应值的嵌套列表
 
 

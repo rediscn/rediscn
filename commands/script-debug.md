@@ -10,7 +10,7 @@ discuzTid: 13912
 
 使用`EVAL`可以开启对脚本的调试。Redis包含完整Lua Debugger和codename LDB，这大大降低了复杂脚本编写的难度。
 在调试模式下，Redis 既做调试服务器又做客户端，像`redis-cli` 可以单步执行，设置断点，观察变量等等，更多
-LDB信息参见[Redis Lua debugger](/topics/ldb)
+LDB信息参见[Redis Lua debugger](/topics/ldb.html)
 
 **注意**：使用开发环境Redis服务器调试Lua脚本，避免在生产环境Redis服务器调试。
 

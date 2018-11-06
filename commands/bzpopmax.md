@@ -13,9 +13,7 @@ discuzTid: 13899
 
 参数 `timeout` 可以理解为客户端被阻塞的最大秒数值，0 表示永久阻塞。
 
-详细说明请参照[BZPOPMIN 说明文档][cb]，`BZPOPMAX`返回非空有序集合 key中分数最大的成员，而`BZPOPMIN`返回该key中分数最小的成员，除此之外，两条命令无其他差别。 
-
-[cb]: [/commands/bzpopmin.html](/commands/bzpopmin.html)
+详细说明请参照[BZPOPMIN 说明文档](/commands/bzpopmin.html)，`BZPOPMAX`返回非空有序集合 key中分数最大的成员，而`BZPOPMIN`返回该key中分数最小的成员，除此之外，两条命令无其他差别。 
 
 ## 返回值
 
