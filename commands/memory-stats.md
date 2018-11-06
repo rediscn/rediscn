@@ -54,4 +54,4 @@ discuzTid: 13909
 [array-reply](/topics/protocol.html#array-reply): 包含内存使用指标名称和对应值的嵌套列表
 
 
-关于主页中使用的关键词slave的说明：为了保证Redis 5 的向后兼容性，我们在Redis 5继续使用关键词slave。slave 是协议的一部分，我们会在API自然消亡后弃用关键词slave的使用。
+关于主页中使用的关键词slave的说明：为了保证Redis 5 的向后兼容性，我们在Redis 5 中继续使用关键词slave。slave 是协议的一部分，我们会在API自然消亡后弃用关键词slave的使用。
