@@ -465,25 +465,25 @@ Clinet 2: XCLAIM mystream mygroup Lora 3600000 1526569498055-0
       2) "orange"
 ```
 
-Alice成功声明了该消息，现在可以处理并确认消息，尽管原来的消费者还没有恢复，也能往前推动。
+Alice成功认领了该消息，现在可以处理并确认消息，尽管原来的消费者还没有恢复，也能往前推动。
 
 从上面的例子很明显能看到，作为成功认领了指定消息的副作用，**XCLAIM**命令也返回了消息数据本身。但这不是强制性的。可以使用**JUSTID**选项，以便仅返回成功认领的消息的ID。如果你想减少客户端和服务器之间的带宽使用量的话，以及考虑命令的性能，这会很有用，并且你不会对消息感兴趣，因为稍后你的消费者的实现方式将不时地重新扫描历史待处理消息。
 
 认领也可以通过一个独立的进程来实现：这个进程只负责检查待处理消息列表，并将空闲的消息分配给看似活跃的消费者。可以通过Redis Stream的可观察特性获得活跃的消费者。这是下一个章节的主题。
 
-## Claiming and the delivery counter
+## 消息认领及交付计数器
 
-The counter that you observe in the **XPENDING** output is the number of deliveries of each message. Such counter is incremented in two ways: when a message is successfully claimed via **XCLAIM** or when an **XREADGROUP** call is used in order to access the history of pending messages.
+在**XPENDING**的输出中，你所看到的计数器是每一条消息的交付次数。这样的计数器以两种方式递增：消息通过**XCLAIM**成功认领时，或者调用**XREADGROUP**访问历史待处理消息时。
 
-When there are failures, it is normal that messages are delivered multiple times, but eventually they usually get processed. However there is sometimes a problem to process a given specific message, because it is corrupted or crafted in a way that triggers a bug in the processing code. In such a case what happens is that consumers will continuously fail to process this particular message. Because we have the counter of the delivery attempts, we can use that counter to detect messages that for some reason are not processable at all. So once the deliveries counter reaches a given large number that you chose, it is probably wiser to put such messages in another stream and send a notification to the system administrator. This is basically the way that Redis streams implement the concept of the *dead letter*.
+当出现故障时，消息被多次传递是很正常的，但最终它们通常会得到处理。但有时候处理特定的消息会出现问题，因为消息会以触发处理代码中的bug的方式被损坏或修改。在这种情况下，消费者处理这条特殊的消息会一直失败。因为我们有传递尝试的计数器，所以我们可以使用这个计数器来检测由于某些原因根本无法处理的消息。所以一旦消息的传递计数器达到你给定的值，比较明智的做法是将这些消息放入另外一个Stream，并给系统管理员发送一条通知。这基本上是Redis Stream实现的*dead letter*概念的方式。
 
-## Streams observability
+## Streams 的可观察性
 
-Messaging systems that lack observability are very hard to work with. Not knowing who is consuming messages, what messages are pending, the set of consumer groups active in a given stream, makes everything opaque. For this reason, Redis streams and consumer groups, have different ways to observe what is happening. We already covered **XPENDING**, which allows us to inspect the list of messages that are under processing at a given moment, together with their idle time and number of deliveries.
+缺乏可观察性的消息系统很难处理。不知道谁在消费消息，哪些消息待处理，不知道给定Stream的活跃消费者组的集合，使得一切都不透明。因此，Redis Stream和消费者组都有不同的方式来观察正在发生的事情。我们已经介绍了**XPENDING**，它允许我们检查在给定时刻正在处理的消息列表，以及它们的空闲时间和传递次数。
 
-However we may want to do more than that, and the **XINFO** command is an observability interface that can be used with sub-commands in order to get information about streams or consumer groups.
+但是，我们可能希望做更多的事情，**XINFO**命令是一个可观察性接口，可以与子命令一起使用，以获取有关Stream或消费者组的信息。
 
-This command uses subcommands in order to show different informations about the status of the stream and its consumer groups. For instance using **XINFO STREAM <key>** reports information about the stream itself.
+这个命令使用子命令来显示有关Stream和消费者组的状态的不同信息，比如使用**XINFO STREAM <key>**可以报告关于Stream本身的信息。
 
 ```
 > XINFO STREAM mystream
@@ -507,7 +507,7 @@ This command uses subcommands in order to show different informations about the 
        2) "banana"
 ```
 
-The output shows information about how the stream is encoded internally, and also shows the first and the last message in the stream. Another information available is the number of consumer groups associated with this stream value. We can dig further asking for more information about the consumer groups.
+输出显示了有关如何在内部编码Stream的信息，以及显示了Stream的第一条和最后一条消息。另一个可用的信息是与这个Stream相关联的消费者组的数量。我们可以进一步挖掘有关消费者组的更多信息。
 
 ```
 > XINFO GROUPS mystream
@@ -525,9 +525,9 @@ The output shows information about how the stream is encoded internally, and als
    6) (integer) 0
 ```
 
-As you can see in this and in the previous output, the **XINFO** command outputs a sequence of field-value items. Because it is an observability command this allows the human user to immediately understand what information is reported, and allows the command to report more information in the future by adding more fields without breaking the compatibility with older clients. Other commands that must be more bandwidth efficient instead, like **XPENDING**, just report the information without the field names.
+正如你在这里和前面的输出中看到的，**XINFO**命令输出一系列键值对。因为这是一个可观察性命令，允许人类用户立即了解报告的信息，并允许命令通过添加更多字段来报告更多信息，而不会破坏与旧客户端的兼容性。其他更高带宽效率的命令，比如**XPENDING**，只报告没有字段名称的信息。
 
-The output of the example above, where the **GROUPS** subcommand is used, should be clear observing the field names. We can check more in detail the state of a specific consumer group by checking the consumers that are registered in such group.
+上面例子中的输出（使用了子命令**GROUPS**）应该能清楚地观察字段名称。我们可以通过检查在此类消费者组中注册的消费者，来更详细地检查特定消费者组的状态。
 
 ```
 > XINFO CONSUMERS mystream mygroup
@@ -545,7 +545,7 @@ The output of the example above, where the **GROUPS** subcommand is used, should
    6) (integer) 83841983
 ```
 
-In case you do not remember the syntax of the command, just ask for help to the command itself:
+如果你不记得命令的语法，只需要查看命令本身的帮助：
 
 ```
 > XINFO HELP
@@ -556,26 +556,25 @@ In case you do not remember the syntax of the command, just ask for help to the 
 5) HELP                         -- Print this help.
 ```
 
-## Differences with Kafka (TM) partitions
+## 与Kafka（TM）分区的差异
 
-Consumer groups in Redis streams may resemble in some way Kafka (TM) partitioning-based consumer groups, however note that Redis streams are practically very different. The partitions are only *logical* and the messages are just put into a single Redis key, so the way the different clients are served is based on who is ready to process new messages, and not from which partition clients are reading. For instance, if the consumer C3 at some point fails permanently, Redis will continue to serve C1 and C2 will all the new messages arriving, as if now there are only two *logical* partitions.
+Redis Stream的消费者组可能类似于基于Kafka（TM）分区的消费者组，但是要注意Redis Stream实际上非常不同。分区仅仅是*逻辑*的，并且消息只是放在一个Redis键中，因此不同客户端的服务方式取决于谁准备处理新消息，而不是从哪个分区客户端读取。例如，如果消费者C3在某一点永久故障，Redis会继续服务C1和C2，将新消息送达，就像现在只有两个*逻辑*分区一样。
 
-Similarly, if a given consumer is much faster at processing messages than the other consumers, this consumer will receive proportionally more messages in the same unit of time. This is possible since Redis tracks all the unacknowledged messages explicitly, and remembers who received which message and the ID of the first message never delivered to any consumer.
+类似地，如果一个给定的消费者在处理消息方面比其他消费者快很多，那么这个消费者在相同单位时间内按比例会接收更多的消息。这是有可能的，因为Redis显式地追踪所有未确认的消息，并且记住了谁接收了哪些消息，以及第一条消息的ID从未传递给任何消费者。
 
-However, this also means that in Redis if you really want to partition messages about the same stream into multiple Redis instances, you have to use multiple keys and some sharding system such as Redis Cluster or some other application-specific sharding system. A single Redis stream is not automatically partitioned to multiple instances.
+但是，这也意味着在Redis中，如果你真的想把同一个Stream的消息分区到不同的Redis实例中，你必须使用多个key和一些分区系统，比如Redis集群或者特定应用程序的分区系统。单个Redis Stream不会自动分区到多个实例上。
 
-We could say that schematically the following is true:
+我们可以说，以下是正确的：
 
-* If you use 1 stream -> 1 consumer, you are processing messages in order.
-* If you use N stream with N consumers, so only a given consumer hits a subset of the N streams, you can scale the above model of 1 stream -> 1 consumer.
-* If you use 1 stream -> N consumers, you are load balancing to N consumers, however in that case, messages about the same logical item may be consumed out of order, because a given consumer may process message 3 faster than another consumer is processing message 4.
+* 如果你使用一个Stream对应一个消费者，则消息是按顺序处理的。
+* 如果你使用N个Stream对应N个消费者，那么只有给定的消费者hits N个Stream的子集，你可以扩展上面的模型来实现。
+* 如果你使用一个Stream对应多个消费者，则对N个消费者进行负载平衡，但是在那种情况下，有关同一逻辑项的消息可能会无序消耗，因为给定的消费者处理消息3可能比另一个消费者处理消息4要快。
 
-So basically Kafka partitions are more similar to using N different Redis keys.
-While Redis consumer groups are a server-side load balancing system of messages from a given stream to N different consumers.
+所以基本上Kafka分区更像是使用了N个不同的Redis键。而Redis消费者组是一个将给定Stream的消息负载均衡到N个不同消费者的服务端负载均衡系统。
 
-## Capped Streams
+## 设置Streams的上限
 
-Many applications do not want to collect data into a stream forever. Sometimes it is useful to have at maximum a given number of items inside a stream, other times once a given size is reached, it is useful to move data from Redis to a storage which is not in memory and not as fast but suited to take the history for potentially decades to come. Redis streams have some support for this. One the **MAXLEN** option of the **XADD** command. Such option is very simple to use:
+许多应用并不希望将数据永久收集到一个Stream。有时在Stream中指定一个最大项目数很有用，之后一旦达到给定的大小，将数据从Redis中移到不那么快的非内存存储是有用的，适合用来记录未来几十年的历史数据。Redis Stream对此有一定的支持。这就是**XADD**命令的**MAXLEN**选项，这个选项用起来很简单：
 
 ```
 > XADD mystream MAXLEN 2 * value 1
@@ -595,7 +594,7 @@ Many applications do not want to collect data into a stream forever. Sometimes i
       2) "3"
 ```
 
-Using **MAXLEN** the old entries are automatically evicted when the specified length is reached, so that the stream is taken at a constant size. There is currently no option to tell the stream to just retain items that are not older than a given amount, because such command, in order to run consistently, would have to potentially block for a lot of time in order to evict items. Imagine for example what happens if there is an insertion spike, then a long pause, and another insertion, all with the same maximum time. The stream would block to evict the data that became too old during the pause. So it is up to the user to do some planning and understand what is the maximum stream length desired. Moreover, while the length of the stream is proportional to the memory used, trimming by time is less simple to control and anticipate: it depends on the insertion rate that is a variable often changing over time (and when it does not change, then to just trim by size is trivial).
+如果使用**MAXLEN**选项，当Stream的达到指定长度后，老的条目会自动被驱逐，因此Stream的大小是恒定的。目前还没有选项让Stream只保留给定数量的条目，因为为了一致地运行，这样的命令必须为了驱逐条目而潜在地阻塞很长时间。比如可以想象一下如果存在插入尖峰，然后是长暂停，以及另一次插入，全都具有相同的最大时间。Stream会阻塞来驱逐在暂停期间变得太旧的数据。因此，用户需要进行一些规划并了解所需的最大流长度。此外，虽然Stream的长度与内存使用是成正比的，但是按时间来缩减不太容易控制和预测：这取决于插入速率，该变量通常随时间变化（当它不变化时，那么按尺寸缩减是微不足道的）。
 
 However trimming with **MAXLEN** can be expensive: streams are represented by macro nodes into a radix tree, in order to be very memory efficient. Altering the single macro node, consisting of a few tens of elements, is not optimal. So it is possible to give the command in the following special form:
 
