@@ -14,7 +14,7 @@ discuzTid: 1089
 
 [integer-reply](/topics/protocol#integer-reply): 被移除成员的数量。
 
-##列子
+## 列子
 
 	redis> ZADD myzset 1 "one"
 	(integer) 1

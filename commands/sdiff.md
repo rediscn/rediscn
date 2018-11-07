@@ -23,6 +23,8 @@ discuzTid: 1044
 
 [array-reply](/topics/protocol.html#array-reply):结果集的元素.
 
+## 举例
+
 	redis> SADD key1 "a"
 	(integer) 1
 	redis> SADD key1 "b"
