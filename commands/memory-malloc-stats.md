@@ -6,7 +6,7 @@ disqusIdentifier: command_memory-malloc-stats
 disqusUrl: http://redis.cn/commands/memory-malloc-stats.html
 commandsType: server
 discuzTid: 13907
-tranAuthor：gqhao
+tranAuthor: gqhao
 ---
 
 命令`MEMORY MALLOC-STATS` 提供内存分配情况的内部统计报表

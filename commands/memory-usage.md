@@ -6,7 +6,7 @@ disqusIdentifier: command_memory-usage
 disqusUrl: http://redis.cn/commands/memory-usage.html
 commandsType: server
 discuzTid: 13910
-tranAuthor：gqhao
+tranAuthor: gqhao
 ---
 
 命令`MEMORY USAGE` 给出一个key和它值在RAM中占用的字节数

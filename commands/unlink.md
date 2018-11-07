@@ -6,7 +6,7 @@ disqusIdentifier: command_unlink
 disqusUrl: http://redis.cn/commands/unlink.html
 commandsType: keys
 discuzTid: 13937
-tranAuthor：gqhao
+tranAuthor: gqhao
 ---
 
 该命令和`DEL`十分相似：删除指定的key(s),若key不存在则该key被跳过。但是，相比`DEL`会产生阻塞，该命令会在另一个线程中回收内存，因此它是非阻塞的。

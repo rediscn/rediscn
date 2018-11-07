@@ -6,7 +6,7 @@ disqusIdentifier: command_cluster-replicas
 disqusUrl: http://redis.cn/commands/cluster-replicas.html
 commandsType: cluster
 discuzTid: 13904
-tranAuthor：gqhao
+tranAuthor: gqhao
 ---
 
 该命令会列出指定主节点的辅助副本节点，输出格式同命令`CLUSTER NODES`(格式说明请参阅说明文档)

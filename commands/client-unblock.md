@@ -6,7 +6,7 @@ disqusIdentifier: command_unblock
 disqusUrl: http://redis.cn/commands/client-unblock.html
 commandsType: server
 discuzTid: 13903
-tranAuthor：gqhao
+tranAuthor: gqhao
 ---
 
 当客户端因为执行具有阻塞功能的命令如`BRPOP`、`XREAD`或者`WAIT`被阻塞时，该命令可以通过其他连接解除客户端的阻塞

@@ -6,7 +6,7 @@ disqusIdentifier: command_bzpopmin
 disqusUrl: http://redis.cn/commands/bzpopmin.html
 commandsType: sortedsets
 discuzTid: 13900
-tranAuthor：gqhao
+tranAuthor: gqhao
 ---
 
 `BZPOPMIN` 是有序集合命令 `ZPOPMIN`带有阻塞功能的版本。

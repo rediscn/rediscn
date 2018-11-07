@@ -6,7 +6,7 @@ disqusIdentifier: command_id
 disqusUrl: http://redis.cn/commands/client-id.html
 commandsType: server
 discuzTid: 13901
-tranAuthor：gqhao
+tranAuthor: gqhao
 ---
 
 该命令返回当前连接的ID，每个ID符合如下约束：

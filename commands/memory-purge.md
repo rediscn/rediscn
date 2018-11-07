@@ -6,7 +6,7 @@ disqusIdentifier: command_memory-purge
 disqusUrl: http://redis.cn/commands/memory-purge.html
 commandsType: server
 discuzTid: 13908
-tranAuthor：gqhao
+tranAuthor: gqhao
 ---
 
 命令`MEMORY PURGE` 尝试清除脏页以便内存分配器回收使用
