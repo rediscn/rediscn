@@ -64,9 +64,6 @@ ID保证始终是递增的：如果比较刚插入的条目的ID，它将大于�
 
 [bulk-string-reply](/topics/protocol.html#bulk-string-reply)：
 
-The command returns the ID of the added entry. The ID is the one auto-generated
-if `*` is passed as ID argument, otherwise the command just returns the same ID
-specified by the user during insertion.
 该命令返回添加的条目的ID。如果ID参数传的是`*`，那么ID是自动生成的，
 否则，命令仅返回用户在插入期间指定的相同的ID。
 
