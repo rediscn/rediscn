@@ -6,6 +6,7 @@ disqusIdentifier: command_memory-doctor
 disqusUrl: http://redis.cn/commands/memory-doctor.html
 commandsType: server
 discuzTid: 13905
+tranAuthor：gqhao
 ---
 
 命令`MEMORY DOCTOR` 会列出 Redis 服务器遇到的不同类型的内存相关问题，并提供相应的解决建议

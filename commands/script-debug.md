@@ -6,6 +6,7 @@ disqusIdentifier: command_script-debug
 disqusUrl: http://redis.cn/commands/script-debug.html
 commandsType: scripting
 discuzTid: 13912
+tranAuhtor：gqhao
 ---
 
 使用`EVAL`可以开启对脚本的调试。Redis包含完整Lua Debugger和codename LDB，这大大降低了复杂脚本编写的难度。

@@ -6,6 +6,7 @@ disqusIdentifier: command_reply
 disqusUrl: http://redis.cn/commands/client-reply.html
 commandsType: server
 discuzTid: 13902
+tranAuthor：gqhao
 ---
 当需要完全禁用redis服务器对当前客户端的回复时可使用该命令。
 

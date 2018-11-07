@@ -6,6 +6,7 @@ disqusIdentifier: command_replicaof
 disqusUrl: http://redis.cn/commands/replicaof.html
 commandsType: server
 discuzTid: 13911
+tranAuthor：gqhao
 ---
 命令`REPLICAOF` 可以在线修改当前服务器的复制设置
 

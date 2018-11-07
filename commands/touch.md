@@ -6,6 +6,7 @@ disqusIdentifier: command_touch
 disqusUrl: http://redis.cn/commands/touch.html
 commandsType: keys
 discuzTid: 13914
+tranAuhtor：gqhao
 ---
 
 修改指定key(s) 最后访问时间

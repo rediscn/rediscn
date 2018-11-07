@@ -6,6 +6,7 @@ disqusIdentifier: command_swapdb
 disqusUrl: http://redis.cn/commands/swapdb.html
 commandsType: connection
 discuzTid: 13913
+tranAuthor：gqhao
 ---
 
 该命令可以交换同一Redis服务器上的两个DATABASE，可以实现连接某一数据库的连接立即访问到其他DATABASE的数据。访问交换前其他database的连接也可以访问到该DATABASE的数据。

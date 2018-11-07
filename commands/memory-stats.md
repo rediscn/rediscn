@@ -6,6 +6,7 @@ disqusIdentifier: command_memory-stats
 disqusUrl: http://redis.cn/commands/memory-stats.html
 commandsType: server
 discuzTid: 13909
+tranAuthor：gqhao
 ---
 
 命令`MEMORY STATS` 将服务器的内存使用情况以数组情况返回
