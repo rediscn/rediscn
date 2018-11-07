@@ -6,6 +6,7 @@ disqusIdentifier: command_bzpopmax
 disqusUrl: http://redis.cn/commands/bzpopmax.html
 commandsType: sortedsets
 discuzTid: 13899
+tranAuthor: gqhao
 ---
 `BZPOPMAX` 是有序集合命令 `ZPOPMAX`带有阻塞功能的版本。
 
