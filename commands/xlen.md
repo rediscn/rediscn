@@ -13,10 +13,14 @@ exist the command returns zero, as if the stream was empty.
 However note that unlike other Redis types, zero-length streams are
 possible, so you should call `TYPE` or `EXISTS` in order to check if
 a key exists or not.
+返回流中的条目数。如果指定的key不存在，则此命令返回0，就好像该流为空。
+但是请注意，与其他的Redis类型不同，零长度流是可能的，所以你应该调用`TYPE` 或者 `EXISTS`
+来检查一个key是否存在。
 
 Streams are not auto-deleted once they have no entries inside (for instance
 after an `XDEL` call), because the stream may have consumer groups
 associated with it.
+一旦内部没有任何的条目（例如调用`XDEL`后），流不会被自动删除，因为可能还存在与其相关联的消费者组。
 
 ## 返回值
 
