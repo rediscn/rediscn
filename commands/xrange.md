@@ -8,29 +8,19 @@ commandsType: streams
 discuzTid: 13923
 ---
 
-The command returns the stream entries matching a given range of IDs.
-The range is specified by a minimum and maximum ID. All the entires having
-an ID between the two specified or exactly one of the two IDs specified
-(closed interval) are returned.
+此命令返回流中满足给定ID范围的条目。范围由最小和最大ID指定。所有ID在指定的两个ID之间或与其中一个ID相等（闭合区间）的条目将会被返回。
 
-The `XRANGE` command has a number of applications:
+`XRANGE`命令有许多用途：
 
-* Returning items in a specific time range. This is possible because
-  Stream IDs are [related to time](/topics/streams-intro).
-* Iteratating a stream incrementally, returning just
-  a few items at every iteration. However it is semantically much more
-  robust than the `SCAN` family of functions.
-* Fetching a single entry from a stream, providing the ID of the entry
-  to fetch two times: as start and end of the query interval.
+* 返回特定时间范围的项目。这是可能的，因为流的ID[与时间相关](/topics/streams-intro)。
+* 增量迭代流，每次迭代只返回几个项目。但它在语义上比`SCAN`函数族强大很多。
+* 从流中获取单个条目，提供要获取两次的条目的ID：作为查询间隔的开始和结束。
 
-The command also has a reciprocal command returning items in the
-reverse order, called `XREVRANGE`, which is otherwise identical.
+该命令还有一个倒序命令，以相反的顺序返回项目，叫做`XREVRANGE`，除了返回顺序相反以外，它们是完全相同的。
 
-## `-` and `+` special IDs
+## 特殊ID：`-` 和 `+`
 
-The `-` and `+` special IDs mean respectively the minimum ID possible
-and the maximum ID possible inside a stream, so the following command
-will just return every entry in the stream:
+特殊ID`-`和`+`分别表示流中可能的最小ID和最大ID，因此，以下命令将会返回流中的每一个条目：
 
 ```
 > XRANGE somestream - +
@@ -51,38 +41,23 @@ will just return every entry in the stream:
 ... other entries here ...
 ```
 
-The `-` ID is effectively just exactly as specifying `0-0`, while
-`+` is equivalent to `18446744073709551615-18446744073709551615`, however
-they are nicer to type.
+`-` ID实际上与指定`0-0`完全一样，而`+`则相当于`18446744073709551615-18446744073709551615`，但是它们更适合输入。
 
-## Incomplete IDs
+## 不完全ID
 
-Stream IDs are composed of two parts, a Unix millisecond time stamp and a
-sequence number for entries inserted in the same millisecond. It is possible
-to use `XRANGE` specifying just the first part of the ID, the millisecond time,
-like in the following example:
+流的ID由两部分组成，一个Unix毫秒时间戳和一个为同一毫秒插入的序列号。使用`XRANGE`仅指定ID的第一部分是可能的，即毫秒时间部分，如下面的例子所示：
 
 ```
 > XRANGE somestream 1526985054069 1526985055069
 ```
 
-In this case, `XRANGE` will auto-complete the start interval with `-0`
-and end interval with `-18446744073709551615`, in order to return all the
-entries that were generated between a given millisecond and the end of
-the other specified millisecond. This also means that repeating the same
-millisecond two times, we get all the entries within such millisecond,
-because the sequence number range will be from zero to the maximum.
+在这种情况中，`XRANGE`将会使用`-0`自动补全开始ID，以及使用`-18446744073709551615`自动补全结束ID，以便返回所有在两个毫秒值之间生成的条目。这同样意味着，重复两个相同的毫秒时间，我们将会得到在这一毫秒内产生的所有条目，因为序列号范围将从0到最大值。
 
-Used in this way `XRANGE` works as a range query command to obtain entries
-in a specified time. This is very handy in order to access the history
-of past events in a stream.
+以这种方式使用`XRANGE`用作范围查询命令以在指定时间内获取条目。这非常方便，以便访问流中过去事件的历史记录。
 
-## Returning a maximum number of entries
+## 返回最大条目数
 
-Using the **COUNT** option it is possible to reduce the number of entries
-reported. This is a very important feature even if it may look marginal,
-because it allows, for instance, to model operations such as *give me
-the entry greater or equal to the following*:
+使用**COUNT**选项可以减少报告的条目数。这是一个非常重要的特性，虽然它看起来很边缘，因为它允许，例如，模型操作，比如*给我大于或等于以下ID的条目*：
 
 ```
 > XRANGE somestream 1526985054069-0 + COUNT 1
@@ -95,15 +70,11 @@ the entry greater or equal to the following*:
       6) "839248"
 ```
 
-In the above case the entry `1526985054069-0` exists, otherwise the server
-would have sent us the next one. Using `COUNT` is also the base in order to
-use `XRANGE` as an iterator.
+在上面的例子中，条目`1526985054069-0`存在，否则服务器将发送给我们下一个条目。使用`COUNT`也是使用`XRANGE`作为迭代器的基础。
 
-## Iterating a stream
+## 迭代流
 
-In order to iterate a stream, we can proceed as follows. Let's assume that
-we want two elements per iteration. We start fetching the first two
-elements, which is trivial:
+为了迭代流，我们可以如下进行。让我们假设每次迭代我们需要两个元素。我们开始获取前两个元素，这是微不足道的：
 
 ```
 > XRANGE writers - + COUNT 2
@@ -119,12 +90,9 @@ elements, which is trivial:
       4) "Austen"
 ```
 
-Then instead of starting the iteration again from `-`, as the start
-of the range we use the entry ID of the *last* entry returned by the
-previous `XRANGE` call, adding the sequence part of the ID by one.
+然后，不是从`-`再次开始迭代，我们使用前一次`XRANGE`调用中返回的*最后的条目ID*作为范围的开始，将ID的序列部分加1。
 
-The ID of the last entry is `1526985685298-0`, so we just add 1 to the
-sequence to obtain `1526985685298-1`, and continue our iteration:
+最后一个条目的ID是`1526985685298-0`，所以我们只需要在序列中加1以获得`1526985685298-1`，并继续我们的迭代：
 
 ```
 > XRANGE writers 1526985685298-1 + COUNT 2
@@ -140,22 +108,13 @@ sequence to obtain `1526985685298-1`, and continue our iteration:
       4) "Christie"
 ```
 
-And so forth. Eventually this will allow to visit all the entries in the
-stream. Obviously, we can start the iteration from any ID, or even from
-a specific time, by providing a given incomplete start ID. Moreover, we
-can limit the iteration to a given ID or time, by providing an end
-ID or incomplete ID instead of `+`.
+依此类推，最终，这将允许访问流中的所有条目。很明显，我们可以从任意ID开始迭代，或者甚至从特定的时间开始，通过提供一个不完整的开始ID。此外，我们可以限制迭代到一个给定的ID或时间安，通过提供一个结束ID或不完整ID而不是`+`。
 
-The command `XREAD` is also able to iterate the stream.
-The command `XREVRANGE` can iterate the stream reverse, from higher IDs
-(or times) to lower IDs (or times).
+`XREAD`命令同样可以迭代流。`XREVRANGE`命令可以反向迭代流，从较高的ID（或时间）到较低的ID（或时间）。
 
-## Fetching single items
+## 获取单个项目
 
-If you look for an `XGET` command you'll be disappointed because `XRANGE`
-is effectively the way to go in order to fetch a single entry from a
-stream. All you have to do is to specify the ID two times in the arguments
-of XRANGE:
+如果你在查找一个`XGET`命令，你将会失望，因为`XRANGE`实际上就是从流中获取单个条目的方式。所有你需要做的，就是在XRANGE的参数中指定ID两次：
 
 ```
 > XRANGE mystream 1526984818136-0 1526984818136-0
@@ -168,19 +127,15 @@ of XRANGE:
       6) "7782813"
 ```
 
-## Additional information about streams
+## 有关流的其他信息
 
-For further information about Redis streams please check our
-[introduction to Redis Streams document](/topics/streams-intro).
+更多有关Redis流的信息，请参阅我们的[Redis Streams介绍文档](/topics/streams-intro)。
 
 ## 返回值
 
 [array-reply](/topics/protocol.html#array-reply)：
 
-The command returns the entries with IDs matching the specified range.
-The returned entries are complete, that means that the ID and all the fields
-they are composed are returned. Moreover, the entries are returned with
-their fields and values in the exact same order as `XADD` added them.
+该命令返回ID与指定范围匹配的条目。返回的条目是完整的，这意味着ID和所有组成条目的字段都将返回。此外，返回的条目及其字段和值的顺序与使用`XADD`添加它们的顺序完全一致。
 
 ## 例子
 

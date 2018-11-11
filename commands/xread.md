@@ -8,25 +8,19 @@ commandsType: streams
 discuzTid: 13924
 ---
 
-Read data from one or multiple streams, only returning entries with an
-ID greater than the last received ID reported by the caller.
-This command has an option to block if items are not available, in a similar
-fashion to `BRPOP` or `BZPOPMIN` and others.
+Read data from one or multiple streams, only returning entries with an ID greater than the last received ID reported by the caller. This command has an option to block if items are not available, in a similar fashion to `BRPOP` or `BZPOPMIN` and others.
+从一个或者多个流中读取数据，仅返回ID大于调用者报告的最后接收ID的条目。此命令有一个阻塞选项，用于等待可用的项目，类似于`BRPOP`或者`BZPOPMIN`等等。
 
 Please note that before reading this page, if you are new to streams,
 we recommend to read [our introduction to Redis Streams](/topics/streams-intro).
+请注意，在阅读本页之前，如果你不了解Stream，我们推荐先阅读[我们的Redis Streams介绍](/topics/streams-intro)。
 
-## Non-blocking usage
+## 非阻塞用法
 
-If the **BLOCK** option is not used, the command is synchronous, and can
-be considered somewhat related to `XRANGE`: it will return a range of items
-inside streams, however it has two fundamental differences compared to `XRANGE`
-even if we just consider the synchronous usage:
+If the **BLOCK** option is not used, the command is synchronous, and can be considered somewhat related to `XRANGE`: it will return a range of items inside streams, however it has two fundamental differences compared to `XRANGE` even if we just consider the synchronous usage:
+如果未提供**BLOCK**选项，此命令是同步的，并可以认为与`XRANGE`有些相关：它将会返回流中的一系列项目，但与`XRANGE`相比它有两个基本差异（如果我们只考虑同步使用）：
 
-* This command can be called with multiple streams if we want to read at
-  the same time from a number of keys. This is a key feature of `XREAD` because
-  especially when blocking with **BLOCK**, to be able to listen with a single
-  connection to multiple keys is a vital feature.
+* This command can be called with multiple streams if we want to read at the same time from a number of keys. This is a key feature of `XREAD` because especially when blocking with **BLOCK**, to be able to listen with a single connection to multiple keys is a vital feature.
 * While `XRANGE` returns items in a range of IDs, `XREAD` is more suited in
   order to consume the stream starting from the first entry which is greater
   than any other entry we saw so far. So what we pass to `XREAD` is, for each

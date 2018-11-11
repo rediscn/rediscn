@@ -61,11 +61,6 @@ discuzTid: 13926
 [array-reply](/topics/protocol.html#array-reply)：
 
 
-The command returns the entries with IDs matching the specified range,
-from the higher ID to the lower ID matching.
-The returned entries are complete, that means that the ID and all the fields
-they are composed are returned. Moreover the entries are returned with
-their fields and values in the exact same order as `XADD` added them.
 此命令返回ID在指定区间的条目，从较高的ID到较低的ID中匹配。
 返回的条目是完整的，这意味着将返回ID及其组成的所有字段。
 此外，返回的条目及其字段和值的顺序与以使用`XADD`添加的完全相同。
