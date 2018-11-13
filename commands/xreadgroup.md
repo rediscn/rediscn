@@ -8,73 +8,55 @@ commandsType: streams
 discuzTid: 13925
 ---
 
-The `XREADGROUP` command is a special version of the `XREAD` command
-with support for consumer groups. Probably you will have to understand the
-`XREAD` command before reading this page will makes sense.
+`XREADGROUP`命令是`XREAD`命令的特殊版本，支持消费者组。在阅读本页之前，你可能必须先理解`XREAD`命令才有意义。
 
-Moreover, if you are new to streams, we recommend to read our
-[introduction to Redis Streams](/topics/streams-intro).
-Make sure to understand the concept of consumer group in the introduction
-so that following how this command works will be simpler.
+此外，如果你是Stream新手，我们建议阅读我们的[Redis Streams简介](/topics/streams-intro)。
+确保在介绍中理解消费者组的概念，以便遵循此命令的工作原理将更加简单。
 
-## Consumer groups in 30 seconds
+## 快速了解消费者组
 
-The difference between this command and the vanilla `XREAD` is that this
-one supports consumer groups.
+此命令与`XREAD`的区别是它支持消费者组。
 
-Without consumer groups, just using `XREAD`, all the clients are served with all the entries arriving in a stream. Instead using consumer groups with `XREADGROUP`, it is possible to create groups of clients that consume different parts of the messages arriving in a given stream. If, for instance, the stream gets the new entires A, B, and C and there are two consumers reading via a consumer group, one client will get, for instance, the messages A and C, and the other the message B, and so forth.
+如果没有消费者组，仅使用`XREAD`，所有客户端都将获得所有到达流的条目。相反，如果使用带有`XREADGROUP`的消费者组，则可以创建不同的客户端组来消费到达给定流的不同的部分。例如，如果流获得新的条目A，B和C，并且有两个消费者通过消费者组读取流，其中一个客户端将会得到例如，消息A和C，另外一个客户端得到消息B，等等，以此类推。
 
-Within a consumer group, a given consumer (that is, just a client consuming messages from the stream), has to identify with an unique *consumer name*. Which is just a string.
+在消费者组中，给定的消费者（即从流中消费消息的客户端）必须使用唯一的*消费者名称*进行标识。名称只是一个字符串。
 
-One of the guarantees of consumer groups is that a given consumer can only see the history of messages that were delivered to it, so a message has just a single owner. However there is a special feature called *message claiming* that allows other consumers to claim messages in case there is a non recoverable failure of some consumer. In order to implement such semantics, consumer groups require explicit acknowledged of the messages successfully processed by the consumer, via the `XACK` command. This is needed because the stream will track, for each consumer group, who is processing what message.
+消费者组的保证之一是，给定的消费者只能看到发送给它的历史消息，因此每条消息只有一个所有者。然而，还有一个特殊的特性叫做*消息认领*，其允许其他消费者在某些消费者无法恢复时认领消息。为了实现这样的语义，消费者组要求消费者使用`XACK`命令显式确认已成功处理的消息。这是必要的，因为流将为每个消费者组跟踪哪个消费者正在处理什么消息。
 
-This is how to understand if you want to use a consumer group or not:
+这是如何理解您是否要使用消费者组：
 
-1. If you have a stream and multiple clients, and you want all the clients to get all the messages, you do not need a consumer group.
-2. If you have a stream and multiple clients, and you want the stream to be *partitioned* or *shareded* across your clients, so that each client will get a sub set of the messages arriving in a stream, you need a consumer group.
+1. 如果你有一个流和多个客户端，并且你希望所有的客户端都获取到完整的信息，那么你不需要使用消费者组。
+2. 如果你有一个流和多个客户端，并且你希望在你的客户端上对流进行*分区*或*共享*，以便每个客户端都能获得一个到达流的消息的子集，那么你需要使用消费者组。
 
-## Differences between XREAD and XREADGROUP
+## XREAD和XREADGROUP之间的差异
 
-From the point of view of the syntax, the commands are almost the same,
-however `XREADGROUP` *requires* a special and mandatory option:
+从语法的角度来看，这两个命令几乎是相同的，但是`XREADGROUP`*需要*一个特殊和强制的选项：
 
     GROUP <group-name> <consumer-name>
 
-The group name is just the name of a consumer group associated to the stream.
-The group is created using the `XGROUP` command. The consumer name is the
-string that is used by the client to identify itself inside the group.
-The consumer is auto created inside the consumer group the first time it
-is saw. Different clients should select a different consumer name.
+组名只是关联到流的消费者组的名称。该组是使用`XGROUP`命令创建的。消费者名称是客户端用于在消费者组内标识自己的字符串。消费者会在第一次出现在消费者组内时被自动创建。不同的消费者应该选择不同的消费者名称。
 
-When you read with `XREADGROUP`, the server will *remember* that a given
-message was delivered to you: the message will be stored inside the
-consumer group in what is called a Pending Entries List (PEL), that is
-a list of message IDs delivered but not yet acknowledged.
+当你使用`XREADGROUP`读取时，服务器将会*记住*某个给定的消息已经传递给你：消息会被存储在消费者组内的待处理条目列表（PEL）中，即已送达但尚未确认的消息ID列表。
 
-The client will have to acknowledge the message processing using `XACK`
-in order for the pending entry to be removed from the PEL. The PEL
-can be inspected using the `XPENDING` command.
+客户端必须使用`XACK`确认消息处理，以便从待处理条目列表中删除待处理条目。可以使用`XPENDING`命令检查待处理条目列表。
 
-The ID to specify in the **STREAMS** option when using `XREADGROUP` can
-be one of the following two:
+使用`XREADGROUP`时在**STREAMS**选项中指定的ID可以是以下两种之一：
 
-* The special `>` ID, which means that the consumer want to receive only messages that were *never delivered to any other consumer*. It just means, give me new messages.
-* Any other ID, that is, 0 or any other valid ID or incomplete ID (just the millisecond time part), will have the effect of returning entries that are pending for the consumer sending the command. So basically if the ID is not `>`, then the command will just let the client access its pending entries: delivered to it, but not yet acknowledged.
+* 特殊ID`>`，意味着消费者希望只接收*从未发送给任何其他消费者*的消息。这意思是说，请给我新的消息。
+* 任意其他的ID，即0或任意其他有效ID或不完整的ID（只有毫秒时间部分），将具有返回发送命令的消费者的待处理条目的效果。所以，基本上如果ID不是`>`，命令将让客户端访问它的待处理条目（已发送给它，但尚未确认的条目）。
 
-Like `XREAD` the `XREADGROUP` command can be used in a blocking way. There
-are no differences in this regard.
+就像`XREAD`，`XREADGROUP`命令也可以以阻塞的方式使用。在这方面没有区别。
 
-## What happens when a message is delivered to a consumer?
+## 当消息被传递给消费者时，会发生什么？
 
-Two things:
+两件事：
 
-1. If the message was never delivered to anyone, that is, if we are talking about a new message, then a PEL (Pending Entry List) is created.
-2. If instead the message was already delivered to this consumer, and it is just re-fetching the same message again, then the *last delivery counter* is updated to the current time, and the *number of deliveries* is incremented by one. You can access those message properties using the `XPENDING` command.
+1. 如果消息从未被发送给其他消费者，也即，如果我们正在谈论新消息，则创建待处理条目列表（PEL）。
+2. 相反，如果该消息已经发送给该消费者，并且它只是再次重新获取相同的消息，那么*最后送达时间*会被更新为当前时间，并且*送达次数*会加1。你可以使用`XPENDING`命令访问这些消息属性。
 
-## Usage example
+## 用法示例
 
-Normally you use the command like that in order to get new messages and
-process them. In pseudo-code:
+通常，你使用这样的命令来获取新消息并处理它们。在伪代码中：
 
 ```
 WHILE true
@@ -95,15 +77,10 @@ WHILE true
 END
 ```
 
-In this way the example consumer code will fetch only new messages, process
-them, and acknowledge them via `XACK`. However the example code above is
-not complete, because it does not handle recovering after a crash. What
-will happen if we crash in the middle of processing messages, is that our
-messages will remain in the pending entries list, so we can access our
-history by giving `XREADGROUP` initially an ID of 0, and performing the same
-loop. Once providing and ID of 0 the reply is an empty set of messages, we
-know that we processed and acknowledged all the pending messages: we
-can start to use `>` as ID, in order to get the new messages and rejoin the
-consumers that are processing new things.
+通过这种方式，例子中的消费者代码将会只获取新消息，处理它们，以及通过`XACK`确认它们。
+但是以上案例的代码是不完整的，因为它没有处理崩溃后的恢复事宜。如果我们在处理消息的过程中崩溃了，
+则我们的消息将继续保留在待处理条目列表中，因此我们可以通过给`XREADGROUP`初始ID为0并执行相同的循环来访问我们的消息历史。
+一旦提供的ID为0并且回复是一组空的消息，我们就知道我们已经处理并确认完了所有的待处理消息：
+我们可以开始使用`>`作为ID，以便获取新消息并重新加入正在处理新消息的消费者。
 
-To see how the command actually replies, please check the `XREAD` command page.
+要查看命令实际回复的方式，请参阅`XREAD`命令页面。
