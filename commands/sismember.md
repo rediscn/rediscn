@@ -17,7 +17,7 @@ discuzTid: 1055
 - 如果member元素是集合key的成员，则返回1
 - 如果member元素不是key的成员，或者集合key不存在，则返回0
 
-##举例
+## 举例
 	
 	redis> SADD myset "one"
 	(integer) 1

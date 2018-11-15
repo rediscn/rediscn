@@ -8,33 +8,13 @@ commandsType: streams
 discuzTid: 13922
 ---
 
-Fetching data from a stream via a consumer group, and not acknowledging
-such data, has the effect of creating *pending entries*. This is
-well explained in the `XREADGROUP` command, and even better in our
-[introduction to Redis Streams](/topics/streams-intro). The `XACK` command
-will immediately remove the pending entry from the Pending Entry List (PEL)
-since once a message is successfully processed, there is no longer need
-for the consumer group to track it and to remember the current owner
-of the message.
+通过消费者组从流中获取数据，而不是确认这些数据，具有创建*待处理条目*的效果。这在`XREADGROUP`命令中已有详尽的说明，在我们的[Redis Streams介绍](/topics/streams-intro)中更好。`XACK`命令会立即从待处理条目列表（PEL）中移除待处理条目，因为一旦消息被成功处理，消费者组就不再需要跟踪它并记住消息的当前所有者。
 
-The `XPENDING` command is the interface to inspect the list of pending
-messages, and is as thus a very important command in order to observe
-and understand what is happening with a streams consumer groups: what
-clients are active, what messages are pending to be consumed, or to see
-if there are idle messages. Moreover this command, together with `XCLAIM`
-is used in order to implement recovering of consumers that are failing
-for a long time, and as a result certain messages are not processed: a
-different consumer can claim the message and continue. This is better
-explained in the [streams intro](/topics/streams-intro) and in the
-`XCLAIM` command page, and is not covered here.
+`XPENDING`命令是检查待处理消息列表的接口，因此它是一个非常重要的命令，用于观察和了解消费者组正在发生的事情：哪些客户端是活跃的，哪些消息在等待消费，或者查看是否有空闲的消息。此外，该命令与`XCLAIM`一起使用，用于实现长时间故障的消费者的恢复，因此不处理某些消息：不同的消费者可以认领该消息并继续处理。这在[Redis Streams介绍](/topics/streams-intro)和`XCLAIM`命令页面中有更好的解释，这里不再介绍。
 
-## Summary form of XPENDING
+## XPENDING命令格式总结
 
-When `XPENDING` is called with just a key name and a consumer group
-name, it just outputs a summary about the pending messages in a given
-consumer group. In the following example, we create a consumed group and
-immediatelycreate a pending message by reading from the group with
-`XREADGROUP`.
+当只使用键名和消费者组名调用`XPENDING`时，其只输出有关给定消费组的待处理消息的概要。在以下例子中，我们创建一个使用过的消费者组，并通过使用`XREADGROUP`从组中读取来立即创建待处理消息。
 
 ```
 > XGROUP CREATE mystream group55 0-0
@@ -51,10 +31,7 @@ OK
             6) "7782813"
 ```
 
-We expect the pending entries list for the consumer group `group55` to
-have a message right now: consumer named `consumer-123` fetched the
-message without acknowledging its processing. The simples `XPENDING`
-form will give us this information:
+我们希望消费者组`group55`的待处理条目列表立即拥有一条消息：消费者`consumer-123`获取了一条消息，且没有确认消息。简单的`XPENDING`形式会给我们提供以下信息：
 
 ```
 > XPENDING mystream group55
@@ -65,16 +42,9 @@ form will give us this information:
       2) "1"
 ```
 
-In this form, the command outputs the total number of pending messages for this
-consumer group, which is one, followed by the smallest and greatest ID among the
-pending messages, and then list every consumer in the consumer group with
-at least one pending message, and the number of pending messages it has.
+在这种形式中，此命令输出该消费者组的待处理消息的数量（即1），然后是待处理消息的最小和最大ID，然后列出消费者组中每一个至少一条待处理消息的消费者，以及他的待处理消息数量。
 
-This is a good overview, but sometimes we are interested in the details.
-In order to see all the pending messages with more associated information
-we need to also pass a range of IDs, in a similar way we do it with
-`XRANGE`, and a non optional *count* argument, to limit the number
-of messages returned per call:
+这是一个很好的概述，但有时候我们对细节感兴趣。为了查看具有更多相关信息的所有待处理消息，我们还需要传递一系列ID，与我们使用`XRANGE`时类似，以及一个非可选的*count*参数，限制每一次调用返回的消息数量：
 
 ```
 > XPENDING mystream group55 - + 10
@@ -84,40 +54,26 @@ of messages returned per call:
    4) (integer) 1
 ```
 
-In the extended form we no longer see the summary information, instead there
-are detailed information for each message in the pending entries list. For
-each message four attributes are returned:
+在扩展的形式中，我们不再看到概要信息，而是在待处理消息列表中有每一条消息的详细信息。对于每条消息，返回四个属性：
 
-1. The ID of the message.
-2. The name of the consumer that fetched the message and has still to acknowledge it. We call it the current *owner* of the message.
-3. The number of milliseconds that elapsed since the last time this message was delivered to this consumer.
-4. The number of times this message was delivered.
+1. 消息的ID。
+2. 获取并仍然要确认消息的消费者名称，我们称之为消息的当前*所有者*。
+3. 自上次将此消息传递给该消费者以来，经过的毫秒数。
+4. 该消息被传递的次数。
 
-The deliveries counter, that is the fourth element in the array, is incremented
-when some other consumer *claims* the message with `XCLAIM`, or when the
-message is delivered again via `XREADGROUP`, when accessing the history
-of a consumer in a consumer group (see the `XREADGROUP` page for more info).
+交付计数器，即数组中的第四个元素，当其他消费者*使用`XCLAIM`声明*消息时，或当通过`XREADGROUP`再次传递消息时，当访问消费者组中的消费者历史时（更多信息请参阅`XREADGROUP`页面）递增。
 
-Finally it is possible to pass an additional argument to the command, in order
-to see the messages having a specific owner:
+最后，还可以向该命令传递一个额外的参数，以便查看具有特定所有者的消息：
 
 ```
 > XPENDING mystream group55 - + 10 consumer-123
 ```
 
-But in the above case the output would be the same, since we have pending
-messages only for a single consumer. However what is important to keep in
-mind is that this operation, filtering by a specific consumer, is not
-inefficient even when there are many pending messages from many consumers:
-we have a pending entries list data structure both globally, and for
-every consumer, so we can very efficiently show just messages pending for
-a single consumer.
+但在上面的例子中，输出将是相同的，因为我们只有一个消费者有待处理消息。然而，我们需要记住重要的一点是，即使来自许多消费者的许多待处理消息，由特定消费者过滤的这种操作效率也不高：我们在全局和每个消费者都有待处理条目数据结构，所以我们可以非常高效地显示单个消费者的待处理消息。
 
 
 ## 返回值
 
 [array-reply](/topics/protocol.html#array-reply)：
 
-The command returns data in different format depending on the way it is
-called, as previously explained in this page. However the reply is always
-an array of items.
+该命令以不同的格式返回数据，具体取决于它的调用方式，如本文前面所述。但是，返回值始终是一组项目。

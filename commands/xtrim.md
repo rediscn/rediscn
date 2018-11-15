@@ -8,37 +8,27 @@ commandsType: streams
 discuzTid: 13927
 ---
 
-`XTRIM` trims the stream to a given number of items, evicting older items
-(items with lower IDs) if needed. The command is conceived to accept multiple
-trimming strategies, however currently only a single one is implemented,
-which is `MAXLEN`, and works exactly as the `MAXLEN` option in `XADD`.
+`XTRIM`将流裁剪为指定数量的项目，如有需要，将驱逐旧的项目（ID较小的项目）。此命令被设想为接受多种修整策略，但目前只实现了一种，即`MAXLEN`，并且与`XADD`中的`MAXLEN`选项完全相同。
 
-For example the following command will trim the stream to exactly
-the latest 1000 items:
+例如，下面的命令会将流裁剪到最新的1000个项目：
 
 ```
 XTRIM mystream MAXLEN 1000
 ```
 
-It is possible to give the command in the following special form in
-order to make it more efficient:
+可以使用以下特殊形式提供命令，以提高其效率：
 
 ```
 XTRIM mystream MAXLEN ~ 1000
 ```
 
-The `~` argument between the **MAXLEN** option and the actual count means that
-the user is not really requesting that the stream length is exactly 1000 items,
-but instead it could be a few tens of entries more, but never less than 1000
-items. When this option modifier is used, the trimming is performed only when
-Redis is able to remove a whole macro node. This makes it much more efficient,
-and it is usually what you want.
+在选项**MAXLEN**和实际计数中间的参数`~`的意思是，用户不是真的需要精确的1000个项目。它可以多几十个条目，但决不能少于1000个。通过使用这个参数，仅当我们移除整个节点的时候才执行修整。这使得命令更高效，而且这也是我们通常想要的。
 
 ## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply)：
 
-The command returns the number of entries deleted from the stream.
+该命令返回从流中删除的条目数。
 
 	redis> XADD mystream * field1 A field2 B field3 C field4 D
 	"1539863719429-0"

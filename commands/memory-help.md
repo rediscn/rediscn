@@ -6,10 +6,9 @@ disqusIdentifier: command_memory-help
 disqusUrl: http://redis.cn/commands/memory-help.html
 commandsType: server
 discuzTid: 13906
+tranAuthor: gqhao
 ---
 
-The `MEMORY HELP` command returns a helpful text describing the different
-subcommands.
 命令`MEMORY HELP`返回不同子命令的说明
 
 ## 返回值

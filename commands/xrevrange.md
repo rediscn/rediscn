@@ -8,34 +8,21 @@ commandsType: streams
 discuzTid: 13926
 ---
 
-This command is exactly like `XRANGE`, but with the notable difference of
-returning the entries in reverse order, and also taking the start-end
-range in reverse order: in `XREVRANGE` you need to state the *end* ID
-and later the *start* ID, and the command will produce all the element
-between (or exactly like) the two IDs, starting from the *end* side.
+此命令与`XRANGE`完全相同，但显著的区别是以相反的顺序返回条目，并以相反的顺序获取开始-结束参数：在`XREVRANGE`中，你需要先指定*结束ID*，再指定*开始ID*，该命令就会从*结束ID*侧开始生成两个ID之间（或完全相同）的所有元素。
 
-So for instance, to get all the elements from the higher ID to the lower
-ID one could use:
+因此，例如，要获得从较高ID到较低ID的所有元素，可以使用：
 
     XREVRANGE + -
 
-Similarly to get just the last element added into the stream it is
-enough to send:
+类似于只获取添加到流中的最后一个元素，可以使用：
 
     XREVRANGE + - COUNT 1
 
-## Iterating with XREVRANGE
+## 使用XREVRANGE迭代
 
-Like `XRANGE` this command can be used in order to iterate the whole
-stream content, however note that in this case, the next command calls
-should use the ID of the last entry, with the sequence number decremneted
-by one. However if the sequence number is already 0, the time part of the
-ID should be decremented by 1, and the sequence part should be set to
-the maxium possible sequence number, that is, 18446744073709551615, or
-could be omitted at all, and the command will automatically assume it to
-be such a number (see `XRANGE` for more info about incomplete IDs).
+与`XRANGE`一样，此命令可以用于迭代整个流的内容，但请注意，在这种情况中，下一个命令调用应该使用最后一个条目的ID，序列号减1。但如果序列号已经是0，则ID的时间部分应该减1，且序列号部分应该设置成最大可能的序列号，即18446744073709551615，或者可以完全省略，命令将自动假设它是这样一个数字（有关不完整ID的更多信息，请参阅`XRANGE`）。
 
-Example:
+例子：
 
 ```
 > XREVRANGE writers + - COUNT 2
@@ -51,9 +38,7 @@ Example:
       4) "Christie"
 ```
 
-The last ID returned is `1526985712947-0`, since the sequence number is
-already zero, the next ID I'll use instead of the `+` special ID will
-be `1526985712946-18446744073709551615`, or just `18446744073709551615`:
+返回的最后ID是`1526985712947-0`，因为序列号已经是0，下一个ID我将不使用特殊ID`+`，而是`1526985712946-18446744073709551615`，或者只是`18446744073709551615`：
 
 ```
 > XREVRANGE writers 1526985712946-18446744073709551615 - COUNT 2
@@ -69,19 +54,16 @@ be `1526985712946-18446744073709551615`, or just `18446744073709551615`:
       4) "Austen"
 ```
 
-And so for until the iteration is complete and no result is returned.
-See the `XRANGE` page about iterating for more information.
+所以直到迭代完成并且没有返回结果。更多有关迭代的信息，请参阅`XRANGE`页面。
 
 ## 返回值
 
 [array-reply](/topics/protocol.html#array-reply)：
 
 
-The command returns the entries with IDs matching the specified range,
-from the higher ID to the lower ID matching.
-The returned entries are complete, that means that the ID and all the fields
-they are composed are returned. Moreover the entries are returned with
-their fields and values in the exact same order as `XADD` added them.
+此命令返回ID在指定区间的条目，从较高的ID到较低的ID中匹配。
+返回的条目是完整的，这意味着将返回ID及其组成的所有字段。
+此外，返回的条目及其字段和值的顺序与以使用`XADD`添加的完全相同。
 
 ## 例子
 

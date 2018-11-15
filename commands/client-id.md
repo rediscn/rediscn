@@ -6,24 +6,17 @@ disqusIdentifier: command_id
 disqusUrl: http://redis.cn/commands/client-id.html
 commandsType: server
 discuzTid: 13901
+tranAuthor: gqhao
 ---
 
-The command just returns the ID of the current connection. Every connection
-ID has certain guarantees:
-
-1. It is never repeated, so if `CLIENT ID` returns the same number, the caller can be sure that the underlying client did not disconnect and reconnect the connection, but it is still the same connection.
-2. The ID is monotonically incremental. If the ID of a connection is greater than the ID of another connection, it is guaranteed that the second connection was established with the server at a later time.
-
-该命令返回当前连接的ID，每个ID符合如下约束
+该命令返回当前连接的ID，每个ID符合如下约束：
 1. 永不重复。当调用命令`CLIENT ID`返回相同的值时，调用者可以确认原连接未被断开，只是被重用 ，因此仍可以认为是同一连接
 2. ID值单调递增。若某一连接的ID值比其他连接的ID值大，可以确认该连接是较新创建的
 
-This command is especially useful together with `CLIENT UNBLOCK` which was
-introduced also in Redis 5 together with `CLIETN ID`. Check the `CLIENT UNBLOCK` command page for a pattern involving the two commands.
-该命令和同为Redis 5 新增的命令 `CLIENT UNBLOCK`一起使用，会有更好的效果。两条命令的使用格式参照`CLIENT UNBLOCK`命令说明页。
+该命令和同为Redis 5 新增的命令 `CLIENT UNBLOCK`一起使用，会有更好的效果。两条命令的使用格式参照`CLIENT UNBLOCK`说明页。
 
 ## 例子
 
 	redis> CLIENT ID
-	ERR Unknown or disabled command 'CLIENT'
+	(integer) 3
 	redis> 

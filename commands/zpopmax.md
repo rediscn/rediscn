@@ -8,17 +8,14 @@ commandsType: sortedsets
 discuzTid: 13928
 ---
 
-Removes and returns up to `count` members with the highest scores in the sorted
-set stored at `key`.
+删除并返回有序集合`key`中的最多`count`个具有最高得分的成员。
 
-When left unspecified, the default value for `count` is 1. Specifying a `count`
-value that is higher than the sorted set's cardinality will not produce an
-error. When returning multiple elements, the one with the highest score will
-be the first, followed by the elements with lower scores.
+如未指定，`count`的默认值为1。指定一个大于有序集合的基数的`count`不会产生错误。
+当返回多个元素时候，得分最高的元素将是第一个元素，然后是分数较低的元素。
 
 ## 返回值
 
-[array-reply](/topics/protocol.html#array-reply): list of popped elements and scores.
+[array-reply](/topics/protocol.html#array-reply): 弹出的元素和分数列表。
 
 ## 例子
 

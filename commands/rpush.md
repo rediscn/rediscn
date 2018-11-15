@@ -16,7 +16,7 @@ discuzTid: 1034
 
 [integer-reply](/topics/protocol.html#integer-reply): 在 push 操作后的列表长度。
 
-##历史
+## 历史
 
 >= 2.4: 接受多个 value 参数。 在老于 2.4 的 Redis 版本中，一条命令只能 push 单一个值。
 

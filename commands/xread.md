@@ -8,36 +8,21 @@ commandsType: streams
 discuzTid: 13924
 ---
 
-Read data from one or multiple streams, only returning entries with an
-ID greater than the last received ID reported by the caller.
-This command has an option to block if items are not available, in a similar
-fashion to `BRPOP` or `BZPOPMIN` and others.
+从一个或者多个流中读取数据，仅返回ID大于调用者报告的最后接收ID的条目。此命令有一个阻塞选项，用于等待可用的项目，类似于`BRPOP`或者`BZPOPMIN`等等。
 
-Please note that before reading this page, if you are new to streams,
-we recommend to read [our introduction to Redis Streams](/topics/streams-intro).
+请注意，在阅读本页之前，如果你不了解Stream，我们推荐先阅读[我们的Redis Streams介绍](/topics/streams-intro)。
 
-## Non-blocking usage
+## 非阻塞使用
 
-If the **BLOCK** option is not used, the command is synchronous, and can
-be considered somewhat related to `XRANGE`: it will return a range of items
-inside streams, however it has two fundamental differences compared to `XRANGE`
-even if we just consider the synchronous usage:
+如果未提供**BLOCK**选项，此命令是同步的，并可以认为与`XRANGE`有些相关：它将会返回流中的一系列项目，但与`XRANGE`相比它有两个基本差异（如果我们只考虑同步使用）：
 
-* This command can be called with multiple streams if we want to read at
-  the same time from a number of keys. This is a key feature of `XREAD` because
-  especially when blocking with **BLOCK**, to be able to listen with a single
-  connection to multiple keys is a vital feature.
-* While `XRANGE` returns items in a range of IDs, `XREAD` is more suited in
-  order to consume the stream starting from the first entry which is greater
-  than any other entry we saw so far. So what we pass to `XREAD` is, for each
-  stream, the ID of the last element that we received from that stream.
+* 如果我们想要从多个键同时读取，则可以使用多个流调用此命令。这是`XREAD`的一个关键特性，因为特别是在使用**BLOCK**进行阻塞时，能够通过单个连接监听多个键是一个至关重要的特性。
+* `XRANGE`返回一组ID中的项目，`XREAD`更适合用于从第一个条目（比我们到目前为止看到的任何其他条目都要大）开始使用流。因此，我们传递给`XREAD`的是，对于每个流，我们从该流接收的最后一个条目的ID。
 
-For example, if I have two streams `mystream` and `writers`, and I want to
-read data from both the streams starting from the first element they contain,
-I could call `XREAD` like in the following example.
+例如，如果我有两个流`mystream`和`writers`，并且我希望同时从这两个流中读取数据（从它们的第一个元素开始），
+我可以像下面这样调用`XREAD`：
 
-Note: we use the **COUNT** option in the example, so that for each stream
-the call will return at maximum two elements per stream.
+请注意：我们在例子中使用了**COUNT**选项，因此对于每一个流，调用将返回每个流最多两个元素。
 
 ```
 > XREAD COUNT 2 STREAMS mystream writers 0-0 0-0
@@ -69,20 +54,15 @@ the call will return at maximum two elements per stream.
             4) "Austen"
 ```
 
-The **STREAMS** option is mandatory and MUST be the final option because
-such option gets a variable length of argument in the following format:
+**STREAMS**选项是强制的，并且必须是最后一个选项，因为此选项以下列格式获取可变长度的参数：
 
     STREAMS key_1 key_2 key_3 ... key_N ID_1 ID_2 ID_3 ... ID_N
 
-So we start with a list of keys, and later continue with all the associated
-IDs, representing *the last ID we received for that stream*, so that the
-call will serve us only greater IDs from the same stream.
+所以我们以一组流的key开始，并在后面跟着所有关联的ID，表示*我们从该流中获取的最后ID*，以便调用仅为我们提供同一流中具有更大ID的条目。
 
-For instance in the above example, the last items that we received
-for the stream `mystream` has ID `1526999352406-0`, while for the
-stream `writers` has the ID `1526985685298-0`.
+例如，在上面的例子中，我们从流`mystream`中接收的最后项目的ID是`1526999352406-0`，而对于流`writers`，我们接收的最后项目的ID是`1526985685298-0`。
 
-To continue iterating the two streams I'll call:
+要继续迭代这两个流，我将调用：
 
 ```
 > XREAD COUNT 2 STREAMS mystream writers 1526999352406-0 1526985685298-0
@@ -107,120 +87,73 @@ To continue iterating the two streams I'll call:
             4) "Christie"
 ```
 
-And so forth. Eventually, the call will not return any item, but just an
-empty array, then we know that there is nothing more to fetch from our
-stream (and we would have to retry the operation, hence this command
-also supports a blocking mode).
+以此类推，最终，调用不再返回任何项目，只返回一个空数组，然后我们就知道我们的流中没有更多数据可以获取了（我们必须重试该操作，因此该命令也支持阻塞模式）。
 
-## Incomplete IDs
+## 不完全ID
 
-To use incomplete IDs is valid, like it is valid for `XRANGE`. However
-here the sequence part of the ID, if missing, is always interpreted as
-zero, so the command:
+使用不完整的ID是有效的，就像它对`XRANGE`一样有效。但是这里ID的序列号部分，如果缺少，将总是被解释为0，所以命令：
 
 ```
 > XREAD COUNT 2 STREAMS mystream writers 0 0
 ```
 
-is exactly equivalent to
+完全等同于
 
 ```
 > XREAD COUNT 2 STREAMS mystream writers 0-0 0-0
 ```
 
-## Blocking for data
+## 阻塞数据
 
-In its synchronous form, the command can get new data as long as there
-are more items available. However, at some point, we'll have to wait for
-producers of data to use `XADD` to push new entries inside the streams
-we are consuming. In order to avoid polling at a fixed or adaptive interval
-the command is able to block if it could not return any data, according
-to the specified streams and IDs, and automatically unblock once one of
-the requested keys accept data.
+在同步形式中，只要有更多可用项，该命令就可以获取新数据。但是，有些时候，我们不得不等待数据生产者使用`XADD`向我们消费的流中推送新条目。为了避免使用固定或自适应间隔获取数据，如果命令根据指定的流和ID不能返回任何数据，则该命令能够阻塞，并且一旦请求的key之一接收了数据，就会自动解除阻塞。
 
-It is important to understand that this command is *fans out* to all the
-clients that are waiting for the same range of IDs, so every consumer will
-get a copy of the data, unlike to what happens when blocking list pop
-operations are used.
+重要的是需要理解这个命令是*扇形分发*到所有正在等待相同ID范围的客户端，因此每个消费者都将得到一份数据副本，这与使用阻塞列表pop操作时发生的情况不同。
 
-In order to block, the **BLOCK** option is used, together with the number
-of milliseconds we want to block before timing out. Normally Redis blocking
-commands take timeouts in seconds, however this command takes a millisecond
-timeout, even if normally the server will have a timeout resolution near
-to 0.1 seconds. This time it is possible to block for a shorter time in
-certain use cases, and if the server internals will improve over time, it is
-possible that the resolution of timeouts will improve.
+为了阻塞，使用**BLOCK**选项，以及我们希望在超时前阻塞的毫秒数。通常Redis阻塞命令的超时时间单位是秒，但此命令拥有一个毫秒超时时间，虽然通常服务器的超时时间精度大概在0.1秒左右。这可以在某些用例中阻塞更短的时间，并且如果服务器内部结构随着时间的推移而改善，它的超时精度可能也会有提升。
 
-When the **BLOCK** command is passed, but there is data to return at
-least in one of the streams passed, the command is executed synchronously
-*exactly like if the BLOCK option would be missing*.
+当传递了**BLOCK**选项，但是在传递的流中没有任何流有数据返回，那么该命令是同步执行的，*就像没有指定BLOCK选项一样*。
 
-This is an example of blocking invocation, where the command later returns
-a null reply because the timeout has elapsed without new data arriving:
+这是阻塞调用的例子，其中命令稍后将返回空回复（`nil`），因为超时时间已到但没有新数据到达：
 
 ```
 > XREAD BLOCK 1000 STREAMS mystream 1526999626221-0
 (nil)
 ```
 
-## The special `$` ID.
+## 特殊的ID`$`
 
-When blocking sometimes we want to receive just entries that are added
-to the stream via `XADD` starting from the moment we block. In such a case
-we are not interested in the history of already added entries. For
-this use case, we would have to check the stream top element ID, and use
-such ID in the `XREAD` command line. This is not clean and requires to
-call other commands, so instead it is possible to use the special `$`
-ID to signal the stream that we want only the new things.
+有时阻塞我们只希望接收从我们阻塞的那一刻开始通过`XADD`添加到流的条目。在这种情况下，我们对已经添加条目的历史不感兴趣。对于这个用例，我们不得不检查流的最大元素ID，并使在`XREAD`命令行中使用这个ID。这不纯粹并且需要调用其他命令，因此可以使用特殊的ID`$`来表明我们只想要流中的新条目。
 
-It is **very important** to understand that you should use the `$`
-ID only for the first call to `XREAD`. Later the ID should be the one
-of the last reported item in the stream, otherwise you could miss all
-the entries that are added in between.
+你应该仅在第一次调用`XREAD`时使用`$`，理解这一点**非常重要**。后面的ID你应该使用前一次报告的项目中最后一项的ID，否则你将会丢失所有添加到这中间的条目。
 
-This is how a typical `XREAD` call looks like in the first iteration
-of a consumer willing to consume only new entries:
+这是典型的`XREAD`调用（在想要仅消费新条目的消费者的第一次迭代）看起来的样子：
 
 ```
 > XREAD BLOCK 5000 COUNT 100 STREAMS mystream $
 ```
 
-Once we get some replies, the next call will be something like:
+一旦我们得到了一些回复，下一次调用会是像这样的：
 
 ```
 > XREAD BLOCK 5000 COUNT 100 STREAMS mystream 1526999644174-3
 ```
 
-And so forth.
+依此类推。
 
-## How multiple clients blocked on a single stream are served
+## 如何在单个流上阻止多个客户端
 
-Blocking list operations on lists or sorted sets have a *pop* behavior.
-Bascially, the element is removed from the list or sorted set in order
-to be returned to the client. In this scenario you want the items
-to be consumed in a fair way, depending on the moment clients blocked
-on a given key arrived. Normally Redis uses the FIFO semantics in this
-use cases.
+列表或有序集合上的阻塞列表操作有*pop*行为。基本上，元素将从列表或有序集合中删除，以便返回给客户端。
+在这种场景下，你希望项目以公平的方式被消费，具体取决于客户端在给定key上阻止的时刻到达。通常在这种用例中，Redis使用FIFO语义。
 
-However note that with streams this is not a problem: stream entries
-are not removed from the stream when clients are served, so every
-client waiting will be served as soon as an `XADD` command provides
-data to the stream.
+但请注意，对于流这不是问题：当服务客户端时，不会从流中删除条目，因此只要`XADD`命令向流提供数据，就会提供给每个等待的客户端。
 
 ## 返回值
 
 [array-reply](/topics/protocol.html#array-reply)：
 
 
-The command returns an array of results: each element of the returned
-array is an array composed of a two element containing the key name and
-the entries reported for that key. The entries reported are full stream
-entries, having IDs and the list of all the fields and values. Field and
-values are guaranteed to be reported in the same order they were added
-by `XADD`.
+该命令返回一个结果数组：返回数组的每个元素都是一个由两个元素组成的数组（键名和为该键报告的条目）。报告的条目是完整的流条目，具有ID以及所有字段和值的列表。返回的条目及其字段和值的顺序与使用`XADD`添加它们的顺序完全一致。
 
-When **BLOCK** is used, on timeout a null reply is returned.
+当使用**BLOCK**时，超时时将返回一个空回复（`nil`）。
 
-Reading the [Redis Streams introduction](/topics/streams-intro) is highly
-suggested in order to understand more about the streams overall behavior
-and semantics.
+为了更多地了解流的整体行为和语义，强烈建议阅读[Redis Streams介绍](/topics/streams-intro)。

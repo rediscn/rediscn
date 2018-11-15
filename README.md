@@ -5,6 +5,29 @@
 
 ## 更新日志： ##
 
+### 2018年11月7日
+1、翻译[BZPOPMAX](http://www.redis.cn/commands/bzpopmax.html)、
+[BZPOPMIN](http://www.redis.cn/commands/bzpopmin.html)、
+[CLIENT ID](http://www.redis.cn/commands/client-id.html)、
+[CLIENT REPLY](http://www.redis.cn/commands/client-reply.html)、
+[CLIENT UNBLOCK](http://www.redis.cn/commands/client-unblock.html)、
+[CLUSTER REPLICAS](http://www.redis.cn/commands/cluster-replicas.html)、
+[MEMORY DOCTOR](http://www.redis.cn/commands/memory-doctor.html)、
+[MEMORY HELP](http://www.redis.cn/commands/memory-help.html)、
+[MEMORY MALLOC STATS](http://www.redis.cn/commands/memory-malloc-stats.html)、
+[MEMORY PURGE](http://www.redis.cn/commands/memory-purge.html)、
+[MEMORY STATS](http://www.redis.cn/commands/memory-stats.html)、
+[MEMORY USAGE](http://www.redis.cn/commands/memory-usage.html)、
+[REPLICAOF](http://www.redis.cn/commands/replicaof.html)、
+[SCRIPT DEBUG](http://www.redis.cn/commands/script-debug.html)、
+[SWAPDB](http://www.redis.cn/commands/swapdb.html)、
+[TOUCH](http://www.redis.cn/commands/touch.html)、
+[UNLINK](http://www.redis.cn/commands/unlink.html)命令，感谢[gqhao](https://github.com/gqhao)提供的翻译。
+
+### 2018年10月20日
+2、新增[Redis月报第五期](/monthly/m20181020.html)<br/>
+
+
 ### 2018年10月18日
 1、更新首页和下载页里redis的最新版本5.0.0。<br/>
 2、新增[Redis Stream](http://www.redis.cn/topics/streams-intro.html)介绍。<br/>
@@ -40,26 +63,28 @@
 [XREVRANGE](http://www.redis.cn/commands/xrevrange.html)、
 [XTRIM](http://www.redis.cn/commands/xtrim.html)、
 [ZPOPMAX](http://www.redis.cn/commands/zpopmax.html)、
-[ZPOPMIN](http://www.redis.cn/commands/zpopmin.html)、
+[ZPOPMIN](http://www.redis.cn/commands/zpopmin.html)
 命令
 
 
 ### 2018年9月20日
 1、更新首页和下载页里redis的最新版本4.0.11。<br/>
+2、新增[Redis月报第四期](/monthly/m20180920.html)<br/>
 
 ### 2018年8月20日
-1、新增[Redis月刊20180820期](/monthly/m20180820.html)<br/>
+1、新增[Redis月报第三期](/monthly/m20180820.html)<br/>
 2、上架华为云广告
 
+
 ### 2018年7月20日
-1、新增[Redis月刊20180720期](/monthly/m20180720.html)
+1、新增[Redis月报第二期](/monthly/m20180720.html)
 
 ### 2018年6月20日
 1、更新首页和下载页里redis的最新版本4.0.10。<br/>
-2、填充[Redis月刊20180620期](/monthly/index.html)
+2、填充[Redis月报第一期](/monthly/index.html)
 
 ### 2018年6月1日
-1、新增[Redis月刊](/monthly/index.html)<br/>
+1、新增[Redis月报](/monthly/index.html)<br/>
 2、新增[Redis捐赠清单](/donation.html)
 
 ### 2018年4月12日

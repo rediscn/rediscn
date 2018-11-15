@@ -8,40 +8,30 @@ commandsType: streams
 discuzTid: 13918
 ---
 
-Removes the specified entries from a stream, and returns the number of entries
-deleted, that may be different from the number of IDs passed to the command in
-case certain IDs do not exist.
+从指定流中移除指定的条目，并返回成功删除的条目的数量，在传递的ID不存在的情况下，
+返回的数量可能与传递的ID数量不同。
 
-Normally you may think at a Redis stream as an append-only data structure,
-however Redis streams are represented in memory, so we are able to also
-delete entries. This may be useful, for instance, in order to comply with
-certain privacy policies.
+通常，你可能将Redis流想象为一个仅附加的数据结构，但是Redis流是存在于内存中的，
+所以我们也可以删除条目。这也许会有用，例如，为了遵守特定的隐私策略。
 
-# Understanding the low level details of entries deletion
+# 理解删除条目的底层细节
 
-Redis streams are represented in a way that makes them memory efficient:
-a radix tree is used in order to index macro-nodes that pack linearly tens
-of stream entries. Normally what happens when you delete an entry from a stream
-is that the entry is not *really* evicted, it just gets marked as deleted.
+Redis流以一种使其内存高效的方式表示：使用基数树来索引包含线性数十个Stream条目的宏节点。
+通常，当你从Stream中删除一个条目的时候，条目并没有*真正*被驱逐，只是被标记为删除。
 
-Eventually if all the entries in a macro-node are marked as deleted, the whole
-node is destroyed and the memory reclaimed. This means that if you delete
-a large amount of entries from a stream, for instance more than 50% of the
-entries appended to the stream, the memory usage per entry may increment, since
-what happens is that the stream will start to be fragmented. However the stream
-performances will remain the same.
+最终，如果宏节点中的所有条目都被标记为删除，则会销毁整个节点，并回收内存。
+这意味着如果你从Stream里删除大量的条目，比如超过50%的条目，则每一个条目的内存占用可能会增加，
+因为Stream将会开始变得碎片化。然而，流的表现将保持不变。
 
-In future versions of Redis it is possible that we'll trigger a node garbage
-collection in case a given macro-node reaches a given amount of deleted
-entries. Currently with the usage we anticipate for this data structure, it is
-not a good idea to add such complexity.
+在Redis未来的版本中，当一个宏节点内删除条目达到一定数量的时候，我们有可能会触发节点垃圾回收机制。
+目前，根据我们对这种数据结构的预期用途，还不太适合增加这样的复杂度。
 
 ## 返回值
 
 [integer-reply](/topics/protocol.html#integer-reply)：
 
 
-@examples
+例子：
 
 ```
 > XADD mystream * a 1

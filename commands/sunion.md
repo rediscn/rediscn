@@ -23,7 +23,7 @@ discuzTid: 1067
 
 [array-reply](/topics/protocol#array-reply):并集的成员列表
 
-##举例
+## 举例
 
 	redis> SADD key1 "a"
 	(integer) 1

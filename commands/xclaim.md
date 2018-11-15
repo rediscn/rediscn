@@ -8,48 +8,46 @@ commandsType: streams
 discuzTid: 13917
 ---
 
-In the context of a stream consumer group, this command changes the ownership
-of a pending message, so that the new owner is the consumer specified as the
-command argument. Normally this is what happens:
+在流的消费者组上下文中，此命令改变待处理消息的所有权，
+因此新的所有者是在命令参数中指定的消费者。通常是这样的：
 
-1. There is a stream with an associated consumer group.
-2. Some consumer A reads a message via `XREADGROUP` from a stream, in the context of that consumer group.
-3. As a side effect a pending message entry is created in the pending entries list (PEL) of the consumer group: it means the message was delivered to a given consumer, but it was not yet acknowledged via `XACK`.
-4. Then suddenly that consumer fails forever.
-5. Other consumers may inspect the list of pending messages, that are stale for quite some time, using the `XPENDING` command. In order to continue processing such messages, they use `XCLAIM` to acquire the ownership of the message and continue.
+1. 假设有一个具有关联消费者组的流。
+2. 某个消费者A在消费者组的上下文中通过`XREADGROUP`从流中读取一条消息。
+3. 作为读取消息的副作用，消费者组的待处理条目列表（PEL）中创建了一个待处理消息条目：这意味着这条消息已传递给给定的消费者，但是尚未通过`XACK`确认。
+4. 突然这个消费者出现故障，且永远无法恢复。
+5. 其他消费者可以使用`XPENDING`检查已经过时很长时间的待处理消息列表，为了继续处理这些消息，他们使用`XCLAIM`来获得消息的所有权，并继续处理。
 
-This dynamic is clearly explained in the [Stream intro documentation](/topics/streams-intro).
+[Stream介绍文档](/topics/streams-intro)中清楚的解释了这种动态。
 
-Note that the message is claimed only if its idle time is greater the minimum idle time we specify when calling `XCLAIM`. Because as a side effect `XCLAIM` will also reset the idle time (since this is a new attempt at processing the message), two consumers trying to claim a message at the same time will never both succeed: only one will successfully claim the message. This avoids that we process a given message multiple times in a trivial way (yet multiple processing is possible and unavoidable in the general case).
+请注意，消息只有在其空闲时间大于我们通过`XCLAIM`指定的空闲时间的时才会被认领。
+因为作为一个副作用，`XCLAIM`也会重置消息的空闲时间（因为这是处理消息的一次新尝试），
+两个试图同时认领消息的消费者将永远不会成功：只有一个消费者能成功认领消息。
+这避免了我们用微不足道的方式多次处理给定的消息（虽然一般情况下无法完全避免多次处理）。
 
-Moreover, as a side effect, `XCLAIM` will increment the count of attempted
-deliveries of the message. In this way messages that cannot be processed for
-some reason, for instance because the consumers crash attempting to process
-them, will start to have a larger counter and can be detected inside the system.
+此外，作为副作用，`XCLAIM`会增加消息的尝试交付次数。通过这种方式，
+由于某些原因而无法处理的消息（例如因为消费者在尝试处理期间崩溃），将开始具有更大的计数器，
+并可以在系统内部被检测到。
 
-## Command options
+## 命令选项
 
-The command has multiple options, however most are mainly for internal use in
-order to transfer the effects of `XCLAIM` or other commands to the AOF file
-and to propagate the same effects to the slaves, and are unlikely to be
-useful to normal users:
+该命令有多个选项，但是大部分主要用于内部使用，以便将`XCLAIM`或其他命令的结果传递到AOF文件，
+以及传递相同的结果到从节点，并且不太可能对普通用户有用：
 
-1. `IDLE <ms>`: Set the idle time (last time it was delivered) of the message. If IDLE is not specified, an IDLE of 0 is assumed, that is, the time count is reset because the message has now a new owner trying to process it.
-2. `TIME <ms-unix-time>`: This is the same as IDLE but instead of a relative amount of milliseconds, it sets the idle time to a specific Unix time (in milliseconds). This is useful in order to rewrite the AOF file generating `XCLAIM` commands.
-3. `RETRYCOUNT <count>`: Set the retry counter to the specified value. This counter is incremented every time a message is delivered again. Normally `XCLAIM` does not alter this counter, which is just served to clients when the XPENDING command is called: this way clients can detect anomalies, like messages that are never processed for some reason after a big number of delivery attempts.
-4. `FORCE`: Creates the pending message entry in the PEL even if certain specified IDs are not already in the PEL assigned to a different client. However the message must be exist in the stream, otherwise the IDs of non existing messages are ignored.
-5. `JUSTID`: Return just an array of IDs of messages successfully claimed, without returning the actual message.
+1. `IDLE <ms>`: 设置消息的空闲时间（自最后一次交付到目前的时间）。如果没有指定IDLE，则假设IDLE值为0，即时间计数被重置，因为消息现在有新的所有者来尝试处理它。
+2. `TIME <ms-unix-time>`: 这个命令与`IDLE`相同，但它不是设置相对的毫秒数，而是将空闲时间设置为一个指定的Unix时间（以毫秒为单位）。这对于重写生成`XCLAIM`命令的AOF文件很有用。
+3. `RETRYCOUNT <count>`: 将重试计数器设置为指定的值。这个计数器在每一次消息被交付的时候递增。通常，`XCLAIM`不会更改这个计数器，它只在调用XPENDING命令时提供给客户端：这样客户端可以检测到异常，例如在大量传递尝试后由于某种原因从未处理过的消息。
+4. `FORCE`: 在待处理条目列表（PEL）中创建待处理消息条目，即使某些指定的ID尚未在分配给不同客户端的待处理条目列表（PEL）中。但是消息必须存在于流中，否则不存在的消息ID将会被忽略。
+5. `JUSTID`: 只返回成功认领的消息ID数组，不返回实际的消息。
 
 ## 返回值
 
 [array-reply](/topics/protocol.html#array-reply)：
 
 
-The command returns all the messages successfully claimed, in the same format
-as `XRANGE`. However if the `JUSTID` option was specified, only the message
-IDs are reported, without including the actual message.
+此命令以`XRANGE`相同的格式返回所有成功认领的消息。但如果指定了`JUSTID`选项，
+则只返回消息的ID，不包括实际的消息。
 
-Example:
+例子：
 
 ```
 > XCLAIM mystream mygroup Alice 3600000 1526569498055-0
@@ -58,4 +56,4 @@ Example:
       2) "orange"
 ```
 
-In the above example we claim the message with ID `1526569498055-0`, only if the message is idle for at least one hour without the original consumer or some other consumer making progresses (acknowledging or claiming it), and assigns the ownership to the consumer `Alice`.
+在上面的例子中，我们认领ID为`1526569498055-0`的消息，仅当消息闲置至少一小时且没有原始消费者或其他消费者进行推进（确认或认领它）时，并将所有权分配给消费者`Alice`。

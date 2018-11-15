@@ -42,7 +42,7 @@ HyperLogLog可以使用固定且很少的内存（每个HyperLogLog结构需要1
 	(integer) 6
 	redis> 
 
-##性能
+## 性能
 
 当调用[PFCOUNT](/commands/pfcount.html)命令时指定一个key为参数,性能表现很好，甚至和处理一个HyperLogLog所需要的时间一样短.这可能和[PFCOUNT](/commands/pfcount.html)命令能够直接使用缓存的的估计基数有关，大多数的[PFADD](/commands/pfadd.html)也不会更新任何寄存器，所以这个值也很少被更改.理论上能达到每秒几百次操作.
 

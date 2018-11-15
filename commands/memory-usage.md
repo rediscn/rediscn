@@ -6,32 +6,26 @@ disqusIdentifier: command_memory-usage
 disqusUrl: http://redis.cn/commands/memory-usage.html
 commandsType: server
 discuzTid: 13910
+tranAuthor: gqhao
 ---
 
-The `MEMORY USAGE` command reports the number of bytes that a key and its value
-require to be stored in RAM.
+命令`MEMORY USAGE` 给出一个key和它值在RAM中占用的字节数
 
-The reported usage is the total of memory allocations for data and
-administrative overheads that a key its value require.
+返回的结果是key的值以及为管理该key分配的内存总字节数
 
-For nested data types, the optional `SAMPLES` option can be provided, where
-`count` is the number of sampled nested values. By default, this option is set
-to `5`. To sample the all of the nested values, use `SAMPLES 0`. 
+对于嵌套数据类型，可以使用选项`SAMPLES`，其中COUNT表示抽样的元素个数，默认值为5。当需要抽样所有元素时，使用`SAMPLES 0`
 
 ## 例子
 
-With Redis v4.0.1 64-bit and **jemalloc**, the empty string measures as follows:
-
+在redis 64位版本V4.0.1 和**jemalloc**做内存分配器的情况下，空string 可定义如下： 
 ```
 > SET "" ""
 OK
 > MEMORY USAGE ""
 (integer) 51
 ```
-
-These bytes are pure overhead at the moment as no actual data is stored, and are
-used for maintaining the internal data structures of the server. Longer keys and
-values show asymptotically linear usage.
+如上，实际数据为空，但是存储时仍然耗费了一些内存，这些内存用于Redis 服务器维护内部数据结构。随着key和value的增大，内存使用量和key 大小基本成
+线性关系。
 
 ```
 > SET foo bar
@@ -45,6 +39,7 @@ OK
 (integer) 153
 ```
 
-@return
+## 返回值
 
-@integer-reply: the memory usage in bytes 
+[integer-reply](/topics/protocol.html#integer-reply): 使用的内存的字节数
+

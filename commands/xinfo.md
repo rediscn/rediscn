@@ -8,13 +8,11 @@ commandsType: streams
 discuzTid: 13920
 ---
 
-This is an introspection command used in order to retrieve different information
-about the streams and associated consumer groups. Three forms are possible:
+这是一个内省命令，用于检索关于流和关联的消费者组的不同的信息。有三种可能的形式：
 
 * `XINFO STREAM <key>`
 
-In this form the command returns general information about the stream stored
-at the specified key.
+在这种形式下，此命令返回有关存储在特定键的流的一般信息。
 
 ```
 > XINFO STREAM mystream
@@ -38,18 +36,11 @@ at the specified key.
        2) "value"
 ```
 
-In the above example you can see that the reported information are the number
-of elements of the stream, details about the radix tree representing the
-stream mostly useful for optimization and debugging tasks, the number of
-consumer groups associated with the stream, the last generated ID that may
-not be the same as the last entry ID in case some entry was deleted. Finally
-the full first and last entry in the stream are shown, in order to give some
-sense about what is the stream content.
+在以上例子中，你可以看到报告的信息是流的元素的数量，有关表示流的基数树的详细信息（主要用于优化和调试任务），与流关联的消费者组的数量，最后生成的ID（某些条目被删除时，此ID可能与最后一个条目的ID不同），最后显示了流中完整的第一个和最后一个条目，以便了解流的内容是什么。
 
 * `XINFO GROUPS <key>`
 
-In this form we just get as output all the consumer groups associated with the
-stream:
+在这种形式中，我们只获得与流关联的所有消费者组的输出：
 
 ```
 > XINFO GROUPS mystream
@@ -67,14 +58,11 @@ stream:
    6) (integer) 0
 ```
 
-For each consumer group listed the command also shows the number of consumers
-known in that group and the pending messages (delivered but not yet acknowledged)
-in that group.
+对每一个列出的消费者组，该命令还显示该组中已知的消费者数量，以及该组中的待处理消息（已传递但尚未确认）数量。
 
 * `XINFO CONSUMERS <key> <group>`
 
-Finally it is possible to get the list of every consumer in a specific consumer
-group:
+最后，还可以取得指定消费者组中的消费者列表：
 
 ```
 > XINFO CONSUMERS mystream mygroup
@@ -92,19 +80,11 @@ group:
    6) (integer) 83841983
 ```
 
-We can see the idle time in milliseconds (last field) together with the
-consumer name and the number of pending messages for this specific
-consumer.
+我们可以看到这个消费者的空闲毫秒时间（最后一个字段）以及消费者名称和待处理消息数量。
 
-**Note that you should not rely on the fields exact position**, nor on the
-number of fields, new fields may be added in the future. So a well behaving
-client should fetch the whole list, and report it to the user, for example,
-as a dictionary data structure. Low level clients such as C clients where
-the items will likely be reported back in a linear array should document
-that the order is undefined.
+**请注意，你不应该依赖字段的确切位置**，也不应该依赖字段的数量，因为将来可能会增加新的字段。因此，表现良好的客户端应该获取整个列表，并将其报告给用户，例如，作为字典数据结构。低级客户端（例如C客户端，其中项目可能以线性数组报告）应该注明顺序是不确定的。
 
-Finally it is possible to get help from the command, in case the user can't
-remember the exact syntax, by using the `HELP` subcommnad:
+最后，通过使用`HELP`子命令，可以从命令获得帮助，以防用户无法记住确切的语法：
 
 ```
 > XINFO HELP

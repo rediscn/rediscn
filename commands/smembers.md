@@ -16,7 +16,7 @@ discuzTid: 1058
 
 [array-reply](/topics/protocol.html#array-reply):集合中的所有元素.
 
-##举例
+## 举例
 
 	redis> SADD myset "Hello"
 	(integer) 1

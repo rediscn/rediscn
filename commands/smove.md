@@ -20,7 +20,7 @@ discuzTid: 1059
 - 如果该元素成功移除,返回1
 - 如果该元素不是 source集合成员,无任何操作,则返回0.
 
-##举例
+## 举例
 
 	redis> SADD myset "one"
 	(integer) 1

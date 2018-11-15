@@ -14,7 +14,7 @@ discuzTid: 1039
 
 [integer-reply](/topics/protocol.html#integer-reply): 集合的基数(元素的数量),如果key不存在,则返回 0.
 
-##举例
+## 举例
 
 	redis> SADD myset "Hello"
 	(integer) 1

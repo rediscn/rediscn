@@ -21,10 +21,10 @@ SETEX是原子的，也可以通过把上面两个命令放到[MULTI](/commands/
 
 ## 例子 ##
 
-redis> SETEX mykey 10 "Hello"
-OK
-redis> TTL mykey
-(integer) 10
-redis> GET mykey
-"Hello"
-redis> 
+	redis> SETEX mykey 10 "Hello"
+	OK
+	redis> TTL mykey
+	(integer) 10
+	redis> GET mykey
+	"Hello"
+	redis> 
