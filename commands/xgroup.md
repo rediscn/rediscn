@@ -6,6 +6,7 @@ disqusIdentifier: command_xgroup
 disqusUrl: http://redis.cn/commands/xgroup.html
 commandsType: streams
 discuzTid: 13919
+tranAuthor: wangqiang
 ---
 
 该命令用于管理流数据结构关联的消费者组。使用`XGROUP`你可以：

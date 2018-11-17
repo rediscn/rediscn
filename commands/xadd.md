@@ -6,6 +6,7 @@ disqusIdentifier: command_xadd
 disqusUrl: http://redis.cn/commands/xadd.html
 commandsType: streams
 discuzTid: 13915
+tranAuthor: wangqiang
 ---
 
 将指定的流条目追加到指定key的流中。

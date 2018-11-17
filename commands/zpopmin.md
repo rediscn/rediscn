@@ -6,6 +6,7 @@ disqusIdentifier: command_zpopmin
 disqusUrl: http://redis.cn/commands/zpopmin.html
 commandsType: sortedsets
 discuzTid: 13929
+tranAuthor: wangqiang
 ---
 
 删除并返回有序集合`key`中的最多`count`个具有最低得分的成员。

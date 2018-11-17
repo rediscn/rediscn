@@ -6,6 +6,7 @@ disqusIdentifier: command_xack
 disqusUrl: http://redis.cn/commands/xack.html
 commandsType: streams
 discuzTid: 13916
+tranAuthor: wangqiang
 ---
 
 `XACK`命令用于从流的消费者组的*待处理条目列表*（简称PEL）中删除一条或多条消息。

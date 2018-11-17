@@ -6,6 +6,7 @@ disqusIdentifier: command_xtrim
 disqusUrl: http://redis.cn/commands/xtrim.html
 commandsType: streams
 discuzTid: 13927
+tranAuthor: wangqiang
 ---
 
 `XTRIM`将流裁剪为指定数量的项目，如有需要，将驱逐旧的项目（ID较小的项目）。此命令被设想为接受多种修整策略，但目前只实现了一种，即`MAXLEN`，并且与`XADD`中的`MAXLEN`选项完全相同。

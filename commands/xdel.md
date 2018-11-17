@@ -6,6 +6,7 @@ disqusIdentifier: command_xdel
 disqusUrl: http://redis.cn/commands/xdel.html
 commandsType: streams
 discuzTid: 13918
+tranAuthor: wangqiang
 ---
 
 从指定流中移除指定的条目，并返回成功删除的条目的数量，在传递的ID不存在的情况下，

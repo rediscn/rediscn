@@ -6,6 +6,7 @@ disqusIdentifier: command_xlen
 disqusUrl: http://redis.cn/commands/xlen.html
 commandsType: streams
 discuzTid: 13921
+tranAuthor: wangqiang
 ---
 
 返回流中的条目数。如果指定的key不存在，则此命令返回0，就好像该流为空。

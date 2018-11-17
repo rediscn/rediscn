@@ -6,6 +6,7 @@ disqusIdentifier: command_xrevrange
 disqusUrl: http://redis.cn/commands/xrevrange.html
 commandsType: streams
 discuzTid: 13926
+tranAuthor: wangqiang
 ---
 
 此命令与`XRANGE`完全相同，但显著的区别是以相反的顺序返回条目，并以相反的顺序获取开始-结束参数：在`XREVRANGE`中，你需要先指定*结束ID*，再指定*开始ID*，该命令就会从*结束ID*侧开始生成两个ID之间（或完全相同）的所有元素。

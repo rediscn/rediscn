@@ -6,6 +6,7 @@ disqusIdentifier: command_xpending
 disqusUrl: http://redis.cn/commands/xpending.html
 commandsType: streams
 discuzTid: 13922
+tranAuthor: wangqiang
 ---
 
 通过消费者组从流中获取数据，而不是确认这些数据，具有创建*待处理条目*的效果。这在`XREADGROUP`命令中已有详尽的说明，在我们的[Redis Streams介绍](/topics/streams-intro)中更好。`XACK`命令会立即从待处理条目列表（PEL）中移除待处理条目，因为一旦消息被成功处理，消费者组就不再需要跟踪它并记住消息的当前所有者。

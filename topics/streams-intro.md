@@ -5,6 +5,7 @@ permalink: topics/streams-intro.html
 disqusIdentifier: streams-intro
 disqusUrl: http://redis.cn/topics/streams-intro.html
 discuzTid: 13930
+tranAuthor: wangqiang
 ---
 
 # Redis Streams 介绍
