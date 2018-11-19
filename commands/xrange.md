@@ -6,6 +6,7 @@ disqusIdentifier: command_xrange
 disqusUrl: http://redis.cn/commands/xrange.html
 commandsType: streams
 discuzTid: 13923
+tranAuthor: wangqiang
 ---
 
 此命令返回流中满足给定ID范围的条目。范围由最小和最大ID指定。所有ID在指定的两个ID之间或与其中一个ID相等（闭合区间）的条目将会被返回。

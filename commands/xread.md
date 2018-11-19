@@ -6,6 +6,7 @@ disqusIdentifier: command_xread
 disqusUrl: http://redis.cn/commands/xread.html
 commandsType: streams
 discuzTid: 13924
+tranAuthor: wangqiang
 ---
 
 从一个或者多个流中读取数据，仅返回ID大于调用者报告的最后接收ID的条目。此命令有一个阻塞选项，用于等待可用的项目，类似于`BRPOP`或者`BZPOPMIN`等等。

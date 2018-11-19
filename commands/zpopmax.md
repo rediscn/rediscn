@@ -6,6 +6,7 @@ disqusIdentifier: command_zpopmax
 disqusUrl: http://redis.cn/commands/zpopmax.html
 commandsType: sortedsets
 discuzTid: 13928
+tranAuthor: wangqiang
 ---
 
 删除并返回有序集合`key`中的最多`count`个具有最高得分的成员。

@@ -6,6 +6,7 @@ disqusIdentifier: command_xreadgroup
 disqusUrl: http://redis.cn/commands/xreadgroup.html
 commandsType: streams
 discuzTid: 13925
+tranAuthor: wangqiang
 ---
 
 `XREADGROUP`命令是`XREAD`命令的特殊版本，支持消费者组。在阅读本页之前，你可能必须先理解`XREAD`命令才有意义。

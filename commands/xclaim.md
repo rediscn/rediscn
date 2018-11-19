@@ -6,6 +6,7 @@ disqusIdentifier: command_xclaim
 disqusUrl: http://redis.cn/commands/xclaim.html
 commandsType: streams
 discuzTid: 13917
+tranAuthor: wangqiang
 ---
 
 在流的消费者组上下文中，此命令改变待处理消息的所有权，

@@ -6,6 +6,7 @@ disqusIdentifier: command_xinfo
 disqusUrl: http://redis.cn/commands/xinfo.html
 commandsType: streams
 discuzTid: 13920
+tranAuthor: wangqiang
 ---
 
 这是一个内省命令，用于检索关于流和关联的消费者组的不同的信息。有三种可能的形式：
