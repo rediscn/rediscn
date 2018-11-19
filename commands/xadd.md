@@ -59,7 +59,7 @@ ID保证始终是递增的：如果比较刚插入的条目的ID，它将大于�
 
 ## 有关流的其他信息
 
-更多关于Redis流的信息请参阅我们的【Redis Streams介绍文档】(/topics/streams-intro)。
+更多关于Redis流的信息请参阅我们的【Redis Streams介绍文档】(/topics/streams-intro.html)。
 
 ## 返回值
 

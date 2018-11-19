@@ -13,7 +13,7 @@ tranAuthor: wangqiang
 
 `XRANGE`命令有许多用途：
 
-* 返回特定时间范围的项目。这是可能的，因为流的ID[与时间相关](/topics/streams-intro)。
+* 返回特定时间范围的项目。这是可能的，因为流的ID[与时间相关](/topics/streams-intro.html)。
 * 增量迭代流，每次迭代只返回几个项目。但它在语义上比`SCAN`函数族强大很多。
 * 从流中获取单个条目，提供要获取两次的条目的ID：作为查询间隔的开始和结束。
 

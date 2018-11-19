@@ -11,7 +11,7 @@ tranAuthor: wangqiang
 
 从一个或者多个流中读取数据，仅返回ID大于调用者报告的最后接收ID的条目。此命令有一个阻塞选项，用于等待可用的项目，类似于`BRPOP`或者`BZPOPMIN`等等。
 
-请注意，在阅读本页之前，如果你不了解Stream，我们推荐先阅读[我们的Redis Streams介绍](/topics/streams-intro)。
+请注意，在阅读本页之前，如果你不了解Stream，我们推荐先阅读[我们的Redis Streams介绍](/topics/streams-intro.html)。
 
 ## 非阻塞使用
 

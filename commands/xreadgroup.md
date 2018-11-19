@@ -11,7 +11,7 @@ tranAuthor: wangqiang
 
 `XREADGROUP`命令是`XREAD`命令的特殊版本，支持消费者组。在阅读本页之前，你可能必须先理解`XREAD`命令才有意义。
 
-此外，如果你是Stream新手，我们建议阅读我们的[Redis Streams简介](/topics/streams-intro)。
+此外，如果你是Stream新手，我们建议阅读我们的[Redis Streams简介](/topics/streams-intro.html)。
 确保在介绍中理解消费者组的概念，以便遵循此命令的工作原理将更加简单。
 
 ## 快速了解消费者组
