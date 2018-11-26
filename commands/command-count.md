@@ -8,14 +8,15 @@ commandsType: server
 discuzTid: 936
 ---
 
-Returns @integer-reply of number of total commands in this Redis server.
+返回Redis服务器命令的总数
 
-@return
 
-@integer-reply: number of commands returned by `COMMAND`
+## 返回值
 
-@examples
+[Integer reply](/topics/protocol.html#integer-reply): 命令的总数
 
-```cli
-COMMAND COUNT
-```
+## 例子
+
+	redis> COMMAND COUNT
+	(integer) 197
+	redis> 
