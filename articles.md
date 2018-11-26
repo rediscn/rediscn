@@ -288,7 +288,7 @@ disqusUrl: http://redis.cn/articles.html
 
 * 2017-08-29  [Why Your MongoDB needs Redis](https://redislabs.com/docs/why-your-mongodb-needs-redis/?utm_content=buffereb06b&utm_medium=social&utm_source=linkedin.com&utm_campaign=buffer)
 
-* 2017-08-30  [Redis Cluster 迁移案例](https://mp.weixin.qq.com/s?__biz=MzA4Nzc4MjI4MQ==&mid=2652402631&idx=1&sn=3ebb8cdcec1b8dfcae64eaf306f4bce6&chksm=8bd8f521bcaf7c37bfccbf13d56e075f30d238ff441c73e4ae9331af27061475056e7abf36a5&mpshare=1&scene=1&srcid=0830twdFe3SIO6CN5vOFVppm&key=93cfae3cc9d95451ddf4520ebfb0fbb9430e654b95dc5b8e844800335468c60294b0ec67168a4ec36f1533483546f33c4e50e43ecbd2d678b4e9a1fbb4480a8d19e2fee8a4990038b3028bfc885f4967&ascene=0&uin=MzM4Njg2NDU1&devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.12.5+build(16F73)&version=12020710&nettype=WIFI&fontScale=100&pass_ticket=Q%2FLMiwdx488Q4J8ezSyEJBRsYHh7VqfK69ObExc%2BIRXji8mS5Bo4Zwf6Arcoqmoi)
+* 2017-08-30  [Redis Cluster 迁移案例](/articles/20170830103.html)
 
 * 2017-08-31  [RedisConf17 - Redis Flash in Google Cloud with Kubernetes - Kelsey Hightower](https://www.youtube.com/watch?v=RCD-JqV2QpQ)
 
@@ -992,32 +992,32 @@ disqusUrl: http://redis.cn/articles.html
 
 * 2016-08-10  [Redis 3.2.0 is out! ](http://antirez.com/news/104)
 
-* 2016-08-10  [动态追踪技术（中） - Dtrace、SystemTap、火焰图](http://mp.weixin.qq.com/s?__biz=MjM5ODQ2MDIyMA==&mid=2650712266&idx=1&sn=54d909d240eb701ae48467dc798ddc7f&scene=1&srcid=0506xZXTUptwNdQOqmeVNjjK#rd)
+* 2016-08-10  [动态追踪技术（中） - Dtrace、SystemTap、火焰图](/articles/20180810008.html)
 
-* 2016-08-10  [bloomfilter-redis: Distributed bloom filters on Redis (using the Hedis client). - Hackage](https://hackage.haskell.org/package/bloomfilter-redis)
+* 2016-08-10  [bloomfilter-redis: Distributed bloom filters on Redis (using the Hedis client). - Hackage](/articles/20180810007.html)
 
-* 2016-08-10  [Redis Keyspace Notifications – Redis](http://sc.qq.com/fx/u?r=gMmLTAA)
+* 2016-08-10  [Redis Keyspace Notifications – Redis](/articles/20180810006.html)
 
-* 2016-08-10  [How to setup HAProxy and Redis Sentinel for automatic failover between Redis Master and Slave servers – All Help & Support](https://discuss.zendesk.com/hc/en-us/articles/205309388-How-to-setup-HAProxy-and-Redis-Sentinel-for-automatic-failover-between-Redis-Master-and-Slave-servers?from=singlemessage&isappinstalled=1)
+* 2016-08-10  [How to setup HAProxy and Redis Sentinel for automatic failover between Redis Master and Slave servers – All Help & Support](/articles/20180810005.html)
 
 * 2016-08-10  [HunanTV · GitHub](https://github.com/HunanTV)
 
-* 2016-08-10  [【互联网小兵】网易视频云：网易HBase基准性能测试之结果篇](http://toutiao.com/group/6278854910721638657/?iid=4180859862&app=news_article&wxshare_count=1&tt_from=weixin&utm_source=weixin&utm_medium=toutiao_android&utm_campaign=client_share)
+* 2016-08-10  [【互联网小兵】网易视频云：网易HBase基准性能测试之结果篇](/articles/20180810004.html)
 
-* 2016-08-10  [Software error doomed Japanese Hitomi spacecraft : Nature News & Comment](http://www.nature.com/news/software-error-doomed-japanese-hitomi-spacecraft-1.19835?from=timeline&isappinstalled=0)
+* 2016-08-10  [Software error doomed Japanese Hitomi spacecraft : Nature News & Comment](articles/20160810003.html)
 
 * 2016-08-10  [redis pdf](http://pan.baidu.com/share/link?shareid=3001852208&uk=285584457)
 
-* 2016-08-10  [Top Redis Headaches for Devops – Replication Buffer](https://redislabs.com/blog/top-redis-headaches-for-devops-replication-buffer#.VxzASUC3PqB)
+* 2016-08-10  [Top Redis Headaches for Devops – Replication Buffer](/articles/201608100002.html)
 
 * 2016-08-10  [QCon北京2016幻灯片下载合集](http://ppt.geekbang.org/qconbj2016?amp;amp;isappinstalled=0&amp;amp;amp;isappinstalled=0&amp;amp;from=timeline&amp;amp;isappinstalled=0&amp;from=timeline&amp;isappinstalled=0)
 
-* 2016-08-10  [JedisConnectionException: It seems like server has closed the connection-IT技术精华网](http://www.chepoo.com/jedis-connection-exception-it-seems-like-server-has-closed-the-connection.html)
+* 2016-08-10  [JedisConnectionException: It seems like server has closed the connection-IT技术精华网](/articles/20160810001.html)
 
 
 * 2016-08-11  [记一个Redis安全漏洞和Redis安全规范 - 今天](https://zhuoroger.github.io/2016/07/29/redis-sec/)
 
-* 2016-08-11  [zabbix监控redis多实例 - Zabbix - 运维网 - 手机版 - Powered by Discuz!](http://www.iyunv.com/thread-242436-1-1.html)
+* 2016-08-11  [zabbix监控redis多实例 - Zabbix - 运维网 - 手机版 - Powered by Discuz!](/articles/20160811001.html)
 
 
 * 2016-08-12  [Redis 数据自动清理 - CNode技术社区](/articles/20160812.html)
