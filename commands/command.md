@@ -10,28 +10,26 @@ discuzTid: 935
 
 返回Redis所有命令数组。
 
-Cluster clients must be aware of key positions in commands so commands can go to matching instances,
-but Redis commands vary between accepting one key,
-multiple keys, or even multiple keys separated by other data.
+集群客户端必须知道命令中key的位置，以便命令可以转到匹配的实例，
+但是Redis命令在接收一个key，多个key甚至由其他数据分隔开的多个key之间会有所不同。
 
-You can use `COMMAND` to cache a mapping between commands and key positions for
-each command to enable exact routing of commands to cluster instances.
+你可以使用`COMMAND`来为每一个命令缓存命令和key位置之间的映射关系，以实现命令到集群的精确路由。
 
-## Nested Result Array
-Each top-level result contains six nested results.  Each nested result is:
+## 嵌套结果数组
+每一个顶级结果包含了六个嵌套的结果。每一个嵌套结果是：
 
-  - command name
-  - command arity specification
-  - nested @array-reply of command flags
-  - position of first key in argument list
-  - position of last key in argument list
-  - step count for locating repeating keys
+  - 命令名称
+  - 命令元数规范
+  - 嵌套的命令标志
+  - 参数列表中第一个key的位置
+  - 参数列表中最后一个key的位置
+  - 用于定位重复key的步数
 
-### Command Name
+### 命令名称
 
-Command name is the command returned as a lowercase string.
+命令名称是以小写字符串形式返回的命令。
 
-### Command Arity
+### 命令元数
 
 <table style="width:50%">
 <tr><td>
@@ -58,40 +56,51 @@ Command name is the command returned as a lowercase string.
 </td></tr>
 </table>
 
-Command arity follows a simple pattern:
+命令元数遵循一个简单的模式：
 
-  - positive if command has fixed number of required arguments.
-  - negative if command has minimum number of required arguments, but may have more.
+  - 正数：命令拥有固定数量的必需参数。
+  - 负数：命令拥有最小数量的必需参数，可以有更多的参数。
 
-Command arity _includes_ counting the command name itself.
+命令元数_包含_计算命令名称本身。
 
-Examples:
+例如：
 
-  - `GET` arity is 2 since the command only accepts one
-argument and always has the format `GET _key_`.
-  - `MGET` arity is -2 since the command accepts at a minimum
-one argument, but up to an unlimited number: `MGET _key1_ [key2] [key3] ...`.
+  - `GET`的元数是2，因为该命令仅接收一个参数，并且命令格式始终是`GET _key_`。
+  - `MGET`的元数是-2，因为该命令接收至少一个参数，但最多可以接收无限数量：`MGET _key1_ [key2] [key3] ...`。
 
-Also note with `MGET`, the -1 value for "last key position" means the list
-of keys may have unlimited length.
+在`MGET`中同样需要注意，"最后一个key的位置"的值是-1，这表示key列表可以具有无限长度。
 
-### Flags
-Command flags is @array-reply containing one or more status replies:
+### 标志
+命令标志是包含一个或多个状态回复的[array-reply](/topics/protocol.html#array-reply)：
 
   - *write* - command may result in modifications
+  - *write* - 命令可能会导致修改
   - *readonly* - command will never modify keys
+  - *readonly* - 命令永远不会修改键
   - *denyoom* - reject command if currently OOM
+  - *denyoom* - 如果当前发生OOM，则拒绝该命令
   - *admin* - server admin command
+  - *admin* - 服务器管理命令
   - *pubsub* - pubsub-related command
+  - *pubsub* - 发布订阅相关的命令
   - *noscript* - deny this command from scripts
+  - *noscript* - 在脚本中将会拒绝此命令
   - *random* - command has random results, dangerous for scripts
+  - *random* - 命令具有随机结果，在脚本中使用很危险
   - *sort\_for\_script* - if called from script, sort output
+  - *sort\_for\_script* - 如果从脚本调用，则排序输出
   - *loading* - allow command while database is loading
+  - *loading* - 允许在数据库加载时使用此命令
   - *stale* - allow command while replica has stale data
+  - *stale* - 允许在从节点具有陈旧数据时使用此命令
   - *skip_monitor* - do not show this command in MONITOR
+  - *skip_monitor* - 在MONITOR中不会显示此命令
   - *asking* - cluster related - accept even if importing
+  - *asking* - 集群相关的 - 即使正在导入数据也接受此命令
   - *fast* - command operates in constant or log(N) time.  Used for latency monitoring.
+  - *fast* - 命令以常量或log(N)时间运行。用于延迟监控。
   - *movablekeys* - keys have no pre-determined position.  You must discover keys yourself.
+  - *movablekeys* - key没有预先确定的位置。你必须自己发现key。
 
 
 ### Movable Keys
