@@ -6,6 +6,7 @@ disqusIdentifier: command_command
 disqusUrl: http://redis.cn/commands/command.html
 commandsType: server
 discuzTid: 935
+tranAuthor: wangqiang
 ---
 
 以数组的形式返回有关所有Redis命令的详细信息。

@@ -6,24 +6,22 @@ disqusIdentifier: command_command-getkeys
 disqusUrl: http://redis.cn/commands/command-getkeys.html
 commandsType: server
 discuzTid: 937
+tranAuthor: wangqiang
 ---
 
-Returns @array-reply of keys from a full Redis command.
+以[array-reply](/topics/protocol.html#array-reply)的形式从完整的Redis命令返回key。
 
-`COMMAND GETKEYS` is a helper command to let you find the keys
-from a full Redis command.
+`COMMAND GETKEYS`是一个辅助命令，让你可以从完整的Redis命令中找到key。
 
-`COMMAND` shows some commands as having movablekeys meaning
-the entire command must be parsed to discover storage or retrieval
-keys.  You can use `COMMAND GETKEYS` to discover key positions
-directly from how Redis parses the commands.
+`COMMAND`显示了某些命令拥有可变位置的key，这意味着必须分析完整的命令才能找到要存储或者检索的key。
+你可以使用`COMMAND GETKEYS`直接从Redis解析命令的方式来发现key的位置。
 
 
-@return
+## 返回值
 
-@array-reply: list of keys from your command.
+[array-reply](/topics/protocol.html#array-reply)：给定命令中的key列表。
 
-@examples
+## 例子
 
 ```cli
 COMMAND GETKEYS MSET a b c d e f
