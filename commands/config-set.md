@@ -6,63 +6,40 @@ disqusIdentifier: command_config-set
 disqusUrl: http://redis.cn/commands/config-set.html
 commandsType: server
 discuzTid: 942
+tranAuthor: wangqiang
 ---
 
-The `CONFIG SET` command is used in order to reconfigure the server at run time
-without the need to restart Redis.
-You can change both trivial parameters or switch from one to another persistence
-option using this command.
+`CONFIG SET`命令用于在服务器运行期间重写某些配置，而不用重启Redis。你可以使用此命令更改不重要的参数或从一个参数切换到另一个持久性选项。
 
-The list of configuration parameters supported by `CONFIG SET` can be obtained
-issuing a `CONFIG GET *` command, that is the symmetrical command used to obtain
-information about the configuration of a running Redis instance.
+可以通过`CONFIG GET *`获得`CONFIG SET`命令支持的配置参数列表，该命令是用于获取有关正在运行的Redis实例的配置信息的对称命令。
 
-All the configuration parameters set using `CONFIG SET` are immediately loaded
-by Redis and will take effect starting with the next command executed.
+所有使用`CONFIG SET`设置的配置参数将会立即被Redis加载，并从下一个执行的命令开始生效。
 
-All the supported parameters have the same meaning of the equivalent
-configuration parameter used in the [redis.conf][hgcarr22rc] file, with the
-following important differences:
+所有支持的参数与[redis.conf][hgcarr22rc]文件中使用的等效配置参数具有相同含义，但有以下重要区别：
 
 [hgcarr22rc]: http://github.com/antirez/redis/raw/2.8/redis.conf
 
-* In options where bytes or other quantities are specified, it is not
-  possible to use the `redis.conf` abbreviated form (`10k`, `2gb` ... and so forth),
-  everything should be specified as a well-formed 64-bit integer, in the base
-  unit of the configuration directive. However since Redis version 3.0 or
-  greater, it is possible to use `CONFIG SET` with memory units for
-  `maxmemory`, client output buffers, and replication backlog size.
-* The save parameter is a single string of space-separated integers.
-  Every pair of integers represent a seconds/modifications threshold.
+* 在指定字节或其他数量的选项中，不能使用在`redis.conf`中使用的简写形式（如`10k`，`2gb`等），所有内容都应该指定为格式良好的64位整数，以配置指令的基本单位表示。但从Redis3.0以及更高版本开始，可以将`CONFIG SET`与内存单元一起用于`maxmemory`、客户端输出缓冲以及复制积压大小（repl-backlog-size）指定内存单位。
+* save参数是一个以空格分隔的整数字符串。每对整数代表一个秒/修改阈值。
 
-For instance what in `redis.conf` looks like:
+例如在`redis.conf`中看起来像这样：
 
 ```
 save 900 1
 save 300 10
 ```
 
-that means, save after 900 seconds if there is at least 1 change to the dataset,
-and after 300 seconds if there are at least 10 changes to the dataset, should
-be set using `CONFIG SET SAVE "900 1 300 10"`.
+这意味着，如果数据集有1个以上变更，则在900秒后保存；如果有10个以上变更，则在300秒后就保存，应使用`CONFIG SET SAVE "900 1 300 10"来设置。
 
-It is possible to switch persistence from RDB snapshotting to append-only file
-(and the other way around) using the `CONFIG SET` command.
-For more information about how to do that please check the [persistence
-page][tp].
+可以使用`CONFIG SET`命令将持久化从RDB快照切换到AOF文件（或其他相似的方式）。
+有关如何执行此操作的详细信息，请查看[persistencepage][tp]。
 
 [tp]: /topics/persistence
 
-In general what you should know is that setting the `appendonly` parameter to
-`yes` will start a background process to save the initial append-only file
-(obtained from the in memory data set), and will append all the subsequent
-commands on the append-only file, thus obtaining exactly the same effect of a
-Redis server that started with AOF turned on since the start.
+一般来说，你应该知道将`appendonly`参数设置为`yes`将启动后台进程以保存初始AOF文件（从内存数据集中获取），并将所有后续命令追加到AOF文件，从而达到了与一个Redis服务器从一开始就开启了AOF选项相同的效果。
 
-You can have both the AOF enabled with RDB snapshotting if you want, the two
-options are not mutually exclusive.
+如果你愿意，可以同时开启AOF和RDB快照，这两个选项不是互斥的。
 
-@return
+## 返回值
 
-@simple-string-reply: `OK` when the configuration was set properly.
-Otherwise an error is returned.
+[simple-string-reply](/topics/protocol.html#simple-string-reply)：当配置被正确设置时返回`OK`，否则将返回错误。
