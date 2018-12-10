@@ -6,24 +6,42 @@ disqusIdentifier: command_command-info
 disqusUrl: http://redis.cn/commands/command-info.html
 commandsType: server
 discuzTid: 938
+tranAuthor: wangqiang
 ---
 
-Returns @array-reply of details about multiple Redis commands.
+以[array-reply](/topics/protocol.html#array-reply)的形式返回多个Redis命令的详细信息。
 
-Same result format as `COMMAND` except you can specify which commands
-get returned.
+此命令返回的结果与`COMMAND`相同，但是你可以指定返回哪些命令。
 
-If you request details about non-existing commands, their return
-position will be nil.
+如果你指定了一些不存在的命令，那么在它们的返回位置将会是nil。
 
+## 返回值
 
-@return
+[array-reply](/topics/protocol.html#array-reply)：嵌套的命令详情列表。
 
-@array-reply: nested list of command details.
+## 例子
 
-@examples
+    redis> COMMAND INFO get set foo eval
+        1) 1) "get"
+           2) (integer) 2
+           3) 1) "readonly"
+              2) "fast"
+           4) (integer) 1
+           5) (integer) 1
+           6) (integer) 1
+        2) 1) "set"
+           2) (integer) -3
+           3) 1) "write"
+              2) "denyoom"
+           4) (integer) 1
+           5) (integer) 1
+           6) (integer) 1
+        3) (nil)
+        4) 1) "eval"
+           2) (integer) -3
+           3) 1) "noscript"
+              2) "movablekeys"
+           4) (integer) 0
+           5) (integer) 0
+           6) (integer) 0
 
-```cli
-COMMAND INFO get set eval
-COMMAND INFO foo evalsha config bar
-```

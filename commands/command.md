@@ -6,32 +6,31 @@ disqusIdentifier: command_command
 disqusUrl: http://redis.cn/commands/command.html
 commandsType: server
 discuzTid: 935
+tranAuthor: wangqiang
 ---
 
-返回Redis所有命令数组。
+以数组的形式返回有关所有Redis命令的详细信息。
 
-Cluster clients must be aware of key positions in commands so commands can go to matching instances,
-but Redis commands vary between accepting one key,
-multiple keys, or even multiple keys separated by other data.
+集群客户端必须知道命令中key的位置，以便命令可以转到匹配的实例，
+但是Redis命令在接收一个key，多个key甚至由其他数据分隔开的多个key之间会有所不同。
 
-You can use `COMMAND` to cache a mapping between commands and key positions for
-each command to enable exact routing of commands to cluster instances.
+你可以使用`COMMAND`来为每一个命令缓存命令和key位置之间的映射关系，以实现命令到集群的精确路由。
 
-## Nested Result Array
-Each top-level result contains six nested results.  Each nested result is:
+## 嵌套结果数组
+每一个顶级结果包含了六个嵌套的结果。每一个嵌套结果是：
 
-  - command name
-  - command arity specification
-  - nested @array-reply of command flags
-  - position of first key in argument list
-  - position of last key in argument list
-  - step count for locating repeating keys
+  - 命令名称
+  - 命令元数规范
+  - 嵌套的命令标志
+  - 参数列表中第一个key的位置
+  - 参数列表中最后一个key的位置
+  - 用于定位重复key的步数
 
-### Command Name
+### 命令名称
 
-Command name is the command returned as a lowercase string.
+命令名称是以小写字符串形式返回的命令。
 
-### Command Arity
+### 命令元数
 
 <table style="width:50%">
 <tr><td>
@@ -58,43 +57,40 @@ Command name is the command returned as a lowercase string.
 </td></tr>
 </table>
 
-Command arity follows a simple pattern:
+命令元数遵循一个简单的模式：
 
-  - positive if command has fixed number of required arguments.
-  - negative if command has minimum number of required arguments, but may have more.
+  - 正数：命令拥有固定数量的必需参数。
+  - 负数：命令拥有最小数量的必需参数，可以有更多的参数。
 
-Command arity _includes_ counting the command name itself.
+命令元数**包含**计算命令名称本身。
 
-Examples:
+例如：
 
-  - `GET` arity is 2 since the command only accepts one
-argument and always has the format `GET _key_`.
-  - `MGET` arity is -2 since the command accepts at a minimum
-one argument, but up to an unlimited number: `MGET _key1_ [key2] [key3] ...`.
+  - `GET`的元数是2，因为该命令仅接收一个参数，并且命令格式始终是`GET _key_`。
+  - `MGET`的元数是-2，因为该命令接收至少一个参数，但最多可以接收无限数量：`MGET _key1_ [key2] [key3] ...`。
 
-Also note with `MGET`, the -1 value for "last key position" means the list
-of keys may have unlimited length.
+在`MGET`中同样需要注意，『最后一个key的位置』的值是-1，这表示key列表可以具有无限长度。
 
-### Flags
-Command flags is @array-reply containing one or more status replies:
+### 标志
+命令标志是包含一个或多个状态回复的[array-reply](/topics/protocol.html#array-reply)：
 
-  - *write* - command may result in modifications
-  - *readonly* - command will never modify keys
-  - *denyoom* - reject command if currently OOM
-  - *admin* - server admin command
-  - *pubsub* - pubsub-related command
-  - *noscript* - deny this command from scripts
-  - *random* - command has random results, dangerous for scripts
-  - *sort\_for\_script* - if called from script, sort output
-  - *loading* - allow command while database is loading
-  - *stale* - allow command while replica has stale data
-  - *skip_monitor* - do not show this command in MONITOR
-  - *asking* - cluster related - accept even if importing
-  - *fast* - command operates in constant or log(N) time.  Used for latency monitoring.
-  - *movablekeys* - keys have no pre-determined position.  You must discover keys yourself.
+  - *write* - 命令可能会导致修改
+  - *readonly* - 命令永远不会修改键
+  - *denyoom* - 如果当前发生OOM，则拒绝该命令
+  - *admin* - 服务器管理命令
+  - *pubsub* - 发布订阅相关的命令
+  - *noscript* - 在脚本中将会拒绝此命令
+  - *random* - 命令具有随机结果，在脚本中使用很危险
+  - *sort\_for\_script* - 如果从脚本调用，则排序输出
+  - *loading* - 允许在数据库加载时使用此命令
+  - *stale* - 允许在从节点具有陈旧数据时使用此命令
+  - *skip_monitor* - 在MONITOR中不会显示此命令
+  - *asking* - 集群相关的 - 即使正在导入数据也接受此命令
+  - *fast* - 命令以常量或log(N)时间运行。用于延迟监控。
+  - *movablekeys* - key在命令中没有预先确定的位置。你必须自己发现key。
 
 
-### Movable Keys
+### 可变位置的Key
 
 ```
 1) 1) "sort"
@@ -107,40 +103,35 @@ Command flags is @array-reply containing one or more status replies:
    6) (integer) 1
 ```
 
-Some Redis commands have no predetermined key locations.  For those commands,
-flag `movablekeys` is added to the command flags @array-reply.  Your Redis
-Cluster client needs to parse commands marked `movabkeleys` to locate all relevant key positions.
+某些Redis命令没有预先确定key的位置。对于那些命令，标志`movablekeys`会被添加到命令的标志[array-reply](/topics/protocol.html#array-reply)中。
+你的Redis集群客户端需要解析标记为`movabkeleys`的命令，以便定位所有相关的key的位置。
 
-Complete list of commands currently requiring key location parsing:
+目前需要解析key位置的完整命令列表：
 
-  - `SORT` - optional `STORE` key, optional `BY` weights, optional `GET` keys
-  - `ZUNIONSTORE` - keys stop when `WEIGHT` or `AGGREGATE` starts
-  - `ZINTERSTORE` - keys stop when `WEIGHT` or `AGGREGATE` starts
-  - `EVAL` - keys stop after `numkeys` count arguments
-  - `EVALSHA` - keys stop after `numkeys` count arguments
+  - `SORT` - 可选的`STORE` key，可选的`BY`权重，可选的`GET` keys
+  - `ZUNIONSTORE` - keys参数列表在`WEIGHT`或者`AGGREGATE`之前
+  - `ZINTERSTORE` - keys参数列表在`WEIGHT`或者`AGGREGATE`之前
+  - `EVAL` - keys列表是在参数`numkeys`之后的`numkeys`个参数
+  - `EVALSHA` - keys列表是在参数`numkeys`之后的`numkeys`个参数
 
-Also see `COMMAND GETKEYS` for getting your Redis server tell you where keys
-are in any given command.
+另请参阅`COMMAND GETKEYS`来让Redis服务器告诉你任意给定完整命令中的keys在哪里。
 
-### First Key in Argument List
+### 参数列表中的第一个Key
 
-For most commands the first key is position 1.  Position 0 is
-always the command name itself.
+对大部分命令来说，第一个key的位置是1。位置0始终是命令名称本身。
 
 
-### Last Key in Argument List
+### 参数列表中的最后一个Key
 
-Redis commands usually accept one key, two keys, or an unlimited number of keys.
+Redis命令通常可以接收一个key，两个key或者无限数量的key。
 
-If a command accepts one key, the first key and last key positions is 1.
+如果命令只接收一个key，那么第一个key和最后一个key的位置都是1。
 
-If a command accepts two keys (e.g. `BRPOPLPUSH`, `SMOVE`, `RENAME`, ...) then the
-last key position is the location of the last key in the argument list.
+如果命令接收两个key（例如：`BRPOPLPUSH`、`SMOVE`、`RENAME`等），那么最后一个key的位置是最后一个key在参数列表中的位置。
 
-If a command accepts an unlimited number of keys, the last key position is -1.
+如果命令接收无限数量的key，那么最后一个key的位置是-1。
 
-
-### Step Count
+### 步数
 
 <table style="width:50%">
 <tr><td>
@@ -168,18 +159,14 @@ If a command accepts an unlimited number of keys, the last key position is -1.
 </td></tr>
 </table>
 
-Key step count allows us to find key positions in commands
-like `MSET` where the format is `MSET _key1_ _val1_ [key2] [val2] [key3] [val3]...`.
+Key的步数允许我们在命令中查找key的位置，比如`MSET`，其格式是`MSET _key1_ _val1_ [key2] [val2] [key3] [val3]...`。
 
-In the case of `MSET`, keys are every other position so the step value is 2.  Compare
-with `MGET` above where the step value is just 1.
-
+在`MSET`的用例中，key是每隔一个位置出现，所以步数的值是2。对比上面的`MGET`，其步数是1。
 
 
 ## 返回值
 
-[array-reply](/topics/protocol.html#array-reply): nested list of command details.  Commands are returned
-in random order.
+[array-reply](/topics/protocol.html#array-reply)：嵌套的命令详细信息列表。命令以随机的顺序返回。
 
 ## 例子
 

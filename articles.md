@@ -9,6 +9,73 @@ disqusUrl: http://redis.cn/articles.html
 
 # 文章列表
 
+## 2018-10
+* [实现故障恢复自动化：详解Redis哨兵技术 ](/articles/20181020001.html)（来源：DBAplus社群）
+* [Redis真的那么好用吗？](/articles/20181020002.html)（来源：python 爬虫与人工智能）
+* [MongoDB、HBase、Redis 等 NoSQL 优劣势、应用场景](/articles/20181020003.html)（来源：51CTO）
+* [如何优雅地用Redis实现分布式锁](/articles/20181020004.html)（来源：Java架构沉思录）
+* [Redis如何实现乐观锁](/articles/20181020005.html)（来源：CSDN）
+* [Redis开源项目的终极杀手？CRUG解读Redis开源协议变更](/articles/20181020006.html)（来源：中间件小哥）
+* [Redis 5.0 正式发布！](/articles/20181020007.html)（来源：开源中国）
+* [Redis杀死许可证，闭源的有：RediSearch、Redis Graph、ReJSON、ReBloom、Redis-ML](https://mp.weixin.qq.com/s/IWP7e_XbwIPZ3tUrqu6LVw)（来源：云头条）
+* [Redis：Kubernetes 带我飞！](https://segmentfault.com/a/1190000014453291)（来源：segmentfault）
+* [以Redis为例，详谈分布式系统缓存的细枝末节](http://www.cnblogs.com/bsfz/p/9568591.html)（来源：博客园）
+* [Redis模块化介绍意译与解析](https://charpty.com/article/redis-trs-topics-modules-intro?from=timeline&isappinstalled=0)（来源：charpty的博客）
+* [大新闻 - Redis要商业化运营！这是大趋势么？](https://mp.weixin.qq.com/s/jWyaRFpuSGaZ8Ze2o7HCsA)（来源： CRUG公众号 rediscn）
+* [Redis的商业化运营背后，KV存储的趋势化发展](http://www.sohu.com/a/270496558_100195299)（来源：搜狐网）
+
+## 2018-09
+* [Redis作者摊上事儿了：多人要求修改Redis主从复制术语master/slave](https://mp.weixin.qq.com/s/DWH7e87q_h52VPH8amlrXw)（来源：infoQ）
+* [阿里云Redis多线程性能提升思路解析](https://mp.weixin.qq.com/s/IF5iL9R7-bSauO1NI7Z9Jg)（来源：云栖社区）
+* [Pika3.0正式发布](https://mp.weixin.qq.com/s?__biz=MzIyNzUwMjM2MA==&mid=2247485763&idx=1&sn=a04f5bcd45c50544ea2cebe7ba788f80&chksm=e8617934df16f0221320740d6955d9aad2b4f3650481a2b533a4679b0ef4dfd4309e9cf5cf1a&mpshare=1&scene=23&srcid=0801Zc75m3q3h3SfCYnUnx3q%23rd) （来源：HULK一线技术杂谈）
+* [Redis高可用详解：持久化技术及方案选择](https://mp.weixin.qq.com/s?__biz=MzI4NTA1MDEwNg==&mid=2650769300&idx=1&sn=49a11efa1a6ee605fceaddf240a55c40&chksm=f3f93201c48ebb175fa76053d95e315b621485b0e65e42d8b41fe91b8f859c9278f3adec7ca9&mpshare=1&scene=23&srcid=0731SR4C94CRM0Mljym0oEI3%23rd) （来源：DBAplus社群）
+* [稳住～Redis缓存数据库安全加固指导汇总](https://bbs.huaweicloud.com/forum/thread-11382-1-1.html) （来源：华为云社区）
+* [多级缓存设计详解 - 给数据库减负，刻不容缓！](https://mp.weixin.qq.com/s?__biz=MzU1MzE2NzIzMg==&mid=2247485727&idx=1&sn=319e4c967c3d27ffd1d90db8ff5d1f15&chksm=fbf7b9f0cc8030e6a90ca223409d29d719766bda3d6ca67f4f8db693ea6e865efa344db4ef29&mpshare=1&scene=23&srcid=0726S7HTxGItY2fjbNQCeaUh%23rd) （来源：京东技术）
+* [从Redislabs官网获悉：Docker容器中运行的Redis实例突破10亿](https://redislabs.com/) （来源：Redislabs官网）
+* [实战：使用Redis实现分布式锁](https://www.cnblogs.com/middleware/p/9237098.html) （来源：博客园）
+* [干货：从单机到2000万QPS: 知乎Redis平台发展与演进之路](https://mp.weixin.qq.com/s/YKJ-Y6EZevvMK8MX38xE3w)（来源：高可用架构）
+* [【原创】自己动手写一个能操作redis的客户端](https://www.cnblogs.com/rjzheng/p/9347749.html) （来源：博客园）
+
+## 2018-08
+* [Redis缓存数据库安全加固指导（一)](https://mp.weixin.qq.com/s/Jqoi3JfJGJicFxR7aNYTZQ)（来源：华为云中间件小哥）
+* [session一致性架构设计实践](https://mp.weixin.qq.com/s/iTdHyODJ12RvTbe6MILg6Q)（来源：架构师之路）
+* [可能是目前最详细的Redis内存模型及应用解读](http://dbaplus.cn/news-158-2127-1.html) （来源：DBAplus社群）
+* [详解python调用redis lua内嵌脚本的高级用法](http://xiaorui.cc/2016/03/27/%E8%AF%A6%E8%A7%A3python%E8%B0%83%E7%94%A8redis-lua%E5%86%85%E5%B5%8C%E8%84%9A%E6%9C%AC%E7%9A%84%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95) （来源：芮风云的博客）
+* [如何用Redis平衡海量信息推送的实效与体量](http://dbaplus.cn/news-158-2123-1.html) （来源：DBAplus社群）
+* [Redis 高负载下的中断优化](https://tech.meituan.com/Redis_High_Concurrency_Optimization.html) （来源：美团点评技术博客）
+* [Redis开发设计规范及案例分析](https://mp.weixin.qq.com/s/gw1X34vtiwRcEYgLbWp23w) （来源：华为云中间件小哥）
+* [美团针对Redis Rehash机制的探索和实践](https://tech.meituan.com/Redis_Rehash_Practice_Optimization.html) （来源：美团点评技术博客）
+* [大规模codis集群的治理与实践](https://mp.weixin.qq.com/s/O4AqVdibJWs2ivs6dhdClQ)（来源：小时光茶社）
+* [使用Redis解决“树”形数据的复杂查询](https://my.oschina.net/u/1469495/blog/1504818)（来源：开源中国）
+
+## 2018-07
+
+* [外行看热闹，内行看门道，盘点精彩世界杯背后你看得见的Redis身影](https://m.aliyun.com/yunqi/articles/604597?from=timeline&isappinstalled=0)（来源：云栖社区）
+* [Redis混合存储-冷热数据识别与交换](https://www.toutiao.com/i6579010633843360264/?tt_from=weixin&utm_campaign=client_share&from=groupmessage&timestamp=1531841796&app=news_article&utm_source=weixin&isappinstalled=0&iid=37773691708&utm_medium=toutiao_android&wxshare_count=3&pbid=6499405354623354381)（来源：今日头条）
+* [阿里云技术专家仲肥：了解并使用Redis 4.0](https://mp.weixin.qq.com/s?__biz=MzI0NTE4NjA0OQ==&mid=2658357827&idx=1&sn=9c0090377e54eacab0752b2673563fe7&chksm=f2d5992dc5a2103b6de077ed57707169f18f4bc16a3c8b6a7a13fcc36ae56e01c8be04f369c5&mpshare=1&scene=23&srcid=0701spZ5Syw7Gr8PpUxvddhK%23rd) （来源：云栖社区）
+* [Redis开发设计规范及案例分析](https://mp.weixin.qq.com/s?__biz=MzU0OTE4MzYzMw==&mid=2247484956&idx=1&sn=7c4df84b7f388407323693346e497eb7&chksm=fbb28fe2ccc506f4a6fbd8781352ffb7339dc60451f12c4559d907aead05b7388546d8819518&mpshare=1&scene=23&srcid=070977TTxTeXE1KhfB8CcksS%23rd) （来源：架构师小秘圈）
+* [Flume+Kafka+Storm+Redis构建大数据实时处理系统](https://mp.weixin.qq.com/s?__biz=MzI4NTA1MDEwNg==&mid=2650768724&idx=1&sn=214ae952886f6d912b88d6c2445c252e&chksm=f3f930c1c48eb9d7551cd70d21d3d02b04eb9ee9832e3405857225f5d9cdacac8291634c651f&mpshare=1&scene=23&srcid=0709OGOAufVUi71njRGepk6p%23rd) （来源：DBAplus社群）
+* [技术前沿：分布式缓存Redis Cluster在华泰证券的探索与实践](https://mp.weixin.qq.com/s?__biz=MjM5MDAxOTk2MQ==&mid=2650278770&idx=1&sn=5b1e2d1de5458f8967b4f9ff4cc6b5dc&chksm=be47936489301a7231379fe0330ee01232cc4c21c0fd08c65c57232c5bb189266c5c46e96d6f&mpshare=1&scene=23&srcid=0704cjXd77cRd4Pjk5QMnZhx%23rd) （来源：数据和云）
+* [Redis查漏补缺：最易错过的技术要点大扫盲](https://mp.weixin.qq.com/s?__biz=MzI4NTA1MDEwNg==&mid=2650768368&idx=1&sn=61972539ec7b0a0b68cce5f127174ae6&chksm=f3f93665c48ebf7322943d1974f63e883488c60bbb2e4414bccf6dfe9d8489ad58e1557ae270&mpshare=1&scene=23&srcid=0625sJRHndesZGlMHGPWxNZK%23rd) （来源：DBAplus社群）
+* [10个常见的Redis面试"刁难"问题](https://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&mid=2653549993&idx=1&sn=27240c1aa611c352a487ecee8ded050b&chksm=813a6431b64ded27fd43bd07d5245b672a6e03e7b7d4482ccef58510d97dfadc39d82d257416&mpshare=1&scene=23&srcid=07247wQ3gUtqXo3EEDXNgcVk%23rd) （来源：高可用架构）
+* [挑战Kafka！Redis5.0重量级特性Stream尝鲜](https://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&mid=2653549949&idx=1&sn=7f6c4cf8642478574718ed0f8cf61409&chksm=813a64e5b64dedf357cef4e2894e33a75e3ae51575a4e3211c1da23008ef79173962e9a83c73&mpshare=1&scene=23&srcid=0724P2ImfTli0CPqWv2u9B58%23rd) （来源：高可用架构）
+* [Redisson荣登Github的Java排行榜前50位](https://github.com/topics/java?l=java)
+  Redisson介绍：[https://github.com/redisson/redisson?from=timeline&isappinstalled=0](https://github.com/redisson/redisson?from=timeline&isappinstalled=0) （来源：github.com）
+
+## 2018-06
+
+- [2018年6月全球数据库排名：Redis5月大涨5.24%](https://db-engines.com/en/ranking) (来源：db-engines.com)
+- [Redis公布5.0版本12项新特性](https://mp.weixin.qq.com/s/6oSfF1rvcfpdsRMf5UCmGA)（来源：高可用架构公众号）
+- [史上最全Redis高可用技术解决方案大全](https://mp.weixin.qq.com/s/BoLsVKYyu8yRXZbxd1uuQw)（来源：CRUG公众号）
+- [通用Redis架构+实用辅助工具，逐一攻破DBA痛难点](https://mp.weixin.qq.com/s/K94lNadsoXOZ529-lX6DUA)（来源：DBAplus社群公众号）
+- [Kubernetes-基于Helm安装部署高可用的Redis](https://www.kubernetes.org.cn/3974.html)（来源：kubernetes中文社区）
+- [Redis Cluster基于Docker容器部署](https://blog.csdn.net/lee9213/article/details/80321956) （来源：lee9213的专栏@CSDN）
+- [Redis 高负载下的中断优化](https://blog.csdn.net/meituantech/article/details/80062289)（来源：MeituanTech的博客@CSDN）
+- [基于redis和docker的guestbook留言簿部署案例](https://www.cnblogs.com/dongdongwq/p/5446081.html)（来源：奔跑的东东@博客园）
+- [Docker 部署SpringBoot项目整合 Redis 镜像做访问计数Demo](http://www.ymq.io/2018/01/11/Docker-deploy-spring-boot-Integrate-redis)（来源：搜云库）
+- [详解腾讯云新一代Redis缓存数据库](http://www.citnews.com.cn/news/201803/72458.html)（来源：citnews中文科技资讯）
+
+
 ## 2018-01
 
 
@@ -221,7 +288,7 @@ disqusUrl: http://redis.cn/articles.html
 
 * 2017-08-29  [Why Your MongoDB needs Redis](https://redislabs.com/docs/why-your-mongodb-needs-redis/?utm_content=buffereb06b&utm_medium=social&utm_source=linkedin.com&utm_campaign=buffer)
 
-* 2017-08-30  [Redis Cluster 迁移案例](https://mp.weixin.qq.com/s?__biz=MzA4Nzc4MjI4MQ==&mid=2652402631&idx=1&sn=3ebb8cdcec1b8dfcae64eaf306f4bce6&chksm=8bd8f521bcaf7c37bfccbf13d56e075f30d238ff441c73e4ae9331af27061475056e7abf36a5&mpshare=1&scene=1&srcid=0830twdFe3SIO6CN5vOFVppm&key=93cfae3cc9d95451ddf4520ebfb0fbb9430e654b95dc5b8e844800335468c60294b0ec67168a4ec36f1533483546f33c4e50e43ecbd2d678b4e9a1fbb4480a8d19e2fee8a4990038b3028bfc885f4967&ascene=0&uin=MzM4Njg2NDU1&devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.12.5+build(16F73)&version=12020710&nettype=WIFI&fontScale=100&pass_ticket=Q%2FLMiwdx488Q4J8ezSyEJBRsYHh7VqfK69ObExc%2BIRXji8mS5Bo4Zwf6Arcoqmoi)
+* 2017-08-30  [Redis Cluster 迁移案例](/articles/20170830103.html)
 
 * 2017-08-31  [RedisConf17 - Redis Flash in Google Cloud with Kubernetes - Kelsey Hightower](https://www.youtube.com/watch?v=RCD-JqV2QpQ)
 
@@ -232,11 +299,11 @@ disqusUrl: http://redis.cn/articles.html
 
 * 2017-07-02  [RedisConf17 - How Roblox Keeps Millions of Users up to Date with Redis Pub - Peter Philips](https://www.youtube.com/watch?v=nXTxXSWBayg&app=desktop)
 
-* 2017-07-03  [redis哨兵模式使用lua脚本实现分布式锁](http://www.voidcn.com/blog/Mr_Smile2014/article/p-6658981.html)
+* 2017-07-03  [redis哨兵模式使用lua脚本实现分布式锁](/articles/20170703107.html)
 
-* 2017-07-04  [Redisson性能压测权威发布](https://mp.weixin.qq.com/s?__biz=MjM5NjkxMjA1MA==&mid=2247483746&idx=1&sn=9e9fe2e91f2566aac6227f93281dffc5&chksm=a6e34fbf9194c6a9033270cff2535522904ca1929d95c5622e5a25603ea1b4995610a0fab373&mpshare=1&scene=1&srcid=07046PzadWRRycnrcwjs82ut&key=df6095916712388e6dfb106bdc6094ae7e3456b08613ca648eca028843d82428612d92db74de3e33fba6b7ad3301315ae79d9bfd149068405a497419e43e47880e286732d55a2722bb9062256d74e07a&ascene=0&uin=MzM4Njg2NDU1&devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.12.5+build(16F73)&version=12020710&nettype=WIFI&fontScale=100&pass_ticket=iqAMbFo%2FIvxdIiTZGiBd%2F%2FdEf4wLij8x4w%2BtUhL%2BQD%2F1FKZ%2BLbfn4zwWKuwrgzrq)
+* 2017-07-04  [Redisson性能压测权威发布](/articles/20170704108.html)
 
-* 2017-07-05  [听滴滴大神给你讲Redis Cluster迁移遇到的坑](https://mp.weixin.qq.com/s?__biz=MjM5NjkxMjA1MA==&mid=2247483772&idx=1&sn=51d93d22e1ed2efbff5596839d5b77df&chksm=a6e34fa19194c6b7e4775eea10bfb5632458d04706ed1620dc0432f6911cc6a306b86dee26c8&mpshare=1&scene=1&srcid=0705TBGOIAsdqlpsm3IvyoB5&key=df6095916712388e5692fea773f1361740a200117ea47f983bb3c66a0975e614d1c70abd5e1c6dde416caba1a239852df63726075ac41c3259d278ed76c53f3d0b58ba3bcd8b7c6f66ca475d9db5295f&ascene=0&uin=MzM4Njg2NDU1&devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.12.5+build(16F73)&version=12020710&nettype=WIFI&fontScale=100&pass_ticket=mYdTJugINDYt%2BrCxiF%2FYcu9ftJpYtOM%2BTmouv5L%2F%2BPgTiX7WRIRzN7%2BGzNwlrP9k)
+* 2017-07-05  [听滴滴大神给你讲Redis Cluster迁移遇到的坑](/articles/20170705109.html)
 
 * 2017-07-06  [A local proxy server for discovering and to Redis via Sentinel](https://github.com/RedisLabs/sentinel_tunnel)
 
@@ -607,13 +674,13 @@ disqusUrl: http://redis.cn/articles.html
 ## 2016-11
 
 
-* 2016-11-02  [Distributed Locks using Golang and Redis](https://kylewbanks.com/blog/distributed-locks-using-golang-and-redis)
+* 2016-11-02  [Distributed Locks using Golang and Redis](/articles/20161102.html)
 
-* 2016-11-03  [Redis短连接性能优化](https://yq.aliyun.com/articles/62593)
+* 2016-11-03  [Redis短连接性能优化](/articles/20161103.html)
 
-* 2016-11-07  [redis启动流程（一）](http://www.ituring.com.cn/article/265187)
+* 2016-11-07  [redis启动流程（一）](/articles/20161107001.html)
 
-* 2016-11-07  [Redis Cluster多机房高可用实现--基于客户端](https://cachecloud.github.io/2016/11/03/Redis%20Cluster%E5%A4%9A%E6%9C%BA%E6%88%BF%E9%AB%98%E5%8F%AF%E7%94%A8%E5%AE%9E%E7%8E%B0/)
+* 2016-11-07  [Redis Cluster多机房高可用实现--基于客户端](/articles/20161107002.html)
 
 * 2016-11-08  [redis启动流程（二）](http://www.ituring.com.cn/article/196415)
 
@@ -925,66 +992,66 @@ disqusUrl: http://redis.cn/articles.html
 
 * 2016-08-10  [Redis 3.2.0 is out! ](http://antirez.com/news/104)
 
-* 2016-08-10  [动态追踪技术（中） - Dtrace、SystemTap、火焰图](http://mp.weixin.qq.com/s?__biz=MjM5ODQ2MDIyMA==&mid=2650712266&idx=1&sn=54d909d240eb701ae48467dc798ddc7f&scene=1&srcid=0506xZXTUptwNdQOqmeVNjjK#rd)
+* 2016-08-10  [动态追踪技术（中） - Dtrace、SystemTap、火焰图](/articles/20180810008.html)
 
-* 2016-08-10  [bloomfilter-redis: Distributed bloom filters on Redis (using the Hedis client). - Hackage](https://hackage.haskell.org/package/bloomfilter-redis)
+* 2016-08-10  [bloomfilter-redis: Distributed bloom filters on Redis (using the Hedis client). - Hackage](/articles/20180810007.html)
 
-* 2016-08-10  [Redis Keyspace Notifications – Redis](http://sc.qq.com/fx/u?r=gMmLTAA)
+* 2016-08-10  [Redis Keyspace Notifications – Redis](/articles/20180810006.html)
 
-* 2016-08-10  [How to setup HAProxy and Redis Sentinel for automatic failover between Redis Master and Slave servers – All Help & Support](https://discuss.zendesk.com/hc/en-us/articles/205309388-How-to-setup-HAProxy-and-Redis-Sentinel-for-automatic-failover-between-Redis-Master-and-Slave-servers?from=singlemessage&isappinstalled=1)
+* 2016-08-10  [How to setup HAProxy and Redis Sentinel for automatic failover between Redis Master and Slave servers – All Help & Support](/articles/20180810005.html)
 
 * 2016-08-10  [HunanTV · GitHub](https://github.com/HunanTV)
 
-* 2016-08-10  [【互联网小兵】网易视频云：网易HBase基准性能测试之结果篇](http://toutiao.com/group/6278854910721638657/?iid=4180859862&app=news_article&wxshare_count=1&tt_from=weixin&utm_source=weixin&utm_medium=toutiao_android&utm_campaign=client_share)
+* 2016-08-10  [【互联网小兵】网易视频云：网易HBase基准性能测试之结果篇](/articles/20180810004.html)
 
-* 2016-08-10  [Software error doomed Japanese Hitomi spacecraft : Nature News & Comment](http://www.nature.com/news/software-error-doomed-japanese-hitomi-spacecraft-1.19835?from=timeline&isappinstalled=0)
+* 2016-08-10  [Software error doomed Japanese Hitomi spacecraft : Nature News & Comment](articles/20160810003.html)
 
 * 2016-08-10  [redis pdf](http://pan.baidu.com/share/link?shareid=3001852208&uk=285584457)
 
-* 2016-08-10  [Top Redis Headaches for Devops – Replication Buffer](https://redislabs.com/blog/top-redis-headaches-for-devops-replication-buffer#.VxzASUC3PqB)
+* 2016-08-10  [Top Redis Headaches for Devops – Replication Buffer](/articles/201608100002.html)
 
 * 2016-08-10  [QCon北京2016幻灯片下载合集](http://ppt.geekbang.org/qconbj2016?amp;amp;isappinstalled=0&amp;amp;amp;isappinstalled=0&amp;amp;from=timeline&amp;amp;isappinstalled=0&amp;from=timeline&amp;isappinstalled=0)
 
-* 2016-08-10  [JedisConnectionException: It seems like server has closed the connection-IT技术精华网](http://www.chepoo.com/jedis-connection-exception-it-seems-like-server-has-closed-the-connection.html)
+* 2016-08-10  [JedisConnectionException: It seems like server has closed the connection-IT技术精华网](/articles/20160810001.html)
 
 
 * 2016-08-11  [记一个Redis安全漏洞和Redis安全规范 - 今天](https://zhuoroger.github.io/2016/07/29/redis-sec/)
 
-* 2016-08-11  [zabbix监控redis多实例 - Zabbix - 运维网 - 手机版 - Powered by Discuz!](http://www.iyunv.com/thread-242436-1-1.html)
+* 2016-08-11  [zabbix监控redis多实例 - Zabbix - 运维网 - 手机版 - Powered by Discuz!](/articles/20160811001.html)
 
 
-* 2016-08-12  [Redis 数据自动清理 - CNode技术社区](https://cnodejs.org/topic/57838f4a3b501f7054982ee4)
+* 2016-08-12  [Redis 数据自动清理 - CNode技术社区](/articles/20160812.html)
 
 * 2016-08-13  [Redis on Apache Mesos, A New Framework - Dhilip Kumar S, Huawei Technologies - YouTube](http://sc.qq.com/fx/u?r=GVGVKgA)
 
-* 2016-08-14  [基于redis的点赞功能设计](http://sc.qq.com/fx/u?r=kLwc0nA)
+* 2016-08-14  [基于redis的点赞功能设计](/articles/20160814.html)
 
 * 2016-08-15  [Redis和SSRF - virusdefender's blog](http://sc.qq.com/fx/u?r=aGHmYjA)
 
 * 2016-08-15  [如何优雅地删除 Redis 大键 - 分享自 @开发者头条](http://toutiao.io/posts/50yn2h)
 
-* 2016-08-15  [延迟考虑 - Redis开发运维实践指南](http://sc.qq.com/fx/u?r=ietzTsA)
+* 2016-08-15  [延迟考虑 - Redis开发运维实践指南](articles/20160815001.html)
 
-* 2016-08-16  [每天近百亿条用户数据，携程大数据高并发应用架构涅槃](http://mp.weixin.qq.com/s?__biz=MzA5NzkxMzg1Nw==&mid=2653160427&idx=1&sn=e522cb1e1729d5e75113bc6d9bc673cc&scene=1&srcid=0816wsbhMVer2G7aOvYvDYyP#rd)
+* 2016-08-16  [每天近百亿条用户数据，携程大数据高并发应用架构涅槃](/articles/20160816.html)
 
-* 2016-08-17  [用redis来实现具有ack机制的消息队列](http://www.jianshu.com/p/57edefa80167)
+* 2016-08-17  [用redis来实现具有ack机制的消息队列](/articles/20160817.html)
 
 
-* 2016-08-19  [HyperLogLogs in Redis](https://robots.thoughtbot.com/hyperloglogs-in-redis)
+* 2016-08-19  [HyperLogLogs in Redis](/articles/20160831.html)
 
-* 2016-08-20  [Real-World Redis Tips - Heroku](https://blog.heroku.com/real-world-redis-tips)
+* 2016-08-20  [Real-World Redis Tips - Heroku](/articles/20160820.html)
 
-* 2016-08-22  [Random notes on improving the Redis LRU algorithm](http://antirez.com/news/109)
+* 2016-08-22  [Random notes on improving the Redis LRU algorithm](/articles/20160822.html)
 
-* 2016-08-23  [Setup Redis as the Session Store for Apache Tomcat 7 - DZone Big Data](http://sc.qq.com/fx/u?r=MN1ORsA)
+* 2016-08-23  [Setup Redis as the Session Store for Apache Tomcat 7 - DZone Big Data](/articles/20160823002.html)
 
-* 2016-08-23  [大规模排行榜系统实践及挑战](http://mp.weixin.qq.com/s?__biz=MzI3NTM1MjExMg==&mid=2247483816&idx=1&sn=136d3da5f2a7cf546440fa8279cbaa47&scene=1&srcid=0823pmID5jdOnO0qQSz1g1ez#rd)
+* 2016-08-23  [大规模排行榜系统实践及挑战](/articles/20160823001.html)
 
-* 2016-08-24  [使用 Docker Compose 部署基于 Sentinel 的高可用 Redis 集群 - 掘金](http://gold.xitu.io/entry/579868e80a2b580061e352d2)
+* 2016-08-24  [使用 Docker Compose 部署基于 Sentinel 的高可用 Redis 集群 - 掘金](/articles/20160824.html)
 
-* 2016-08-25  [Redis源码学习——BIO-云栖社区](https://m.aliyun.com/yunqi/articles/58703?from=singlemessage&isappinstalled=1)
+* 2016-08-25  [Redis源码学习——BIO-云栖社区](/articles/20160825.html)
 
-* 2016-08-29  [Asp.net Core 使用Redis存储Session](http://www.aichengxu.com/view/10939014)
+* 2016-08-29  [Asp.net Core 使用Redis存储Session](/articles/20160829.html)
 
 * 2016-08-30  [深入分析redis持久化](http://www.mobile-open.com/2016/955053.html)
 
@@ -994,19 +1061,19 @@ disqusUrl: http://redis.cn/articles.html
 ## 2016-07
 
 
-* 2016-07-26  [redis应用场景与最佳实践](http://www.huyanping.cn/redis%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E4%B8%8E%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5/)
+* 2016-07-26  [redis应用场景与最佳实践](/articles/20160726002.html)
 
-* 2016-07-26  [近千节点的Redis Cluster高可用集群案例:优酷蓝鲸优化实战](http://mp.weixin.qq.com/s?__biz=MzAwMDU1MTE1OQ==&mid=2653547585&idx=1&sn=9a664b16f656f757632cd4eb29f9a5dc&scene=1&srcid=0726LGdy9zmneqsZyAekKukJ#rd)
+* 2016-07-26  [近千节点的Redis Cluster高可用集群案例:优酷蓝鲸优化实战](/articles/20160726001.html)
 
-* 2016-07-28  [Redis压缩列表原理与应用分析](https://mp.weixin.qq.com/s?__biz=MzAwNjQwNzU2NQ==&mid=2650342814&idx=1&sn=aba5c247a8c726cea3a86bac64d4a339&scene=1&srcid=0727YNxfwO2zzZlW7AVplGMN&key=8dcebf9e179c9f3a7a34a51b0f07d506dbdf1c1ae28cc0442d989767a2f2950aa11e97ab9520b605645d5c50300a9a04&ascene=0&uin=MzM4Njg2NDU1)
+* 2016-07-28  [Redis压缩列表原理与应用分析](/articles/20160728.html)
 
 * 2016-07-29  [Apache Mesos runs Redis](https://github.com/mesos/mr-redis)
 
-* 2016-07-30  [codis，codis3.0和其他](https://mp.weixin.qq.com/s?__biz=MjM5NDMzMDE5NQ==&mid=402357641&idx=1&sn=7a00695620185ed57d09e5c591ebed0a&scene=1&srcid=0729ywJCIxWbnjJKBW1BaXYM&key=8dcebf9e179c9f3aebbcd0aded38c73549c899bab23ed9b05417ceb46e764c80dbf25c96f10cf8ce020110f03bcb2aec&ascene=0&uin=MzM4Njg2NDU1)
+* 2016-07-30  [codis，codis3.0和其他](/articles/2016073002.html)
 
-* 2016-07-30  [优酷蓝鲸近千节点的Redis集群运维经验总结](https://mp.weixin.qq.com/s?__biz=MzA5NzkxMzg1Nw==&mid=2653160253&idx=1&sn=52576dd6e5acfd7ba140efe67bc0fa6e&scene=1&srcid=0730MWmZSIgzaEhuJjt2ZJn2&pass_ticket=4nMfla%2BECFYqmXGvENtmJG9l7dThjwOasoT8r2q8h8tbHJgiyxfMA6v1jHqXAr7A#rd)
+* 2016-07-30  [优酷蓝鲸近千节点的Redis集群运维经验总结](articles/2016073001.html)
 
-* 2016-07-31  [【干货】Docker化高可用redis集群](https://mp.weixin.qq.com/s?__biz=MzI0NTE4NjA0OQ==&mid=2658351573&idx=2&sn=fb194491852b84b793233b2bebc456dc&scene=1&srcid=0731HDDs6lEuh8q2wMpmViy3&pass_ticket=JiiNCOOLwCNJRHCGqmKYIgl9nnA0YZMert1gbyFdNh5ojmB5oqvqi0LgW0GSOSY%2F#rd)
+* 2016-07-31  [【干货】Docker化高可用redis集群](/articles/20160731.html)
 
 
 

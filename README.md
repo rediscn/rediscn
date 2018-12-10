@@ -5,6 +5,26 @@
 
 ## 更新日志： ##
 
+### 2018年11月26日
+1、更新首页和下载页里redis的最新版本5.0.2。<br/>
+2、翻译[Redis Stream](http://www.redis.cn/topics/streams-intro.html)介绍，感谢[helloeson](https://github.com/helloeson)提供的翻译。<br/>
+3、翻译[XACK](http://www.redis.cn/commands/xack.html)、
+[XADD](http://www.redis.cn/commands/xadd.html)、
+[XCLAIM](http://www.redis.cn/commands/xclaim.html)、
+[XDEL](http://www.redis.cn/commands/xdel.html)、
+[XGROUP](http://www.redis.cn/commands/xgroup.html)、
+[XINFO](http://www.redis.cn/commands/xinfo.html)、
+[XLEN](http://www.redis.cn/commands/xlen.html)、
+[XPENDING](http://www.redis.cn/commands/xpending.html)、
+[XRANGE](http://www.redis.cn/commands/xrange.html)、
+[XREAD](http://www.redis.cn/commands/xread.html)、
+[XREADGROUP](http://www.redis.cn/commands/xreadgroup.html)、
+[XREVRANGE](http://www.redis.cn/commands/xrevrange.html)、
+[XTRIM](http://www.redis.cn/commands/xtrim.html)、
+[ZPOPMAX](http://www.redis.cn/commands/zpopmax.html)、
+[ZPOPMIN](http://www.redis.cn/commands/zpopmin.html)
+命令，感谢[helloeson](https://github.com/helloeson)提供的翻译。
+
 ### 2018年11月7日
 1、翻译[BZPOPMAX](http://www.redis.cn/commands/bzpopmax.html)、
 [BZPOPMIN](http://www.redis.cn/commands/bzpopmin.html)、

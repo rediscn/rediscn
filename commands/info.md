@@ -35,7 +35,7 @@ discuzTid: 990
 [bulk-string-reply](/topics/protocol.html#bulk-string-reply): 文本行的合集
 
 每一行包含了包含一种信息或者属性（从#字符开始）。
-所有的属性都是以字段:值（`field:value`）的形式，已`\r\n`结尾。
+所有的属性都是以字段:值（`field:value`）的形式，以`\r\n`结尾。
 
 ## 例子
 
@@ -146,24 +146,29 @@ discuzTid: 990
 
 请注意不同Redis版本会添加或者删除一些字段。一个健壮的客户端应用解析该命令的结果时，应该跳过未知的字段，并且优雅的处理缺少的字段。
 
-已下描述要求 Redis >= 2.4
-
+以下是Redis >= 2.4的字段说明。
 
 下面是所有 **server** 相关的信息:
 
 *   `redis_version`: Redis 服务器版本
 *   `redis_git_sha1`:  Git SHA1
 *   `redis_git_dirty`: Git dirty flag
+*   `redis_build_id`: 构建ID
+*   `redis_mode`: 服务器模式（standalone，sentinel或者cluster）
 *   `os`: Redis 服务器的宿主操作系统
 *   `arch_bits`: 架构（32 或 64 位）
 *   `multiplexing_api`:  Redis 所使用的事件处理机制
+*   `atomicvar_api`:  Redis使用的Atomicvar API
 *   `gcc_version`: 编译 Redis 时所使用的 GCC 版本
 *   `process_id`:  服务器进程的 PID
 *   `run_id`: Redis 服务器的随机标识符（用于 Sentinel 和集群）
 *   `tcp_port`: TCP/IP 监听端口
 *   `uptime_in_seconds`: 自 Redis 服务器启动以来，经过的秒数
 *   `uptime_in_days`: 自 Redis 服务器启动以来，经过的天数
+*   `hz`: 服务器的频率设置
 *   `lru_clock`: 以分钟为单位进行自增的时钟，用于 LRU 管理
+*   `executable`: 服务器的可执行文件路径
+*   `config_file`: 配置文件路径
 
 下面是所有 **clients** 相关的信息:
 
@@ -179,9 +184,23 @@ discuzTid: 990
 *   `used_memory_rss`: 从操作系统的角度，返回 Redis 已分配的内存总量（俗称常驻集大小）。这个值和 top 、 ps 等命令的输出一致。
 *   `used_memory_peak`: Redis 的内存消耗峰值（以字节为单位）
 *   `used_memory_peak_human`: 以人类可读的格式返回 Redis 的内存消耗峰值
+*   `used_memory_peak_perc`: 使用内存占峰值内存的百分比
+*   `used_memory_overhead`: 服务器为管理其内部数据结构而分配的所有开销的总和（以字节为单位）
+*   `used_memory_startup`: Redis在启动时消耗的初始内存大小（以字节为单位）
+*   `used_memory_dataset`: 以字节为单位的数据集大小（used_memory减去used_memory_overhead）
+*   `used_memory_dataset_perc`: used_memory_dataset占净内存使用量的百分比（used_memory减去used_memory_startup）
+*   `total_system_memory`: Redis主机具有的内存总量
+*   `total_system_memory_human`: 以人类可读的格式返回 Redis主机具有的内存总量
 *   `used_memory_lua`: Lua 引擎所使用的内存大小（以字节为单位）
+*   `used_memory_lua_human`: 以人类可读的格式返回 Lua 引擎所使用的内存大小
+*   `maxmemory`: maxmemory配置指令的值
+*   `maxmemory_human`: 以人类可读的格式返回 maxmemory配置指令的值
+*   `maxmemory_policy`: maxmemory-policy配置指令的值
 *   `mem_fragmentation_ratio`: `used_memory_rss` 和 `used_memory` 之间的比率
 *   `mem_allocator`: 在编译时指定的， Redis 所使用的内存分配器。可以是 libc 、 jemalloc 或者 tcmalloc 。
+*   `active_defrag_running`: 指示活动碎片整理是否处于活动状态的标志
+*   `lazyfree_pending_objects`: 等待释放的对象数（由于使用ASYNC选项调用UNLINK或FLUSHDB和FLUSHALL）
+
 在理想情况下， used_memory_rss 的值应该只比 used_memory 稍微高一点儿。
 
 当 rss > used ，且两者的值相差较大时，表示存在（内部或外部的）内存碎片。
@@ -190,28 +209,34 @@ discuzTid: 990
 
 当 used > rss 时，表示 Redis 的部分内存被操作系统换出到交换空间了，在这种情况下，操作可能会产生明显的延迟。
 
-当 Redis 释放内存时，分配器可能会，也可能不会，将内存返还给操作系统。
+由于Redis无法控制其分配的内存如何映射到内存页，因此常住内存（used_memory_rss）很高通常是内存使用量激增的结果。
+
+当 Redis 释放内存时，内存将返回给分配器，分配器可能会，也可能不会，将内存返还给操作系统。
 
 如果 Redis 释放了内存，却没有将内存返还给操作系统，那么 used_memory 的值可能和操作系统显示的 Redis 内存占用并不一致。
 
 查看 used_memory_peak 的值可以验证这种情况是否发生。
 
+要获得有关服务器内存的其他内省信息，可以参考[`MEMORY STATS`](/commands/memory-stats)和[`MEMORY DOCTOR`](/commands/memory-doctor)。
+
 下面是所有 **persistence** 相关的信息:
 
-*   `loading`: Flag indicating if the load of a dump file is on-going
-*   `rdb_changes_since_last_save`: Number of changes since the last dump
-*   `rdb_bgsave_in_progress`: Flag indicating a RDB save is on-going
-*   `rdb_last_save_time`: Epoch-based timestamp of last successful RDB save
-*   `rdb_last_bgsave_status`: Status of the last RDB save operation
-*   `rdb_last_bgsave_time_sec`: Duration of the last RDB save operation in seconds
-*   `rdb_current_bgsave_time_sec`: Duration of the on-going RDB save operation if any
-*   `aof_enabled`: Flag indicating AOF logging is activated
-*   `aof_rewrite_in_progress`: Flag indicating a AOF rewrite operation is on-going
-*   `aof_rewrite_scheduled`: Flag indicating an AOF rewrite operation
-     will be scheduled once the on-going RDB save is complete.
-*   `aof_last_rewrite_time_sec`: Duration of the last AOF rewrite operation in seconds
-*   `aof_current_rewrite_time_sec`: Duration of the on-going AOF rewrite operation if any
-*   `aof_last_bgrewrite_status`: Status of the last AOF rewrite operation
+*   `loading`: 指示转储文件（dump）的加载是否正在进行的标志
+*   `rdb_changes_since_last_save`: 自上次转储以来的更改次数
+*   `rdb_bgsave_in_progress`: 指示RDB文件是否正在保存的标志
+*   `rdb_last_save_time`: 上次成功保存RDB的基于纪年的时间戳
+*   `rdb_last_bgsave_status`: 上次RDB保存操作的状态
+*   `rdb_last_bgsave_time_sec`: 上次RDB保存操作的持续时间（以秒为单位）
+*   `rdb_current_bgsave_time_sec`: 正在进行的RDB保存操作的持续时间（如果有）
+*   `rdb_last_cow_size`: 上次RDB保存操作期间copy-on-write分配的字节大小
+*   `aof_enabled`: 表示AOF记录已激活的标志
+*   `aof_rewrite_in_progress`: 表示AOF重写操作正在进行的标志
+*   `aof_rewrite_scheduled`: 表示一旦进行中的RDB保存操作完成，就会安排进行AOF重写操作的标志
+*   `aof_last_rewrite_time_sec`: 上次AOF重写操作的持续时间，以秒为单位
+*   `aof_current_rewrite_time_sec`: 正在进行的AOF重写操作的持续时间（如果有）
+*   `aof_last_bgrewrite_status`: 上次AOF重写操作的状态
+*   `aof_last_write_status`: 上一次AOF写入操作的状态
+*   `aof_last_cow_size`: 上次AOF重写操作期间copy-on-write分配的字节大小
 
 `changes_since_last_save` refers to the number of operations that produced
 some kind of changes in the dataset since the last time either `SAVE` or

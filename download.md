@@ -1,7 +1,7 @@
 ---
 layout: index
-title: Redis 5.0.0 下载
-excerpt: Redis下载中心(Redis download)，下载各种版本的redis，包括最新redis 5.0.0稳定版redis,5.0.0-Beta版本以及win32/64版本
+title: Redis 5.0.2 下载
+excerpt: Redis下载中心(Redis download)，下载各种版本的redis，包括最新redis 5.0.2稳定版redis,5.0.2-Beta版本以及win32/64版本
 permalink: download.html
 disqusIdentifier: download
 disqusUrl: http://redis.cn/download.html
@@ -39,10 +39,10 @@ discuzTid: 854
                   <i class='fa fa-file-text-o'></i>
                   Release notes
                 </a>
-                <a class='download-link' href='http://download.redis.io/releases/redis-5.0.0.tar.gz'>
+                <a class='download-link' href='http://download.redis.io/releases/redis-5.0.2.tar.gz'>
                   <i class='fa fa-arrow-circle-o-down'></i>
                   Download
-                  5.0.0
+                  5.0.2
                 </a>
               </div>
             </li>
@@ -97,7 +97,7 @@ discuzTid: 854
           </p>
           <span id="installation" class="anchor"></span><h2 ><a href="#installation" class="anchor-link">*</a>安装</h2>
           <p>下载、解压、编译Redis</p>
-          <pre><code>$ wget http://download.redis.io/releases/redis-5.0.0.tar.gz&#x000A;$ tar xzf redis-5.0.0.tar.gz&#x000A;$ cd redis-5.0.0&#x000A;$ make</code></pre>
+          <pre><code>$ wget http://download.redis.io/releases/redis-5.0.2.tar.gz&#x000A;$ tar xzf redis-5.0.2.tar.gz&#x000A;$ cd redis-5.0.2&#x000A;$ make</code></pre>
           <p>
             进入到解压后的
             <code>src</code>
