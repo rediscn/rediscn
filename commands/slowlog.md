@@ -6,51 +6,35 @@ disqusIdentifier: command_slowlog
 disqusUrl: http://redis.cn/commands/slowlog.html
 commandsType: server
 discuzTid: 1057
+tranAuthor: wangqiang
 ---
 
-This command is used in order to read and reset the Redis slow queries log.
+此命令用于读取和重置Redis慢查询日志。
 
-## Redis slow log overview
+## Redis慢查询日志概述
 
-The Redis Slow Log is a system to log queries that exceeded a specified
-execution time.
-The execution time does not include I/O operations like talking with the client,
-sending the reply and so forth, but just the time needed to actually execute the
-command (this is the only stage of command execution where the thread is blocked
-and can not serve other requests in the meantime).
+Redis慢查询日志是一个记录超过指定执行时间的查询的系统。
+这里的执行时间不包括IO操作，比如与客户端通信，发送回复等等，而只是实际执行命令所需的时间（这是唯一在命令执行过程中线程被阻塞且不能同时处理其他请求的阶段）。
 
-You can configure the slow log with two parameters: _slowlog-log-slower-than_
-tells Redis what is the execution time, in microseconds, to exceed in order for
-the command to get logged.
-Note that a negative number disables the slow log, while a value of zero forces
-the logging of every command.
-_slowlog-max-len_ is the length of the slow log.
-The minimum value is zero.
-When a new command is logged and the slow log is already at its maximum length,
-the oldest one is removed from the queue of logged commands in order to make
-space.
+你可以用两个参数配置慢查询日志：_slowlog-log-slower-than_告诉Redis命令的执行时间超过多少微秒将会被记录。
+请注意，使用负数将会关闭慢查询日志，而值为0将强制记录每一个命令。
+_slowlog-max-len_是慢查询日志的长度。
+最小值是0。
+当一个新命令被记录，且慢查询日志已经达到其最大长度时，将从记录命令的队列中移除删除最旧的命令以腾出空间。
 
-The configuration can be done by editing `redis.conf` or while the server is
-running using the `CONFIG GET` and `CONFIG SET` commands.
+配置可以通过编辑`redis.conf`文件来完成，或者在服务器运行期间通过使用`CONFIG GET`和`CONFIG SET`命令来完成。
 
-## Reading the slow log
+## 读取慢查询日志
 
-The slow log is accumulated in memory, so no file is written with information
-about the slow command executions.
-This makes the slow log remarkably fast at the point that you can enable the
-logging of all the commands (setting the _slowlog-log-slower-than_ config
-parameter to zero) with minor performance hit.
+慢查询日志在内存中堆积，因此不会写入一个包含慢速命令执行信息的文件。
+这使得慢查询日志非常快，你可以开启所有命令的日志记录（设置_slowlog-log-slower-than_参数值为零），但性能较低。
 
-To read the slow log the **SLOWLOG GET** command is used, that returns every
-entry in the slow log.
-It is possible to return only the N most recent entries passing an additional
-argument to the command (for instance **SLOWLOG GET 10**).
+要读取慢查询日志，请使用**SLOWLOG GET**命令，此命令返回慢查询日志中的每一个条目。
+可以只返回最近的N个条目，通过给命令传入一个额外的参数（例如：**SLOWLOG GET 10**）。
 
-Note that you need a recent version of redis-cli in order to read the slow log
-output, since it uses some features of the protocol that were not formerly
-implemented in redis-cli (deeply nested multi bulk replies).
+请注意，你需要最新版本的redis-cli才能读取慢查询日志的输出，因为它使用了以前未在redis-cli中实现的协议的某些功能（深层嵌套的多批量回复）。
 
-## Output format
+## 输出格式
 
 ```
 redis 127.0.0.1:6379> slowlog get 2
@@ -66,26 +50,24 @@ redis 127.0.0.1:6379> slowlog get 2
       3) "100"
 ```
 
-Every entry is composed of four fields:
+每一个条目由四个字段组成：
 
-* A unique progressive identifier for every slow log entry.
-* The unix timestamp at which the logged command was processed.
-* The amount of time needed for its execution, in microseconds.
-* The array composing the arguments of the command.
+* 每个慢查询条目的唯一的递增标识符。
+* 处理记录命令的unix时间戳。
+* 命令执行所需的总时间，以微秒为单位。
+* 组成该命令的参数的数组。
 
-The entry's unique ID can be used in order to avoid processing slow log entries
-multiple times (for instance you may have a script sending you an email alert
-for every new slow log entry).
+条目的唯一ID可以用于避免慢查询条目被多次处理（例如，你也许有一个脚本使用每个新的慢查询日志条目给你发送报警邮件）。
 
-The ID is never reset in the course of the Redis server execution, only a server
-restart will reset it.
+条目ID在Redis服务器运行期间绝不会被重置，仅在Redis服务重启才重置它。
 
-## Obtaining the current length of the slow log
+## 获取慢查询日志的当前长度
 
-It is possible to get just the length of the slow log using the command
-**SLOWLOG LEN**.
+使用命令**SLOWLOG LEN**可以获得慢查询日志的长度。
 
-## Resetting the slow log.
+## 重置慢查询日志
 
-You can reset the slow log using the **SLOWLOG RESET** command.
-Once deleted the information is lost forever.
+你可以使用命令**SLOWLOG RESET**来重置慢查询日志。
+
+删除后，信息将永远丢失。
+
