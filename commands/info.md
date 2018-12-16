@@ -6,6 +6,7 @@ disqusIdentifier: command_info
 disqusUrl: http://redis.cn/commands/info.html
 commandsType: server
 discuzTid: 990
+tranAuthor: wangqiang
 ---
 
 `INFO`命令以一种易于理解和阅读的格式，返回关于Redis服务器的各种信息和统计数值。

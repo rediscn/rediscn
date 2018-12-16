@@ -6,24 +6,24 @@ disqusIdentifier: command_role
 disqusUrl: http://redis.cn/commands/role.html
 commandsType: server
 discuzTid: 1031
+tranAuthor: wangqiang
 ---
 
-Provide information on the role of a Redis instance in the context of replication, by returning if the instance is currently a `master`, `slave`, or `sentinel`. The command also returns additional information about the state of the replication (if the role is master or slave) or the list of monitored master names (if the role is sentinel).
+通过返回实例当前是`master`，`slave`还是`sentinel`来提供有关Redis实例在复制环境中的角色的信息。此命令还返回有关复制状态（如果角色是master或者slave）或者监听的master名称列表（如果角色是sentinel）的额外信息。
 
-## Output format
+## 输出格式
 
-The command returns an array of elements. The first element is the role of
-the instance, as one of the following three strings:
+此命令返回一个元素数组。第一个元素是实例的角色，即以下字符串之一：
 
 * "master"
 * "slave"
 * "sentinel"
 
-The additional elements of the array depends on the role.
+数组的其他额外元素取决于实例的角色。
 
-## Master output
+## 主节点输出
 
-An example of output when `ROLE` is called in a master instance:
+在主节点中调用`ROLE`命令时的输出示例：
 
 ```
 1) "master"
@@ -36,15 +36,15 @@ An example of output when `ROLE` is called in a master instance:
       3) "3129543"
 ```
 
-The master output is composed of the following parts:
+主节点输出由以下部分组成：
 
-1. The string `master`.
-2. The current master replication offset, which is an offset that masters and slaves share to understand, in partial resynchronizations, the part of the replication stream the slave needs to fetch to continue.
-3. An array composed of three elements array representing the connected slaves. Every sub-array contains the slave IP, port, and the last acknowledged replication offset.
+1. 字符串`master`。
+2. 当前主节点的复制偏移量，它是主节点和从节点共享的偏移量，用于理解在部分重新同步中，从节点需要提取以继续的复制流部分。
+3. 由三个元素组成的代表已连接的从节点的数组。每一个子数组包含了从节点的IP，端口和最后确认的复制偏移量。
 
-## Slave output
+## 从节点输出
 
-An example of output when `ROLE` is called in a slave instance:
+在从节点中调用`ROLE`命令时的输出示例：
 
 ```
 1) "slave"
@@ -54,17 +54,17 @@ An example of output when `ROLE` is called in a slave instance:
 5) (integer) 3167038
 ```
 
-The slave output is composed of the following parts:
+从节点输出由以下部分组成：
 
-1. The string `slave`.
-2. The IP of the master.
-3. The port number of the master.
-4. The state of the replication from the point of view of the master, that can be `connect` (the instance needs to connect to its master), `connecting` (the slave-master connection is in progress), `sync` (the master and slave are trying to perform the synchronization), `connected` (the slave is online).
-5. The amount of data received from the slave so far in terms of master replication offset.
+1. 字符串`slave`。
+2. 主节点的IP。
+3. 主节点的端口号。
+4. 从主节点的视角来看的复制状态，可以是`connect`（实例需要连接它的主节点），`connecting`（主从正在建立连接），`sync`（主从节点正在尝试执行同步），`connected`（从节点在线）。
+5. 到目前为止从主从复制偏移量接收的数据量。
 
-## Sentinel output
+## 哨兵输出
 
-An example of Sentinel output:
+哨兵输出的一个示例：
 
 ```
 1) "sentinel"
@@ -74,20 +74,20 @@ An example of Sentinel output:
    4) "metadata-master"
 ```
 
-The sentinel output is composed of the following parts:
+哨兵输出由以下部分组成：
 
-1. The string `sentinel`.
-2. An array of master names monitored by this Sentinel instance.
+1. 字符串`sentinel`。
+2. 当前哨兵实例监听的主节点名称数组。
 
-@return
+## 返回值
 
-@array-reply: where the first element is one of `master`, `slave`, `sentinel` and the additional elements are role-specific as illustrated above.
+[array-reply](/topics/protocol.html#array-reply)：第一个元素是`master`、`slave`、`sentinel`之一，其余元素根据角色而定，如上所示。
 
-@history
+## 历史
 
-* This command was introduced in the middle of a Redis stable release, specifically with Redis 2.8.12.
+* 此命令是在Redis稳定版本中引入的，特别是Redis 2.8.12。
 
-@examples
+## 例子
 
 ```cli
 ROLE
