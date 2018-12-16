@@ -238,96 +238,90 @@ discuzTid: 990
 *   `aof_last_write_status`: 上一次AOF写入操作的状态
 *   `aof_last_cow_size`: 上次AOF重写操作期间copy-on-write分配的字节大小
 
-`changes_since_last_save` refers to the number of operations that produced
-some kind of changes in the dataset since the last time either `SAVE` or
-`BGSAVE` was called.
+`changes_since_last_save`指的是从上次调用`SAVE`或者`BGSAVE`以来，在数据集中产生某种变化的操作的数量。
 
-If AOF is activated, these additional fields will be added:
+如果启用了AOF，则会添加以下这些额外的字段：
 
-*   `aof_current_size`: AOF current file size
-*   `aof_base_size`: AOF file size on latest startup or rewrite
-*   `aof_pending_rewrite`: Flag indicating an AOF rewrite operation
-     will be scheduled once the on-going RDB save is complete.
-*   `aof_buffer_length`: Size of the AOF buffer
-*   `aof_rewrite_buffer_length`: Size of the AOF rewrite buffer
-*   `aof_pending_bio_fsync`: Number of fsync pending jobs in background I/O queue
-*   `aof_delayed_fsync`: Delayed fsync counter
+*   `aof_current_size`: 当前的AOF文件大小
+*   `aof_base_size`: 上次启动或重写时的AOF文件大小
+*   `aof_pending_rewrite`: 指示AOF重写操作是否会在当前RDB保存操作完成后立即执行的标志。
+*   `aof_buffer_length`: AOF缓冲区大小
+*   `aof_rewrite_buffer_length`: AOF重写缓冲区大小
+*   `aof_pending_bio_fsync`: 在后台IO队列中等待fsync处理的任务数
+*   `aof_delayed_fsync`: 延迟fsync计数器
 
-If a load operation is on-going, these additional fields will be added:
+如果正在执行加载操作，将会添加这些额外的字段：
 
-*   `loading_start_time`: Epoch-based timestamp of the start of the load operation
-*   `loading_total_bytes`: Total file size
-*   `loading_loaded_bytes`: Number of bytes already loaded
-*   `loading_loaded_perc`: Same value expressed as a percentage
-*   `loading_eta_seconds`: ETA in seconds for the load to be complete
+*   `loading_start_time`: 加载操作的开始时间（基于纪元的时间戳）
+*   `loading_total_bytes`: 文件总大小
+*   `loading_loaded_bytes`: 已经加载的字节数
+*   `loading_loaded_perc`: 已经加载的百分比
+*   `loading_eta_seconds`: 预计加载完成所需的剩余秒数
 
 下面是所有 **stats** 相关的信息:
 
-*   `total_connections_received`: Total number of connections accepted by the server
-*   `total_commands_processed`: Total number of commands processed by the server
-*   `instantaneous_ops_per_sec`: Number of commands processed per second
-*   `rejected_connections`: Number of connections rejected because of `maxclients` limit
-*   `expired_keys`: Total number of key expiration events
-*   `evicted_keys`: Number of evicted keys due to `maxmemory` limit
-*   `keyspace_hits`: Number of successful lookup of keys in the main dictionary
-*   `keyspace_misses`: Number of failed lookup of keys in the main dictionary
-*   `pubsub_channels`: Global number of pub/sub channels with client subscriptions
-*   `pubsub_patterns`: Global number of pub/sub pattern with client subscriptions
-*   `latest_fork_usec`: Duration of the latest fork operation in microseconds
+*   `total_connections_received`: 服务器接受的连接总数
+*   `total_commands_processed`: 服务器处理的命令总数
+*   `instantaneous_ops_per_sec`: 每秒处理的命令数
+*   `rejected_connections`: 由于`maxclients`限制而拒绝的连接数
+*   `expired_keys`: key到期事件的总数
+*   `evicted_keys`: 由于`maxmemory`限制而导致被驱逐的key的数量
+*   `keyspace_hits`: 在主字典中成功查找到key的次数
+*   `keyspace_misses`: 在主字典中查找key失败的次数
+*   `pubsub_channels`: 拥有客户端订阅的全局pub/sub通道数
+*   `pubsub_patterns`: 拥有客户端订阅的全局pub/sub模式数
+*   `latest_fork_usec`: 最新fork操作的持续时间，以微秒为单位
 
 下面是所有 **replication** 相关的信息:
 
-*   `role`: Value is "master" if the instance is slave of no one, or "slave" if the instance is enslaved to a master.
-    Note that a slave can be master of another slave (daisy chaining).
+*   `role`: 如果实例不是任何节点的从节点，则值是"master"，如果实例从某个节点同步数据，则是"slave"。
+    请注意，一个从节点可以是另一个从节点的主节点（菊花链）。
 
-If the instance is a slave, these additional fields are provided:
+如果实例是从节点，则会提供以下这些额外字段：
 
-*   `master_host`: Host or IP address of the master
-*   `master_port`: Master listening TCP port
-*   `master_link_status`: Status of the link (up/down)
-*   `master_last_io_seconds_ago`: Number of seconds since the last interaction with master
-*   `master_sync_in_progress`: Indicate the master is syncing to the slave
+*   `master_host`: 主节点的Host名称或IP地址
+*   `master_port`: 主节点监听的TCP端口
+*   `master_link_status`: 连接状态（up或者down）
+*   `master_last_io_seconds_ago`: 自上次与主节点交互以来，经过的秒数
+*   `master_sync_in_progress`: 指示主节点正在与从节点同步
 
-If a SYNC operation is on-going, these additional fields are provided:
+如果SYNC操作正在进行，则会提供以下这些字段：
 
-*   `master_sync_left_bytes`: Number of bytes left before syncing is complete
-*   `master_sync_last_io_seconds_ago`: Number of seconds since last transfer I/O during a SYNC operation
+*   `master_sync_left_bytes`: 同步完成前剩余的字节数
+*   `master_sync_last_io_seconds_ago`: 在SYNC操作期间自上次传输IO以来的秒数
 
-If the link between master and slave is down, an additional field is provided:
+如果主从节点之间的连接断开了，则会提供一个额外的字段：
 
-*   `master_link_down_since_seconds`: Number of seconds since the link is down
+*   `master_link_down_since_seconds`: 自连接断开以来，经过的秒数
 
-The following field is always provided:
+以下字段将始终提供：
 
-*   `connected_slaves`: Number of connected slaves
+*   `connected_slaves`: 已连接的从节点数
 
-For each slave, the following line is added:
+对每个从节点，将会添加以下行：
 
-*   `slaveXXX`: id, IP address, port, state
+*   `slaveXXX`: id，地址，端口号，状态
 
 下面是所有 **cpu** 相关的信息:
 
-*   `used_cpu_sys`: System CPU consumed by the Redis server
-*   `used_cpu_user`:User CPU consumed by the Redis server
-*   `used_cpu_sys_children`: System CPU consumed by the background processes
-*   `used_cpu_user_children`: User CPU consumed by the background processes
+*   `used_cpu_sys`: 由Redis服务器消耗的系统CPU
+*   `used_cpu_user`: 由Redis服务器消耗的用户CPU
+*   `used_cpu_sys_children`: 由后台进程消耗的系统CPU
+*   `used_cpu_user_children`: 由后台进程消耗的用户CPU
 
-The **commandstats** section provides statistics based on the command type,
-including the number of calls, the total CPU time consumed by these commands,
-and the average CPU consumed per command execution.
+**commandstats**部分提供基于命令类型的统计，包含调用次数，这些命令消耗的总CPU时间，以及每个命令执行所消耗的平均CPU。
 
-For each command type, the following line is added:
+对于每一个命令类型，添加以下行：
 
 *   `cmdstat_XXX`: `calls=XXX,usec=XXX,usec_per_call=XXX`
 
-The **cluster** section currently only contains a unique field:
+**cluster**部分当前只包含一个唯一的字段：
 
-*   `cluster_enabled`: Indicate Redis cluster is enabled
+*   `cluster_enabled`: 表示已启用Redis集群
 
-The **keyspace** section provides statistics on the main dictionary of each database.
-The statistics are the number of keys, and the number of keys with an expiration.
+**keyspace**部分提供有关每个数据库的主字典的统计，统计信息是key的总数和过期的key的总数。
 
-For each database, the following line is added:
+对于每个数据库，提供以下行：
 
 *   `dbXXX`: `keys=XXX,expires=XXX`
 
