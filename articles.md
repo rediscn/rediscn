@@ -682,13 +682,13 @@ disqusUrl: http://redis.cn/articles.html
 
 * 2016-11-07  [Redis Cluster多机房高可用实现--基于客户端](/articles/20161107002.html)
 
-* 2016-11-08  [redis启动流程（二）](http://www.ituring.com.cn/article/196415)
+* 2016-11-08  [redis启动流程（二）](/articles/20161108.html)
 
-* 2016-11-09  [spring-data-redis的一个缺陷导致redis报错](http://irfen.me/spring-data-redis-expire-bug-mini/)
+* 2016-11-09  [spring-data-redis的一个缺陷导致redis报错](/articles/20161109.html)
 
-* 2016-11-10  [Nginx+Lua+Redis搭建高并发服务](http://gongfuxiang.com/post-98.html)
+* 2016-11-10  [Nginx+Lua+Redis搭建高并发服务](/articles/20161110001.html)
 
-* 2016-11-10  [如何在Redis中实现事务](http://www.tuicool.com/articles/jyINfin)
+* 2016-11-10  [如何在Redis中实现事务](/articles/20161110002.html)
 
 * 2016-11-12  [Developing A High Performance Recommendations Engine with Redis and Go](http://sweetcode.io/developing-high-performance-recommendations-engine-redis-go/)
 
