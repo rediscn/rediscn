@@ -1,21 +1,35 @@
 <script type='text/javascript'>
-	function aliCallBack(json){
-		if(json && json.success && json.data){
-			var adjson = eval(json.data[0].content);
-			if(adjson){
-				$("#ali_nav").html('<a href="'+adjson[0].url+'" target="_blank"><img src="'+adjson[0].img+'" style="width:100%;height:100%;" data-bd-imgshare-binded="1"></a>');
-			}
-		}
-	}
-	
+lastScrollY=0;
+
+function heartBeat(){ 
+	var diffY;
+	if (document.documentElement && document.documentElement.scrollTop)
+	diffY = document.documentElement.scrollTop;
+	else if (document.body)
+	diffY = document.body.scrollTop
+	else
+	{/*Netscape stuff*/}
+	//alert(diffY);
+	percent=.1*(diffY-lastScrollY); 
+	if(percent>0)percent=Math.ceil(percent); 
+	else percent=Math.floor(percent); 
+	document.getElementById("lovexin12").style.top=parseInt(document.getElementById
+	("lovexin12").style.top)+percent+"px";
+	document.getElementById("lovexin14").style.top=parseInt(document.getElementById
+	("lovexin12").style.top)+percent+"px";
+	lastScrollY=lastScrollY+percent; 
+	//alert(lastScrollY);
+}
+
+if(!isMobileBrowser()){
+		suspendcode12="<DIV id=\"lovexin12\" style='width:120px;height:270px;left:2px;POSITION:absolute;TOP:320px;z-index:3;'><a href='https://www.huaweicloud.com/product/dcs.html?wx' target='_blank'><img src='/images/couplets/hw_cp_20181217_1.png'/></a></div>"
+		suspendcode14="<DIV id=\"lovexin14\" style='width:120px;height:270px;right:2px;POSITION:absolute;TOP:320px;z-index:3;'><a href='https://www.huaweicloud.com/product/dcs.html?wx' target='_blank'><img src='/images/couplets/hw_cp_20181217_2.png'/></a></div>"
+		document.write(suspendcode12); 
+		document.write(suspendcode14); 
+		window.setInterval("heartBeat()",1);
+}
+
 $(document).ready(function(){ 
-		if($("#ali_nav").length){
-				$.ajax({
-             type: "get",
-             async: false,
-             url: "https://promotion.aliyun.com/promotion/adv/getAliyunAdv.htm?s=0df56e5827cb4947b8050f4ea282609d&p=page_1474882843539&pin=pos_1475983591976&cback=aliCallBack",
-             dataType: "jsonp"
-         });
-    }
+	
 });
 </script>
