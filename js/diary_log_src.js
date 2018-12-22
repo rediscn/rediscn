@@ -1,6 +1,7 @@
 
 function diary_log(){
-	diary_log_20181018();
+	diary_log_20181218();
+	//diary_log_20181018();
 	//diary_log_20180208();
 	//diary_log_20170912();
 	
@@ -41,6 +42,15 @@ function diary_log_20181018(){
 		+'\n热烈祝贺Redis 5.0正式发布！！！'
 		+'\n打个求职小广告'
 		+'\n鄙人正在找java技术经理、架构师相关职位的工作，期望工作地点长沙，看到请联系geelou@qq.com。'
+	);
+	
+	clog(b64Encode(msgStr));
+}
+
+function diary_log_20181218(){
+	var msgStr = (''
+	  +'\n-------------------------  华丽的分割线，以下内容写自20181218  -------------------------'
+		+'\n2018年已然接近尾声，2019年先实现个小目录，网站pv突破10万。'
 	);
 	
 	clog(b64Encode(msgStr));
