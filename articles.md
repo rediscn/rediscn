@@ -690,13 +690,13 @@ disqusUrl: http://redis.cn/articles.html
 
 * 2016-11-10  [如何在Redis中实现事务](/articles/20161110002.html)
 
-* 2016-11-12  [Developing A High Performance Recommendations Engine with Redis and Go](http://sweetcode.io/developing-high-performance-recommendations-engine-redis-go/)
+* 2016-11-12  [Developing A High Performance Recommendations Engine with Redis and Go](/articles/20161112.html)
 
-* 2016-11-14  [nredis-proxy 高性能Redis 服务中间件](https://mp.weixin.qq.com/s?__biz=MjM5NzM0MjcyMQ==&mid=2650068463&idx=2&sn=d9aa4cc763a6b0554b031a4451fe09aa&chksm=bedb0e8189ac87973f6c0e36befa0f91e3df001f7a5012f1f96b6044558e76e6e8ee73925f5a&mpshare=1&scene=1&srcid=1114Q2iLCh7RSgQxpj4MIEol&pass_ticket=f8d90t09A6IOHUOlGweuFraDmb%2FoaXSkQ87NXPsfpiGVn4ROqqkZf4SIvdT2IbIH#rd)
+* 2016-11-14  [nredis-proxy 高性能Redis 服务中间件](/articles/20161114001.html)
 
-* 2016-11-14  [由浅入深介绍 Redis LRU 策略的具体实现](http://blog.jobbole.com/107084/)
+* 2016-11-14  [由浅入深介绍 Redis LRU 策略的具体实现](/articles/20161114002.html)
 
-* 2016-11-16  [Socket.io和Redis写Realtime App](https://laravist.com/series/realtime-laravel-app-with-socket-io)
+* 2016-11-16  [Socket.io和Redis写Realtime App](/articles/20161116.html)
 
 * 2016-11-18  [An event-driven, asynchronous redis client based on netty](https://github.com/CodisLabs/nedis)
 

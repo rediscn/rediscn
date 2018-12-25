@@ -8,6 +8,9 @@ discuzTid: 855
 ---
 # redis中文网更新日志 #
 
+### 2018年12月25日
+1、更新首页和下载页里redis的最新版本5.0.3。
+
 ### 2018年11月26日
 1、更新首页和下载页里redis的最新版本5.0.2。<br/>
 2、翻译[Redis Stream](http://www.redis.cn/topics/streams-intro.html)介绍，感谢[helloeson](https://github.com/helloeson)提供的翻译。<br/>
