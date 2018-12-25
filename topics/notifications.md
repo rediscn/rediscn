@@ -5,98 +5,77 @@ permalink: topics/notifications.html
 disqusIdentifier: topics_notifications
 disqusUrl: http://redis.cn/topics/notifications.html
 discuzTid: 873
+tranAuthor: wangqiang
 ---
 
-Redis Keyspace Notifications
+Redis键空间通知
 ===
 
-**IMPORTANT** Keyspace notifications is a feature available since 2.8.0
+**重要：**键空间通知功能自2.8.0版本开始可用。
 
-Feature overview
+功能概述
 ---
 
-Keyspace notifications allows clients to subscribe to Pub/Sub channels in order
-to receive events affecting the Redis data set in some way.
+键空间通知允许客户端订阅发布/订阅频道，以便以某种方式接收影响Redis数据集的事件。
 
-Examples of the events that is possible to receive are the following:
+可能接收的事件示例如下：
 
-* All the commands affecting a given key.
-* All the keys receiving an LPUSH operation.
-* All the keys expiring in the database 0.
+* 所有影响给定键的命令。
+* 所有接收LPUSH操作的键。
+* 所有在数据库0中到期的键。
 
-Events are delivered using the normal Pub/Sub layer of Redis, so clients
-implementing Pub/Sub are able to use this feature without modifications.
+事件使用Redis的普通发布/订阅层传递，因此实现了发布/订阅的客户端无需修改即可使用此功能。
 
-Because Redis Pub/Sub is *fire and forget* currently there is no way to use this
-feature if you application demands **reliable notification** of events, that is,
-if your Pub/Sub client disconnects, and reconnects later, all the events
-delivered during the time the client was disconnected are lost.
+由于Redis的发布/订阅是*fire and forget*，因此如果你的应用要求**可靠的事件通知**，目前还不能使用这个功能，也就是说，如果你的发布/订阅客户端断开连接，并在稍后重连，那么所有在客户端断开期间发送的事件将会丢失。
 
-In the future there are plans to allow for more reliable delivering of
-events, but probably this will be addressed at a more general level either
-bringing reliability to Pub/Sub itself, or allowing Lua scripts to intercept
-Pub/Sub messages to perform operations like pushing the events into a list.
+将来有计划允许更可靠的事件传递，但可能会在更一般的层面上解决，要么为发布/订阅本身带来可靠性，要么允许Lua脚本拦截发布/订阅的消息以执行推送等操作，就像往队列里推送事件一样。
 
-Type of events
+事件类型
 ---
 
-Keyspace notifications are implemented sending two distinct type of events
-for every operation affecting the Redis data space. For instance a `DEL`
-operation targeting the key named `mykey` in database `0` will trigger
-the delivering of two messages, exactly equivalent to the following two
-`PUBLISH` commands:
+键空间通知的实现是为每一个影响Redis数据空间的操作发送两个不同类型的事件。例如，在数据库`0`中名为`mykey`的键上执行`DEL`操作，将触发两条消息的传递，完全等同于下面两个`PUBLISH`命令：
+
 
     PUBLISH __keyspace@0__:mykey del
     PUBLISH __keyevent@0__:del mykey
 
-It is easy to see how one channel allows to listen to all the events targeting
-the key `mykey` and the other channel allows to obtain information about
-all the keys that are target of a `del` operation.
+以上很容易看到，一个频道允许监听所有以键`mykey`为目标的所有事件，以及另一个频道允许获取有关所有`DEL`操作目标键的信息。
 
-The first kind of event, with `keyspace` prefix in the channel is called
-a **Key-space notification**, while the second, with the `keyevent` prefix,
-is called a **Key-event notification**.
+第一种事件，在频道中使用`keyspace`前缀的被叫做**键空间通知**，第二种，使用`keyevent`前缀的，被叫做**键事件通知**。
 
-In the above example a `del` event was generated for the key `mykey`.
-What happens is that:
+在以上例子中，为键`mykey`生成了一个`del`事件。
+会发生什么：
 
-* The Key-space channel receives as message the name of the event.
-* The Key-event channel receives as message the name of the key.
+* 键空间频道接收到的消息是事件的名称。
+* 键事件频道接收到的消息是键的名称。
 
-It is possible to enable only one kind of notification in order to deliver
-just the subset of events we are interested in.
+可以只启用其中一种通知，以便只传递我们感兴趣的事件子集。
 
-Configuration
+配置
 ---
 
-By default keyspace events notifications are disabled because while not
-very sensible the feature uses some CPU power. Notifications are enabled
-using the `notify-keyspace-events` of redis.conf or via the **CONFIG SET**.
+默认情况下，键空间事件通知是不启用的，因为虽然不太明智，但该功能会消耗一些CPU。可以使用redis.conf中的`notify-keyspace-events`或者使用**CONFIG SET**命令来开启通知。
 
-Setting the parameter to the empty string disables notifications.
-In order to enable the feature a non-empty string is used, composed of multiple
-characters, where every character has a special meaning according to the
-following table:
+将参数设置为空字符串会禁用通知。
+为了开启通知功能，使用了一个非空字符串，由多个字符组成，每一个字符都有其特殊的含义，具体参见下表：
 
-    K     Keyspace events, published with __keyspace@<db>__ prefix.
-    E     Keyevent events, published with __keyevent@<db>__ prefix.
-    g     Generic commands (non-type specific) like DEL, EXPIRE, RENAME, ...
-    $     String commands
-    l     List commands
-    s     Set commands
-    h     Hash commands
-    z     Sorted set commands
-    x     Expired events (events generated every time a key expires)
-    e     Evicted events (events generated when a key is evicted for maxmemory)
-    A     Alias for g$lshzxe, so that the "AKE" string means all the events.
+    K     键空间事件，以__keyspace@<db>__前缀发布。
+    E     键事件事件，以__keyevent@<db>__前缀发布。
+    g     通用命令（非类型特定），如DEL，EXPIRE，RENAME等等
+    $     字符串命令
+    l     列表命令
+    s     集合命令
+    h     哈希命令
+    z     有序集合命令
+    x     过期事件（每次键到期时生成的事件）
+    e     被驱逐的事件（当一个键由于达到最大内存而被驱逐时产生的事件）
+    A     g$lshzxe的别名，因此字符串AKE表示所有的事件。
 
-At least `K` or `E` should be present in the string, otherwise no event
-will be delivered regardless of the rest of the string.
+字符串中应当至少存在`K`或者`E`，否则将不会传递事件，不管字符串中其余部分是什么。
 
-For instance to enable just Key-space events for lists, the configuration
-parameter must be set to `Kl`, and so forth.
+例如，要为列表开启键空间事件，则配置参数必须设置为`Kl`，以此类推。
 
-The string `KEA` can be used to enable every possible event.
+字符串`KEA`可以用于开启所有可能的事件。
 
 Events generated by different commands
 ---
