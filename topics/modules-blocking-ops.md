@@ -13,6 +13,7 @@ Blocking commands in Redis modules
 Redis has a few blocking commands among the built-in set of commands.
 One of the most used is `BLPOP` (or the symmetric `BRPOP`) which blocks
 waiting for elements arriving in a list.
+Redis 有很多内嵌的阻塞命令。最常被使用的是`BLPOP`(或者相对的`BRPOP`),它能阻塞对list中元素访问。
 
 The interesting fact about blocking commands is that they do not block
 the whole server, but just the client calling them. Usually the reason to
@@ -20,6 +21,7 @@ block is that we expect some external event to happen: this can be
 some change in the Redis data structures like in the `BLPOP` case, a
 long computation happening in a thread, to receive some data from the
 network, and so forth.
+阻塞命令比较有意思的一点是它不阻塞整个服务器，而仅仅是调用的客户端。通常情况下
 
 Redis modules have the ability to implement blocking commands as well,
 this documentation shows how the API works and describes a few patterns
