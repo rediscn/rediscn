@@ -616,17 +616,17 @@ disqusUrl: http://redis.cn/articles.html
 ## 2016-12
 
 
-* 2016-12-01  [给redis cluster集群加上认证功能](http://lee90.blog.51cto.com/10414478/1863243)
+* 2016-12-01  [给redis cluster集群加上认证功能](/articles/20161201.html)
 
-* 2016-12-02  [Redis短连接性能优化](https://m.aliyun.com/yunqi/articles/62593)
+* 2016-12-02  [Redis短连接性能优化](/articles/20161202.html)
 
-* 2016-12-04  [Redis无限全量复制问题分析与优化](https://cachecloud.github.io/2016/11/24/%E5%85%A8%E9%87%8F%E5%A4%8D%E5%88%B6%E9%97%AE%E9%A2%98/)
+* 2016-12-04  [Redis无限全量复制问题分析与优化](/articles/20161204.html)
 
-* 2016-12-05  [Build Complex Express Sites with Redis and Socket.io](http://www.0daydown.com/12/668713.html)
+* 2016-12-05  [使用Redis和Socket.io构建复杂的Express站点](/articles/20161205001.html)
 
-* 2016-12-05  [如何让redis 迁移大key的restore性能提升6倍](https://m.aliyun.com/yunqi/articles/64884)
+* 2016-12-05  [如何让redis 迁移大key的restore性能提升6倍](/articles/20161205002.html)
 
-* 2016-12-06  [多级缓存：支撑海量读服务的瑞士军刀](https://mp.weixin.qq.com/s?__biz=MzI4NTA1MDEwNg==&mid=2650758519&idx=1&sn=c867dd3cfa2e82d118b12e48d2ef5d14&chksm=f3f9e8e2c48e61f493c0c0a457bd68402e2a768cfaf4e363db9e7418beb823b88a54c4a8781d&mpshare=1&scene=1&srcid=1206KNj7WJTZ2svt6Gk9fiBD&key=9ed31d4918c154c895b577d6435f2848e44683ce026361c8c68fc158957a56b159236ef28683e7f088ae5394e1bc3168fe4ae0ebe64bea2ad3357d217533cc94dffa1ab75b6d065b85be5abedc7067cc&ascene=0&uin=MzM4Njg2NDU1&devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.10.3+build(14D136)&version=11020201&pass_ticket=aVefF%2Bz3oWZH49SuNS6MyouFpANjV0dk4WYb%2FjlUfazxCsLPogaP3S4TUzZH2Mfz)
+* 2016-12-06  [多级缓存：支撑海量读服务的瑞士军刀](/articles/20161206.html)
 
 * 2016-12-07  [成享微信课堂第二十一期--利用Nginx+Redis+Tomcat集群实现负载均衡](https://mp.weixin.qq.com/s?__biz=MzA3ODEwNDUxNA==&mid=2651183317&idx=1&sn=1be5c11d84c9530c6e123ce87d192ecb&chksm=84b6aa78b3c1236e09c67fb3e6a3eb88af14291fd3a7817de409128341712fb2abbe896c0f04&mpshare=1&scene=1&srcid=1207hpXMSKyXV2c5tsljUFDj&key=9ed31d4918c154c8b50cc41ce7c4a06394eb1534d21f9976628967630e2602fa11aad9867dc8e5de180ab7ace4eb51bdb12ea6b31db8ccf27d169ed340162f1c69840bd41bb39d4fdb84bb85afea1c7c&ascene=0&uin=MzM4Njg2NDU1&devicetype=iMac+MacBookPro12%2C1+OSX+OSX+10.10.3+build(14D136)&version=11020201&pass_ticket=Tr6k7ty%2FUFRA19zqKCPFuh23JhGlVVPrqGGsXhyu4%2FYQKrt%2BTOe4SvnWYPMzWWkx)
 
@@ -698,11 +698,11 @@ disqusUrl: http://redis.cn/articles.html
 
 * 2016-11-16  [Socket.io和Redis写Realtime App](/articles/20161116.html)
 
-* 2016-11-18  [An event-driven, asynchronous redis client based on netty](https://github.com/CodisLabs/nedis)
+* 2016-11-18  [基于netty的事件驱动的异步redis客户端](/articles/20161118001.html)
 
-* 2016-11-18  [深入浅出 Redis client/server交互流程](https://mp.weixin.qq.com/s?__biz=MzIzNjUxMzk2NQ==&mid=2247483989&idx=1&sn=c1aac5b3eca9cb3f9e177d88ba189719&chksm=e8d7fd97dfa074815a7e6e1ce873d798bd4180820ee11f81b6dc332df6bda1810e6e6327179c&scene=0&pass_ticket=wSunpEuiPF7%2FQbYg%2B2nrTevzjVtfHc4OYisRYX7QMLfz9p09DAO1Z3mRej1zI5W8#rd)
+* 2016-11-18  [深入浅出 Redis client/server交互流程](/articles/20161118002.html)
 
-* 2016-11-21  [开放平台API接口调用频率控制系统设计浅谈](https://my.oschina.net/feichexia/blog/312591)
+* 2016-11-21  [开放平台API接口调用频率控制系统设计浅谈](/articles/20161121.html)
 
 * 2016-11-22  [Redis主从实现读写分离](http://m.jb51.net/article/95997.htm)
 
