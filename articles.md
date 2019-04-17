@@ -17,7 +17,7 @@ disqusUrl: http://redis.cn/articles.html
 * [Redis如何实现乐观锁](/articles/20181020005.html)（来源：CSDN）
 * [Redis开源项目的终极杀手？CRUG解读Redis开源协议变更](/articles/20181020006.html)（来源：中间件小哥）
 * [Redis 5.0 正式发布！](/articles/20181020007.html)（来源：开源中国）
-* [Redis杀死许可证，闭源的有：RediSearch、Redis Graph、ReJSON、ReBloom、Redis-ML](https://mp.weixin.qq.com/s/IWP7e_XbwIPZ3tUrqu6LVw)（来源：云头条）
+* [Redis杀死许可证，闭源的有：RediSearch、Redis Graph、ReJSON、ReBloom、Redis-ML](/articles/20181020008.html)（来源：云头条）
 * [Redis：Kubernetes 带我飞！](https://segmentfault.com/a/1190000014453291)（来源：segmentfault）
 * [以Redis为例，详谈分布式系统缓存的细枝末节](http://www.cnblogs.com/bsfz/p/9568591.html)（来源：博客园）
 * [Redis模块化介绍意译与解析](https://charpty.com/article/redis-trs-topics-modules-intro?from=timeline&isappinstalled=0)（来源：charpty的博客）
