@@ -9,7 +9,24 @@ discuzTid: 855
 # redis中文网更新日志 #
 
 ### 2019年4月17日
-1、更新首页和下载页里redis的最新版本5.0.4。
+1、更新首页和下载页里redis的最新版本5.0.4。<br/>
+2、翻译[CLUSTER FAILOVER](http://redis.cn/commands/cluster-failover.html)、
+[CLUSTER FORGET](http://redis.cn/commands/cluster-forget.html)、
+[CLUSTER REPLICATE](http://redis.cn/commands/cluster-replicate.html)、
+[CLUSTER RESET](http://redis.cn/commands/cluster-reset.html)、
+[CLUSTER SAVECONFIG](http://redis.cn/commands/cluster-saveconfig.html)、
+[CLUSTER SET-CONFIG-EPOCH](http://redis.cn/commands/cluster-set-config-epoch.html)、
+[CLUSTER SETSLOT](http://redis.cn/commands/cluster-setslot.html)、
+[CLUSTER SLAVES](http://redis.cn/commands/cluster-slaves.html)、
+[WAIT](http://redis.cn/commands/wait.html)、
+[PUBSUB](http://redis.cn/commands/pubsub.html)、
+[PUNSUBSCRIBE](http://redis.cn/commands/punsubscribe.html)、
+[UNSUBSCRIBE](http://redis.cn/commands/unsubscribe.html)、
+[SCRIPT LOAD](http://redis.cn/commands/script-load.html)、
+[CLIENT KILL](http://redis.cn/commands/client-kill.html)、
+[CLIENT PAUSE](http://redis.cn/commands/client-pause.html)、
+[CLIENT SETNAME](http://redis.cn/commands/client-setname.html)
+命令，感谢[gqhao](https://github.com/gqhao)提供的翻译。
 
 ### 2018年12月25日
 1、更新首页和下载页里redis的最新版本5.0.3。
@@ -168,7 +185,7 @@ discuzTid: 855
 1、更新首页和下载页里redis的最新版本3.2.9。<br/>
 
 ### 2017年3月13日
-1、修正[DEL](http://redis.cn/commands/del.html)翻译，感谢rhett.pang@qq.com反馈的问题。
+1、修正[DEL](http://redis.cn/commands/del.html)翻译，感谢rhett.pang@qq.com反馈的问题。<br/>
 2、修正[HEXISTS](http://redis.cn/commands/hexists.html)翻译，感谢rhett.pang@qq.com反馈的问题。
 
 ### 2017年3月13日
