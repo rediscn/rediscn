@@ -7,87 +7,55 @@ disqusUrl: http://redis.cn/topics/topics/modules-blocking-ops.html
 discuzTid: 2015
 ---
 
-Blocking commands in Redis modules
+Redis 模块中的阻塞命令
 ===
 
-Redis has a few blocking commands among the built-in set of commands.
-One of the most used is `BLPOP` (or the symmetric `BRPOP`) which blocks
-waiting for elements arriving in a list.
-Redis 有很多内嵌的阻塞命令。最常被使用的是`BLPOP`(或者相对的`BRPOP`),它能阻塞对list中元素访问。
+Redis 有很多内嵌的阻塞命令。最常被使用的是`BLPOP`(或者`BRPOP`),它能阻塞对list中元素访问。
 
-The interesting fact about blocking commands is that they do not block
-the whole server, but just the client calling them. Usually the reason to
-block is that we expect some external event to happen: this can be
-some change in the Redis data structures like in the `BLPOP` case, a
-long computation happening in a thread, to receive some data from the
-network, and so forth.
-阻塞命令比较有意思的一点是它不阻塞整个服务器，而仅仅是调用的客户端。通常情况下
+阻塞命令比较有意思的一点是它不阻塞整个服务器，仅阻塞调用客户端。通常我们希望某些事件发生，
+所以触发阻塞比如:像在`BLPOP`中，Redis 数据发生改变，线程进行了长时间计算，接收到了大量的网络数据等等。
 
-Redis modules have the ability to implement blocking commands as well,
-this documentation shows how the API works and describes a few patterns
-that can be used in order to model blocking commands.
+Redis 模块也可以实现阻塞功能，本文档会介绍模块的API，并给出阻塞命令可以使用的模式。
 
-NOTE: This API si currently *experimental*, so it can only be used if
-the macro `REDISMODULE_EXPERIMENTAL_API` is defined. This is required because
-these calls are still not in their final stage of design, so may change
-in the future, certain parts may be reprecated and so forth.
+注意: 模块API 目前还是*实验性*的，仅在宏*REDISMODULE_EXPERIMENTAL_API*被定义是使用。
+模块API的一些命令还未最终上线，后续还会有改动，因此现在不是最终版本。
 
-To use this part of the modules API include the modules header like that:
+如果要使用模块API，请在编译时添加头文件，如下：
 
     #define REDISMODULE_EXPERIMENTAL_API
     #include "redismodule.h"
 
-How blocking and resuming works.
+如何阻塞和恢复运行
 ---
+注意：`src/modules`目录下的`helloblock.c`是阻塞的一个简单例子，可以用来了解阻塞API如何生效的。
 
-_Note: You may want to check the `helloblock.c` example in the Redis source tree
-inside the `src/modules` directory, for a simple to understand example
-on how the blocking API is applied._
-
-In Redis modules, commands are implemented by callback functions that
-are invoked by the Redis core when the specific command is called
-by the user. Normally the callback terminates its execution sending
-some reply to the client. Using the following function instead, the
-function implementing the module command may request that the client
-is put into the blocked state:
+在Redis的模块中，命令都是通过Redis核心的回调函数实现的，正常情况下，回调函数执行结束后就将结果返回给客户端，如果使用如下实现模块命令的函数，
+客户端需要被置为阻塞状态
 
     RedisModuleBlockedClient *RedisModule_BlockClient(RedisModuleCtx *ctx, RedisModuleCmdFunc reply_callback, RedisModuleCmdFunc timeout_callback, void (*free_privdata)(void*), long long timeout_ms);
 
-The function returns a `RedisModuleBlockedClient` object, which is later
-used in order to unblock the client. The arguments have the following
-meaning:
+函数返回`RedisModuleBlockedClient`对象，用于解除客户端的锁定。参数的意义如下:
 
-* `ctx` is the command execution context as usually in the rest of the API.
-* `reply_callback` is the callback, having the same prototype of a normal command function, that is called when the client is unblocked in order to return a reply to the client.
-* `timeout_callback` is the callback, having the same prototype of a normal command function that is called when the client reached the `ms` timeout.
-* `free_privdata` is the callback that is called in order to free the private data. Private data is a pointer to some data that is passed between the API used to unblock the client, to the callback that will send the reply to the client. We'll see how this mechanism works later in this document.
-* `ms` is the timeout in milliseconds. When the timeout is reached, the timeout callback is called and the client is automatically aborted.
+* `ctx` API中表示命令执行的上下文
+* `reply_callback` 回调函数，同一般命令函数有相同原型，当解锁客户端时会调用该命令以便返回客户端信息
+* `timeout_callback` 回调函数，同一般命令函数有相同原型，当客户端到达超时时间（ms）调用
+* `free_privdata` 回调函数，用以释放私有数据。私有数据指API用来解锁客户端并传输给回调函数用以回复客户端的数据。处理机制本文后续会详细介绍。
+* `ms` 超时设置的毫秒数。当超过超时时间，超时回调函数会被调用，客户端自动退出。
 
-Once a client is blocked, it can be unblocked with the following API:
-
+当客户端被阻塞时，如下API可对其进行解除阻塞：
     int RedisModule_UnblockClient(RedisModuleBlockedClient *bc, void *privdata);
 
-The function takes as argument the blocked client object returned by
-the previous call to `RedisModule_BlockClient()`, and unblock the client.
-Immediately before the client gets unblocked, the `reply_callback` function
-specified when the client was blocked is called: this function will
-have access to the `privdata` pointer used here.
+该函数的参数是之前调用`RedisModule_BlockClient()`返回的阻塞客户端对象，它会解除客户端的阻塞。
+当客户端被解除阻塞之前，指定的`reply_callback`函数会被调用：该函数拥有`privdata`的访问权限 
 
-IMPORTANT: The above function is thread safe, and can be called from within
-a thread doing some work in order to implement the command that blocked
-the client.
+注意：上述函数都是线程安全的，可在运行线程中被调用，来实现阻塞客户端的命令
 
-The `privdata` data will be freed automatically using the `free_privdata`
-callback when the client is unblocked. This is useful **since the reply
-callback may never be called** in case the client timeouts or disconnects
-from the server, so it's important that it's up to an external function
-to have the responsibility to free the data passed if needed.
+当客户端被解除阻塞时，`free_privdata`会被调用，`privdata`会被自动释放。这样操作有很大好处，当客户端超时或者断开的时候，`reply callback` 永远都不会被调用，
+所以如果数据需要被释放，可以让一个外部函数负责操作。
 
-To better understand how the API works, we can imagine writing a command
-that blocks a client for one second, and then send as reply "Hello!".
+为了更好的理解API如何工作，我们可以想象这个例子，执行一个阻塞客户端1秒的命令，然后回复“Hello！”
 
-Note: arity checks and other non important things are not implemented
-int his command, in order to take the example simple.
+注意: 为了使例子简单，例子命令中没有实现参数验证和其他一些非重要的项目。
 
     int Example_RedisCommand(RedisModuleCtx *ctx, RedisModuleString **argv,
                              int argc)
@@ -108,10 +76,8 @@ int his command, in order to take the example simple.
         RedisModule_UnblockClient(bc,NULL);
     }
 
-The above command blocks the client ASAP, spawining a thread that will
-wait a second and will unblock the client. Let's check the reply and
-timeout callbacks, which are in our case very similar, since they
-just reply the client with a different reply type.
+上述命令会马上阻塞客户端，导致一个线程被阻塞1秒然后解除客户端阻塞。我们可以检测消息回复和超时回调函数回复，因为在本例中他们仅仅回复的类型不同，因此近乎是同一函数。
+
 
     int reply_func(RedisModuleCtx *ctx, RedisModuleString **argv,
                    int argc)
@@ -125,26 +91,19 @@ just reply the client with a different reply type.
         return RedisModule_ReplyWithNull(ctx);
     }
 
-The reply callback just sends the "Hello!" string to the client.
-The important bit here is that the reply callback is called when the
-client is unblocked from the thread.
+回调函数仅回复客户端“Hello！”，比较重要的一点是回调函数在线程解锁客户端的时候被调用。
 
-The timeout command returns `NULL`, as it often happens with actual
-Redis blocking commands timing out.
+超时命令回复`NULL`，因为它经常在Redis 确实出现超时时发生
 
-Passing reply data when unblocking
+解除阻塞时传递回复数据
 ---
 
-The above example is simple to understand but lacks an important
-real world aspect of an actual blocking command implementation: often
-the reply function will need to know what to reply to the client,
-and this information is often provided as the client is unblocked.
+上述例子简单易懂，但缺少实际实现角度：回复函数需要知道返回什么给客户端，该信息是在客户端被解除阻塞后提供的。
 
-We could modify the above example so that the thread generates a
-random number after waiting one second. You can think at it as an
-actually expansive operation of some kind. Then this random number
-can be passed to the reply function so that we return it to the command
-caller. In order to make this working, we modify the functions as follow:
+
+对如上面例子做修改，线程在等待一秒后生成一个随机数。可认为这个是一个耗费资源的操作。随机数会传递给回复函数以便返回给命令调用者。
+
+我们修改如下函数让上述描述能够运行
 
     void *threadmain(void *arg) {
         RedisModuleBlockedClient *bc = arg;
@@ -156,15 +115,12 @@ caller. In order to make this working, we modify the functions as follow:
         RedisModule_UnblockClient(bc,mynumber);
     }
 
-As you can see, now the unblocking call is passing some private data,
-that is the `mynumber` pointer, to the reply callback. In order to
-obtain this private data, the reply callback will use the following
-fnuction:
+如你所见，解除阻塞函数调用，传递了私有数据--`mynumber` 指针--给回复调用函数。回复调用函数使用如下函数获取私有数据：
+
 
     void *RedisModule_GetBlockedClientPrivateData(RedisModuleCtx *ctx);
 
-So our reply callback is modified like that:
-
+回复函数调用修改如下：
     int reply_func(RedisModuleCtx *ctx, RedisModuleString **argv,
                    int argc)
     {
@@ -174,37 +130,27 @@ So our reply callback is modified like that:
         return RedisModule_ReplyWithLongLong(ctx,mynumber);
     }
 
-Note that we also need to pass a `free_privdata` function when blocking
-the client with `RedisModule_BlockClient()`, since the allocated
-long value must be freed. Our callback will look like the following:
-
-    void free_privdata(void *privdata) {
+因为分配给大值的资源必须被释放，当使用`RedisModule_BlockClient()` 阻塞客户端时，我们还需要传递`free_privdata`函数。
+    
+	void free_privdata(void *privdata) {
         RedisModule_Free(privdata);
     }
 
-NOTE: It is important to stress that the private data is best freed in the
-`free_privdata` callback becaues the reply function may not be called
-if the client disconnects or timeout.
+注意：特别强调，最好在`free_privdata`回调中释放私有数据，因为回复函数有时会因为客户端断连或超时而没被调用。
 
-Also note that the private data is also accessible from the timeout
-callback, always using the `GetBlockedClientPrivateData()` API.
+另外还要注意一点：超时回调在使用`GetBlockedClientPrivateData()`API时可以访问私有数据。
 
-Aborting the blocking of a client
+从一个客户端阻塞中退出
 ---
 
-One problem that sometimes arises is that we need to allocate resources
-in order to implement the non blocking command. So we block the client,
-then, for example, try to create a thread, but the thread creation function
-returns an error. What to do in such a condition in order to recover? We
-don't want to take the client blocked, nor we want to call `UnblockClient()`
-because this will trigger the reply callback to be called.
+还有一个问题有时会出现，为了实现非阻塞命令，需要分配资源。比如，我们阻塞客户端，然后，创建一个线程，但是线程创建失败，在这种场景下，如何恢复？
+我们既不想让客户端一直阻塞，也不想调用`UnblockClient`,因为`UnblockClient`会触发一次回复函数调用。
 
-In this case the best thing to do is to use the following function:
 
+在这种情况下，最好的方法是使用下面的函数：
     int RedisModule_AbortBlock(RedisModuleBlockedClient *bc);
 
-Practically this is how to use it:
-
+使用方法如下：
     int Example_RedisCommand(RedisModuleCtx *ctx, RedisModuleString **argv,
                              int argc)
     {
@@ -220,20 +166,17 @@ Practically this is how to use it:
         return REDISMODULE_OK;
     }
 
-The client will be unblocked but the reply callback will not be called.
+客户端会被解除阻塞，但是不会触发恢复函数的调用。
 
-Implementing the command, reply and timeout callback using a single function
+回复和超时回调可以使用一个函数
 ---
 
-The following functions can be used in order to implement the reply and
-callback with the same function that implements the primary command
-function:
+使用如下函数来实现回复和超时回调使用同一个函数的功能：
 
     int RedisModule_IsBlockedReplyRequest(RedisModuleCtx *ctx);
     int RedisModule_IsBlockedTimeoutRequest(RedisModuleCtx *ctx);
 
-So I could rewrite the example command without using a separated
-reply and timeout callback:
+因此，我可以在回复和超时回调函数使用同一个函数的条件下，重写上面的例子：
 
     int Example_RedisCommand(RedisModuleCtx *ctx, RedisModuleString **argv,
                              int argc)
@@ -257,11 +200,9 @@ reply and timeout callback:
         return REDISMODULE_OK;
     }
 
-Functionally is the same but there are people that will prefer the less
-verbose implementation that concentrates most of the command logic in a
-single function.
+功能上相同的。但是大家更倾向清晰简洁的实现以及更多关注命令逻辑的一个单独函数。
 
-Working on copies of data inside a thread
+单线程内使用数据副本
 ---
 
 An interesting pattern in order to work with threads implementing the
@@ -269,18 +210,16 @@ slow part of a command, is to work with a copy of the data, so that
 while some operation is performed in a key, the user continues to see
 the old version. However when the thread terminated its work, the
 representations are swapped and the new, processed version, is used.
+如何和处理较慢命令的线程协同工作？有个有意思的解决方法是让这些线程使用数据的副本，因此，关于一个key的操作正在执行时，用户还是能看到
+旧值。但是，当处理线程结束执行，新的值将被展示和使用。
 
-An example of this approach is the
+该方法的例子如下
 [Neural Redis module](https://github.com/antirez/neural-redis)
-where neural networks are trained in different threads while the
-user can still execute and inspect their older versions.
+当神经网络在其他线程训练的时候，用户仍然使用旧版本的模型
 
-Future work
+未来工作
 ---
 
-An API is work in progress right now in order to allow Redis modules APIs
-to be called in a safe way from threads, so that the threaded command
-can access the data space and do incremental operations.
+新的API在开发中，它可以让线程已更安全的方式来调用模块APIs，线程级命令也可以访问数据空间并做增量操作。
 
-There is no ETA for this feature but it may appear in the course of the
-Redis 4.0 release at some point.
+新特性目前没有ETA，但是它可能会在Redis 4.0中出现。
