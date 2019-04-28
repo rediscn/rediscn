@@ -205,11 +205,7 @@ Redis 模块也可以实现阻塞功能，本文档会介绍模块的API，并�
 单线程内使用数据副本
 ---
 
-An interesting pattern in order to work with threads implementing the
-slow part of a command, is to work with a copy of the data, so that
-while some operation is performed in a key, the user continues to see
-the old version. However when the thread terminated its work, the
-representations are swapped and the new, processed version, is used.
+
 如何和处理较慢命令的线程协同工作？有个有意思的解决方法是让这些线程使用数据的副本，因此，关于一个key的操作正在执行时，用户还是能看到
 旧值。但是，当处理线程结束执行，新的值将被展示和使用。
 
