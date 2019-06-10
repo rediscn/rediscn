@@ -17,7 +17,8 @@ Use like malloc(). Memory allocated with this function is reported in
 Redis INFO memory, used for keys eviction according to maxmemory settings
 and in general is taken into account as memory allocated by Redis.
 You should avoid using malloc().
-
+用法同malloc()。Redis 会根据最大内存设置，做keys的淘汰时会用到该函数，命令INFO memory 会统计该函数分配的内存。
+避免使用malloc()函数。
 ## `RedisModule_Calloc`
 
     void *RedisModule_Calloc(size_t nmemb, size_t size);
@@ -26,13 +27,15 @@ Use like calloc(). Memory allocated with this function is reported in
 Redis INFO memory, used for keys eviction according to maxmemory settings
 and in general is taken into account as memory allocated by Redis.
 You should avoid using calloc() directly.
+用法同calloc()。Redis 会根据最大内存设置，做keys的淘汰时会用到该函数，命令INFO memory 会统计该函数分配的内存。
+避免使用calloc()函数。
 
 ## `RedisModule_Realloc`
 
     void* RedisModule_Realloc(void *ptr, size_t bytes);
 
 Use like realloc() for memory obtained with `RedisModule_Alloc()`.
-
+用法同realloc(),针对使用`RedisModule_Alloc()`分配的内存
 ## `RedisModule_Free`
 
     void RedisModule_Free(void *ptr);
@@ -40,13 +43,13 @@ Use like realloc() for memory obtained with `RedisModule_Alloc()`.
 Use like free() for memory obtained by `RedisModule_Alloc()` and
 `RedisModule_Realloc()`. However you should never try to free with
 `RedisModule_Free()` memory allocated with malloc() inside your module.
-
+用法同 free()，针对使用`RedisModule_Alloc`和`RedisModule_Realloc()`分配的内存。切勿调用`RedisModule_Free()`释放malloc()分配的内存。
 ## `RedisModule_Strdup`
 
     char *RedisModule_Strdup(const char *str);
 
 Like strdup() but returns memory allocated with `RedisModule_Alloc()`.
-
+用法同strdup()，不过返回使用`RedisModule_Alloc()`分配的内存
 ## `RedisModule_PoolAlloc`
 
     void *RedisModule_PoolAlloc(RedisModuleCtx *ctx, size_t bytes);
