@@ -8,6 +8,9 @@ discuzTid: 855
 ---
 # redis中文网更新日志 #
 
+### 2019年11月9日
+1、更新首页和下载页里redis的最新版本5.0.5。<br/>
+
 ### 2019年4月17日
 1、更新首页和下载页里redis的最新版本5.0.4。<br/>
 2、翻译[CLUSTER FAILOVER](http://redis.cn/commands/cluster-failover.html)、
