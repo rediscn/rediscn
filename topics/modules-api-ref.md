@@ -17,7 +17,8 @@ Use like malloc(). Memory allocated with this function is reported in
 Redis INFO memory, used for keys eviction according to maxmemory settings
 and in general is taken into account as memory allocated by Redis.
 You should avoid using malloc().
-
+用法同malloc()。Redis 会根据最大内存设置，做keys的淘汰时会用到该函数，命令INFO memory 会统计该函数分配的内存。
+避免使用malloc()函数。
 ## `RedisModule_Calloc`
 
     void *RedisModule_Calloc(size_t nmemb, size_t size);
@@ -26,13 +27,15 @@ Use like calloc(). Memory allocated with this function is reported in
 Redis INFO memory, used for keys eviction according to maxmemory settings
 and in general is taken into account as memory allocated by Redis.
 You should avoid using calloc() directly.
+用法同calloc()。Redis 会根据最大内存设置，做keys的淘汰时会用到该函数，命令INFO memory 会统计该函数分配的内存。
+避免使用calloc()函数。
 
 ## `RedisModule_Realloc`
 
     void* RedisModule_Realloc(void *ptr, size_t bytes);
 
 Use like realloc() for memory obtained with `RedisModule_Alloc()`.
-
+用法同realloc(),针对使用`RedisModule_Alloc()`分配的内存
 ## `RedisModule_Free`
 
     void RedisModule_Free(void *ptr);
@@ -40,13 +43,13 @@ Use like realloc() for memory obtained with `RedisModule_Alloc()`.
 Use like free() for memory obtained by `RedisModule_Alloc()` and
 `RedisModule_Realloc()`. However you should never try to free with
 `RedisModule_Free()` memory allocated with malloc() inside your module.
-
+用法同 free()，针对使用`RedisModule_Alloc`和`RedisModule_Realloc()`分配的内存。切勿调用`RedisModule_Free()`释放malloc()分配的内存。
 ## `RedisModule_Strdup`
 
     char *RedisModule_Strdup(const char *str);
 
 Like strdup() but returns memory allocated with `RedisModule_Alloc()`.
-
+用法同strdup()，不过返回使用`RedisModule_Alloc()`分配的内存
 ## `RedisModule_PoolAlloc`
 
     void *RedisModule_PoolAlloc(RedisModuleCtx *ctx, size_t bytes);
@@ -58,11 +61,15 @@ anyway. The returned memory is aligned to the architecture word size
 if at least word size bytes are requested, otherwise it is just
 aligned to the next power of two, so for example a 3 bytes request is
 4 bytes aligned while a 2 bytes request is 2 bytes aligned.
+返回分配的堆内存，该段内存会在回调函数返回时被自动释放。当回调函数返回时必须释放的小块内存适合使用该函数申请。
+申请的内存会按照计算机字对齐，如果有指定字的字节数，则按指定的对齐，默认按照大于申请内存最小的2的次幂对齐，比如3字节会按照4个字节对齐，
+2字节则按照2字节对齐。
 
 There is no realloc style function since when this is needed to use the
 pool allocator is not a good idea.
-
+没有对应的realloc 函数，不建议使用realloc操作内存池分配器分配的诶村。
 The function returns NULL if `bytes` is 0.
+`bytes` 为0时返回NULL。
 
 ## `RedisModule_GetApi`
 
@@ -71,9 +78,11 @@ The function returns NULL if `bytes` is 0.
 Lookup the requested module API and store the function pointer into the
 target pointer. The function returns `REDISMODULE_ERR` if there is no such
 named API, otherwise `REDISMODULE_OK`.
+查询调用的API模块，并将函数指着保存在目标指针。当没有改API时返回`REDISMODULE_ERR`,否则返回`REDISMODULE_OK`。
 
 This function is not meant to be used by modules developer, it is only
 used implicitly by including redismodule.h.
+该函数不是为模块开发者使用的仅是在包含redismodule.h时隐式可调用。
 
 ## `RedisModule_IsKeysPositionRequest`
 
@@ -82,6 +91,7 @@ used implicitly by including redismodule.h.
 Return non-zero if a module command, that was declared with the
 flag "getkeys-api", is called in a special way to get the keys positions
 and not to get executed. Otherwise zero is returned.
+当一个标志为“getkeys-api”的模块命令被调用来获得keys的位置还没有被执行时，返回非0值，否则返回0.
 
 ## `RedisModule_KeyAtPos`
 
@@ -92,7 +102,8 @@ keys, since it was flagged as "getkeys-api" during the registration,
 the command implementation checks for this special call using the
 `RedisModule_IsKeysPositionRequest()` API and uses this function in
 order to report keys, like in the following example:
-
+调用模块命令获取keys的位置，如果模块命令在注册阶段被标志为“getkeys-api”,那么它会调用`RedisModule_IsKeysPositionRequest()`API并使用
+该函数来返回keys位置信息，见如下例子
     if (RedisModule_IsKeysPositionRequest(ctx)) {
         RedisModule_KeyAtPos(ctx,1);
         RedisModule_KeyAtPos(ctx,2);
@@ -101,7 +112,7 @@ order to report keys, like in the following example:
  Note: in the example below the get keys API would not be needed since
  keys are at fixed positions. This interface is only used for commands
  with a more complex structure.
-
+注意：如果keys的位置固定，可忽略例子。因为该结构仅针对需要更复杂结构的命令。
 ## `RedisModule_CreateCommand`
 
     int RedisModule_CreateCommand(RedisModuleCtx *ctx, const char *name, RedisModuleCmdFunc cmdfunc, const char *strflags, int firstkey, int lastkey, int keystep);
@@ -111,88 +122,120 @@ calling the function pointer 'func' using the RedisModule calling
 convention. The function returns `REDISMODULE_ERR` if the specified command
 name is already busy or a set of invalid flags were passed, otherwise
 `REDISMODULE_OK` is returned and the new command is registered.
+使用该函数对新增redis命令进行注册。如果需要注册的命令正在创建或者部分参数设置错误则返回`REDISMODULE_ERR`,
+否则新增命令注册成功，并返回`REDISMODULE_OK`
 
 This function must be called during the initialization of the module
 inside the `RedisModule_OnLoad()` function. Calling this function outside
 of the initialization function is not defined.
+该函数在调用`RedisModule_OnLoad()` 进行模块初始化的过程中被调用，其他阶段调用无效。
 
 The command function type is the following:
-
+命令函数的类型如下：
      int MyCommand_RedisCommand(RedisModuleCtx *ctx, RedisModuleString **argv, int argc);
 
 And is supposed to always return `REDISMODULE_OK`.
+正常返回`REDISMODULE_OK`
 
 The set of flags 'strflags' specify the behavior of the command, and should
 be passed as a C string compoesd of space separated words, like for
 example "write deny-oom". The set of flags are:
+信号量`strflags` 限定了命令的操作，用空格隔开的C 字符串组成，例如"write deny-oom",信号量如下：
 
 * **"write"**:     The command may modify the data set (it may also read
                    from it).
+* **"write"**:     该命令会修改数据集
+				   
 * **"readonly"**:  The command returns data from keys but never writes.
+* **"readonly"**:  该命令仅返回值，不做修改
 * **"admin"**:     The command is an administrative command (may change
                    replication or perform similar tasks).
+* **"admin"**:     管理命令(可以调整复制或类似操作)
 * **"deny-oom"**:  The command may use additional memory and should be
                    denied during out of memory conditions.
+* **"deny-oom"**:  该命令使用额外内存，在内存超用的场景下应当被拒绝
+
 * **"deny-script"**:   Don't allow this command in Lua scripts.
+* **"deny-script"**:   禁止使用Lua 脚本
+
 * **"allow-loading"**: Allow this command while the server is loading data.
                        Only commands not interacting with the data set
                        should be allowed to run in this mode. If not sure
                        don't use this flag.
+* **"allow-loading"**: 允许Redis 服务器加载数据时执行该命令，只有不和数据集交互的命令在该模式下被允许执行。否则不设置该信号量。
+					   
 * **"pubsub"**:    The command publishes things on Pub/Sub channels.
+* **"pubsub"**:    该命令回想发布/订阅频道里发布内容.
+
 * **"random"**:    The command may have different outputs even starting
                    from the same input arguments and key values.
+* **"random"**:    该命令接收相同的输入可能会有不同的输出
+				   
 * **"allow-stale"**: The command is allowed to run on slaves that don't
                      serve stale data. Don't use if you don't know what
                      this means.
+* **"allow-stale"**: 该命令允许在slave上执行，即使slave提供的数据不一致。
+					 
 * **"no-monitor"**: Don't propoagate the command on monitor. Use this if
                     the command has sensible data among the arguments.
+* **"no-monitor"**: 不监控该命令。如果命令参数有敏感数据可以使用该设置
+					
 * **"fast"**:      The command time complexity is not greater
                    than O(log(N)) where N is the size of the collection or
                    anything else representing the normal scalability
                    issue with the command.
+* **"fast"**:      该命令的时间复杂度应当低于O(log(N)),其中N是集合的大小等
+
 * **"getkeys-api"**: The command implements the interface to return
                      the arguments that are keys. Used when start/stop/step
                      is not enough because of the command syntax.
+
+* **"getkeys-api"**: 该命令实现了返回keys的接口。
+					 
 * **"no-cluster"**: The command should not register in Redis Cluster
                     since is not designed to work with it because, for
                     example, is unable to report the position of the
                     keys, programmatically creates key names, or any
                     other reason.
-
+* **"no-cluster"**: 该命令不在Redis群集中注册，因为该命令不是为群集设计的。
+					
 ## `RedisModule_SetModuleAttribs`
 
     void RedisModule_SetModuleAttribs(RedisModuleCtx *ctx, const char *name, int ver, int apiver);
 
 Called by `RM_Init()` to setup the `ctx->module` structure.
+`RM_Init()`使用该函数安装`ctx->module`结构
 
 This is an internal function, Redis modules developers don't need
 to use it.
+该函数是测试函数，Redis模块开发者不需要用该函数
 
 ## `RedisModule_Milliseconds`
 
     long long RedisModule_Milliseconds(void);
 
 Return the current UNIX time in milliseconds.
-
+以毫秒数格式返回当前UNIX时间
 ## `RedisModule_AutoMemory`
 
     void RedisModule_AutoMemory(RedisModuleCtx *ctx);
 
 Enable automatic memory management. See API.md for more information.
+打开自动内存管理。详见API.md
 
 The function must be called as the first function of a command implementation
 that wants to use automatic memory.
-
+新增命令如果需要自动内存管理，必须先调用该函数。
 ## `RedisModule_CreateString`
 
     RedisModuleString *RedisModule_CreateString(RedisModuleCtx *ctx, const char *ptr, size_t len);
 
 Create a new module string object. The returned string must be freed
 with `RedisModule_FreeString()`, unless automatic memory is enabled.
-
+创建一个模块字符串对象。除非打开了自动内存管理，否则返回的字符串必须调用`RedisModule_FreeString()`释放
 The string is created by copying the `len` bytes starting
 at `ptr`. No reference is retained to the passed buffer.
-
+返回的字符串是从`ptr`开始的`len`个字节。
 ## `RedisModule_CreateStringPrintf`
 
     RedisModuleString *RedisModule_CreateStringPrintf(RedisModuleCtx *ctx, const char *fmt, ...);
@@ -200,18 +243,20 @@ at `ptr`. No reference is retained to the passed buffer.
 Create a new module string object from a printf format and arguments.
 The returned string must be freed with `RedisModule_FreeString()`, unless
 automatic memory is enabled.
+创建一个格式化后的模块字符串对象。除非打开了自动内存管理，否则返回的字符串必须调用`RedisModule_FreeString()`释放。
 
 The string is created using the sds formatter function sdscatvprintf().
-
+该字符串调用sds格式化函数sdscatvprintf()创建。
 ## `RedisModule_CreateStringFromLongLong`
 
     RedisModuleString *RedisModule_CreateStringFromLongLong(RedisModuleCtx *ctx, long long ll);
 
 Like `RedisModule_CreatString()`, but creates a string starting from a long long
 integer instead of taking a buffer and its length.
-
+功能同`RedisModule_CreatString()`，不同的地方是该函数接收一个长整型数值，不像`RedisModule_CreatString()`需要缓存和缓存长度。
 The returned string must be released with `RedisModule_FreeString()` or by
 enabling automatic memory management.
+除非打开了自动内存管理，否则返回的字符串必须调用`RedisModule_FreeString()`释放。
 
 ## `RedisModule_CreateStringFromString`
 
@@ -219,21 +264,22 @@ enabling automatic memory management.
 
 Like `RedisModule_CreatString()`, but creates a string starting from another
 RedisModuleString.
-
+功能同`RedisModule_CreatString()`,不过该函数通过其他RedisModuleString创建字符串
 The returned string must be released with `RedisModule_FreeString()` or by
 enabling automatic memory management.
-
+除非打开了自动内存管理，否则返回的字符串必须调用`RedisModule_FreeString()`释放。
 ## `RedisModule_FreeString`
 
     void RedisModule_FreeString(RedisModuleCtx *ctx, RedisModuleString *str);
 
 Free a module string object obtained with one of the Redis modules API calls
 that return new string objects.
+释放通过Redis模块API创建的字符串对象。
 
 It is possible to call this function even when automatic memory management
 is enabled. In that case the string will be released ASAP and removed
 from the pool of string to release at the end.
-
+即使打开了自动内存管理，也可以调用该函数。只不过调用该函数后字符串会被马上释放，不用等到自动管理函数释放。
 ## `RedisModule_RetainString`
 
     void RedisModule_RetainString(RedisModuleCtx *ctx, RedisModuleString *str);
@@ -243,24 +289,29 @@ an additional call to `RedisModule_FreeString()` in order to really
 free the string. Note that the automatic freeing of the string obtained
 enabling modules automatic memory management counts for one
 `RedisModule_FreeString()` call (it is just executed automatically).
-
+调用过该函数后，需要额外调用一次`RedisModule_FreeString()` 真正释放字符串。注意，开启自动内存释放后，
+每调用一次`RedisModule_FreeString()`，会增加一次计数。
 Normally you want to call this function when, at the same time
 the following conditions are true:
+正常情况下，如下情况下，你会调用该函数
 
 1) You have automatic memory management enabled.
+1) 打开了自动内存管理
 2) You want to create string objects.
+2) 创建新的字符串对象
 3) Those string objects you create need to live *after* the callback
    function(for example a command implementation) creating them returns.
-
+3) 有些字符串对象，需要保存到回调函数执行完之后。
 Usually you want this in order to store the created string object
 into your own data structure, for example when implementing a new data
 type.
+通常情况，调用该函数是为了在自己创建的结构体里保存字符串对象，例如实现一种新的数据类型。
 
 Note that when memory management is turned off, you don't need
 any call to RetainString() since creating a string will always result
 into a string that lives after the callback function returns, if
 no FreeString() call is performed.
-
+注意，如果内存管理未启用，不需要调用RetainString()，已创建的字符串在调用FreeString()前会一存在。
 ## `RedisModule_StringPtrLen`
 
     const char *RedisModule_StringPtrLen(const RedisModuleString *str, size_t *len);
@@ -268,7 +319,7 @@ no FreeString() call is performed.
 Given a string module object, this function returns the string pointer
 and length of the string. The returned pointer and length should only
 be used for read only accesses and never modified.
-
+返回给定字符串对象的指针和长度。注意，返回的字符串仅可读，不可修改。
 ## `RedisModule_StringToLongLong`
 
     int RedisModule_StringToLongLong(const RedisModuleString *str, long long *ll);
@@ -277,7 +328,7 @@ Convert the string into a long long integer, storing it at `*ll`.
 Returns `REDISMODULE_OK` on success. If the string can't be parsed
 as a valid, strict long long (no spaces before/after), `REDISMODULE_ERR`
 is returned.
-
+将字符串转换为长整型，存储在`*ll`中，如果成功返回`REDISMODULE_OK`，失败则返回`REDISMODULE_ERR`。
 ## `RedisModule_StringToDouble`
 
     int RedisModule_StringToDouble(const RedisModuleString *str, double *d);
@@ -285,7 +336,7 @@ is returned.
 Convert the string into a double, storing it at `*d`.
 Returns `REDISMODULE_OK` on success or `REDISMODULE_ERR` if the string is
 not a valid string representation of a double value.
-
+将字符串转换为双精度类型，存储在`*d`中，如果成功返回`REDISMODULE_OK`，失败则返回`REDISMODULE_ERR`。
 ## `RedisModule_StringCompare`
 
     int RedisModule_StringCompare(RedisModuleString *a, RedisModuleString *b);
@@ -293,7 +344,7 @@ not a valid string representation of a double value.
 Compare two string objects, returning -1, 0 or 1 respectively if
 a < b, a == b, a > b. Strings are compared byte by byte as two
 binary blobs without any encoding care / collation attempt.
-
+比较两个字符串对象的大小，针对情况a < b, a == b, a > b 分别反馈-1,0,1。字符串按字节比较，不考虑编码和校验。
 ## `RedisModule_StringAppendBuffer`
 
     int RedisModule_StringAppendBuffer(RedisModuleCtx *ctx, RedisModuleString *str, const char *buf, size_t len);
@@ -301,6 +352,7 @@ binary blobs without any encoding care / collation attempt.
 Append the specified buffere to the string 'str'. The string must be a
 string created by the user that is referenced only a single time, otherwise
 `REDISMODULE_ERR` is returend and the operation is not performed.
+增加字符串`str`的内存，该字符串必须是用户创建和使用的，否则不做操作并返回`REDISMODULE_ERROR`。
 
 ## `RedisModule_WrongArity`
 
@@ -308,8 +360,9 @@ string created by the user that is referenced only a single time, otherwise
 
 Send an error about the number of arguments given to the command,
 citing the command name in the error message.
-
+发送参数个数不匹配的错误信息，错误信息包含该命令名称。
 Example:
+例子
 
     if (argc != 3) return RedisModule_WrongArity(ctx);
 
@@ -319,25 +372,26 @@ Example:
 
 Send an integer reply to the client, with the specified long long value.
 The function always returns `REDISMODULE_OK`.
-
+向客户端返回长整型值。
 ## `RedisModule_ReplyWithError`
 
     int RedisModule_ReplyWithError(RedisModuleCtx *ctx, const char *err);
 
 Reply with the error 'err'.
-
+返回错误`err`
 Note that 'err' must contain all the error, including
 the initial error code. The function only provides the initial "-", so
 the usage is, for example:
-
+注意，`err`必须包含所有报错，包括开头的错误代码，因此使用方法如下例
     RedisModule_ReplyWithError(ctx,"ERR Wrong Type");
 
 and not just:
+而不是，这样：
 
     RedisModule_ReplyWithError(ctx,"Wrong Type");
 
 The function always returns `REDISMODULE_OK`.
-
+该函数返回`REDISMODULE_OK`
 ## `RedisModule_ReplyWithSimpleString`
 
     int RedisModule_ReplyWithSimpleString(RedisModuleCtx *ctx, const char *msg);
@@ -345,9 +399,9 @@ The function always returns `REDISMODULE_OK`.
 Reply with a simple string (+... \r\n in RESP protocol). This replies
 are suitable only when sending a small non-binary string with small
 overhead, like "OK" or similar replies.
-
+回复简单字符串(+... \r\n)。对于仅返回非二进制简单字符串如"OK"比较合适。
 The function always returns `REDISMODULE_OK`.
-
+该函数返回`REDISMODULE_OK`
 ## `RedisModule_ReplyWithArray`
 
     int RedisModule_ReplyWithArray(RedisModuleCtx *ctx, long len);
@@ -355,15 +409,17 @@ The function always returns `REDISMODULE_OK`.
 Reply with an array type of 'len' elements. However 'len' other calls
 to `ReplyWith*` style functions must follow in order to emit the elements
 of the array.
-
+回复包含`len`个元素的数组。但是和`len`有关的其他`ReplyWith*`类型函数会被调用，用于取出和使用数组中的元素
 When producing arrays with a number of element that is not known beforehand
 the function can be called with the special count
 `REDISMODULE_POSTPONED_ARRAY_LEN`, and the actual number of elements can be
 later set with `RedisModule_ReplySetArrayLength()` (which will set the
 latest "open" count if there are multiple ones).
+当生成包含多个元素的数组是，可能预先不知道元素的个数，可以先使用`REDISMODULE_POSTPONED_ARRAY_LEN`进行设置。
+实际的个数值可以通过后续调用`RedisModule_ReplySetArrayLength()`进行设置。
 
 The function always returns `REDISMODULE_OK`.
-
+函数返回`REDISMODULE_OK`
 ## `RedisModule_ReplySetArrayLength`
 
     void RedisModule_ReplySetArrayLength(RedisModuleCtx *ctx, long len);
@@ -372,6 +428,8 @@ When `RedisModule_ReplyWithArray()` is used with the argument
 `REDISMODULE_POSTPONED_ARRAY_LEN`, because we don't know beforehand the number
 of items we are going to output as elements of the array, this function
 will take care to set the array length.
+当`RedisModule_ReplyWithArray()`使用了参数`REDISMODULE_POSTPONED_ARRAY_LEN`，设置数组长度值时需要注意。
+因为很有可能有多个数组都没有设置元素个数。该函数只设置最新生成的数组的长度。
 
 Since it is possible to have multiple array replies pending with unknown
 length, this function guarantees to always set the latest array length
@@ -379,6 +437,7 @@ that was created in a postponed way.
 
 For example in order to output an array like [1,[10,20,30]] we
 could write:
+例如，要输出数组[1,[10,20,30]],我们可以这样写
 
      RedisModule_ReplyWithArray(ctx,REDISMODULE_POSTPONED_ARRAY_LEN);
      RedisModule_ReplyWithLongLong(ctx,1);
@@ -393,7 +452,8 @@ Note that in the above example there is no reason to postpone the array
 length, since we produce a fixed number of elements, but in the practice
 the code may use an interator or other ways of creating the output so
 that is not easy to calculate in advance the number of elements.
-
+注意，上例中，我们没必要延迟设置数组长度，因为生成的是一个固定个数的数组，但是实际生产中，
+程序会使用迭代器或其他方法创建输出，因此很难算出数组中的元素个数。
 ## `RedisModule_ReplyWithStringBuffer`
 
     int RedisModule_ReplyWithStringBuffer(RedisModuleCtx *ctx, const char *buf, size_t len);
@@ -401,6 +461,8 @@ that is not easy to calculate in advance the number of elements.
 Reply with a bulk string, taking in input a C buffer pointer and length.
 
 The function always returns `REDISMODULE_OK`.
+批量返回字符串，每个字符串包含指向缓存的指针和字符串长度。
+该函数返回`REDISMODULE_OK`
 
 ## `RedisModule_ReplyWithString`
 
@@ -409,7 +471,8 @@ The function always returns `REDISMODULE_OK`.
 Reply with a bulk string, taking in input a RedisModuleString object.
 
 The function always returns `REDISMODULE_OK`.
-
+批量返回字符串，每个字符串包含指向缓存的指针和字符串长度。
+该函数返回`REDISMODULE_OK`
 ## `RedisModule_ReplyWithNull`
 
     int RedisModule_ReplyWithNull(RedisModuleCtx *ctx);
@@ -418,7 +481,8 @@ Reply to the client with a NULL. In the RESP protocol a NULL is encoded
 as the string "$-1\r\n".
 
 The function always returns `REDISMODULE_OK`.
-
+恢复客户端NULL，在RESP协议中，NULL的编码为字符串变量“$-l\r\n”
+该函数返回`REDISMODULE_OK`
 ## `RedisModule_ReplyWithCallReply`
 
     int RedisModule_ReplyWithCallReply(RedisModuleCtx *ctx, RedisModuleCallReply *reply);
@@ -427,9 +491,10 @@ Reply exactly what a Redis command returned us with `RedisModule_Call()`.
 This function is useful when we use `RedisModule_Call()` in order to
 execute some command, as we want to reply to the client exactly the
 same reply we obtained by the command.
-
+将`RedisModule_Call()`的执行结果返回给客户端。当我们调用`RedisModule_Call()`执行命令，并希望
+将我们收到的回复内容也返回给客户端时可以使用该函数。
 The function always returns `REDISMODULE_OK`.
-
+该函数返回`REDISMODULE_OK`.
 ## `RedisModule_ReplyWithDouble`
 
     int RedisModule_ReplyWithDouble(RedisModuleCtx *ctx, double d);
@@ -438,28 +503,31 @@ Send a string reply obtained converting the double 'd' into a bulk string.
 This function is basically equivalent to converting a double into
 a string into a C buffer, and then calling the function
 `RedisModule_ReplyWithStringBuffer()` with the buffer and length.
-
+该函数将double类型变量的返回结果`d`转换为字符串类型，然后调用函数`RedisModule_ReplyWithStringBuffer`
+将结果返回给客户端。
 The function always returns `REDISMODULE_OK`.
-
+该函数返回`REDISMODULE_OK`
 ## `RedisModule_Replicate`
 
     int RedisModule_Replicate(RedisModuleCtx *ctx, const char *cmdname, const char *fmt, ...);
 
 Replicate the specified command and arguments to slaves and AOF, as effect
 of execution of the calling command implementation.
-
+向从节点复制和AOF写入特定的命令和参数。
 The replicated commands are always wrapped into the MULTI/EXEC that
 contains all the commands replicated in a given module command
 execution. However the commands replicated with `RedisModule_Call()`
 are the first items, the ones replicated with `RedisModule_Replicate()`
 will all follow before the EXEC.
+被复制的命令通常都被MULTI/EXECT包裹在一个事务内，其中`RedisModule_Call()`复制的命令在第一位，`RedisModule_Replicate()`
+复制的命令排在后面位置，但是在EXEC之前。
 
 Modules should try to use one interface or the other.
-
+模块建议使用同一个接口
 This command follows exactly the same interface of `RedisModule_Call()`,
 so a set of format specifiers must be passed, followed by arguments
 matching the provided format specifiers.
-
+该命令
 Please refer to `RedisModule_Call()` for more information.
 
 The command returns `REDISMODULE_ERR` if the format specifiers are invalid
