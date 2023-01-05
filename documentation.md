@@ -124,7 +124,7 @@ discuzTid: 852
 <ul>
 <li>由付磊、张益军编著的<a href="https://cachecloud.github.io/2016/10/24/Redis3%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5-%E7%9B%AE%E5%BD%95/" target="_blank">《Redis开发与运维》</a>  是一本从开发、运维两个角度总结了Redis实战经验，深入浅出地剖析底层实现，包含大规模集群开发与运维的实际案例与应用技巧的书籍。</li>
 
-<li>由 <a href="http://twitter.com/karlseguin">Karl Seguin</a> 编写的 <a href="http://openmymind.net/2012/1/23/The-Little-Redis-Book/">《The Little Redis Book》</a>  是一本非常简洁和开放的Reids入门书籍。</li>
+<li>由 <a href="http://twitter.com/karlseguin">Karl Seguin</a> 编写的 <a href="http://openmymind.net/2012/1/23/The-Little-Redis-Book/">《The Little Redis Book》</a>  是一本非常简洁和开放的Redis入门书籍。</li>
 <li><a href="http://twitter.com/dr_josiah">Josiah L. Carlson</a> 编写的 <a href="http://www.manning.com/carlson/">《Redis in Action》</a> 是早期的阅读版本。</li>
 <li>还有 <a href="http://shop.oreilly.com/product/0636920020127.do">Redis Cookbook (O&#39;Reilly Media, 2011)</a></li>
 </ul>
