@@ -23,7 +23,7 @@ discuzTid: 894
 ===
 
 我们建议您直接从官网下载源码编译安装Redis,编译它仅仅需要GCC和libc库即可。
-当然您也可以实用liunx的安装管理器来安装Redis,但是我们不鼓励您这么做，因为这样安装的版本通常不是最新的稳定版本。
+当然您也可以实用linux的安装管理器来安装Redis,但是我们不鼓励您这么做，因为这样安装的版本通常不是最新的稳定版本。
 
 您可以通过[本网站](/)直接下载最新稳定版本,同时也可以直接点击[http://download.redis.io/redis-stable.tar.gz](http://download.redis.io/redis-stable.tar.gz)下载。
 
